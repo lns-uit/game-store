@@ -1,3 +1,27 @@
+# Game Store project
+
+
+### Team
+- Trần Đình Khôi (leader)
+- Nguyễn Hữu Khắc Phục
+- Phạm Mạnh Lợi
+- Ngô Văn Khải
+
+### Tasks
+
+- Trần Đình Khôi 
+    - [example]
+    - [example]
+- Nguyễn Hữu Khắc Phục
+    - [example]
+    - [example]
+- Phạm Mạnh Lợi
+    - [example]
+    - [example]
+- Ngô Văn Khải
+    - [example]
+    - [example]
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
