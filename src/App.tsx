@@ -1,36 +1,22 @@
 import './App.css';
-import { Spin, Space } from 'antd';
-import { useEffect, useState } from 'react';
 import { Layout, Menu, Breadcrumb } from 'antd';
 import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
   UserOutlined,
+  LaptopOutlined,
+  NotificationOutlined,
 } from '@ant-design/icons';
+import MyHeader from './components/MyHeader/MyHeader';
 
-const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+const { Header, Content, Footer, Sider } = Layout;
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }, []);
-
-  const toggleSideBar = () => {
-    setIsOpen(!isOpen);
-  };
-
   return (
-    <div className='app'>
-      <p>This is text</p>
-    </div>
+    // <div className='app'>
+    <Layout>
+      <MyHeader />
+    </Layout>
+    // </div>
   );
 }
 
