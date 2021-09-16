@@ -1,22 +1,21 @@
 import './App.css';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import {
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-} from '@ant-design/icons';
+import { Layout } from 'antd';
 import MyHeader from './components/MyHeader/MyHeader';
+import { BrowserRouter as Router } from 'react-router-dom';
+import RootNavigation from './navigation/RootNavigation';
 
-const { SubMenu } = Menu;
-const { Header, Content, Footer, Sider } = Layout;
+const { Content } = Layout;
 
 function App() {
   return (
-    // <div className='app'>
-    <Layout>
-      <MyHeader />
-    </Layout>
-    // </div>
+    <Router>
+      <Layout>
+        <MyHeader />
+        <Content className='site-layout'>
+          <RootNavigation />
+        </Content>
+      </Layout>
+    </Router>
   );
 }
 

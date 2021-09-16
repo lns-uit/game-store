@@ -8,6 +8,9 @@
   --normalText-size: 14px;
   --smallText-size: 12px;
   --largeText-size: 15px;
+  --header-height: 150px;
+  --gutterHorizontal-size: 160px;
+  --carouselHeigh-size: 460px;
 }
 
 * {

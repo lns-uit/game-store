@@ -1,7 +1,9 @@
 .header {
   background-color: var(--grayContainer-color) !important;
-  height: 150px !important;
-  max-width: 1920px !important;
+  height: var(--header-height) !important;
+  position: fixed;
+  z-index: 1;
+  width: 100%;
 }
 
 .header__top-wrapper {

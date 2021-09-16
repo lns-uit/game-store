@@ -1,0 +1,33 @@
+.dots {
+  height: var(--carouselHeigh-size);
+  overflow-y: scroll;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.dots::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.dots {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.dot-container {
+  height: calc(var(--carouselHeigh-size) / 4);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.dot-container--first {
+  padding-top: 0;
+}
+.dot-container--last {
+  padding-bottom: 0;
+  margin-bottom: 10px;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}

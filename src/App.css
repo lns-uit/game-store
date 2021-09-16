@@ -6,3 +6,10 @@
   height: 100vh;
   font-weight: 500;
 }
+.site-layout {
+  margin-top: var(--header-height);
+  padding: 0 var(--gutterHorizontal-size);
+  padding-top: 50px;
+  min-height: calc(100vh - var(--header-height)) !important;
+  background-color: #111;
+}

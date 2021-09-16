@@ -6,36 +6,45 @@ import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
 import { rootColor } from '../../constants/rootColor';
 import InputPrimary from '../InputPrimary/InputPrimary';
 import { SearchOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const { Header } = Layout;
 
 const tabs = [
   {
     name: 'discover',
-    linkTo: '',
+    linkTo: '/',
   },
   {
     name: 'browse',
-    linkTo: '',
+    linkTo: '/browse',
   },
   {
     name: 'help',
-    linkTo: '',
+    linkTo: '/help',
   },
   {
     name: 'faq',
-    linkTo: '',
+    linkTo: '/faq',
   },
 ];
 
 function MyHeader() {
   const [searchText, setSearchText] = useState('');
+  const [activeTab, setActiveTab] = useState(0);
+
   return (
     <Header className='header'>
       <div className='header__top-wrapper'>
         <div className='header__tabs header__top-wrapper--left'>
-          {tabs.map(tab => (
-            <Tab key={`tab-${tab.name}`} text={tab.name} />
+          {tabs.map((tab, index) => (
+            <Link to={tab.linkTo} onClick={() => setActiveTab(index)}>
+              <Tab
+                key={`tab-${tab.name}`}
+                text={tab.name}
+                active={activeTab === index}
+              />
+            </Link>
           ))}
         </div>
         <div className='header__top-wrapper--right'>
