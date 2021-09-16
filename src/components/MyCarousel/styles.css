@@ -2,6 +2,33 @@
   border-radius: 10px;
   overflow: hidden;
 }
+.my-carousel__action {
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: gray;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.my-carousel__action:hover {
+  background-color: var(--grayContainer-color);
+}
+
+.my-carousel__action--prev {
+  left: -60px;
+}
+.my-carousel__action--next {
+  right: -60px;
+}
+.my-carousel__dots-container {
+  position: relative;
+}
 .my-carousel__item {
   height: var(--carouselHeigh-size) !important;
   background-color: #364d79;
@@ -22,4 +49,9 @@
   right: 20px;
   bottom: 50px;
   color: var(--white-color);
+}
+
+.my-carousel__item__description h2 {
+  color: var(--white-color);
+  font-weight: bold;
 }

@@ -6,11 +6,16 @@ import './styles.css';
 interface DotsCustomPropsType {
   dotsInfo: DotInfoType[];
   activeIndex: number;
+  isHorizontal?: boolean;
 }
 
-function DotsCustom({ dotsInfo, activeIndex }: DotsCustomPropsType) {
+function DotsCustom({
+  isHorizontal,
+  dotsInfo,
+  activeIndex,
+}: DotsCustomPropsType) {
   return (
-    <div className='dots'>
+    <div className={`dots ${isHorizontal && 'dots--horizontal'}`}>
       {dotsInfo.map((dot, index) => {
         let classname = `dot-container`;
         if (index === dotsInfo.length) {
@@ -26,6 +31,7 @@ function DotsCustom({ dotsInfo, activeIndex }: DotsCustomPropsType) {
               image={dot.image}
               name={dot.name}
               active={index === activeIndex}
+              isHorizontal={isHorizontal}
             />
           </div>
         );

@@ -7,13 +7,25 @@
   overflow: hidden;
   align-items: flex-start;
   padding: 16px;
+  cursor: pointer;
 }
+.dot--horizontal {
+  width: 100px;
+  padding: 0;
+}
+
 .dot__image-container {
   width: 30%;
   height: 100%;
   border-radius: 10px;
   overflow: hidden;
   margin-right: 10px;
+}
+
+.dot--horizontal .dot__image-container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 .dot__image-container img {
@@ -30,4 +42,8 @@
 
 .dot--active {
   background-color: var(--lightGray-color);
+}
+
+.dot--active.dot--horizontal {
+  border: 2px solid var(--red-color);
 }

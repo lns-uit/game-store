@@ -8,8 +8,7 @@
 }
 .site-layout {
   margin-top: var(--header-height);
-  padding: 0 var(--gutterHorizontal-size);
-  padding-top: 50px;
+  padding: 50px var(--gutterHorizontal-size);
   min-height: calc(100vh - var(--header-height)) !important;
   background-color: #111;
 }
