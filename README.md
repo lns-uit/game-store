@@ -1,5 +1,6 @@
 # Game Store project
-
+### Name of Project: ATM
+#### Web Design: [Figma Design](https://www.figma.com/file/PyrhA02MocSgTN3iHlh6Dm/WebGameDesign?node-id=0%3A1)
 ### Team
 
 - Trần Đình Khôi (leader)
