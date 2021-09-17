@@ -1,0 +1,103 @@
+.game-item {
+  width: 100%;
+  /* height: 400px; */
+  position: relative;
+  overflow: hidden;
+}
+.game-item__image {
+  height: 300px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.game-item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.game-item__detail-wrapper {
+  margin-top: 10px;
+}
+
+.game-item__detail-wrapper__name {
+  font-weight: bold;
+  color: var(--white-color);
+  margin: 0 0 6px 0;
+}
+
+.game-item__detail-wrapper__type {
+  color: var(--lightGray-color);
+  margin: 0 0 6px 0;
+}
+
+.game-item__detail-wrapper__price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-container__sale-container {
+  display: flex;
+  align-items: center;
+}
+
+.price-container__sale {
+  width: 40px;
+  height: 26px;
+  background-color: var(--red-color);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 6px;
+}
+.price-container__sale p {
+  margin: 0;
+  color: var(--white-color);
+  font-size: 10px;
+}
+
+.price-container__cost {
+  color: var(--lightGray-color);
+  margin: 0;
+  text-decoration: line-through;
+}
+
+.price-container__current-price {
+  color: var(--white-color);
+  margin: 0;
+}
+
+.game-item__action {
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.game-item__action__icon {
+  color: var(--white-color) !important;
+  font-size: 20px !important;
+  transition: all 0.2s ease-in-out !important;
+  background-color: #111;
+  border-radius: 50%;
+}
+
+.game-item:hover .game-item__action {
+  top: 20px;
+  right: 20px;
+  transform: rotate(-180deg);
+  opacity: 1;
+}
+
+.game-item__action__icon:hover {
+  transform: scale(1.5, 1.5) !important;
+}
+
+.game-item__action:focus .game-item__action__icon {
+  animation: spring 2s ease-in-out;
+}

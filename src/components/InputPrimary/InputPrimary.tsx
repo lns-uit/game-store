@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Input } from 'antd';
 import './styles.css';
 
 interface InputPrimaryPropsType {
   text: string;
-  setText: (st: string) => void;
+  setText: Dispatch<SetStateAction<string>>;
   placeholder?: string;
   icon?: React.ReactNode;
   stylesClassname?: string;

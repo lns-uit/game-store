@@ -21,22 +21,23 @@
 }
 
 .my-carousel__action--prev {
-  left: -60px;
+  left: 50px;
 }
 .my-carousel__action--next {
-  right: -60px;
+  right: 50px;
 }
 .my-carousel__dots-container {
   position: relative;
 }
 .my-carousel__item {
-  height: var(--carouselHeigh-size) !important;
+  /* height: var(--carouselHeigh-size) !important; */
   background-color: #364d79;
   display: flex !important;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
   position: relative;
+  aspect-ratio: 16/9;
 }
 .my-carousel__item img {
   object-fit: cover;

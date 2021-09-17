@@ -18,13 +18,8 @@ function DotsCustom({
     <div className={`dots ${isHorizontal && 'dots--horizontal'}`}>
       {dotsInfo.map((dot, index) => {
         let classname = `dot-container`;
-        if (index === dotsInfo.length) {
-          classname += ' mb-0';
-        } else if (index === 0) {
-          classname += ' dot-container--first';
-        } else if (index % 4 === 0) {
-          classname += ' dot-container--last';
-        }
+        if (index === 0) classname += ' dot-container--first';
+        if (index === dotsInfo.length - 1) classname += ' dot-container--last';
         return (
           <div className={classname}>
             <DotCustom

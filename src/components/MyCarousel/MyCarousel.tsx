@@ -12,9 +12,16 @@ const { useBreakpoint } = Grid;
 interface MyCarouselPropsType {
   games: GameInfoType[];
   dotsHorizontal?: boolean;
+  showDescription?: boolean;
+  showName?: boolean;
 }
 
-function MyCarousel({ games, dotsHorizontal }: MyCarouselPropsType) {
+function MyCarousel({
+  games,
+  dotsHorizontal,
+  showDescription,
+  showName,
+}: MyCarouselPropsType) {
   const screens = useBreakpoint();
   const carouselRef = useRef<CarouselRef>(null);
 
@@ -85,8 +92,8 @@ function MyCarousel({ games, dotsHorizontal }: MyCarouselPropsType) {
             <div className='my-carousel__item'>
               <img src={game.image} alt='carousel-image' />
               <div className='my-carousel__item__description'>
-                {dotsHorizontal && <h2>{game.name}</h2>}
-                <p>{game.description}</p>
+                {(showName || dotsHorizontal) && <h2>{game.name}</h2>}
+                {showDescription && <p>{game.description}</p>}
               </div>
             </div>
           ))}

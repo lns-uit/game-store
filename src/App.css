@@ -12,3 +12,29 @@
   min-height: calc(100vh - var(--header-height)) !important;
   background-color: #111;
 }
+
+@media (min-width: 68px) and (max-width: 1023px) {
+  .site-layout {
+    padding: 50px 80px;
+  }
+  .dots--horizontal .dot-container {
+    padding: 0 6px !important;
+  }
+}
+/* mobile */
+@media (max-width: 768px) {
+  .site-layout {
+    padding: 50px 20px;
+  }
+  .dots--horizontal {
+    height: 100px !important;
+    padding: 0 !important;
+  }
+  .dots--horizontal .dot-container {
+    padding: 0 2px !important;
+  }
+
+  .my-carousel__action {
+    display: none;
+  }
+}
