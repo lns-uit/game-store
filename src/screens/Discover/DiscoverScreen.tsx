@@ -34,6 +34,20 @@ function DiscoverScreen() {
           </Col>
         ))}
       </Row>
+      <Row gutter={[35, 35]}>
+        {gamesInfoMockData.slice(0, 3).map((game, index) => (
+          <Col span={8}>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                paddingLeft: index > 0 ? 30 : 0,
+              }}>
+              <GameItem isHorizontal game={game} />
+            </div>
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 }
