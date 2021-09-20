@@ -42,7 +42,11 @@
 .header__bottom-wrapper__logo {
   width: 240px;
   height: 86px;
-  background-color: var(--red-color);
+}
+.header__bottom-wrapper__logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .header__bottom-wrapper__wish-list {
   color: var(--white-color);

@@ -17,7 +17,9 @@
 .game-item__image img {
   width: 100%;
   height: 100%;
+  border-radius: 10px;
   object-fit: cover;
+  transition: all 0.4s ease-in-out;
 }
 
 .game-item__detail-wrapper {
@@ -100,11 +102,14 @@
   background-color: #111;
   border-radius: 50%;
 }
-
 .game-item:hover .game-item__action {
   top: 30px;
   right: 30px;
   transform: rotate(-180deg);
+}
+
+.game-item:hover .game-item__image img {
+  transform: scale(1.2, 1.2) !important;
 }
 
 .game-item__action__icon:hover {

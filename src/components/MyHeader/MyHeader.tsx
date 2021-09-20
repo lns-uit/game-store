@@ -7,6 +7,7 @@ import { rootColor } from '../../constants/rootColor';
 import InputPrimary from '../InputPrimary/InputPrimary';
 import { SearchOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import logo from '../../assets/images/logo.png';
 
 const { Header } = Layout;
 
@@ -66,7 +67,9 @@ function MyHeader() {
       </div>
 
       <div className='header__bottom-wrapper'>
-        <div className='header__bottom-wrapper__logo'></div>
+        <div className='header__bottom-wrapper__logo'>
+          <img src={logo} alt='logo' />
+        </div>
         <InputPrimary
           stylesClassname='header__bottom-wrapper__input'
           text={searchText}

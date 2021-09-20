@@ -6,6 +6,8 @@ import './styles.css';
 import { Row, Col } from 'antd';
 import { ActionType } from '../../interfaces/rootInterface';
 import MyCarousel from '../../components/MyCarousel/MyCarousel';
+import GamesContainer from '../../components/GamesContainer/GamesContainer';
+import { rootColor } from '../../constants/rootColor';
 
 function DiscoverScreen() {
   const screens = useBreakpoint();
@@ -20,20 +22,27 @@ function DiscoverScreen() {
           dotsHorizontal={!screens.lg}
         />
       </div>
-      <Row gutter={[35, 35]}>
-        {gamesInfoMockData.map((game, index) => (
-          <Col
-            key={`game-info-${index}`}
-            xxl={4}
-            xl={6}
-            lg={6}
-            md={8}
-            sm={12}
-            xs={24}>
-            <GameItem game={game} action={ActionType.REMOVE} />
-          </Col>
-        ))}
-      </Row>
+      <GamesContainer
+        gutterHorizontal={30}
+        title='TOp game'
+        leftAction=''
+        backgroundColor={rootColor.grayContainerColor}>
+        <Row gutter={[35, 35]}>
+          {gamesInfoMockData.map((game, index) => (
+            <Col
+              key={`game-info-${index}`}
+              xxl={4}
+              xl={6}
+              lg={6}
+              md={8}
+              sm={12}
+              xs={24}>
+              <GameItem game={game} action={ActionType.REMOVE} />
+            </Col>
+          ))}
+        </Row>
+      </GamesContainer>
+
       <Row gutter={[35, 35]}>
         {gamesInfoMockData.slice(0, 3).map((game, index) => (
           <Col span={8}>
@@ -42,8 +51,11 @@ function DiscoverScreen() {
                 display: 'flex',
                 justifyContent: 'center',
                 paddingLeft: index > 0 ? 30 : 0,
+                paddingRight: index === 0 ? 30 : 0,
               }}>
-              <GameItem isHorizontal game={game} />
+              <GamesContainer title='Top seller'>
+                <GameItem isHorizontal game={game} />
+              </GamesContainer>
             </div>
           </Col>
         ))}
