@@ -1,4 +1,4 @@
-import { Tag, Row, Col } from 'antd';
+import { Tag, Row, Col, Tooltip } from 'antd';
 import React from 'react';
 import { rootColor } from '../../constants/rootColor';
 import { ActionType, GameInfoType } from '../../interfaces/rootInterface';
@@ -18,13 +18,24 @@ function GameItem({ game, action, isHorizontal }: GameItemPropsType) {
         isHorizontal ? 'game-item game-item--horizontal' : 'game-item'
       }>
       {action && (
-        <button className='game-item__action'>
-          {action === ActionType.REMOVE ? (
-            <MinusCircleOutlined className='game-item__action__icon' />
-          ) : (
-            <PlusCircleOutlined className='game-item__action__icon' />
-          )}
-        </button>
+        <Tooltip
+          overlayInnerStyle={{ fontSize: 14 }}
+          placement='topLeft'
+          title={
+            action === ActionType.ADD
+              ? 'Add to wishlist'
+              : 'Remove from wishlist'
+          }
+          color={rootColor.redColor}
+          key={rootColor.whiteColor}>
+          <button className='game-item__action'>
+            {action === ActionType.REMOVE ? (
+              <MinusCircleOutlined className='game-item__action__icon' />
+            ) : (
+              <PlusCircleOutlined className='game-item__action__icon' />
+            )}
+          </button>
+        </Tooltip>
       )}
       <Row gutter={[2, 2]}>
         <Col span={isHorizontal ? 12 : 24}>

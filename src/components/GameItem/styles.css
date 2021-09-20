@@ -19,7 +19,7 @@
   height: 100%;
   border-radius: 10px;
   object-fit: cover;
-  transition: all 0.4s ease-in-out;
+  transition: all 0.6s ease-in-out;
 }
 
 .game-item__detail-wrapper {
@@ -97,19 +97,19 @@
 
 .game-item__action__icon {
   color: var(--white-color) !important;
-  font-size: 25px !important;
+  font-size: 20px !important;
   transition: all 0.3s ease-in-out;
   background-color: #111;
   border-radius: 50%;
 }
 .game-item:hover .game-item__action {
-  top: 30px;
-  right: 30px;
+  top: 10px;
+  right: 10px;
   transform: rotate(-180deg);
 }
 
 .game-item:hover .game-item__image img {
-  transform: scale(1.2, 1.2) !important;
+  transform: scale(1.1, 1.1) !important;
 }
 
 .game-item__action__icon:hover {
