@@ -1,0 +1,48 @@
+.ant-drawer-close {
+  background-color: #1a1a1a !important;
+  color: var(--white-color) !important;
+  margin-right: 0px !important;
+  padding: 17px !important;
+}
+.my-drawer__tabs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.my-drawer__tab {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+  font-size: var(--smallText-size);
+  color: var(--white-color);
+  text-transform: uppercase;
+}
+.my-drawer__tab:hover {
+  color: var(--red-color);
+}
+
+.my-drawer__bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.my-drawer__bottom__btn {
+  height: 50px;
+  width: 100%;
+  text-transform: uppercase;
+  border: none;
+  color: var(--white-color);
+  font-size: calc(var(--smallText-size) - 1px);
+  cursor: pointer;
+}
+.my-drawer__bottom__btn--sign-out {
+  border-top: 1px solid var(--border-color);
+  background-color: transparent;
+}
+.my-drawer__bottom__btn--get-launcher {
+  background-color: var(--red-color);
+}

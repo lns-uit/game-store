@@ -43,7 +43,7 @@ function DiscoverScreen() {
         </Row>
       </GamesContainer>
 
-      <Row gutter={[35, 35]}>
+      {/* <Row gutter={[35, 35]}>
         {gamesInfoMockData.slice(0, 3).map((game, index) => (
           <Col span={8}>
             <div
@@ -59,7 +59,7 @@ function DiscoverScreen() {
             </div>
           </Col>
         ))}
-      </Row>
+      </Row> */}
     </div>
   );
 }

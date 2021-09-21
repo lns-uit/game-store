@@ -7,12 +7,14 @@ interface DotsCustomPropsType {
   dotsInfo: DotInfoType[];
   activeIndex: number;
   isHorizontal?: boolean;
+  slideTo: (action: string, value: number | null) => void;
 }
 
 function DotsCustom({
   isHorizontal,
   dotsInfo,
   activeIndex,
+  slideTo,
 }: DotsCustomPropsType) {
   return (
     <div className={`dots ${isHorizontal && 'dots--horizontal'}`}>
@@ -21,7 +23,7 @@ function DotsCustom({
         if (index === 0) classname += ' dot-container--first';
         if (index === dotsInfo.length - 1) classname += ' dot-container--last';
         return (
-          <div className={classname}>
+          <div className={classname} onClick={() => slideTo('slideTo', index)}>
             <DotCustom
               image={dot.image}
               name={dot.name}

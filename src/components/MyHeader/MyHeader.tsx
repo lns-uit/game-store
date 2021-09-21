@@ -5,9 +5,11 @@ import Tab from '../Tab/Tab';
 import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
 import { rootColor } from '../../constants/rootColor';
 import InputPrimary from '../InputPrimary/InputPrimary';
-import { SearchOutlined } from '@ant-design/icons';
+import { SearchOutlined, MenuOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
+import logoSecondary from '../../assets/images/logoSecondary.png';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 
 const { Header } = Layout;
 
@@ -30,13 +32,18 @@ const tabs = [
   },
 ];
 
-function MyHeader() {
+interface MyHeaderPropstype {
+  onOpen: () => void;
+}
+
+function MyHeader({ onOpen }: MyHeaderPropstype) {
   const [searchText, setSearchText] = useState('');
   const [activeTab, setActiveTab] = useState(0);
+  const screens = useBreakpoint();
 
   return (
-    <Header className='header'>
-      <div className='header__top-wrapper'>
+    <Header className={`header${!screens.lg ? ' header--md' : ''}`}>
+      <div className='header__top-wrapper hide-on-md'>
         <div className='header__tabs header__top-wrapper--left'>
           {tabs.map((tab, index) => (
             <Link to={tab.linkTo} onClick={() => setActiveTab(index)}>
@@ -68,7 +75,7 @@ function MyHeader() {
 
       <div className='header__bottom-wrapper'>
         <div className='header__bottom-wrapper__logo'>
-          <img src={logo} alt='logo' />
+          <img src={screens.lg ? logo : logoSecondary} alt='logo' />
         </div>
         <InputPrimary
           stylesClassname='header__bottom-wrapper__input'
@@ -78,7 +85,16 @@ function MyHeader() {
           icon={<SearchOutlined />}
         />
 
-        <div className='header__bottom-wrapper__wish-list'>WishList</div>
+        <div className='header__bottom-wrapper__wish-list'>
+          {screens.lg ? (
+            'Wish list'
+          ) : (
+            <button className='header__drawer-btn' onClick={onOpen}>
+              <MenuOutlined className='header__drawer-btn__icon' />
+            </button>
+          )}
+          {/* WishList */}
+        </div>
       </div>
     </Header>
   );

@@ -33,11 +33,15 @@ function MyCarousel({
     return { name: game.name, image: game.image };
   });
   const [activeIndex, setActiveIndex] = useState(0);
-  const handleCarouselAction = (action: string) => {
+  const handleCarouselAction = (action: string, value: number | null) => {
     if (action === 'prev') {
       carouselRef.current?.prev();
     } else if (action === 'next') {
       carouselRef.current?.next();
+    } else if (action === 'slideTo') {
+      if (value != null) {
+        carouselRef.current?.goTo(value);
+      }
     }
   };
 
@@ -56,12 +60,12 @@ function MyCarousel({
           <>
             <button
               className='my-carousel__action my-carousel__action--prev'
-              onClick={() => handleCarouselAction('prev')}>
+              onClick={() => handleCarouselAction('prev', null)}>
               <SwapLeftOutlined />
             </button>
             <button
               className='my-carousel__action my-carousel__action--next'
-              onClick={() => handleCarouselAction('next')}>
+              onClick={() => handleCarouselAction('next', null)}>
               <SwapRightOutlined />
             </button>
           </>
@@ -70,6 +74,7 @@ function MyCarousel({
           isHorizontal={dotsHorizontal}
           dotsInfo={dotsInfo}
           activeIndex={activeIndex}
+          slideTo={handleCarouselAction}
         />
       </Col>
       <Col

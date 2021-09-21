@@ -103,8 +103,8 @@
   border-radius: 50%;
 }
 .game-item:hover .game-item__action {
-  top: 10px;
-  right: 10px;
+  top: 8px;
+  right: 8px;
   transform: rotate(-180deg);
 }
 

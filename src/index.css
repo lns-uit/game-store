@@ -3,12 +3,14 @@
   --white-color: #fff;
   --textDisable-color: #777777;
   --grayContainer-color: #2a2a2a;
+  --border-color: #3d3d3d;
   --mainGray-color: #404040;
   --lightGray-color: #5f5f5f;
   --normalText-size: 14px;
   --smallText-size: 12px;
   --largeText-size: 15px;
-  --header-height: 150px;
+  --header-height: 135px;
+  --header-height-on-tablet: 60px;
   --gutterHorizontal-size: 160px;
   --carouselHeigh-size: 460px;
 }

@@ -6,11 +6,18 @@
   height: 100vh;
   font-weight: 500;
 }
+.ant-layout {
+  overflow-x: hidden;
+}
 .site-layout {
-  margin-top: var(--header-height);
   padding: 50px var(--gutterHorizontal-size);
   min-height: calc(100vh - var(--header-height)) !important;
+  margin-top: var(--header-height);
   background-color: #111;
+  width: 100% !important;
+}
+.site-layout--md {
+  margin-top: var(--header-height-on-tablet);
 }
 
 @media (min-width: 68px) and (max-width: 1023px) {

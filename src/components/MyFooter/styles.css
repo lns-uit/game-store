@@ -1,0 +1,121 @@
+.my-footer {
+  background-color: var(--grayContainer-color) !important;
+}
+.my-footer__bottom {
+  border-top: 1px solid var(--border-color);
+}
+.my-footer__top {
+  padding-bottom: 20px;
+}
+.my-footer__company-wrapper {
+  width: 100%;
+}
+.my-footer__company-name {
+  color: var(--white-color);
+  margin-bottom: 10px;
+}
+.my-footer__company-members__title {
+  color: #878787;
+}
+.my-footer__company-members {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  grid-template-rows: 30px 30px;
+}
+.my-footer__company-members p {
+  margin: 0;
+  color: var(--white-color);
+  font-size: var(--smallText-size);
+}
+.my-footer__socials {
+  width: 100%;
+  height: 100%;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center;
+}
+.my-footer__social-icon {
+  font-size: 40px !important;
+  color: var(--white-color) !important;
+  margin-left: 12px !important;
+  border-radius: 3px !important;
+  padding: 2px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+}
+.my-footer__copy-right {
+  display: flex;
+  align-items: center;
+  padding: 30px 0;
+}
+.my-footer__copy-right p {
+  margin: 0;
+  color: var(--white-color);
+  font-size: 12px;
+}
+.my-footer__bottom-right-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+}
+.my-footer__icon {
+  display: flex;
+  justify-content: flex-end;
+}
+.my-footer__icon img {
+  width: 76px;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+.my-footer__policies {
+  display: flex;
+  justify-content: flex-end;
+}
+.my-footer__policies p {
+  margin: 0;
+  margin-left: 15px;
+  font-size: 12px;
+  color: var(--white-color);
+}
+.my-footer__policies p:hover {
+  text-decoration: underline;
+}
+
+.my-footer--md .my-footer__company-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.my-footer--md .my-footer__company-members p {
+  text-align: center;
+}
+.my-footer--md .my-footer__socials {
+  justify-content: center !important;
+}
+
+.my-footer--md .my-footer__icon {
+  justify-content: center !important;
+}
+.my-footer--md .my-footer__policies {
+  justify-content: center !important;
+}
+
+.my-footer__social-icon:hover {
+  background-color: #fff !important;
+}
+.my-footer__social-icon--facebook:hover {
+  color: #1877f2 !important;
+}
+.my-footer__social-icon--twitter:hover {
+  color: #1da1f2 !important;
+}
+.my-footer__social-icon--linkedin:hover {
+  color: #0a66c2 !important;
+}
+.my-footer__social-icon--skype:hover {
+  color: #00aff0 !important;
+}
+.my-footer__social-icon--youtube:hover {
+  color: #cd201f !important;
+}

@@ -3,7 +3,7 @@ import { Button, Radio } from 'antd';
 import './styles.css';
 
 interface ButtonPrimaryPropsType {
-  text: string;
+  text?: string;
   callback: () => void;
   outline?: boolean;
   borderColor?: string;
