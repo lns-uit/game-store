@@ -9,10 +9,11 @@
   --normalText-size: 14px;
   --smallText-size: 12px;
   --largeText-size: 15px;
-  --header-height: 135px;
+  --header-height: 120px;
   --header-height-on-tablet: 60px;
   --gutterHorizontal-size: 160px;
   --carouselHeigh-size: 460px;
+  --buttonHeaderHeight-size: 42px;
 }
 
 * {

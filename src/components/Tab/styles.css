@@ -1,6 +1,6 @@
 .tab {
   width: 113px;
-  height: 52px;
+  height: var(--buttonHeaderHeight-size);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,7 +12,7 @@
   margin: 0;
   text-transform: uppercase;
   color: #fff;
-  font-size: 12;
+  font-size: 15px;
   font-weight: bold;
 }
 
