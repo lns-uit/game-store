@@ -26,23 +26,33 @@ const tabs = [
     name: 'faq',
     linkTo: '/faq',
   },
+  {
+    name: 'account',
+    linkTo: '/account',
+  },
+  {
+    name: 'library',
+    linkTo: '/library',
+  },
 ];
 
 function MyDrawer({ isOpen, onClose }: MyDrawerPropsType) {
   return (
     <Drawer
+      title='Hello NguyenPhuc'
       className='my-drawer'
       placement='right'
       onClose={onClose}
       closable={true}
       bodyStyle={{
         backgroundColor: rootColor.grayContainerColor,
-        paddingTop: 50,
         paddingLeft: 0,
         paddingRight: 0,
+        paddingBottom: 0,
+        paddingTop: 0,
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
       }}
       headerStyle={{
         backgroundColor: rootColor.grayContainerColor,

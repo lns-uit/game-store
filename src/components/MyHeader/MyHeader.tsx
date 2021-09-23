@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-import { Layout } from 'antd';
+import { Button, Layout } from 'antd';
 import './styles.css';
 import Tab from '../Tab/Tab';
 import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
 import { rootColor } from '../../constants/rootColor';
 import InputPrimary from '../InputPrimary/InputPrimary';
-import { SearchOutlined, MenuOutlined } from '@ant-design/icons';
+import { SearchOutlined, MenuOutlined, UserOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import logoSecondary from '../../assets/images/logoSecondary.png';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import { Menu, Dropdown } from 'antd';
 
 const { Header } = Layout;
 
@@ -31,6 +32,35 @@ const tabs = [
     linkTo: '/faq',
   },
 ];
+
+const menu = (
+  <Menu>
+    <Menu.Item>
+      <a
+        target='_blank'
+        rel='noopener noreferrer'
+        href='https://www.antgroup.com'>
+        Account
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a
+        target='_blank'
+        rel='noopener noreferrer'
+        href='https://www.aliyun.com'>
+        Collection
+      </a>
+    </Menu.Item>
+    <Menu.Item>
+      <a
+        target='_blank'
+        rel='noopener noreferrer'
+        href='https://www.luohanacademy.com'>
+        Sign Out
+      </a>
+    </Menu.Item>
+  </Menu>
+);
 
 interface MyHeaderPropstype {
   onOpen: () => void;
@@ -56,13 +86,12 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           ))}
         </div>
         <div className='header__top-wrapper--right'>
-          <ButtonPrimary
-            text='GET LAUNCHER'
-            callback={() => console.log('get launcher')}
-            containerColor={rootColor.redColor}
-            borderColor={rootColor.redColor}
-            styleClass={'header__top-wrapper--right__btn-get-launcher'}
-          />
+          <Dropdown overlay={menu} placement='bottomCenter'>
+            <div className='header__top-wrapper--right__user'>
+              <UserOutlined />
+              NguyenPhuc
+            </div>
+          </Dropdown>
           <ButtonPrimary
             text='GET LAUNCHER'
             callback={() => console.log('get launcher')}

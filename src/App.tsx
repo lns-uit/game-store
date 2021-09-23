@@ -24,7 +24,7 @@ function App() {
     <Router>
       <Layout>
         <MyHeader onOpen={onOpen} />
-        <MyDrawer isOpen={isOpen} onClose={onClose} />
+        {!screens.lg && <MyDrawer isOpen={isOpen} onClose={onClose} />}
         <Content
           className={`site-layout${!screens.lg ? ' site-layout--md' : ''}`}>
           <RootNavigation />
