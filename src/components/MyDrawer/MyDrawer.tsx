@@ -3,6 +3,8 @@ import { Drawer, Button } from 'antd';
 import './styles.css';
 import { rootColor } from '../../constants/rootColor';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 
 interface MyDrawerPropsType {
   isOpen: boolean;
@@ -37,6 +39,7 @@ const tabs = [
 ];
 
 function MyDrawer({ isOpen, onClose }: MyDrawerPropsType) {
+  const currentTab = useSelector((state: RootState) => state.tab);
   return (
     <Drawer
       title='Hello NguyenPhuc'
@@ -65,7 +68,9 @@ function MyDrawer({ isOpen, onClose }: MyDrawerPropsType) {
           <Link
             onClick={onClose}
             key={`my-drawer__tab-${index}`}
-            className='my-drawer__tab'
+            className={`my-drawer__tab${
+              tab.linkTo === currentTab ? ' my-drawer__tab--active' : ''
+            }`}
             to={tab.linkTo}>
             {tab.name}
           </Link>

@@ -11,6 +11,8 @@ import logo from '../../assets/images/logo.png';
 import logoSecondary from '../../assets/images/logoSecondary.png';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { Menu, Dropdown } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers/index';
 
 const { Header } = Layout;
 
@@ -68,7 +70,7 @@ interface MyHeaderPropstype {
 
 function MyHeader({ onOpen }: MyHeaderPropstype) {
   const [searchText, setSearchText] = useState('');
-  const [activeTab, setActiveTab] = useState(0);
+  const currentTab = useSelector((state: RootState) => state.tab);
   const screens = useBreakpoint();
 
   return (
@@ -76,11 +78,11 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
       <div className='header__top-wrapper hide-on-md'>
         <div className='header__tabs header__top-wrapper--left'>
           {tabs.map((tab, index) => (
-            <Link to={tab.linkTo} onClick={() => setActiveTab(index)}>
+            <Link to={tab.linkTo}>
               <Tab
                 key={`tab-${tab.name}`}
                 text={tab.name}
-                active={activeTab === index}
+                active={currentTab === tab.linkTo}
               />
             </Link>
           ))}

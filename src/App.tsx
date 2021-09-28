@@ -5,7 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import RootNavigation from './navigation/RootNavigation';
 import { Row, Col } from 'antd';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MyDrawer from './components/MyDrawer/MyDrawer';
 import MyFooter from './components/MyFooter/MyFooter';
 
@@ -20,6 +20,7 @@ function App() {
   const onClose = () => {
     setIsOpen(false);
   };
+
   return (
     <Router>
       <Layout>

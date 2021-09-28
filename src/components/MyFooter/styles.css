@@ -62,6 +62,7 @@
 .my-footer__icon {
   display: flex;
   justify-content: flex-end;
+  margin-bottom: 10px;
 }
 .my-footer__icon img {
   width: 76px;

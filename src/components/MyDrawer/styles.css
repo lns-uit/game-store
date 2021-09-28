@@ -53,3 +53,8 @@
   font-family: 'Poppins', sans-serif !important;
   font-weight: bold;
 }
+
+.my-drawer__tab--active {
+  background-color: var(--red-color) !important;
+  font-weight: bold;
+}

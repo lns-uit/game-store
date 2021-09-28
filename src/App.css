@@ -27,6 +27,9 @@
   .dots--horizontal .dot-container {
     padding: 0 6px !important;
   }
+  .header__bottom-wrapper__logo {
+    padding: 10px 0 !important;
+  }
 }
 /* mobile */
 @media (max-width: 768px) {
