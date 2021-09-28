@@ -1,7 +1,7 @@
 # Game Store project
 ### Name of Project: ATM
 #### Web Design: [Figma Design](https://www.figma.com/file/PyrhA02MocSgTN3iHlh6Dm/WebGameDesign?node-id=0%3A1)
-#### Link Web: [lns-uit.github.io/game-store/](https://lns-uit.github.io/game-store/)
+#### Link Web: [https://lns-uit.github.io/stun-store/](https://lns-uit.github.io/stun-store/)
 ### Team
 
 - Trần Đình Khôi (leader)
