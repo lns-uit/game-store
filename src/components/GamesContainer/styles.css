@@ -1,0 +1,24 @@
+.games-container {
+  padding: 20px 0;
+  border-radius: 4px;
+  margin: 50px 0;
+  width: 100%;
+}
+.games-container__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.games-container__header__title {
+}
+.games-container__header__title p {
+  color: var(--white-color);
+  margin: 0;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.games-container__header__left-action {
+  background-color: var(--red-color);
+}

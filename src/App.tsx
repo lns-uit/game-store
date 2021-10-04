@@ -1,36 +1,38 @@
 import './App.css';
-import { Spin, Space } from 'antd';
+import { Layout } from 'antd';
+import MyHeader from './components/MyHeader/MyHeader';
+import { BrowserRouter as Router } from 'react-router-dom';
+import RootNavigation from './navigation/RootNavigation';
+import { Row, Col } from 'antd';
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { useEffect, useState } from 'react';
-import { Layout, Menu, Breadcrumb } from 'antd';
-import {
-  DesktopOutlined,
-  PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import MyDrawer from './components/MyDrawer/MyDrawer';
+import MyFooter from './components/MyFooter/MyFooter';
 
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
+const { Content } = Layout;
 
 function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const screens = useBreakpoint();
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
-  }, []);
-
-  const toggleSideBar = () => {
-    setIsOpen(!isOpen);
+  const onOpen = () => {
+    setIsOpen(true);
+  };
+  const onClose = () => {
+    setIsOpen(false);
   };
 
   return (
-    <div className='app'>
-      <p>This is text</p>
-    </div>
+    <Router>
+      <Layout>
+        <MyHeader onOpen={onOpen} />
+        {!screens.lg && <MyDrawer isOpen={isOpen} onClose={onClose} />}
+        <Content
+          className={`site-layout${!screens.lg ? ' site-layout--md' : ''}`}>
+          <RootNavigation />
+        </Content>
+        <MyFooter />
+      </Layout>
+    </Router>
   );
 }
 

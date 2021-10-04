@@ -1,0 +1,61 @@
+.dots {
+  /* height: var(--carouselHeigh-size); */
+  width: 100%;
+  aspect-ratio: 1/1.75;
+  overflow-y: scroll;
+  overflow-x: scroll;
+  /* background-color: red; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.dots--horizontal {
+  display: flex;
+  height: 150px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  padding: 0 100px;
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.dots::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.dots {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.dots--horizontal .dot-container--first {
+  /* margin-left: -10px; */
+}
+
+.dot-container {
+  /* height: 25%; */
+  height: 23.5%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 8px 0; */
+}
+
+.dots--horizontal .dot-container {
+  height: 93px;
+  padding: 0 10px;
+  width: 170px;
+}
+
+.dot-container--first {
+  padding-top: 0;
+}
+.dot-container--last {
+  padding-bottom: 0;
+}
+
+.mb-0 {
+  margin-bottom: 0;
+}
