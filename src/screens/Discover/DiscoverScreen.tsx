@@ -27,7 +27,14 @@ function DiscoverScreen() {
           <MyCarousel games={gamesInfoMockData} />
         </Col>
 
-        <Col span={8}></Col>
+        <Col span={8}>
+          <div
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: rootColor.grayContainerColor,
+            }}></div>
+        </Col>
       </Row>
       <GamesContainer
         gutterHorizontal={30}
