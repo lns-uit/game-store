@@ -30,6 +30,9 @@
   .header__bottom-wrapper__logo {
     padding: 10px 0 !important;
   }
+  .my-carousel__item {
+    height: 300px !important;
+  }
 }
 /* mobile */
 @media (max-width: 768px) {
@@ -46,5 +49,8 @@
 
   .my-carousel__action {
     display: none;
+  }
+  .my-carousel__item {
+    height: 300px !important;
   }
 }

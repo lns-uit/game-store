@@ -2,7 +2,7 @@
   background-color: var(--grayContainer-color) !important;
   height: auto !important;
   position: fixed;
-  z-index: 2;
+  z-index: 1000;
   width: 100%;
 }
 

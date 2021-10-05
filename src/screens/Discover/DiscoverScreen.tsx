@@ -6,6 +6,7 @@ import './styles.css';
 import { Row, Col } from 'antd';
 import { ActionType } from '../../interfaces/rootInterface';
 import MyCarousel from '../../components/MyCarousel/MyCarousel';
+import Slides from '../../components/Slides/Slides';
 import GamesContainer from '../../components/GamesContainer/GamesContainer';
 import { rootColor } from '../../constants/rootColor';
 
@@ -16,15 +17,13 @@ function DiscoverScreen() {
   }, [screens]);
   return (
     <div>
-      <div style={{ marginBottom: 40 }}>
-        <MyCarousel
-          games={gamesInfoMockData.slice(0, 4)}
-          dotsHorizontal={!screens.lg}
-        />
+      <div style={{ marginBottom: 40, marginTop: 40 }}>
+        <Slides />
       </div>
+      <MyCarousel games={gamesInfoMockData.slice(0, 6)} />
       <GamesContainer
         gutterHorizontal={30}
-        title='TOp game'
+        title='Top game'
         leftAction=''
         backgroundColor={rootColor.grayContainerColor}>
         <Row gutter={[35, 35]}>
@@ -42,24 +41,6 @@ function DiscoverScreen() {
           ))}
         </Row>
       </GamesContainer>
-
-      {/* <Row gutter={[35, 35]}>
-        {gamesInfoMockData.slice(0, 3).map((game, index) => (
-          <Col span={8}>
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                paddingLeft: index > 0 ? 30 : 0,
-                paddingRight: index === 0 ? 30 : 0,
-              }}>
-              <GamesContainer title='Top seller'>
-                <GameItem isHorizontal game={game} />
-              </GamesContainer>
-            </div>
-          </Col>
-        ))}
-      </Row> */}
     </div>
   );
 }
