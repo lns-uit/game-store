@@ -19,7 +19,7 @@ function MyFooter() {
       <Row gutter={[16, 16]} className='my-footer__top'>
         <Col xxl={12} xl={12} lg={12} md={24} sm={24} xs={24}>
           <div className='my-footer__company-wrapper'>
-            <div className='my-footer__company-name'>Tên gì không biết :v</div>
+            <div className='my-footer__company-name'>LNS-UIT</div>
             <p className='my-footer__company-members__title'>Members Coop:</p>
             <div className='my-footer__company-members'>
               <p>Nguyễn Hữu Khắc Phục</p>
@@ -72,10 +72,10 @@ function MyFooter() {
                 <p>Terms of Service</p>
               </a>
               <a href='https://www.facebook.com/'>
-                <p>Terms of Service</p>
+                <p>Privacy Policy</p>
               </a>
               <a href='https://www.facebook.com/'>
-                <p>Terms of Service</p>
+                <p>Store Refund Policy</p>
               </a>
             </div>
           </div>
