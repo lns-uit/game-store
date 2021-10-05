@@ -5,6 +5,7 @@
   flex-direction: row;
   flex: 1;
   scroll-behavior: smooth !important;
+  height: 110px;
 }
 
 .dot-container {

@@ -3,7 +3,7 @@ import { Carousel, Col, Row } from 'antd';
 import './styles.css';
 import DotsCustom from '../DotsCustom/DotsCustom';
 import { GameInfoType } from '../../interfaces/rootInterface';
-import { SwapLeftOutlined, SwapRightOutlined } from '@ant-design/icons';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/lib/carousel';
 
 interface MyCarouselPropsType {
@@ -59,7 +59,7 @@ function MyCarousel({ games }: MyCarouselPropsType) {
         <button
           className='my-carousel__action'
           onClick={() => handleCarouselAction('prev', null)}>
-          <SwapLeftOutlined />
+          <LeftOutlined />
         </button>
         <DotsCustom
           dotsInfo={dotsInfo}
@@ -69,7 +69,7 @@ function MyCarousel({ games }: MyCarouselPropsType) {
         <button
           className='my-carousel__action'
           onClick={() => handleCarouselAction('next', null)}>
-          <SwapRightOutlined />
+          <RightOutlined />
         </button>
       </Col>
     </Row>

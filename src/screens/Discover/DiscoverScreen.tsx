@@ -22,7 +22,13 @@ function DiscoverScreen() {
       <div style={{ marginBottom: 40, marginTop: 40 }}>
         <Slides />
       </div>
-      <MyCarousel games={gamesInfoMockData.slice(0, 6)} />
+      <Row>
+        <Col span={16}>
+          <MyCarousel games={gamesInfoMockData} />
+        </Col>
+
+        <Col span={8}></Col>
+      </Row>
       <GamesContainer
         gutterHorizontal={30}
         title='Top game'
