@@ -31,7 +31,7 @@ function Slides() {
                     style={{
                       background:
                         index === activeCarousel
-                          ? rootColor.lightGrayColor
+                          ? rootColor.grayContainerColor
                           : 'transparent',
                     }}>
                     <img
@@ -60,7 +60,7 @@ function Slides() {
                             : 'btn-slides-idle'
                         }
                         style={{
-                          background: '#bababa',
+                          background: rootColor.lightGrayColor,
                         }}></div>
                     </div>
                   </div>

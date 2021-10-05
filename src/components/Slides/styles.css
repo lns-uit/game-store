@@ -139,7 +139,7 @@
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  border: 3px var(--themeSank-color);
+  border: 3px var(--red-color);
   border-style: none none solid none;
   animation-name: Timingslides;
   animation-duration: 7s;
