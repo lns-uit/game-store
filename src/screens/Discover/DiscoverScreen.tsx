@@ -17,7 +17,7 @@ function DiscoverScreen() {
   }, [screens]);
   return (
     <div>
-      {/* this is mock */}
+      {/* this is mock    */}
       <div style={{ marginBottom: 40, marginTop: 40 }}>
         <Slides />
       </div>
