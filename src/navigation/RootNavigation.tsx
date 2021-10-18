@@ -6,6 +6,7 @@ import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
 import FAQScreen from '../screens/FAQ/FAQScreen';
 import HelpScreen from '../screens/Help/HelpScreen';
+import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
 
 function RootNavigation() {
   let location = useLocation();
@@ -17,18 +18,19 @@ function RootNavigation() {
   }, [location]);
   return (
     <Switch>
-      <Route path='/browse'>
-        <BrowseScreen />
-      </Route>
-      <Route path='/help'>
-        <HelpScreen />
-      </Route>
-      <Route path='/faq'>
-        <FAQScreen />
-      </Route>
-      <Route path='/'>
+      <Route exact path='/'>
         <DiscoverScreen />
       </Route>
+      <Route exact path='/browse'>
+        <BrowseScreen />
+      </Route>
+      <Route exact path='/help'>
+        <HelpScreen />
+      </Route>
+      <Route exact path='/faq'>
+        <FAQScreen />
+      </Route>
+      <Route component={NotFoundScreen} />
     </Switch>
   );
 }

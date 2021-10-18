@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Col, Layout, Row } from 'antd';
 import './styles.css';
 import {
@@ -13,7 +13,7 @@ import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 const { Footer } = Layout;
 
 function MyFooter() {
-  const screens = useBreakpoint();
+  const screens = useBreakpoint()
   return (
     <Footer className={`my-footer${!screens.lg ? ' my-footer--md' : ''}`}>
       <Row gutter={[16, 16]} className='my-footer__top'>
