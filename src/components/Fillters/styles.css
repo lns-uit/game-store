@@ -30,6 +30,9 @@
 .space-between{
     justify-content: space-between;    
 }
+.center{
+    justify-content: center;
+}
 .f-column{
     flex-direction: column;
 }
@@ -64,6 +67,9 @@
 }
 .fw-900{
     font-weight: 900;
+}
+.fs-11-that-5{
+    font-size: 11.5px;
 }
 /*color*/
 .color-gray{

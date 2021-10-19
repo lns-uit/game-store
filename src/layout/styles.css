@@ -1,0 +1,38 @@
+/*different*/
+.btn-prev, .btn-next{
+    padding: 4px 20px;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+.btn-page{
+    padding: 4px 8px;
+    border: 1px solid white;
+    border-radius: 8px;
+    margin: 0px 8px;
+}
+.not-allowed{
+    cursor: not-allowed;
+}
+.disable{
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.1);
+}
+
+.hover-btn-page:hover{
+    background-color: rgba(255, 255, 255, 0.1);
+}
+.transition-03{
+    transition: .2s;
+}
+/*text*/
+.text-white{
+    color: var(--white-color);
+}
+/*margin*/
+.mr-right-8{
+    margin-right: 8px;
+}
+.mr-left-8{
+    margin-left: 8px;
+}

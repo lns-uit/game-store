@@ -47,7 +47,7 @@ function Fillter(){
 
     const [genres, setGenres] = useState(genre); 
     const [features, setFeatures] = useState(feature); 
-    console.log('fillter');
+
     function setCheckGenre(nameGenre){
         for(var i = 0; i < 6; i++){
             if (genre[i].name === nameGenre){
@@ -66,15 +66,17 @@ function Fillter(){
         setFeatures(feature);
     }
     return(
-        <div className="background-white">
-            <div className="lay-out-fillter">
-                <div className="layout-1 border-bottom">
-                    <div className="pd-top-bottom-10 pd-left-right-5">
-                        <p className="fs-14 lh-16 mg-0">Fillter</p>
+        <div className="relative">
+            <div className="background-white absolute">
+                <div className="lay-out-fillter">
+                    <div className="layout-1 border-bottom">
+                        <div className="pd-top-bottom-10 pd-left-right-5">
+                            <p className="fs-14 lh-16 mg-0">Fillter</p>
+                        </div>
                     </div>
+                    <Genre genres={genres} onClick={setCheckGenre}></Genre>
+                    <Feature features={features} onClick={setCheckFeature}></Feature>
                 </div>
-                <Genre genres={genres} onClick={setCheckGenre}></Genre>
-                <Feature features={features} onClick={setCheckFeature}></Feature>
             </div>
         </div>
     )

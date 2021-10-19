@@ -15,8 +15,7 @@ function Genre({
 }: GenrePropsType){
     const [dropDown, setDropdow] = useState(false);
     let [rendering, setRendering] = useState(1);
-    console.log('genres');
-
+    
     function setCheckGenre(nameGenre){
         onClick(nameGenre);
     }
@@ -54,7 +53,7 @@ function Genre({
                                             {
                                                 genre.check === true
                                                 ?
-                                                <span className="pd-right-5"><i className="fa fa-check"></i></span>
+                                                <span className="pd-right-5 fs-11-that-5"><i className="fa fa-check"></i></span>
                                                 :null
                                             }
                                         </div>
