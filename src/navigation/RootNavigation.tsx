@@ -6,7 +6,7 @@ import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
 import FAQScreen from '../screens/FAQ/FAQScreen';
 import HelpScreen from '../screens/Help/HelpScreen';
-import GameDetail from '../screens/GameDetail/GameDetail';
+// import GameDetail from '../screens/GameDetail/GameDetail';
 
 function RootNavigation() {
   let location = useLocation();
@@ -17,9 +17,9 @@ function RootNavigation() {
   }, [location]);
   return (
     <Switch>
-      <Route path='/game/:nameGame'>
+      {/* <Route path='/game/:nameGame'>
         <GameDetail></GameDetail>
-      </Route>
+      </Route> */}
       <Route path='/browse'>
         <BrowseScreen />
       </Route>
