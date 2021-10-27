@@ -23,7 +23,7 @@ const tabs = [
   },
   {
     name: 'browse',
-    linkTo: '/browse',
+    linkTo: '/browse?page=1',
   },
   {
     name: 'help',

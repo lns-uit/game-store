@@ -17,4 +17,4 @@ export enum ActionType {
   REMOVE = 'remove',
 }
 
-export type { GameInfoType, DotInfoType };
+export type { GameInfoType, DotInfoType};

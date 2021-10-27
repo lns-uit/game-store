@@ -119,6 +119,36 @@ const gamesInfoMockData = [
     onSale: 0,
     type: 'Nhập vai',
   },
+  {
+    name: 'Cell',
+    image:
+      'https://znews-photo.zadn.vn/w660/Uploaded/botnvt/2021_03_20/dragon_ball_dragon_ball_z_cell_dragon_ball_hd_wallpaper_preview_1.jpg',
+    description:
+      't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using',
+    cost: 500000,
+    onSale: 0,
+    type: 'Nhập vai',
+  },
+  {
+    name: 'Cell',
+    image:
+      'https://znews-photo.zadn.vn/w660/Uploaded/botnvt/2021_03_20/dragon_ball_dragon_ball_z_cell_dragon_ball_hd_wallpaper_preview_1.jpg',
+    description:
+      't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using',
+    cost: 500000,
+    onSale: 0,
+    type: 'Nhập vai',
+  },
+  {
+    name: 'Cell',
+    image:
+      'https://znews-photo.zadn.vn/w660/Uploaded/botnvt/2021_03_20/dragon_ball_dragon_ball_z_cell_dragon_ball_hd_wallpaper_preview_1.jpg',
+    description:
+      't is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using',
+    cost: 500000,
+    onSale: 0,
+    type: 'Nhập vai',
+  },
 ];
 
 export { gamesInfoMockData };

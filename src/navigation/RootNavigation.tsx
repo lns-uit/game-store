@@ -6,17 +6,20 @@ import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
 import FAQScreen from '../screens/FAQ/FAQScreen';
 import HelpScreen from '../screens/Help/HelpScreen';
+import GameDetail from '../screens/GameDetail/GameDetail';
 
 function RootNavigation() {
   let location = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(location.pathname);
     dispatch(setTabAction(location.pathname));
   }, [location]);
   return (
     <Switch>
+      <Route path='/game/:nameGame'>
+        <GameDetail></GameDetail>
+      </Route>
       <Route path='/browse'>
         <BrowseScreen />
       </Route>
