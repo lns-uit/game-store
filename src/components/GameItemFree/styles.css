@@ -1,0 +1,11 @@
+.game-item-free__description {
+}
+.game-item-free__description__title {
+  margin: 10px 0;
+  color: var(--white-color);
+  font-weight: 600;
+  font-size: 16px;
+}
+.game-item-free__description__subtitle {
+  color: gray;
+}
