@@ -1,6 +1,6 @@
 import React from 'react';
 import Fillter from '../../components/Fillters/Fillter';
-import ListGameBrowse from '../../layout/ListGameBrowse';
+import ListGameBrowse from '../../layout/ListGameBrowse/ListGameBrowse';
 import {useLocation} from "react-router-dom";
 import './styles.css';
 import { parse } from 'path';

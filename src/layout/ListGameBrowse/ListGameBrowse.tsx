@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Sort from '../components/Sort/Sort';
-import GamesBrowse from '../components/GamesBrowse/GamesBrowse';
-import Page from '../components/Page/Page';
+import Sort from '../../components/Sort/Sort';
+import GamesBrowse from '../../components/GamesBrowse/GamesBrowse';
+import Page from '../../components/Page/Page';
 import './styles.css';
 
 interface Pages{

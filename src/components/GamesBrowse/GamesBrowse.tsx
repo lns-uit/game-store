@@ -3,6 +3,7 @@ import { useStore } from "react-redux";
 import { gamesInfoMockData } from '../../api/mockData';
 import GameItem from '../../components/GameItem/GameItem';
 import { ActionType } from '../../interfaces/rootInterface';    
+import {Link} from "react-router-dom";
 import "./styles.css"
 
 interface Pages{
@@ -19,9 +20,11 @@ function GamesBrowse({
                 {
                     Games[0].map(game=>{
                         return (
-                            <div className="pd-left-right-10 pd-bottom-30">
-                                <GameItem game={game} action={ActionType.REMOVE} />
-                            </div>
+                            <Link to={'/game/' + game.name}>
+                                <div className="pd-left-right-10 pd-bottom-30">
+                                    <GameItem game={game} action={ActionType.REMOVE} />
+                                </div>
+                            </Link>
                         )
                     })
                 }
