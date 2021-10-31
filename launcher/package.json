@@ -1,0 +1,16 @@
+{
+  "name": "stun-launcher",
+  "main": "./main.js",
+  "version": "1.0.0",
+  "author": "nguyenphuc",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "split-grid": "^1.0.11"
+  },
+  "devDependencies": {
+    "electron": "13.1.7"
+  }
+}

@@ -1,0 +1,64 @@
+:root{
+
+    --font-family-app: "Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+
+    --color-gray: rgb(26, 26, 26);
+    --color-icon: rgb(99, 99, 99);
+    --color-icon-hover: rgb(216, 216, 216);
+}
+body {
+    padding: 0;
+    margin: 0;
+    overflow:hidden;
+    background:black;
+    font-family: var(--font-family-app);
+}
+body *{
+    box-sizing: border-box;
+}
+.draggable {
+    -webkit-app-region: drag;
+}
+.prevent-select{
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+.body-container{
+    height: 100vh;
+    padding: 0;
+    display: grid;
+    width: 100%;
+    grid-template-rows: 35px auto 25px;
+    background-color: var(--color-gray);
+}
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: var(--mainGray-color); 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(63, 63, 63);
+    border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(88, 88, 88); 
+}
+.text-main{
+    color: rgb(177, 177, 177);
+    font-size: 13px;
+    font-weight: 600;
+    margin: auto;
+    user-select: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
