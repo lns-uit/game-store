@@ -6,12 +6,20 @@
 }
 /*padding*/
 .pd-top-bottom-10{
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+.pd-top-bottoms-10 .ant-menu-submenu-title{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+.pd-left-rights-5 .ant-menu-submenu-title{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
 }
 .pd-left-right-5{
-    padding-left: 5px;
-    padding-right: 5px;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
 }
 .pd-right-5{
     padding-right: 5px;
@@ -52,6 +60,12 @@
 .drop-down{
     max-height: 0px;
 }   
+.ant-menu-submenu-title .ant-menu-title-content{
+    color: #B4B4B4;
+    font-weight: 900;
+    line-height: 16px;
+    font-size: 14px;
+}
 /*font*/
 .fs-14{
     font-size: 14px;
@@ -80,5 +94,8 @@
 }
 /*margin*/
 .mg-0{
-    margin: 0px;
+    margin: 0px !important;
+}
+.mg-childrent-0 .ant-menu-submenu-title{
+    margin: 0px !important;
 }

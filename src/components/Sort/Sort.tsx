@@ -28,7 +28,7 @@ function Sort() {
                     return(
                         <li 
                             className={nameSort === sort ? "pd-top-bottom-12 pd-left-13 pointer bgr-gray2" : "pd-top-bottom-12 pd-left-13 pointer hover-1"}
-                            onClick={()=>setNameSort(sort)}
+                            onClick={()=>{setNameSort(sort),setDropDown(!dropDown)}}
                         >
                             <div className="d-flex space-between">
                                 <p className="mr-0">{sort}</p>
