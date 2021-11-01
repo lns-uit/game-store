@@ -17,7 +17,6 @@ function GamesBrowse({
     const Games = useState(gamesInfoMockData.slice((page-1)*12,(page-1)*12 + 12));
     return(
         <div className="mr-top-10">
-            <div className="d-gird gird-col-5">
                 <Row>
                     {
                         Games[0].map((game,index)=>{
@@ -41,7 +40,6 @@ function GamesBrowse({
                         })
                     }
                 </Row>
-            </div>
         </div>
     )
 }
