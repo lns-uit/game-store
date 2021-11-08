@@ -1,5 +1,5 @@
 import { Tag, Row, Col, Tooltip } from 'antd';
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { rootColor } from '../../constants/rootColor';
 import { ActionType, GameInfoType } from '../../interfaces/rootInterface';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
@@ -9,9 +9,15 @@ interface GameItemPropsType {
   game: GameInfoType;
   action?: ActionType;
   isHorizontal?: boolean;
+  heightImage?: string;
 }
 
-function GameItem({ game, action, isHorizontal }: GameItemPropsType) {
+function GameItem({
+  game,
+  action,
+  isHorizontal,
+  heightImage,
+}: GameItemPropsType) {
   return (
     <div
       className={isHorizontal ? 'game-item game-item--horizontal' : 'game-item'}
@@ -38,7 +44,10 @@ function GameItem({ game, action, isHorizontal }: GameItemPropsType) {
         </Tooltip>
       )}
       <div className='game-item__container'>
-        <div className='game-item__image'>
+        <div
+          style={heightImage ? { height: heightImage } : {}}
+          className='game-item__image'
+        >
           <img src={game.image} alt='game-item' />
         </div>
         <div className='game-item__detail-wrapper'>

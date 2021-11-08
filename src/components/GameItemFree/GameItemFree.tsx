@@ -4,12 +4,17 @@ import './styles.css';
 
 interface GameItemFreePropsType {
   game: GameInfoType;
+  heightImage?: string;
 }
 
-function GameItemFree({ game }: GameItemFreePropsType) {
+function GameItemFree({ game, heightImage }: GameItemFreePropsType) {
   return (
     <div className='game-item game-item--free'>
-      <div className='game-item__image game-item__image--free'>
+      <div
+        style={heightImage ? { height: heightImage } : {}}
+        className='game-item__image game-item__image--free'
+      >
+        <div className='game-item__tag-free'>free now</div>
         <img
           className='game-item__image'
           src={game.image}

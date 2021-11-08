@@ -11,7 +11,7 @@
 
 .game-item__image {
   height: 15vw;
-  min-height: 250px;
+  /* min-height: 250px; */
   border-radius: 10px;
   overflow: hidden;
 }

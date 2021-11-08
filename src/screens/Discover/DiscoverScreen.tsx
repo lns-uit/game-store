@@ -92,7 +92,7 @@ function DiscoverScreen() {
               sm={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
               xs={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
             >
-              <GameItemFree game={game} />
+              <GameItemFree game={game} heightImage='25vw' />
             </Col>
           ))}
         </Row>
@@ -147,7 +147,11 @@ function DiscoverScreen() {
               sm={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
               xs={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
             >
-              <GameItem game={game} action={ActionType.ADD} />
+              <GameItem
+                game={game}
+                action={ActionType.ADD}
+                heightImage='23vw'
+              />
             </Col>
           ))}
         </Row>

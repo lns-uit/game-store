@@ -8,9 +8,9 @@ function ViewMoreBtn() {
     <ButtonPrimary
       text='View More'
       callback={() => console.log('Navigate to browse')}
-      containerColor={rootColor.lightGrayColor}
-      borderColor={rootColor.lightGrayColor}
-      //   styleClass='view-more-btn'
+      containerColor='#4c4c4c'
+      borderColor='#4c4c4c'
+      styleClass='view-more-btn'
     />
   );
 }

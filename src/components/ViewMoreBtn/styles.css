@@ -1,4 +1,7 @@
 .view-more-btn {
-  background-color: var(--lightGray-color);
-  border-color: var(--lightGray-color);
+  border-radius: 6px !important;
+  padding: 18px 20px 18px 20px !important;
+  font-size: 14px !important;
+  text-transform: uppercase;
+  font-weight: 500 !important;
 }
