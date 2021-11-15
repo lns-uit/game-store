@@ -24,6 +24,9 @@
 .pd-right-5{
     padding-right: 5px;
 }
+.pd-right-10{
+    padding-right: 10px;
+}
 /*border*/
 .border-bottom{
     border: 1px solid gray;
@@ -93,9 +96,29 @@
     background-color: #B4B4B4;
 }
 /*margin*/
-.mg-0{
+.m-0{
     margin: 0px !important;
 }
 .mg-childrent-0 .ant-menu-submenu-title{
     margin: 0px !important;
+}
+/*diff*/
+.float-right{
+    float: right;
+}
+.line-1,.line-2,.line-3, .line-4{
+    display: block;
+    border-top: 1px solid #ffffff;
+    height: 1px;
+}
+.line-1{
+    width: 16px;
+    padding-bottom: 4px;
+}
+.line-2{
+    width: 10px;
+    padding-bottom: 4px;
+}
+.line-3{
+    width: 6px;
 }

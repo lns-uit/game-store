@@ -24,9 +24,9 @@ function GamesBrowse({
                                 <Col
                                     key={`game-info-${index}`}
                                     xxl={4}
-                                    xl={6}
-                                    lg={6}
-                                    md={8}
+                                    xl={8}
+                                    lg={12}
+                                    md={24}
                                     sm={12}
                                     xs={24}
                                 >
