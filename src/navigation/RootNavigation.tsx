@@ -6,6 +6,8 @@ import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
 import FAQScreen from '../screens/FAQ/FAQScreen';
 import HelpScreen from '../screens/Help/HelpScreen';
+import AdminScreen from '../screens/Admin/AdminScreen';
+import ConsoleGameListScreen from '../screens/Admin/ConsoleGameListScreen';
 // import GameDetail from '../screens/GameDetail/GameDetail';
 
 function RootNavigation() {
@@ -29,6 +31,13 @@ function RootNavigation() {
       <Route path='/faq'>
         <FAQScreen />
       </Route>
+      <Route path='/console/game-list'>
+        <ConsoleGameListScreen/>
+      </Route>
+      <Route path='/admin'>
+        <AdminScreen/>
+      </Route>
+
       <Route path='/'>
         <DiscoverScreen />
       </Route>

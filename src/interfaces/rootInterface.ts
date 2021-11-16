@@ -6,15 +6,51 @@ interface GameInfoType {
   onSale: number;
   type: string;
 }
-
+interface GameType {
+  idGame: string;
+  nameGame: string;
+  averageRate: string;
+  numOfRate: number;
+  developer: number;
+  publisher: string;
+  releaseDate: any;
+  plaform: any;
+  cost: any;
+  lastestVersion: any;
+  numberOfBuyer: any;
+  numberOfDowloaders: any;
+  discount: any;
+  genres: {
+    idGenreNavigation: GenreType;
+  }[];
+  imageGameDetail: ImageType[];
+  newVersion: any;
+}
 interface DotInfoType {
   image: string;
   name?: string;
 }
-
-export enum ActionType {
-  ADD = 'add',
-  REMOVE = 'remove',
+interface ImageType{
+  idImage:any;
+  url: any;
+}
+interface DiscountType {
+  idDiscount: any;
+  listGame: any[];
+  percentDiscount: any;
+  title: any;
+  startDate: any;
+  endDate: any;
 }
 
-export type { GameInfoType, DotInfoType};
+interface GenreType{
+  idGenre: any;
+  nameGenre: any;
+}
+
+export enum ActionType {
+  ADD = "add",
+  REMOVE = "remove",
+}
+
+export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType };
