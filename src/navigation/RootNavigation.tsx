@@ -6,6 +6,7 @@ import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
 import FAQScreen from '../screens/FAQ/FAQScreen';
 import HelpScreen from '../screens/Help/HelpScreen';
+import AdminCreateGame from '../screens/AdminCreateGame/AdminCreateGame';
 // import GameDetail from '../screens/GameDetail/GameDetail';
 
 function RootNavigation() {
@@ -20,6 +21,9 @@ function RootNavigation() {
       {/* <Route path='/game/:nameGame'>
         <GameDetail></GameDetail>
       </Route> */}
+      <Route path='/admin/create-game'>
+        <AdminCreateGame></AdminCreateGame>
+      </Route>
       <Route path='/browse'>
         <BrowseScreen />
       </Route>
