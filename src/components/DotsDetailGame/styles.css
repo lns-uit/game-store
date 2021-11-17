@@ -1,0 +1,60 @@
+/*margin*/
+.m-top-24{
+    margin-top: 24px;
+}
+.m-10{
+    margin: 10px;
+}
+/*padding*/
+.pd-2-percent{
+    padding: 2%;
+}
+.pd-left-right-60{
+    padding-left: 60px;
+    padding-right: 60px;
+}
+/*position*/
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+/*width height*/
+.width-169{
+    width: 169px;
+} 
+.height-93{
+    height: 93px;
+}
+/*font*/
+.fs-18{
+    font-size: 18px;
+}
+/*different*/
+.center .slick-center img {
+    opacity: 1;
+    -ms-transform: scale(1.2);
+    transform: scale(1.2);
+}
+.center img {
+    opacity: .8;
+    transition: all .3s ease;
+}
+.button-none button {
+    display: none !important;
+}
+.locate-prev{
+    top: 42px;
+    left: 25px;
+}
+.locate-next{
+    top: 42px;
+    right: 25px;
+}
+.hover-slick:hover{
+    opacity: .5;
+}
+.transition-dot-3{
+    transition: .3s;
+}

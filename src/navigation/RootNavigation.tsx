@@ -11,8 +11,7 @@ import AdminScreen from "../screens/Admin/AdminScreen";
 import ConsoleGameListScreen from "../screens/Admin/ConsoleGameListScreen";
 import ConsoleUsersListScreen from "../screens/Admin/ConsoleUsersListScreen";
 import AdminCreateGame from "../screens/AdminCreateGame/AdminCreateGame";
-
-// import GameDetail from '../screens/GameDetail/GameDetail';
+import GameDetail from "../screens/GameDetail/GameDetail";
 
 function RootNavigation() {
   let location = useLocation();
@@ -23,10 +22,9 @@ function RootNavigation() {
   }, [location]);
   return (
     <Switch>
-      {/* <Route path='/game/:nameGame'>
+      <Route path="/game/:nameGame">
         <GameDetail></GameDetail>
-      </Route> */}
-
+      </Route>
       <Route path="/browse">
         <BrowseScreen />
       </Route>
