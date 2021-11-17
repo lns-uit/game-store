@@ -48,9 +48,20 @@ interface GenreType{
   nameGenre: any;
 }
 
+interface UserType{
+  idUser:string;
+  userName:string;
+  password:string;
+  realName:string;
+  email:string;
+  numberPhone:string;
+  avatar: any;
+  background: any;
+}
+
 export enum ActionType {
   ADD = "add",
   REMOVE = "remove",
 }
 
-export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType };
+export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType};

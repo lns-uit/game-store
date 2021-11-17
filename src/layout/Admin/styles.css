@@ -1,0 +1,54 @@
+/*diff*/
+.ant-form-item .ant-upload.ant-upload-drag{
+    background-color: #262626 !important;
+}
+.ant-upload.ant-upload-drag p.ant-upload-text{
+    color: #ffffff !important;
+}
+.ant-upload.ant-upload-drag{
+    border: none !important;
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+    background-color: #111 !important;
+}
+.ant-select {
+    color: #ffffff !important;
+}
+.ant-select-arrow{
+    color: #ffffff !important;
+}
+.upload .ant-form-item-control-input-content{
+    background-color: #262626 !important;
+    border-radius: 4px;
+    padding: 12px 28px;
+}
+.upload .ant-upload-list-picture-card-container, .upload .ant-upload.ant-upload-select-picture-card{
+    width: 180px;
+    height: 180px;
+}
+.ant-input-textarea-show-count::after{
+    color: #ffffff !important;
+}
+.custom-editor {
+    padding: 24px 200px;
+  }
+  
+  .DraftEditor-root {
+    min-height: 200px;
+    border: solid 1px #bbb;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    cursor: text;
+    padding: 16px;
+    border-radius: 2px;
+    margin-bottom: 2em;
+    box-shadow: inset 0px 1px 8px -3px #ABABAB;
+    background: #fefefe;
+  }
+  .btn-bold{
+      padding: 5px 10px;
+      background: #ffffff;
+  }
+.btn-submit{
+    background-color: rgb(224, 83, 83);
+}

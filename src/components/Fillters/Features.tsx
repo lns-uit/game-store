@@ -1,67 +1,61 @@
 import React,{useState,useEffect} from "react";
+import { Menu } from 'antd';
 import "./styles.css"
 
+const { SubMenu } = Menu;
 interface FeaturesPropsType{
     features: {
         name?: string,
-        check?: boolean
-    }[],
-    onClick: (nameFeature: any) => void
+    }[]
 }
+
+const keys: string[] = [];
 
 function Feature({
     features,
-    onClick
 }: FeaturesPropsType){
-    const [dropDown, setDropdow] = useState(false);
-    let [rendering, setRendering] = useState(1);
 
-    function setCheckFeature(nameFeature){
-        onClick(nameFeature);
+    function setGenres(key){
+        var test = 0;
+
+        for (var i = 0; i < keys.length; i++){
+            if (keys[i] === key.toString()){
+                keys.splice(i,1);
+                test = 1;
+                break;
+            }
+        }
+
+        if (test === 0){
+            keys.push(key.toString());
+        }
     }
-
-    function setFeature(nameFeature){
-        setCheckFeature(nameFeature);
-        setRendering(rendering+1);
-    }
-
     return (
         <div className="layout-2 border-bottom">
             <div className="d-flex f-column">
                 <div className="option">
-                    <div 
-                        className="pointer d-flex align-center space-between pd-top-bottom-10 pd-left-right-5"
-                        onClick={()=>{setDropdow(!dropDown)}}
+                    <Menu
+                        style={{ width: 256 }}
+                        selectedKeys={keys}
+                        defaultOpenKeys={['sub1']}
+                        mode="inline"
                     >
-                        <p className="uppercase fs-14 lh-16 color-gray fw-900 mg-0">Features</p>
-                        <span className={dropDown === false ? "pd-right-5 spin" : "pd-right-5"}><i className="fa fa-chevron-down"></i></span>
-                    </div>
-                    <div className=
-                        {dropDown === true ? 
-                        'overflow-y-auto transition-5ms' : 
-                        'drop-down overflow-y-auto transition-5ms'}
-                    >
-                        {
-                            features.map((feature)=>{
-                                return(
-                                    <div 
-                                        className={feature.check === true ? "pd-top-bottom-10 pd-left-right-5 pointer bgr-gray" : "pd-top-bottom-10 pd-left-right-5 pointer"}
-                                        onClick={()=>setFeature(feature.name)}
-                                    >
-                                        <div className="d-flex align-center space-between">
-                                            <p className="mg-0 fs-15 lh-18">{feature.name}</p>
-                                            {
-                                                feature.check === true
-                                                ?
-                                                <span className="pd-right-5 fs-11-that-5"><i className="fa fa-check"></i></span>
-                                                :null
-                                            }
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                        <SubMenu key="sub1" title="Features" className="pd-top-bottoms-10 pd-left-rights-5 mg-childrent-0">
+                            {
+                                features.map((feature,key)=>{
+                                    return(
+                                        <Menu.Item 
+                                            key={key} 
+                                            onClick={()=>{setGenres(key)}}
+                                            className="pd-top-bottom-10 pd-left-right-5 mg-0"
+                                        >
+                                            {feature.name}
+                                        </Menu.Item>
+                                    )
+                                })
+                            }
+                        </SubMenu>
+                    </Menu>
                 </div>
             </div>
         </div>

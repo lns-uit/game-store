@@ -1,67 +1,59 @@
 import React,{useState,useEffect} from "react";
+import { Menu } from 'antd';
 import "./styles.css"
 
+const { SubMenu } = Menu;
 interface GenrePropsType{
     genres: {
         name?: string,
-        check?: boolean
-    }[],
-    onClick: (nameGenre: any) => void
+    }[]
 }
+
+const keys: string[] = [];
 
 function Genre({
     genres,
-    onClick
 }: GenrePropsType){
-    const [dropDown, setDropdow] = useState(false);
-    let [rendering, setRendering] = useState(1);
-    
-    function setCheckGenre(nameGenre){
-        onClick(nameGenre);
-    }
+    function setGenres(key){
+        var test = 0;
+        for (var i = 0; i < keys.length; i++){
+            if (keys[i] === key.toString()){
+                keys.splice(i,1);
+                test = 1;
+                break;
+            }
+        }
 
-    function checkGenre(nameGenre){
-        setCheckGenre(nameGenre);
-        setRendering(rendering+1);
+        if (test === 0){
+            keys.push(key.toString());
+        }
     }
-
     return (
         <div className="layout-2 border-bottom">
             <div className="d-flex f-column">
                 <div className="option">
-                    <div 
-                        className="pointer d-flex align-center space-between pd-top-bottom-10 pd-left-right-5"
-                        onClick={()=>{setDropdow(!dropDown)}}
+                    <Menu
+                        style={{ width: 256 }}
+                        selectedKeys={keys}
+                        defaultOpenKeys={['sub1']}
+                        mode="inline"
                     >
-                        <p className="uppercase fs-14 lh-16 color-gray fw-900 mg-0">genre</p>
-                        <span className={dropDown === false ? "pd-right-5 spin" : "pd-right-5"}><i className="fa fa-chevron-down"></i></span>
-                    </div>
-                    <div className=
-                        {dropDown === true ? 
-                        'overflow-y-auto transition-5ms' : 
-                        'drop-down overflow-y-auto transition-5ms'}
-                    >
-                        {
-                            genres.map((genre)=>{
-                                return(
-                                    <div 
-                                        className={genre.check === true ? "pd-top-bottom-10 pd-left-right-5 pointer bgr-gray" : "pd-top-bottom-10 pd-left-right-5 pointer"}
-                                        onClick={()=>checkGenre(genre.name)}
-                                    >
-                                        <div className="d-flex align-center space-between">
-                                            <p className="mg-0 fs-15 lh-18">{genre.name}</p>
-                                            {
-                                                genre.check === true
-                                                ?
-                                                <span className="pd-right-5 fs-11-that-5"><i className="fa fa-check"></i></span>
-                                                :null
-                                            }
-                                        </div>
-                                    </div>
-                                )
-                            })
-                        }
-                    </div>
+                        <SubMenu key="sub1" title="Genres" className="pd-top-bottoms-10 pd-left-rights-5 mg-childrent-0">
+                            {
+                                genres.map((genre,key)=>{
+                                    return(
+                                        <Menu.Item 
+                                            key={key} 
+                                            onClick={()=>{setGenres(key)}}
+                                            className="pd-top-bottom-10 pd-left-right-5 mg-0"
+                                        >
+                                            {genre.name}
+                                        </Menu.Item>
+                                    )
+                                })
+                            }
+                        </SubMenu>
+                    </Menu>
                 </div>
             </div>
         </div>
