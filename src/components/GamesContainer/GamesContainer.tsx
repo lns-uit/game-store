@@ -27,14 +27,15 @@ function GamesContainer({
         paddingBottom: gutterVertical,
         paddingRight: gutterHorizontal,
       }}
-      className='games-container'>
+      className='games-container'
+    >
       <div className='games-container__header'>
         <div className='games-container__header__title'>
           <p>{title}</p>
         </div>
         <div className='games-container__header__left-action'>
           {/* example: View More btn, left, right btn */}
-          <p>left action</p>
+          {leftAction}
         </div>
       </div>
       {children}

@@ -3,7 +3,7 @@ import { Button, Radio } from 'antd';
 import './styles.css';
 
 interface ButtonPrimaryPropsType {
-  text?: string;
+  text?: string | React.ReactNode;
   callback: () => void;
   outline?: boolean;
   borderColor?: string;
@@ -35,7 +35,8 @@ function ButtonPrimary({
         color: textColor,
       }}
       onClick={callback}
-      icon={icon}>
+      icon={icon}
+    >
       {text}
     </Button>
   );

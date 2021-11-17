@@ -1,0 +1,28 @@
+.game-item__image--free {
+  position: relative;
+}
+.game-item-free__description {
+}
+.game-item-free__description__title {
+  margin: 10px 0 0 0;
+  color: var(--white-color);
+  font-weight: 600;
+  font-size: 16px;
+}
+.game-item-free__description__subtitle {
+  color: #a0a0a0;
+}
+.game-item__tag-free {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background-color: var(--red-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white-color);
+  text-transform: uppercase;
+  z-index: 100;
+}
