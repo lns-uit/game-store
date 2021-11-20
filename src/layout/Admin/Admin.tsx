@@ -1,4 +1,9 @@
 import React, {useState, useRef} from 'react';
+import UploadFile from '../../components/UploadFile/UpLoadFile';
+import DetailGame from '../../components/UploadFile/DetailGame';
+import DescriptionPhoto from '../../components/UploadFile/DescriptionPhoto';
+import ShortDescription from '../../components/UploadFile/ShortDescription';
+import SystemRequirements from '../../components/UploadFile/SystemRequirements';
 import {
     Form,
     Select,
@@ -16,50 +21,133 @@ import {
     Modal
 } from 'antd';
 import { UploadOutlined, InboxOutlined, PlusOutlined } from '@ant-design/icons';
-import {Editor, EditorState,convertToRaw,RichUtils} from 'draft-js';
+import { EditorState, ContentState, convertToRaw  } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'draft-js/dist/Draft.css';
 import './styles.css';
-function getBase64(img, callback) {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => callback(reader.result));
-    reader.readAsDataURL(img);
-}
+import {storage} from "../../firebase"
+import { url } from 'inspector';
 
 const { Option } = Select;
 
+
 function Admin(){
+    let _contentState = ContentState.createFromText('');
+    const raw = convertToRaw(_contentState);
+    const [contentState, setContentState] = useState(raw);
     const [fileList, setFileList] = useState([]);
-    const editorRef = React.useRef<Editor>(null)
-    const [editorState, setEditorState] = useState(EditorState.createEmpty())
-    const [draw, setDraw] = useState()
+    const [urlZip, setUrlZip] = useState([{
+        name: '',
+        url: ''
+    }]);
+    const [urlImages, setUrlImages] = useState([]);
     
-    const onChange = (editorState)=>{
-        const contentState = editorState.getCurrentContent();
-        setEditorState(editorState);
-        setDraw(convertToRaw(contentState));
-    }
-
-    const onBoldClick = (e) =>{
-        e.preventDefault(); // Mình dùng preventDefault() để giữ con trỏ chuột vẫn còn ở trong editor nhé các bạn
-        setEditorState(RichUtils.toggleInlineStyle(editorState, 'BOLD'));
-    }
-
-    const focus = () => {
-        editorRef.current.focus();
-    }
-
-    const normFile = (e) => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-          return e;
+    const normFileZip = (e) => {
+        if(e.file.status === "error"){
+            getLinkFileZip(e.file.originFileObj);
         }
-        return e && e.fileList;
-    };
-    
+    }
+
+    const normFileImages = (e) => {
+        if(e.file.status === "error"){
+            getLinkFileImage(e.file.originFileObj);
+        }
+    }
+
     const onFinish = (values: any) => {
-        values.draft = draw;
-        console.log('Received values of form: ', values);
-    };
+        let error: string[] = [];
+        let count = 0;
+        let stringErr = "";
+        values.draw = contentState;
+        
+        console.log(urlZip);
+        // const checkZip = values.fileGame.reduce(game=>{
+        //     return game.type === "application/x-zip-compressed"
+        // })
+        // const checkImage = values.images.reduce(game=>{
+        //     return game.type === "image/jpeg"
+        // })
+
+        // console.log(checkZip);
+
+        // if (checkZip === false) {
+        //     count++;
+        //     error.push("Trong upload có file không phải file .zip");
+        // }
+
+        // if (checkImage === false) {
+        //     count++;
+        //     error.push("Trong description photo có ảnh không thuộc đảnh dạng .jpg .png ...");
+        // }
+
+        // if(isValidHttpUrl(values.urlVideo) === false){
+        //     count++;
+        //     error.push("Url video không đúng định dạng đường dẫn trang web");
+        // }
+
+        if (count !== 0){
+            for (var i = 0; i < error.length; i++){
+                stringErr += error[i] + '\n';
+            }
+            window.alert(stringErr);
+        }else{
+            values.fileGame = urlZip;
+            values.images = urlImages;
+            console.log(values);
+        }
+    }
+
+    function getLinkFileZip(file){
+        const uploadTask = storage.ref(`zip/${file.name}`).put(file);
+        uploadTask.on(
+            "state_changed",
+            snapshot =>{},
+            error => {
+                console.log(error);
+            },
+            ()=>{
+                storage
+                    .ref("zip")
+                    .child(file.name)
+                    .getDownloadURL()
+                    .then(url=>{
+                        
+                    })
+            }
+        )
+    }
+    function getLinkFileImage(file){
+        const uploadTask = storage.ref(`images/${file.name}`).put(file);
+        uploadTask.on(
+            "state_changed",
+            snapshot =>{},
+            error => {
+                console.log(error);
+            },
+            ()=>{
+                storage
+                    .ref("images")
+                    .child(file.name)
+                    .getDownloadURL()
+                    .then(url=>{
+                        
+                    })
+            }
+        )
+    }
+
+    function isValidHttpUrl(string) {
+        let url;
+        
+        try {
+          url = new URL(string);
+        } catch (_) {
+          return false;  
+        }
+      
+        return url.protocol === "http:" || url.protocol === "https:";
+    }
 
     return (
         <div className="white">
@@ -68,206 +156,46 @@ function Admin(){
                 onFinish={onFinish}
             >
                 <Form.Item style ={{backgroundColor: "#111"}} rules={[{ required: true, message: 'Please upload' }]}>
-                    <Form.Item name="fileGame" valuePropName="fileList" getValueFromEvent={normFile} noStyle>
-                        <Upload.Dragger name="files">
-                            <p className="ant-upload-drag-icon">
-                            <InboxOutlined />
-                            </p>
-                            <p className="ant-upload-text uppercase">Upload File</p>
+                    <Form.Item name="fileGame" valuePropName="fileGame" getValueFromEvent={normFileZip} noStyle>
+                            <Upload.Dragger name="fileGame">
+                                <p className="ant-upload-drag-icon">
+                                <InboxOutlined />
+                                </p>
+                            <p className="ant-upload-text uppercase">Upload File Zip</p>
                         </Upload.Dragger>
                     </Form.Item>
                 </Form.Item>
-                <Row gutter={[48, 8]}>
-                    <Col
-                        xxl={14}
-                        xl={14}
-                        lg={16}
-                        md={16}
-                        sm={24}
-                        xs={24}
-                    >
-                        <Form.Item
-                            name="nameGame"
-                            rules={[{ required: true, message: 'Please input name game!' }]}
-                        >
-                            <Input placeholder="Name Game" />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="select-multiple"
-                            rules={[{ required: true, message: 'Please select genres', type: 'array' }]}
-                        >
-                            <Select mode="multiple" placeholder="Please select genres">
-                                <Option value="Shooter">Shooter</Option>
-                                <Option value="OpenWorld">Open World</Option>
-                                <Option value="Casual">Casual</Option>
-                                <Option value="HyperCasual">Hyper Casual</Option>
-                                <Option value="Survival">Survival</Option>
-                                <Option value="Puzzle">Puzzle</Option>
-                                <Option value="Co.op">Co.op</Option>
-                                <Option value="Multiplayer">Multiplayer</Option>
-                                <Option value="SinglePlayer">Single Player</Option>
-                            </Select>
-                        </Form.Item>
-
-                        <Form.Item
-                            name="platform"
-                            rules={[{ required: true, message: 'Please select platform!' }]}
-                        >
-                            <Select placeholder="Please select platform">
-                                <Option value="window">Window</Option>
-                                <Option value="macOS">MacOS</Option>
-                            </Select>
-                        </Form.Item>
-
-                        <Form.Item
-                            name="developer"
-                            rules={[{ required: true, message: 'Please input developer!' }]}
-                        >
-                            <Input placeholder="Developer" />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="publisher"
-                            rules={[{ required: true, message: 'Please input publisher!' }]}
-                        >
-                            <Input placeholder="Publisher" />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="privacyPolicy"
-                            rules={[{ required: true, message: 'Please input privacy policy!' }]}
-                        >
-                            <Input placeholder="Privacy Policy" />
-                        </Form.Item>
-
-                        <Form.Item
-                            name="urlVideo"
-                            rules={[{ required: true, message: 'Please input url video!' }]}
-                        >
-                            <Input placeholder="URL Video" />
-                        </Form.Item>
-                    </Col>
-                    <Col
-                        xxl={10}
-                        xl={100}
-                        lg={8}
-                        md={8}
-                        sm={24}
-                        xs={24}
-                    >
-                        <Form.Item
-                            name="version"
-                            rules={[{ required: true, message: 'Please input version!' }]}
-                        >
-                            <Input placeholder="Version" />
-                        </Form.Item>
-                        <Form.Item
-                            name="icon"
-                            valuePropName="icon"
-                            getValueFromEvent={normFile}
-                        >
-                            <Upload name="icon" listType="picture">
-                            <Button icon={<UploadOutlined />}>Click to upload</Button>
-                            </Upload>
-                        </Form.Item>
-                    </Col>
-                </Row>
+                <DetailGame></DetailGame>
                 <div className="decription-photo">
-                    <h3 className="uppercase m-0 white"> decription photo</h3>
+                    <h3 className="uppercase m-0 white"> description photo</h3>
                     <p className="m-0 gray-1">(1920x1080 Required size)</p>
                     <div className="upload">
                         <Form.Item
                             name="images"
                             valuePropName="images"
-                            getValueFromEvent={normFile}
-                            rules={[{ required: true, message: 'Please input images', type: 'array' }]}
+                            getValueFromEvent={normFileImages}
                         >
                             <Upload
                                 listType="picture-card"
                             >
-                                {fileList.length < 8 && '+ Upload'}
+                                {fileList.length < 8 && '+ Upload Image'}
                             </Upload>
                         </Form.Item>
                     </div>
                 </div>
-                <div className="short-decription">
-                    <h3 className="uppercase m-0 white"> Short decription</h3>
-                    <Form.Item
-                        name="shortDecription"
-                        valuePropName="shortDecription"
-                        rules={[{ required: true, message: 'Please input short decription' }]}
-                    >
-                        <Input.TextArea showCount maxLength={500} />
-                    </Form.Item>
+                <ShortDescription></ShortDescription>
+                <div className="detail-description" onClick={focus}>
+                    <h3 className="uppercase m-0 white"> detail description</h3>
+                    <Editor
+                        // ref={editorRef}
+                        defaultContentState={contentState}
+                        onContentStateChange={setContentState}
+                        wrapperClassName="wrapper-class"
+                        editorClassName="editor-class"
+                        toolbarClassName="toolbar-class"
+                    />
                 </div>
-                <div className="detail-decription">
-                    <h3 className="uppercase m-0 white"> detail decription</h3>
-                    <Form.Item
-                        name="detailDecription"
-                        valuePropName="detailDecription"
-                    >
-                        <div className="custom-editor" onClick={focus}>
-                            <span className="pointer btn-bold" onMouseDown={onBoldClick}>
-                                Bold
-                            </span>
-                            <Editor                                     
-                                ref={editorRef}                           
-                                editorState={editorState}
-                                onChange={onChange}
-                            />
-                        </div>
-                    </Form.Item>
-                </div>
-                <div className="detail-decription">
-                    <h3 className="uppercase m-0 white">System requirements</h3>
-                    <Row gutter={[48, 8]}>
-                        <Col
-                            xxl={14}
-                            xl={14}
-                            lg={16}
-                            md={16}
-                            sm={24}
-                            xs={24}
-                        >
-                            <h3 className="uppercase m-0 white">Minimum</h3>
-                            <Form.Item
-                                name="processor"
-                                rules={[{ required: true, message: 'Please input processor!' }]}
-                            >
-                                <Input placeholder="Processor" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="memory"
-                                rules={[{ required: true, message: 'Please select memory!' }]}
-                            >
-                                <Input placeholder="Memory" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="graphics"
-                                rules={[{ required: true, message: 'Please select graphics!' }]}
-                            >
-                                <Input placeholder="Graphics" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="storage"
-                                rules={[{ required: true, message: 'Please input storage!' }]}
-                            >
-                                <Input placeholder="Storage" />
-                            </Form.Item>
-
-                            <Form.Item
-                                name="OS"
-                                rules={[{ required: true, message: 'Please input OS!' }]}
-                            >
-                                <Input placeholder="OS" />
-                            </Form.Item>
-                        </Col>
-                    </Row>
-                </div>
+                <SystemRequirements></SystemRequirements>
                 <Row gutter={[48, 8]}>
                     <Col
                         xxl={14}
@@ -293,7 +221,7 @@ function Admin(){
                         sm={24}
                         xs={24}
                     >
-                        <Form.Item wrapperCol={{ span: 12, offset: 6 }}>
+                        <Form.Item wrapperCol={{ span: 12, offset: 6 }} className="m-top-24">
                             <Button type="primary" htmlType="submit">
                                 Submit
                             </Button>

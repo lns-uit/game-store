@@ -52,3 +52,48 @@
 .btn-submit{
     background-color: rgb(224, 83, 83);
 }
+.detail-game .ant-select-selection-item{
+    color: black;
+}
+.detail-game .center{
+    text-align: center;
+}
+.detail-game .white .ant-select-selection-item{
+    color: #ffffff;
+}
+.m-top-24{
+    margin-top: 24px !important;
+}
+.m-left-2{
+    margin-left: 2px !important;
+}
+.fw-700{
+    font-weight: 700;
+}
+.wrapper-class {
+    padding: 1rem;
+    border: 1px solid #ccc;
+}
+.editor-class {
+    background-color:lightgray;
+    padding: 1rem;
+    border: 1px solid #ccc;
+}
+.toolbar-class {
+    border: 1px solid #ccc;
+}
+.detail-description{
+    margin-bottom: 20px;
+}
+.m-bottom-0{
+    margin-bottom: 0px !important;
+}
+.ant-picker-input input{
+    color: #ffffff !important;
+}
+.ant-picker {
+    background-color: #111 !important;
+}
+.detail-game .m-bottom-24{
+    margin-bottom: 24px;
+}
