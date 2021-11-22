@@ -1,0 +1,35 @@
+
+.admin-container h2 {
+  color: white;
+}
+
+.tag-discount {
+  display: flex;
+
+  color: white;
+  margin-top: 10px;
+  height: 30px;
+}
+.tag-discount-name {
+  background-color: rgb(168, 48, 48);
+  height: 30px;
+  width: 200px;
+  padding: 5px 0px 5px 10px;
+}
+.tag-discount-date {
+  background-color: rgb(66, 66, 66);
+  height: 30px;
+  width: 500px;
+  padding: 5px 0px 5px 10px;
+}
+
+@media screen and (max-width: 1600px) {
+
+}
+.ant-modal-content, .ant-modal-header, .ant-modal-footer{
+  background-color: rgb(26, 26, 26) !important; 
+  border-color: rgb(78, 78, 78) !important;
+}
+.ant-modal-title{
+  color: white !important;  
+}

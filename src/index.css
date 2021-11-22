@@ -49,16 +49,17 @@ code {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: var(--mainGray-color);
+  background: rgb(27, 27, 27);
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: rgb(63, 63, 63);
+  background: rgb(48, 48, 48);
   border-radius: 100px;
+  cursor:default !important;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(88, 88, 88);
+  background: rgb(78, 78, 78);
 }

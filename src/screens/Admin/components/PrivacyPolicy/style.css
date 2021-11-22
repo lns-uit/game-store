@@ -1,0 +1,40 @@
+.privacy-policy-container-editor button {
+    background-color: rgb(197, 36, 36) !important;
+    height: 40px;
+  }
+.privacy-policy-container-editor button:hover {
+    background-color: rgb(165, 33, 33) !important;
+}
+.privacy-policy-container-editor button:focus {
+    background-color: rgb(165, 33, 33) !important;
+}
+.custom-editor{
+    padding: 0 !important;
+}
+.custom-editor .wrapper-class{
+    border: 0 solid transparent !important;
+    padding: 0 !important;
+}
+.editor-class{
+    height: 600px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    background-color: #111111 !important;
+}
+.DraftEditor-root{
+    border-color: rgb(175, 175, 175) !important;
+    background-color: #111111 !important;
+    color: rgb(255, 255, 255) !important;
+    overflow-y: scroll !important;
+}
+.btn-editor-draft{
+    cursor: pointer;
+    color: white;
+    background-color: rgb(32, 32, 32);
+    width: 60px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}

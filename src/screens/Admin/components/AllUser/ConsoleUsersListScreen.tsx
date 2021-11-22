@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Input, Menu, Space, Table, Tag } from "antd";
-import { GameType, UserType } from "../../interfaces/rootInterface";
+import { GameType, UserType } from "../../../../interfaces/rootInterface";
+import './style.css'
 import axios from "axios";
 const { Search } = Input;
 const columns = [

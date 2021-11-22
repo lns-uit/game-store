@@ -3,7 +3,6 @@ import { Layout } from "antd";
 import MyHeader from "./components/MyHeader/MyHeader";
 import { BrowserRouter as Router } from "react-router-dom";
 import RootNavigation from "./navigation/RootNavigation";
-import AdminNavigation from "./navigation/AdminNavigation";
 import { Row, Col } from "antd";
 import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
 import { useEffect, useState } from "react";
