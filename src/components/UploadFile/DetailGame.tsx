@@ -2,25 +2,48 @@ import React, {useState, useRef} from 'react';
 import {
     Form,
     Select,
-    InputNumber,
-    Switch,
-    Radio,
-    Slider,
     Button,
     Upload,
-    Rate,
-    Checkbox,
     Row,
     Col,
-    Input,
-    Modal,
-    DatePicker
+    Input
 } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import {storage} from "../../firebase"
+import { useDispatch } from 'react-redux';
+import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
 
 const { Option } = Select;
 
 function DetailGame(){
+    const dispatch = useDispatch();
+
+    const normFileImages = (e) => {
+        if(e.file.status === "error"){
+            getLinkFileImage(e.file.originFileObj);
+        }
+    }
+
+    function getLinkFileImage(file){
+        const uploadTask = storage.ref(`gameAvatar/${file.name}`).put(file);
+        uploadTask.on(
+            "state_changed",
+            snapshot =>{},
+            error => {
+                console.log(error);
+            },
+            ()=>{
+                storage
+                    .ref("gameAvatar")
+                    .child(file.name)
+                    .getDownloadURL()
+                    .then(url=>{
+                        console.log(1);
+                        dispatch(setUrlGameAvatar('getLink', file.name,url,));
+                    })
+            }
+        )
+    }
 
     return(
         <div className="detail-game">
@@ -83,12 +106,11 @@ function DetailGame(){
                         <Input placeholder="Publisher" />
                     </Form.Item>
 
-                    <Form.Item 
-                        name="releaseDate" 
-                        hasFeedback validateStatus="success" 
-                        rules={[{ required: true, message: 'Please input release date!' }]}
+                    <Form.Item
+                        name="privacyPolicy"
+                        rules={[{ required: true, message: 'Please input privacy policy!' }]}
                     >
-                        <DatePicker style={{ width: '100%' }} />
+                        <Input placeholder="Privacy Policy" />
                     </Form.Item>
 
                     <Form.Item
@@ -111,6 +133,15 @@ function DetailGame(){
                         rules={[{ required: true, message: 'Please input version!' }]}
                     >
                         <Input placeholder="Version" />
+                    </Form.Item>
+                    <Form.Item
+                        name="iconGame"
+                        valuePropName="fileList"
+                        getValueFromEvent={normFileImages}
+                    >
+                        <Upload name="iconGame">
+                        <Button icon={<UploadOutlined />}>Upload icon game</Button>
+                        </Upload>
                     </Form.Item>
                 </Col>
             </Row>

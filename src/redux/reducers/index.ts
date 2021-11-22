@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux';
 import tabReducer from './tabReducer';
+import gameAvatarReducer from './gameAvatar'
 
 const rootReducer = combineReducers({
-  tab: tabReducer
+  tab: tabReducer,
+  gameAvatar: gameAvatarReducer
 });
 
 

@@ -26,22 +26,23 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'draft-js/dist/Draft.css';
 import './styles.css';
-import {storage} from "../../firebase"
-import { url } from 'inspector';
+import {storage} from "../../firebase";
+import {RootState} from '../../redux/reducers/index';
+import { useSelector } from 'react-redux';
 
 const { Option } = Select;
 
+let urlZip: {name: string, url: string}[] = [];
+let urlImages: {name: string, url: string}[] = [];
 
 function Admin(){
     let _contentState = ContentState.createFromText('');
     const raw = convertToRaw(_contentState);
     const [contentState, setContentState] = useState(raw);
     const [fileList, setFileList] = useState([]);
-    const [urlZip, setUrlZip] = useState([{
-        name: '',
-        url: ''
-    }]);
-    const [urlImages, setUrlImages] = useState([]);
+    const url = useSelector(
+        (state: RootState) => state.gameAvatar
+    )
     
     const normFileZip = (e) => {
         if(e.file.status === "error"){
@@ -60,8 +61,7 @@ function Admin(){
         let count = 0;
         let stringErr = "";
         values.draw = contentState;
-        
-        console.log(urlZip);
+    
         // const checkZip = values.fileGame.reduce(game=>{
         //     return game.type === "application/x-zip-compressed"
         // })
@@ -94,6 +94,7 @@ function Admin(){
         }else{
             values.fileGame = urlZip;
             values.images = urlImages;
+            values.avatarGame = url; 
             console.log(values);
         }
     }
@@ -112,7 +113,10 @@ function Admin(){
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        
+                        urlZip.push({
+                            name: file.name,
+                            url: url
+                        });
                     })
             }
         )
@@ -131,7 +135,10 @@ function Admin(){
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        
+                        urlImages.push({
+                            name: file.name,
+                            url: url
+                        });
                     })
             }
         )
