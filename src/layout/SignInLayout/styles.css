@@ -29,7 +29,7 @@
 }
 
 /*diff*/
-.responsive-page-sign-in{
+.responsive-page-sign-in, .responsive-page-sign-up{
     color: #ffffff;
 }
 .page-content{
@@ -58,7 +58,7 @@
     flex-direction: column;
     justify-content: space-between;
 }
-.login-title{
+.login-title, .sign-up-title{
     text-transform: uppercase;
     text-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     font-size: 34px;
@@ -86,4 +86,11 @@
     text-align: center;
     text-decoration: none;
     color: #ffffff;
+}
+.sign-up-title{
+    color: #BB9023;
+}
+.sign-up-content .ant-btn-primary{
+    background-color: #BB9023 !important;
+    border-color: #BB9023 !important;
 }
