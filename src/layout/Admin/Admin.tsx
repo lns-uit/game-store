@@ -164,7 +164,7 @@ function Admin(){
             >
                 <Form.Item style ={{backgroundColor: "#111"}} rules={[{ required: true, message: 'Please upload' }]}>
                     <Form.Item name="fileGame" valuePropName="fileGame" getValueFromEvent={normFileZip} noStyle>
-                            <Upload.Dragger name="fileGame">
+                        <Upload.Dragger name="fileGame">
                                 <p className="ant-upload-drag-icon">
                                 <InboxOutlined />
                                 </p>
