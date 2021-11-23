@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Route, Switch, useLocation } from "react-router";
@@ -10,6 +11,8 @@ import HelpScreen from "../screens/Help/HelpScreen";
 import AdminScreen from "../screens/Admin/AdminScreen";
 import AdminCreateGame from "../screens/AdminCreateGame/AdminCreateGame";
 import GameDetail from "../screens/GameDetail/GameDetail";
+import SignIn  from '../screens/SignIn/SignIn';
+
 
 function RootNavigation() {
   let location = useLocation();
@@ -26,6 +29,13 @@ function RootNavigation() {
       <Route path="/browse">
         <BrowseScreen />
       </Route>
+      <Route path="/buyer/sign-in">
+        <SignIn></SignIn>
+      </Route>
+      <Route path="/buyer/sign-up">
+        <div> map dit </div>
+      </Route>
+       
       <Route path="/help">
         <HelpScreen />
       </Route>
