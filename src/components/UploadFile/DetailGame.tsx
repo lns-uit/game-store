@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {
     Form,
     Select,
@@ -12,18 +12,35 @@ import { UploadOutlined } from '@ant-design/icons';
 import {storage} from "../../firebase"
 import { useDispatch } from 'react-redux';
 import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
+import axios from 'axios';
+import { GenreType } from '../../interfaces/rootInterface';
 
 const { Option } = Select;
 
 function DetailGame(){
     const dispatch = useDispatch();
+    const [gameData, setGameData] = useState<any[]>([]);
+    let allGame: any[] = [];
 
     const normFileImages = (e) => {
         if(e.file.status === "error"){
             getLinkFileImage(e.file.originFileObj);
         }
     }
-
+    const getDataGame = () => {
+        return axios.get("https://localhost:5001/api/genre").then((response) => {
+          response.data.forEach((data) =>{
+              if (data.lastestVersion!==-1){
+                allGame.push(
+                    <Option key={data.idGenre} value={data.nameGenre}>
+                        {data.nameGenre}
+                    </Option>
+                )
+              }
+          })
+          setGameData(allGame);
+        });
+      };
     function getLinkFileImage(file){
         const uploadTask = storage.ref(`gameAvatar/${file.name}`).put(file);
         uploadTask.on(
@@ -44,7 +61,9 @@ function DetailGame(){
             }
         )
     }
-
+    useEffect(() => {
+        getDataGame();
+      }, []);
     return(
         <div className="detail-game">
             <Row gutter={[48, 8]}>
@@ -69,15 +88,7 @@ function DetailGame(){
                         rules={[{ required: true, message: 'Please select genres', type: 'array' }]}
                     >
                         <Select mode="multiple" placeholder="Please select genres">
-                            <Option value="Shooter">Shooter</Option>
-                            <Option value="OpenWorld">Open World</Option>
-                            <Option value="Casual">Casual</Option>
-                            <Option value="HyperCasual">Hyper Casual</Option>
-                            <Option value="Survival">Survival</Option>
-                            <Option value="Puzzle">Puzzle</Option>
-                            <Option value="Co.op">Co.op</Option>
-                            <Option value="Multiplayer">Multiplayer</Option>
-                            <Option value="SinglePlayer">Single Player</Option>
+                            {gameData}
                         </Select>
                     </Form.Item>
 

@@ -29,6 +29,14 @@
 .ant-input-textarea-show-count::after{
     color: #ffffff !important;
 }
+.ant-select-selection-item-content{
+    color: white !important;
+}
+.ant-input-number{
+    width: 100% !important;
+    border-color: rgb(110, 110, 110) !important;
+}
+
 .custom-editor {
     padding: 24px 200px;
   }

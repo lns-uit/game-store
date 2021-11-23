@@ -26,9 +26,11 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'draft-js/dist/Draft.css';
 import './styles.css';
+import {GameVersionType} from '../../interfaces/rootInterface';
 import {storage} from "../../firebase";
 import {RootState} from '../../redux/reducers/index';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const { Option } = Select;
 
@@ -95,10 +97,42 @@ function Admin(){
             values.fileGame = urlZip;
             values.images = urlImages;
             values.avatarGame = url; 
+            // postGame(values);
             console.log(values);
         }
     }
+    const postGame = (values:any) => {
+        axios
+          .post("https://localhost:5001/api/game/create", {
+                // Game:{
+                //     NameGame: values.nameGame,
+                //     Developer: values.developer,
+                //     Publisher: values.publisher,
+                //     Plaform: values.platform,
+                //     Cost: values.cost,
+                //     LastestVersion: values.version
 
+                // },
+                // GameVersion:{
+                //     Version: values.version,
+                //     UrlDownload: values.fileGame[0].url,
+                //     ShortDescription: values.shortDecription.currentTarget.value,
+                //     Descriptions:
+                //     Os: values.OS,
+                //     Processor: values.processor,
+                //     Storage: values.storage,
+                //     DirectX: 
+                //     Graphics: values.graphics,
+                //     PrivacyPolicy: values.privacyPolicy
+                // }
+          })
+          .then((response) => {
+
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      };
     function getLinkFileZip(file){
         const uploadTask = storage.ref(`zip/${file.name}`).put(file);
         uploadTask.on(
@@ -217,7 +251,11 @@ function Admin(){
                             name="cost"
                             rules={[{ required: true, message: 'Please input cost!' }]}
                         >
-                            <Input placeholder="Cost" />
+                            <InputNumber
+                                defaultValue={0}
+                                min = {0}
+                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            />
                         </Form.Item>
                     </Col>
                     <Col

@@ -26,6 +26,22 @@ interface GameType {
   imageGameDetail: ImageType[];
   newVersion: any;
 }
+interface GameVersionType{
+  idGameVersion: string;
+  idGame: string;
+  versionGame: string;
+  dateUpdate: Date;
+  urlDownload: string;
+  shortDescription: string;
+  descriptions: string;
+  requires: string;
+  os: string;
+  processor: string;
+  storage: string;
+  dirextX: string;
+  graphics: string;
+  privacyPolicy: string;
+}
 interface DotInfoType {
   image: string;
   name?: string;
@@ -64,4 +80,4 @@ export enum ActionType {
   REMOVE = "remove",
 }
 
-export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType};
+export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType};
