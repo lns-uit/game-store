@@ -12,7 +12,7 @@ import AdminScreen from "../screens/Admin/AdminScreen";
 import AdminCreateGame from "../screens/AdminCreateGame/AdminCreateGame";
 import GameDetail from "../screens/GameDetail/GameDetail";
 import SignIn  from '../screens/SignIn/SignIn';
-
+import SignUp from '../screens/SignUp/SignUp';
 
 function RootNavigation() {
   let location = useLocation();
@@ -33,7 +33,7 @@ function RootNavigation() {
         <SignIn></SignIn>
       </Route>
       <Route path="/buyer/sign-up">
-        <div> map dit </div>
+        <SignUp></SignUp>
       </Route>
        
       <Route path="/help">
