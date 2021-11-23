@@ -34,7 +34,7 @@ function SignInComponent(){
                         onFinish={onFinish}
                     >
                         <div style = {{textAlign:'left'}}>
-                            <p className="gray-5 fs-14 lh-18">Username and Email</p>
+                            <p className="gray-5 fs-14 lh-18">Username or Email</p>
                             <Form.Item
                                 name="userName"
                                 rules={[{ required: true, message: 'Please input your username!' }]}
@@ -44,7 +44,7 @@ function SignInComponent(){
                         </div>
 
                         <div style = {{textAlign:'left'}}>
-                            <p className="gray-5 fs-14 lh-18">password</p>
+                            <p className="gray-5 fs-14 lh-18">Password</p>
                             <Form.Item
                                 name="password"
                                 rules={[{ required: true, message: 'Please input your password!' }]}
@@ -54,7 +54,7 @@ function SignInComponent(){
                         </div>
 
                         <Form.Item wrapperCol={{ offset: 0, span: 100 }} className="button-m-top-60">
-                            <Button type="primary" htmlType="submit" className="full-width">
+                            <Button style = {{height:"40px"}} type="primary" htmlType="submit" className="full-width">
                                 Sign In
                             </Button>
                         </Form.Item>

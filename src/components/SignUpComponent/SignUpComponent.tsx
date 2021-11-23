@@ -83,7 +83,7 @@ function SignUpComponent(){
                         </div>
 
                         <Form.Item wrapperCol={{ offset: 0, span: 100 }} className="button-m-top-60">
-                            <Button type="primary" htmlType="submit" className="full-width">
+                            <Button style = {{height:"40px"}} type="primary" htmlType="submit" className="full-width">
                                 Sign Up
                             </Button>
                         </Form.Item>
