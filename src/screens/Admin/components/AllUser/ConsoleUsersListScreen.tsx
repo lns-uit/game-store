@@ -3,6 +3,7 @@ import { Button, Dropdown, Input, Menu, Space, Table, Tag } from "antd";
 import { GameType, UserType } from "../../../../interfaces/rootInterface";
 import './style.css'
 import axios from "axios";
+import Item from "antd/lib/list/Item";
 const { Search } = Input;
 const columns = [
   {
@@ -80,8 +81,8 @@ const MyMenu = ({id}) => (
   </Menu>
 );
 function ConsoleUsersListScreen() {
-  const onSearch = (value) => console.log(value);
   const [userData, setUserData] = useState<UserType[]>([]);
+  const [searchUser, setSearchUser] = useState('');
 
   const getUserData = () => {
     return axios.get("https://localhost:5001/api/user").then((response) => {
@@ -95,14 +96,18 @@ function ConsoleUsersListScreen() {
     <div className="console-container">
       <div className="console-content">
         <div className="search-container">
-          <Search
+          <Input
             placeholder="input search text"
-            onSearch={onSearch}
-            enterButton
+            onChange = {event=>setSearchUser(event.target.value.toLowerCase())}
           />
         </div>
         <div className="console-list-name">
-          <Table columns={columns} dataSource={userData} />
+          <Table columns={columns} dataSource={
+            userData.filter(item=>
+              item.email.toLowerCase().indexOf(searchUser) !==-1 || item.userName.toLowerCase().indexOf(searchUser) !== -1
+              || item.realName.toLowerCase().indexOf(searchUser) !== -1
+            )} 
+          />
         </div>
       </div>
     </div>

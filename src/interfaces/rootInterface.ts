@@ -75,9 +75,13 @@ interface UserType{
   background: any;
 }
 
+interface Imgs{
+  url: string;
+}
+
 export enum ActionType {
   ADD = "add",
   REMOVE = "remove",
 }
 
-export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType};
+export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType, Imgs};

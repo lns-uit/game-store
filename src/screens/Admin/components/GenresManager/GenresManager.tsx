@@ -10,6 +10,7 @@ import Search from "antd/lib/transfer/search";
 
 function GenresManager() {
   const [listGenre, setListGenre] = useState<GenreType[]>([]);
+  const [genreSearch,setGenreSearch] = useState("");
   const [genreCreate, setGenreCreate] = useState("");
   const [idGenreUpdate,setIdGenreUpdate] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -122,7 +123,8 @@ function GenresManager() {
       </Modal>
       <div className="genre-action-btn">
         <div className="search-container">
-            <Search
+            <Input
+              onChange={(event) => setGenreSearch(event.target.value)}
               placeholder="input search text"
             />
           <Button type="primary" danger onClick={()=>{showModal();setAction("create")}}>
@@ -132,7 +134,7 @@ function GenresManager() {
       </div>
 
       <br />
-      <Table columns={columns} dataSource={listGenre} />
+      <Table columns={columns} dataSource={listGenre.filter(item=> item.nameGenre.toLowerCase().indexOf(genreSearch.toLowerCase())!==-1)} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import UploadFile from '../../components/UploadFile/UpLoadFile';
 import DetailGame from '../../components/UploadFile/DetailGame';
 import DescriptionPhoto from '../../components/UploadFile/DescriptionPhoto';
@@ -26,7 +26,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'draft-js/dist/Draft.css';
 import './styles.css';
-import {GameVersionType} from '../../interfaces/rootInterface';
+import {GameVersionType, Imgs} from '../../interfaces/rootInterface';
 import {storage} from "../../firebase";
 import {RootState} from '../../redux/reducers/index';
 import { useSelector } from 'react-redux';
@@ -34,14 +34,15 @@ import axios from 'axios';
 
 const { Option } = Select;
 
-let urlZip: {name: string, url: string}[] = [];
-let urlImages: {name: string, url: string}[] = [];
+let urlImages: {Url: string}[] = [];
 
 function Admin(){
     let _contentState = ContentState.createFromText('');
     const raw = convertToRaw(_contentState);
     const [contentState, setContentState] = useState(raw);
     const [fileList, setFileList] = useState([]);
+    const [urlDownload, setUrlDownload] = useState("");
+    const [urlImgs, setUrlImgs] = useState<string[]>([]);
     const url = useSelector(
         (state: RootState) => state.gameAvatar
     )
@@ -94,40 +95,45 @@ function Admin(){
             }
             window.alert(stringErr);
         }else{
-            values.fileGame = urlZip;
-            values.images = urlImages;
-            values.avatarGame = url; 
-            // postGame(values);
-            console.log(values);
+            values.fileGame = urlDownload;
+            // urlImages.push(url);
+
+            values.images = JSON.stringify(urlImages);
+            // values.avatarGame = url; 
+            // console.log(values.avatarGame.url);
+            // setUrlImgs(arr => [ url.url, ...arr.slice(1)])
+            // console.log(JSON.stringify(urlImgs))
+            values.detailDecription = JSON.stringify(values.draw.blocks)
+            postGame(values);
         }
     }
     const postGame = (values:any) => {
         axios
           .post("https://localhost:5001/api/game/create", {
-                // Game:{
-                //     NameGame: values.nameGame,
-                //     Developer: values.developer,
-                //     Publisher: values.publisher,
-                //     Plaform: values.platform,
-                //     Cost: values.cost,
-                //     LastestVersion: values.version
+                Game:{
+                    namegame: values.nameGame,
+                    developer: values.developer,
+                    publisher: values.publisher,
+                    plaform: values.platform,
+                    cost: values.cost,
+                    lastestversion: values.version,
+                },
+                GameVersion:{
+                    versiongame: values.version,
+                    urldownload: values.fileGame,
+                    shortdescription: values.shortDecription.currentTarget.value,
+                    descriptions: values.detailDecription,
+                    os: values.OS,
+                    processor: values.processor,
+                    storage: values.storage,
+                    graphics: values.graphics,
+                    privacyPolicy: values.privacyPolicy
+                },
+                listImageDetail: urlImgs
 
-                // },
-                // GameVersion:{
-                //     Version: values.version,
-                //     UrlDownload: values.fileGame[0].url,
-                //     ShortDescription: values.shortDecription.currentTarget.value,
-                //     Descriptions:
-                //     Os: values.OS,
-                //     Processor: values.processor,
-                //     Storage: values.storage,
-                //     DirectX: 
-                //     Graphics: values.graphics,
-                //     PrivacyPolicy: values.privacyPolicy
-                // }
           })
           .then((response) => {
-
+            console.log(response.data)
           })
           .catch((error) => {
             console.log(error);
@@ -147,10 +153,11 @@ function Admin(){
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        urlZip.push({
-                            name: file.name,
-                            url: url
-                        });
+                        setUrlDownload(url);
+                        // urlZip.push({
+                        //     name: file.name,
+                        //     url: url
+                        // });
                     })
             }
         )
@@ -169,10 +176,11 @@ function Admin(){
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        urlImages.push({
-                            name: file.name,
-                            url: url
-                        });
+                        setUrlImgs(oldArr => [...oldArr,url])
+                        // urlImages.push({
+                        //     // name: file.name,
+                        //     Url: url
+                        // });
                     })
             }
         )
@@ -189,7 +197,9 @@ function Admin(){
       
         return url.protocol === "http:" || url.protocol === "https:";
     }
-
+    useEffect(() => {
+        setUrlImgs(arr => [ '', ...arr.slice(0)])
+      }, []);
     return (
         <div className="white">
             <Form

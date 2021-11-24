@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Modal, Space, Table, DatePicker, InputNumber, Select } from "antd";
-import { GameType, ImageType } from "../../../../interfaces/rootInterface";
+import { GameType, DiscountType } from "../../../../interfaces/rootInterface";
 import axios from "axios";
 import "./style.css";
 import Moment from "react-moment";
@@ -10,9 +10,10 @@ const { Option } = Select;
 function DiscountEvent() {
   const [dateDiscount, setDateDiscount] = useState<string[]>([])
   const [percent, setPercent] = useState(0);
-  const [listDiscount, setListDiscount] = useState<GameType[]>([]);
+  const [listDiscount, setListDiscount] = useState<DiscountType[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [gameData, setGameData] = useState<any[]>([]);
+  const [searchDiscount,setSearchDiscount] = useState("");
   let allGame: any[] = [];
 
   const getDataGame = () => {
@@ -165,9 +166,9 @@ function DiscountEvent() {
       <div className="console-content">
         <div className="console-content-toolbar">
           <div className="search-container">
-            <Search
+            <Input
               placeholder="input search text"
-              enterButton
+              onChange = {event=> setSearchDiscount(event.target.value)}
             />
           </div>
           <div></div>
@@ -179,7 +180,7 @@ function DiscountEvent() {
           </Button>
         </div>
         <div className="console-list-name">
-          <Table columns={columns} dataSource={listDiscount} />
+          <Table columns={columns} dataSource={listDiscount.filter(item=>item.title.toLowerCase().indexOf(searchDiscount.toLowerCase())!==-1)} />
         </div>
       </div>
     </div>

@@ -10,6 +10,7 @@ const { Search } = Input;
 function ConsoleGameListScreen() {
   const onSearch = (value) => console.log(value);
   const [gameData, setGameData] = useState<GameType[]>([]);
+  const [searchGame, setSearchGame] = useState('');
   const history = useHistory();
   const getDataGame = () => {
     return axios.get("https://localhost:5001/api/game").then((response) => {
@@ -71,10 +72,9 @@ function ConsoleGameListScreen() {
       <div className="console-content">
         <div className="console-content-toolbar">
           <div className="search-container">
-            <Search
+            <Input
               placeholder="input search text"
-              onSearch={onSearch}
-              enterButton
+              onChange = {event=>setSearchGame(event.target.value.toLowerCase())}
             />
           </div>
           <div></div>
@@ -84,7 +84,10 @@ function ConsoleGameListScreen() {
           </Button>
         </div>
         <div className="console-list-name">
-          <Table columns={columns} dataSource={gameData} />
+          <Table columns={columns} dataSource={
+              gameData.filter(item=> item.nameGame.toLowerCase().indexOf(searchGame) !== -1
+          
+            )} />
         </div>
       </div>
     </div>
