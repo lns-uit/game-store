@@ -15,14 +15,12 @@ function ListGameBrowse({
 }:Pages) {
   return(
     <div className="flex-1-1-auto white">
-
       <div className="d-flex space-between">
           <Sort></Sort>
           <div className="fillter-mobile">
             <FillterMobile></FillterMobile>
           </div>
       </div>
-
       <GamesBrowse page={page}></GamesBrowse>
       <Page page={page}></Page>
     </div>

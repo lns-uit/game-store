@@ -31,7 +31,7 @@ function GamesBrowse({
                                     xs={24}
                                 >
                                     <Link to={'/game/' + game.name}>
-                                        <div className="pd-left-right-10 pd-bottom-30">
+                                        <div className="pd-left-right-10 pd-bottom-30 m-bottom-12">
                                             <GameItem game={game} action={ActionType.REMOVE} />
                                         </div>
                                     </Link>

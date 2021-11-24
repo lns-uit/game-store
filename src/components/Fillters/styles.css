@@ -32,13 +32,16 @@
     border: 1px solid gray;
 }
 /*display*/
+.d-flex{
+    display: flex;
+}
 .align-center{
     align-items: center;
 }
 .space-between{
     justify-content: space-between;    
 }
-.centers{
+.center{
     justify-content: center;
 }
 .f-column{
@@ -99,6 +102,9 @@
 .mg-childrent-0 .ant-menu-submenu-title{
     margin: 0px !important;
 }
+.m-bottom-12{
+    margin-bottom: 12px;
+}
 /*diff*/
 .float-right{
     float: right;
@@ -118,4 +124,10 @@
 }
 .line-3{
     width: 6px;
+}
+.option .ant-menu-title-content{
+    color: #000000 !important;
+}
+.browse .game-item__image{
+    min-height: 250px !important;
 }
