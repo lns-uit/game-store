@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { useStore } from "react-redux";
-import { gamesInfoMockData } from '../../api/mockData';
-import GameItem from '../../components/GameItem/GameItem';
+import React, { useState, useEffect } from "react";
+import GameItem from '../../components/GameItemCopy/GameItem';
 import { ActionType } from '../../interfaces/rootInterface';    
 import {Link} from "react-router-dom";
 import { Row, Col } from 'antd';
 import "./styles.css"
+import axios from "axios";
 
 interface Pages{
     page: number;
@@ -14,12 +13,22 @@ interface Pages{
 function GamesBrowse({
     page
 }:Pages){
-    const Games = useState(gamesInfoMockData.slice((page-1)*12,(page-1)*12 + 12));
+    const [Games, setGame] = useState<any[]>([]);
+
+    useEffect(() => {
+        // const accessToken = localStorage.getItem("accessToken")
+        axios.get("https://localhost:5001/api/game")
+            .then(res=>{
+                console.log(res.data)
+                setGame(res.data.slice((page-1)*12,(page-1)*12 + 12))
+            })
+            .catch(err => {console.log(err)})
+    }, [])
     return(
         <div className="mr-top-10">
                 <Row>
                     {
-                        Games[0].map((game,index)=>{
+                        Games.map((game,index)=>{
                             return (
                                 <Col
                                     key={`game-info-${index}`}
@@ -30,7 +39,7 @@ function GamesBrowse({
                                     sm={12}
                                     xs={24}
                                 >
-                                    <Link to={'/game/' + game.name}>
+                                    <Link to={'/game/' + game.idGame + '/' + game.nameGame}>
                                         <div className="pd-left-right-10 pd-bottom-30 m-bottom-12">
                                             <GameItem game={game} action={ActionType.REMOVE} />
                                         </div>

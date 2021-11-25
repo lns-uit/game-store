@@ -3,21 +3,26 @@ import '../../layout/SignInLayout/styles.css';
 import {Link} from 'react-router-dom'
 import { Form, Input, Button, Checkbox } from 'antd';
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function SignInComponent(){
     const [loginErr, setLoginErr] = useState(false);
     const [strLoginErr, setStrLoginErr] = useState('');
+    let history = useHistory();
     const onFinish = (values: any) => {
-        console.log('Success:', values);
         axios.post("https://localhost:5001/api/user/login",{
             email: values.userName,
             password: values.password
         })
             .then(res=>{
-                console.log(res)
                 localStorage.setItem("accessToken", res.data.token);
+                localStorage.setItem("userName", res.data.username);
+                history.replace('/')
             })
-            .catch(err => {console.log(err)})
+            .catch(err => {
+                setLoginErr(true);
+                setStrLoginErr("Info login is incorrect");
+            })
         // var myHeader = new Header();
         // myHeader.append("Authorization", "Bearer" + localStorage.getItem("accessToken"))
         

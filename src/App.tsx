@@ -20,6 +20,8 @@ function App() {
   const onClose = () => {
     setIsOpen(false);
   };
+  const accessToken = localStorage.getItem('accessToken');
+  console.log(accessToken);
 
   return (
     <>

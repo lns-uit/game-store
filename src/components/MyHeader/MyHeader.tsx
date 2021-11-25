@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers/index';
 
 const { Header } = Layout;
+const idUser = '123';
 
 const tabs = [
   {
@@ -35,31 +36,32 @@ const tabs = [
   },
 ];
 
+const signOut = ()=>{
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("userName");
+  window.location.reload();
+}
+
 const menu = (
   <Menu>
     <Menu.Item>
-      <a
-        target='_blank'
-        rel='noopener noreferrer'
-        href='https://www.antgroup.com'>
+      <Link
+        to={'/user/' + idUser}
+      >
         Account
-      </a>
+      </Link>
     </Menu.Item>
     <Menu.Item>
-      <a
-        target='_blank'
-        rel='noopener noreferrer'
-        href='https://www.aliyun.com'>
+      <Link
+        to={'/user/collection/' + idUser}
+      >
         Collection
-      </a>
+      </Link>
     </Menu.Item>
     <Menu.Item>
-      <a
-        target='_blank'
-        rel='noopener noreferrer'
-        href='https://www.luohanacademy.com'>
+      <div onClick={signOut}>
         Sign Out
-      </a>
+      </div>
     </Menu.Item>
   </Menu>
 );
@@ -72,6 +74,8 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
   const [searchText, setSearchText] = useState('');
   const currentTab = useSelector((state: RootState) => state.tab);
   const screens = useBreakpoint();
+  const isLogin = localStorage.getItem("accessToken") !== null;
+  const userName = localStorage.getItem("userName");
 
   return (
     <Header className={`header${!screens.lg ? ' header--md' : ''}`}>
@@ -88,12 +92,20 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           ))}
         </div>
         <div className='header__top-wrapper--right'>
-          <Dropdown overlay={menu} placement='bottomCenter'>
-            <div className='header__top-wrapper--right__user'>
-              <UserOutlined />
-              NguyenPhuc
+          {
+            isLogin ? 
+            <Dropdown overlay={menu} placement='bottomCenter'>
+              <div className='header__top-wrapper--right__user pointer'>
+                <UserOutlined />
+                {userName}
+              </div>
+            </Dropdown> :
+            <div className='header__top-wrapper--right__user gray-6'>
+              <Link to="/buyer/sign-up" className='m-0 global_action_link pointer sign_in_hover'>Sign Up</Link>              
+                &nbsp;|&nbsp;
+              <Link to="/buyer/sign-in" className='m-0 global_action_link pointer sign_in_hover'>Sign In</Link>
             </div>
-          </Dropdown>
+          }
           <ButtonPrimary
             text='GET LAUNCHER'
             callback={() => console.log('get launcher')}

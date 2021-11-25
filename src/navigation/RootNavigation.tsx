@@ -1,7 +1,7 @@
 
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Route, Switch, useLocation } from "react-router";
+import { Route, Switch, useLocation, Redirect } from "react-router";
 import { BrowserRouter as Router } from "react-router-dom";
 import { setTabAction } from "../redux/actions/tabAction";
 import BrowseScreen from "../screens/Browse/BrowseScreen";
@@ -23,17 +23,23 @@ function RootNavigation() {
   }, [location]);
   return (
     <Switch>
-      <Route path="/game/:nameGame">
+      <Route path="/game/:idGame/:nameGame">
         <GameDetail></GameDetail>
       </Route>
       <Route path="/browse">
         <BrowseScreen />
       </Route>
-      <Route path="/buyer/sign-in">
-        <SignIn></SignIn>
+      <Route path="/buyer/sign-in"
+        render={()=>{
+          return localStorage.getItem("accessToken") === null ? <SignIn></SignIn> : <Redirect to="/"></Redirect>
+        }}
+      >
       </Route>
-      <Route path="/buyer/sign-up">
-        <SignUp></SignUp>
+      <Route path="/buyer/sign-up"
+        render={()=>{
+          return localStorage.getItem("accessToken") === null ? <SignUp></SignUp> : <Redirect to="/"></Redirect>
+        }}
+      >
       </Route>
        
       <Route path="/help">
