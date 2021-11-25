@@ -70,7 +70,6 @@ function FillterMobile(){
                 }}
             >
                 <Genre genres={genres}></Genre>
-                <Feature features={features}></Feature>
             </Drawer>
         </div>
     )

@@ -17,11 +17,11 @@ function BrowseScreen() {
 
   return(
     <div className="browse">
-      <Row gutter={[48, 8]}>
+      <Row gutter={[8, 8]}>
         <Col
-          xxl={8}
-          xl={8}
-          lg={8}
+          xxl={6}
+          xl={7}
+          lg={9}
           md={8}
           sm={24}
           xs={24}
@@ -31,9 +31,9 @@ function BrowseScreen() {
           </div>
         </Col>
         <Col
-          xxl={16}
-          xl={16}
-          lg={16}
+          xxl={18}
+          xl={17}
+          lg={15}
           md={16}
           sm={24}
           xs={24}

@@ -23,17 +23,6 @@ var genres = [
         name: 'Puzzle'
     }
 ]
-var features = [
-    {
-        name: 'Co.op',
-    },
-    {
-        name: 'Multiplayer',
-    },
-    {
-        name: 'Single Player',
-    }
-]
 
 function Fillter(){
     return(
@@ -47,7 +36,6 @@ function Fillter(){
                     </div>
                     <Menu>
                         <Genre genres={genres}></Genre>
-                        <Feature features={features}></Feature>
                     </Menu>
                 </div>
             </div>

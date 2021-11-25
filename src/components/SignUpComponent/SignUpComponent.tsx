@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom'
 import { Form, Input, Button, Checkbox } from 'antd';
+import axios from 'axios';
 
 function SignUpComponent(){
     const [signUpErr, setSignUpErr] = useState(false);
     const [strSignUpErr, setStrSignUpErr] = useState('');
     const onFinish = (values: any) => {
+        console.log(values);
         if(values.password !== values.confirmPassword){
             setSignUpErr(true);
             setStrSignUpErr("Password and confirm password are not the same")
@@ -13,6 +15,13 @@ function SignUpComponent(){
         else{
             setSignUpErr(false);
             setStrSignUpErr('')
+            axios.post("https://localhost:5001/api/user/register",{
+                username: values.userName,
+                password: values.password,
+                email: values.email
+            })
+                .then((res)=>{console.log(res)})
+                .catch((err=>{console.log(err)}))
         }
     };
 
