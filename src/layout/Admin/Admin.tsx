@@ -74,7 +74,6 @@ function Admin(){
     }
 
     const onFinish = (values: any) => {
-        form.resetFields();
         let error: string[] = [];
         let count = 0;
         let stringErr = "";
@@ -147,9 +146,11 @@ function Admin(){
 
           })
           .then((response) => {
+            form.resetFields();
             console.log(response.data)
           })
           .catch((error) => {
+            form.resetFields();
             console.log(error);
           });
       };
