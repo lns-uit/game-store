@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Button, Layout } from 'antd';
+import React, { useCallback, useState } from 'react';
+import { Layout } from 'antd';
 import './styles.css';
 import Tab from '../Tab/Tab';
 import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
@@ -11,11 +11,12 @@ import logo from '../../assets/images/logo.png';
 import logoSecondary from '../../assets/images/logoSecondary.png';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
 import { Menu, Dropdown } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers/index';
+import { useHistory } from 'react-router-dom';
+import { logout } from '../../redux/actions/userAction';
 
 const { Header } = Layout;
-const idUser = '123';
 
 const tabs = [
   {
@@ -36,48 +37,50 @@ const tabs = [
   },
 ];
 
-const signOut = ()=>{
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("userName");
-  window.location.reload();
-}
-
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <Link
-        to={'/user/' + idUser}
-      >
-        Account
-      </Link>
-    </Menu.Item>
-    <Menu.Item>
-      <Link
-        to={'/user/collection/' + idUser}
-      >
-        Collection
-      </Link>
-    </Menu.Item>
-    <Menu.Item>
-      <div onClick={signOut}>
-        Sign Out
-      </div>
-    </Menu.Item>
-  </Menu>
-);
-
 interface MyHeaderPropstype {
   onOpen: () => void;
 }
 
 function MyHeader({ onOpen }: MyHeaderPropstype) {
   const [searchText, setSearchText] = useState('');
-  const currentTab = useSelector((state: RootState) => state.tab);
   const screens = useBreakpoint();
-  const isLogin = localStorage.getItem("accessToken") !== null;
-  const userName = useSelector(
-    (state: RootState) => state.user
-)
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const currentTab = useSelector((state: RootState) => state.tab);
+  const user = useSelector((state: RootState) => state.user);
+  const { userName = '', idUser = '' } = user || {};
+
+  const onPressLogoHeader = () => {
+    history.replace('/');
+  };
+
+  const renderMenu = useCallback(
+    () => (
+      <Menu>
+        <Menu.Item>
+          <Link to={'/user/' + idUser}>Account</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <Link to={'/user/collection/' + idUser}>Collection</Link>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={handleSignOut}>Sign Out</div>
+        </Menu.Item>
+      </Menu>
+    ),
+    [user]
+  );
+
+  const handleSignOut = () => {
+    localStorage.removeItem('accessToken');
+    dispatch(logout());
+    history.replace('/');
+  };
+
+  const onHandleSearch = value => {
+    // handle searh here with value
+    setSearchText(value);
+  };
 
   return (
     <Header className={`header${!screens.lg ? ' header--md' : ''}`}>
@@ -94,20 +97,28 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           ))}
         </div>
         <div className='header__top-wrapper--right'>
-          {
-            isLogin ? 
-            <Dropdown overlay={menu} placement='bottomCenter'>
+          {idUser ? (
+            <Dropdown overlay={renderMenu} placement='bottomCenter'>
               <div className='header__top-wrapper--right__user pointer'>
                 <UserOutlined />
                 {userName}
               </div>
-            </Dropdown> :
+            </Dropdown>
+          ) : (
             <div className='header__top-wrapper--right__user gray-6'>
-              <Link to="/buyer/sign-up" className='m-0 global_action_link pointer sign_in_hover'>Sign Up</Link>              
-                &nbsp;|&nbsp;
-              <Link to="/buyer/sign-in" className='m-0 global_action_link pointer sign_in_hover'>Sign In</Link>
+              <Link
+                to='/buyer/sign-up'
+                className='m-0 global_action_link pointer sign_in_hover'>
+                Sign Up
+              </Link>
+              &nbsp;|&nbsp;
+              <Link
+                to='/buyer/sign-in'
+                className='m-0 global_action_link pointer sign_in_hover'>
+                Sign In
+              </Link>
             </div>
-          }
+          )}
           <ButtonPrimary
             text='GET LAUNCHER'
             callback={() => console.log('get launcher')}
@@ -119,13 +130,15 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
       </div>
 
       <div className='header__bottom-wrapper'>
-        <div className='header__bottom-wrapper__logo'>
+        <div
+          className='header__bottom-wrapper__logo'
+          onClick={onPressLogoHeader}>
           <img src={screens.lg ? logo : logoSecondary} alt='logo' />
         </div>
         <InputPrimary
           stylesClassname='header__bottom-wrapper__input'
           text={searchText}
-          setText={setSearchText}
+          setText={onHandleSearch}
           placeholder='Search'
           icon={<SearchOutlined />}
         />

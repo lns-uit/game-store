@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import '../../layout/SignInLayout/styles.css';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button, Checkbox } from 'antd';
+import { Form, Input, Button, Checkbox, Alert } from 'antd';
 import { useHistory } from 'react-router-dom';
 import userApi from '../../api/userApi';
 import { login } from '../../redux/actions/userAction';
 import { useDispatch } from 'react-redux';
+import RootErrorMessage from '../../constants/ErrorMessage';
 
 function SignInComponent() {
   const [loginErr, setLoginErr] = useState(false);
@@ -13,22 +14,29 @@ function SignInComponent() {
   const dispatch = useDispatch();
   let history = useHistory();
   const onFinish = async (values: any) => {
-    const responsive = await userApi.loginApi({
-      email: values.userName,
-      password: values.password,
-    });
+    try {
+      const responsive = await userApi.loginApi({
+        email: values.userName,
+        password: values.password,
+      });
 
-    const { message, token } = responsive;
+      console.log(responsive);
 
-    if (message) {
-      setLoginErr(true);
-      setStrLoginErr(message);
-    }
+      const { message, token, user } = responsive || {};
 
-    if (token) {
-      localStorage.setItem('accessToken', token);
-      dispatch(login(responsive.username));
-      history.replace('/');
+      if (message) {
+        setLoginErr(true);
+        setStrLoginErr(message);
+      }
+
+      if (token) {
+        localStorage.setItem('accessToken', token);
+        dispatch(login(user));
+        history.replace('/');
+      }
+    } catch (e) {
+      console.log(e);
+      alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
     }
   };
 
@@ -41,8 +49,7 @@ function SignInComponent() {
             <div
               id='error_display'
               className='checkout_error'
-              style={{ display: loginErr === true ? 'block' : 'none' }}
-            >
+              style={{ display: loginErr === true ? 'block' : 'none' }}>
               {strLoginErr}
             </div>
           </div>
@@ -50,16 +57,14 @@ function SignInComponent() {
             name='sign_in'
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 50 }}
-            onFinish={onFinish}
-          >
+            onFinish={onFinish}>
             <div style={{ textAlign: 'left' }}>
               <p className='gray-5 fs-14 lh-18'>Username or Email</p>
               <Form.Item
                 name='userName'
                 rules={[
                   { required: true, message: 'Please input your username!' },
-                ]}
-              >
+                ]}>
                 <Input placeholder='Username and Email' />
               </Form.Item>
             </div>
@@ -70,22 +75,19 @@ function SignInComponent() {
                 name='password'
                 rules={[
                   { required: true, message: 'Please input your password!' },
-                ]}
-              >
+                ]}>
                 <Input placeholder='Password' type='password' />
               </Form.Item>
             </div>
 
             <Form.Item
               wrapperCol={{ offset: 0, span: 100 }}
-              className='button-m-top-60'
-            >
+              className='button-m-top-60'>
               <Button
                 style={{ height: '40px' }}
                 type='primary'
                 htmlType='submit'
-                className='full-width'
-              >
+                className='full-width'>
                 Sign In
               </Button>
             </Form.Item>

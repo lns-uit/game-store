@@ -46,6 +46,7 @@
   padding: 15px 0;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .header__bottom-wrapper__logo img {
   width: 100%;
@@ -125,15 +126,15 @@
 .ant-dropdown-menu-item {
   padding: 8px 12px !important;
 }
-.global_action_link{
+.global_action_link {
   color: #b8b6b4;
   padding: 0px 4px;
   line-height: 24px;
   font-size: 12px;
 }
-.sign_in_hover:hover{
+.sign_in_hover:hover {
   color: #ffffff;
 }
-.gray-6{
+.gray-6 {
   color: #b8b6b4 !important;
 }
