@@ -22,6 +22,7 @@ function SignInComponent() {
 
       console.log(responsive);
 
+<<<<<<< HEAD
       const { message, token, user } = responsive || {};
 
       if (message) {
@@ -37,6 +38,18 @@ function SignInComponent() {
     } catch (e) {
       console.log(e);
       alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
+=======
+    if (message) {
+      setLoginErr(true);
+      setStrLoginErr(message);
+    }
+    console.log(responsive);
+
+    if (token) {
+      localStorage.setItem('accessToken', token);
+      dispatch(login({idUser: responsive.user.idUser,userName: responsive.user.userName}));
+      history.replace('/');
+>>>>>>> move index.js file from functions folder to utils and fix redux sign in
     }
   };
 
@@ -93,7 +106,7 @@ function SignInComponent() {
             </Form.Item>
           </Form>
           <div className='not-account'>
-            <Link to='/buyer/sign-up' className='a-create-account'>
+            <Link to='/buyer/sign-up' className="a-create-account">
               Not Account Yet? Sign Up Now
             </Link>
           </div>

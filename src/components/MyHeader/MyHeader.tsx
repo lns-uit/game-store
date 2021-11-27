@@ -44,6 +44,7 @@ interface MyHeaderPropstype {
 function MyHeader({ onOpen }: MyHeaderPropstype) {
   const [searchText, setSearchText] = useState('');
   const screens = useBreakpoint();
+<<<<<<< HEAD
   const history = useHistory();
   const dispatch = useDispatch();
   const currentTab = useSelector((state: RootState) => state.tab);
@@ -81,6 +82,12 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     // handle searh here with value
     setSearchText(value);
   };
+=======
+  const isLogin = localStorage.getItem("accessToken") !== null;
+  const user = useSelector(
+    (state: RootState) => state.user
+  )
+>>>>>>> move index.js file from functions folder to utils and fix redux sign in
 
   return (
     <Header className={`header${!screens.lg ? ' header--md' : ''}`}>
@@ -101,7 +108,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
             <Dropdown overlay={renderMenu} placement='bottomCenter'>
               <div className='header__top-wrapper--right__user pointer'>
                 <UserOutlined />
-                {userName}
+                {user.UserName}
               </div>
             </Dropdown>
           ) : (

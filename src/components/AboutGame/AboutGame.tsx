@@ -24,7 +24,7 @@ function AboutGame({
                     <h2 className="blue-3 fs-15 m-top-18 pd-top-2">
                         <strong>Game Description</strong>
                     </h2>
-                    <div className="pd-0 m-left-18">
+                    <div className="pd-0 m-left-18 white">
                         <div dangerouslySetInnerHTML={{ __html: game.newVersion.descriptions }} />
                     </div>
                 </div>

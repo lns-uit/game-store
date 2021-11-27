@@ -1,6 +1,6 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
-import {dotNumber} from '../../function/index';
+import {dotNumber} from '../../utils/index';
 import {Row,Col} from 'antd';
 
 const commemnts = [
