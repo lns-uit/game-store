@@ -1,38 +1,15 @@
 import React, {useState} from 'react';
 import {Row,Col} from "antd";
-import SystemContent from '../SystemConten/SystemContent';
+import SystemContent from '../SystemContent/SystemContent';
 import "../../layout/LayoutGameDetail2/styles.css";
+import {GameDetailss} from "../../interfaces/rootInterface"
 
 interface Detail{
-    detail:{
-        name: string;
-        genres: string[];
-        features: string[];
-        description: string;
-        minimumWindow:{
-            name: string; value: string;
-        }[];
-        recommendedWindow:{
-            name: string; value: string;
-        }[];
-        minimumMacOs:{
-            name: string; value: string;
-        }[];
-        recommendedMacOs:{
-            name: string; value: string;
-        }[];
-        discount: number;
-        price: number;
-        details:{
-            name: string; value: string;
-        }[];
-        requiresMinimum: string;
-        requiresRecommended: string;
-    }
+    game: GameDetailss;
 }
 
 function SystemRequirements({
-    detail
+    game
 }:Detail){
     const [sys, setSys] = useState('window');
     return(
@@ -51,7 +28,7 @@ function SystemRequirements({
                         </div>
                     </div>
                 </div>
-                <SystemContent detail={detail} sysOs={sys}></SystemContent>
+                <SystemContent game={game} sysOs={sys}></SystemContent>
             </div>
         </div>
     )

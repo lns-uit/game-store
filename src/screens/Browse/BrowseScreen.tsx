@@ -27,7 +27,7 @@ function BrowseScreen() {
           xs={24}
         >
           <div className="fillter-pc">
-            <Fillter></Fillter>
+            <Fillter/>
           </div>
         </Col>
         <Col
@@ -38,7 +38,7 @@ function BrowseScreen() {
           sm={24}
           xs={24}
         >
-          <ListGameBrowse page={page}></ListGameBrowse>
+          <ListGameBrowse page={page}/>
         </Col>
       </Row>
     </div>

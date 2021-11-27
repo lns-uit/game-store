@@ -24,7 +24,7 @@ function RootNavigation() {
   }, [location]);
   return (
     <Switch>
-      <Route path="/game/:idGame/:nameGame">
+      <Route path="/game/:idGame/:version">
         <GameDetail></GameDetail>
       </Route>
       <Route path="/browse">

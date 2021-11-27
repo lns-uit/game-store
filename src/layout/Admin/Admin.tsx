@@ -31,6 +31,7 @@ import {storage} from "../../firebase";
 import {RootState} from '../../redux/reducers/index';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import draftToHtml from 'draftjs-to-html';
 
 const { Option } = Select;
 
@@ -47,11 +48,22 @@ function Admin(){
         (state: RootState) => state.gameAvatar
     )
     
+    const hashConfig = {
+        trigger: '#',
+        separator: ' ',
+    }
+    
+    const markup = draftToHtml(
+        contentState, 
+        hashConfig
+    );
+
     const normFileZip = (e) => {
         if(e.file.status === "error"){
             getLinkFileZip(e.file.originFileObj);
         }
     }
+
 
     const normFileImages = (e) => {
         if(e.file.status === "error"){
@@ -89,6 +101,8 @@ function Admin(){
         //     error.push("Url video không đúng định dạng đường dẫn trang web");
         // }
 
+        console.log(markup)
+
         if (count !== 0){
             for (var i = 0; i < error.length; i++){
                 stringErr += error[i] + '\n';
@@ -103,7 +117,7 @@ function Admin(){
             // console.log(values.avatarGame.url);
             // setUrlImgs(arr => [ url.url, ...arr.slice(1)])
             // console.log(JSON.stringify(urlImgs))
-            values.detailDecription = JSON.stringify(values.draw.blocks)
+            values.detailDecription = markup;
             postGame(values);
         }
     }
@@ -216,7 +230,7 @@ function Admin(){
                         </Upload.Dragger>
                     </Form.Item>
                 </Form.Item>
-                <DetailGame></DetailGame>
+                <DetailGame/>
                 <div className="decription-photo">
                     <h3 className="uppercase m-0 white"> description photo</h3>
                     <p className="m-0 gray-1">(1920x1080 Required size)</p>
@@ -234,7 +248,7 @@ function Admin(){
                         </Form.Item>
                     </div>
                 </div>
-                <ShortDescription></ShortDescription>
+                <ShortDescription/>
                 <div className="detail-description" onClick={focus}>
                     <h3 className="uppercase m-0 white"> detail description</h3>
                     <Editor
@@ -246,7 +260,7 @@ function Admin(){
                         toolbarClassName="toolbar-class"
                     />
                 </div>
-                <SystemRequirements></SystemRequirements>
+                <SystemRequirements/>
                 <Row gutter={[48, 8]}>
                     <Col
                         xxl={14}

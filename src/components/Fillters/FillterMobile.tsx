@@ -69,7 +69,7 @@ function FillterMobile(){
                     flexDirection: 'column',
                 }}
             >
-                <Genre genres={genres}></Genre>
+                <Genre genres={genres}/>
             </Drawer>
         </div>
     )

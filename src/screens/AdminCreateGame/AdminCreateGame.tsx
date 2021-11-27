@@ -4,7 +4,7 @@ import './styles.css'
 
 function AdminCreateGame(){
     return (
-        <Admin></Admin>
+        <Admin/>
     )
 }
 

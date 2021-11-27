@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {useParams} from "react-router-dom";
 import LayoutGameDetail1 from "../../layout/LayoutGameDetail1/LayoutGameDetail1";
 import LayoutGameDetail2 from "../../layout/LayoutGameDetail2/LayoutGameDetail2";
+import gamesApi from "../../api/gamesApi"
 
 let detail = {
     name: "Liên minh huyền thoại",
@@ -58,10 +59,31 @@ let detail = {
 function GameDetail(){
     let slug: any = {};
     slug  = useParams();
+    const [game,setGame] = useState<any>(undefined)
+
+    useEffect(() => {
+        async function getApiGameDetail(){
+            const response = await gamesApi.getGameDetail(slug)
+            console.log(response.discount)
+            if(response){
+                setGame(response)
+            }
+        }
+
+        getApiGameDetail();
+    },[])
     return(
         <div>
-            <LayoutGameDetail1 detail={detail}></LayoutGameDetail1>
-            <LayoutGameDetail2 detail={detail}></LayoutGameDetail2>
+            {
+                game === undefined ?
+                <div>Loadding</div>
+                :
+                <div>
+                    <LayoutGameDetail1 game={game}/>
+                    <LayoutGameDetail2 game={game}/>
+                </div>
+                
+            }
         </div>
     )
 }

@@ -1,12 +1,12 @@
 import { Tag, Row, Col, Tooltip } from 'antd';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import { rootColor } from '../../constants/rootColor';
-import { ActionType,GameType} from '../../interfaces/rootInterface';
+import { ActionType, GameDetailss} from '../../interfaces/rootInterface';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import './styles.css';
 
 interface GameItemPropsType {
-  game: GameType;
+  game: GameDetailss;
   action?: ActionType;
   isHorizontal?: boolean;
   heightImage?: string;
@@ -18,7 +18,6 @@ function GameItem({
   isHorizontal,
   heightImage,
 }: GameItemPropsType) {
-  console.log(game.imageGameDetail)
   const urlGameDefault = "https://yt3.ggpht.com/hN71s4RgKl13k2T3a7C_mL-ktwEC6k-F0-Ucb2i7BFSFdM222sBu64u4yZANtTTeTGGHFqWBysE=s900-c-k-c0x00ffffff-no-rj"
   return (
     <div
@@ -65,7 +64,7 @@ function GameItem({
             {game.discount !== null ? (
               <div className='price-container__sale-container'>
                 <div className='price-container__sale'>
-                  <p>-{game.discount}%</p>
+                  <p>-{game.discount.percentDiscount}%</p>
                 </div>
                 <p className='price-container__cost'>{game.cost}</p>
               </div>

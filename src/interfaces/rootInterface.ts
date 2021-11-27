@@ -79,9 +79,58 @@ interface Imgs{
   url: string;
 }
 
+interface GameDetailss{
+  idGame: string,
+  nameGame: string,
+  averageRate: number,
+  cost: number;
+  developer: string,
+  publisher: string,
+  plaform: string,
+  releaseDate: string,
+  lastestVersion: string,
+  numberOfBuyer: number,
+  numberOfDowloaders: number,
+  numOfRate: number,
+  discount: {
+    idDiscount: string,
+    title: string,
+    percentDiscount: number,
+    startDate: string,
+    endDate: string
+  },
+  genres: {
+    idGenreNavigation:{
+      idGenre: string,
+      nameGenre: string
+    }
+  }[],
+  imageGameDetail: {
+    idImage: string,
+    url: string
+  }[],
+  newVersion:{
+    idGameVersion: string,
+    idGame: string,
+    versionGame: string,
+    dateUpdate: string,
+    urlDownload: string,
+    shortDescription: string,
+    descriptions: string,
+    requires: string,
+    os: string,
+    processor: string,
+    storage: string,
+    directX: string,
+    graphics: string,
+    privacyPolicy: string,
+    memory: string
+  }
+}
+
 export enum ActionType {
   ADD = "add",
   REMOVE = "remove",
 }
 
-export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType, Imgs};
+export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType, Imgs, GameDetailss};
