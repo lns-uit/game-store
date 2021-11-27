@@ -35,7 +35,7 @@ function Fillter(){
                         </div>
                     </div>
                     <Menu>
-                        <Genre genres={genres}></Genre>
+                        <Genre genres={genres}/>
                     </Menu>
                 </div>
             </div>

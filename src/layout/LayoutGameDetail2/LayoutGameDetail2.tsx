@@ -5,37 +5,14 @@ import SystemRequirements from '../../components/SystemRequirements/SystemRequir
 import MoreLikeThis from '../../components/MoreLikeThis/MoreLikeThis';
 import RareAndComment from '../../components/RateAndComment/RateAndComment';
 import "./styles.css";
+import {GameDetailss} from "../../interfaces/rootInterface"
 
 interface Detail{
-    detail:{
-        name: string;
-        genres: string[];
-        features: string[];
-        description: string;
-        minimumWindow:{
-            name: string; value: string;
-        }[];
-        recommendedWindow:{
-            name: string; value: string;
-        }[];
-        minimumMacOs:{
-            name: string; value: string;
-        }[];
-        recommendedMacOs:{
-            name: string; value: string;
-        }[];
-        discount: number;
-        price: number;
-        details:{
-            name: string; value: string;
-        }[];
-        requiresMinimum: string;
-        requiresRecommended: string;
-    }
+    game: GameDetailss
 }
 
 function LayoutGameDetail2({
-    detail
+    game
 }:Detail) {
     return(
         <div className="m-top-80 white">
@@ -53,15 +30,19 @@ function LayoutGameDetail2({
                             <div className="d-flex column genres pd-left-20">
                                 <p className="m-0 m-left-10 gray-4 fs-24">Genres</p>
                                 <div>
-                                    {detail.genres.map((genre,index)=>{
-                                        return(
-                                            <span className="m-left-10 underline fs-18" key={index}>{genre}</span>
-                                        )
-                                    })}
+                                    {
+                                        game.genres !== null ?
+                                            game.genres.map((genre,index)=>{
+                                                return(
+                                                    <span className="m-left-10 underline fs-18" key={index}>{genre.idGenreNavigation.nameGenre}</span>
+                                                )
+                                            })
+                                        : <div>NoThing</div>
+                                    }
                                 </div>
                             </div>
                         </div>
-                        <div className="flex-1-1-auto border-left-1">
+                        {/* <div className="flex-1-1-auto border-left-1">
                             <div className="d-flex column features pd-left-20">
                                 <p className="m-0 m-left-10 gray-4 fs-24">Features</p>
                                 <div>
@@ -70,14 +51,15 @@ function LayoutGameDetail2({
                                             <span className="m-left-10 underline fs-18" key={index}>{feature}</span>
                                         )
                                     })}
+                                    Nothing
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
-                    <AboutGame detail={detail}></AboutGame>
-                    <SystemRequirements detail={detail}></SystemRequirements>
-                    <MoreLikeThis></MoreLikeThis>
-                    <RareAndComment></RareAndComment>
+                    <AboutGame game={game}/>
+                    <SystemRequirements game={game}/>
+                    <MoreLikeThis/>
+                    <RareAndComment/>
                 </Col>
                 <Col
                     xxl={6}

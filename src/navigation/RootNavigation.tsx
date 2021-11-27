@@ -13,6 +13,7 @@ import AdminCreateGame from "../screens/AdminCreateGame/AdminCreateGame";
 import GameDetail from "../screens/GameDetail/GameDetail";
 import SignIn  from '../screens/SignIn/SignIn';
 import SignUp from '../screens/SignUp/SignUp';
+import User from '../screens/User/User'
 
 function RootNavigation() {
   let location = useLocation();
@@ -23,7 +24,7 @@ function RootNavigation() {
   }, [location]);
   return (
     <Switch>
-      <Route path="/game/:idGame/:nameGame">
+      <Route path="/game/:idGame/:version">
         <GameDetail></GameDetail>
       </Route>
       <Route path="/browse">
@@ -41,6 +42,9 @@ function RootNavigation() {
         }}
       >
       </Route>
+      <Route path="/user/:idUser">
+        <User></User>
+      </Route>
        
       <Route path="/help">
         <HelpScreen />
@@ -51,8 +55,9 @@ function RootNavigation() {
       <Route path="/admin/create-game">
         <AdminCreateGame></AdminCreateGame>
       </Route>
-      <Route path="/admin/console">
-        <AdminScreen />
+      <Route path="/admin/console" render={()=>{
+          return localStorage.getItem("accessToken") === null ? <Redirect to="/"></Redirect> : <AdminScreen />
+      }}>
       </Route>
       <Route path="/">
         <DiscoverScreen />

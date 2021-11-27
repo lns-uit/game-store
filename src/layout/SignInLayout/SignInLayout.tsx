@@ -7,7 +7,7 @@ function SignInLayout(){
         <div className="responsive-page-sign-in">
             <div className="page-content">
                 <div className="d-flex center">
-                    <SignInComponent></SignInComponent>
+                    <SignInComponent/>
                 </div>
             </div>
         </div>

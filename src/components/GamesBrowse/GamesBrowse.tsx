@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import { Row, Col } from 'antd';
 import "./styles.css"
 import axios from "axios";
+import gameApi from "../../api/gamesApi";
 
 interface Pages{
     page: number;
@@ -15,14 +16,26 @@ function GamesBrowse({
 }:Pages){
     const [Games, setGame] = useState<any[]>([]);
 
-    useEffect(() => {
+     useEffect(() =>{
         // const accessToken = localStorage.getItem("accessToken")
-        axios.get("https://localhost:5001/api/game")
-            .then(res=>{
-                console.log(res.data)
-                setGame(res.data.slice((page-1)*12,(page-1)*12 + 12))
-            })
-            .catch(err => {console.log(err)})
+        // axios.get("https://localhost:5001/api/game")
+        //     .then(res=>{
+        //         console.log(res.data)
+        //         setGame(res.data.slice((page-1)*12,(page-1)*12 + 12));
+        //     })
+        //     .catch(err => {console.log(err)})
+        async function callApiGames(){
+            const gamesBrowse = await gameApi.getGamesApi();
+
+            if (gamesBrowse){
+                console.log(gamesBrowse)
+                setGame(gamesBrowse);
+            }else{
+                console.log("err");
+            }
+        }
+
+        callApiGames();
     }, [])
     return(
         <div className="mr-top-10">
@@ -39,7 +52,7 @@ function GamesBrowse({
                                     sm={12}
                                     xs={24}
                                 >
-                                    <Link to={'/game/' + game.idGame + '/' + game.nameGame}>
+                                    <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
                                         <div className="pd-left-right-10 pd-bottom-30 m-bottom-12">
                                             <GameItem game={game} action={ActionType.REMOVE} />
                                         </div>

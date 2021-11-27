@@ -75,7 +75,9 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
   const currentTab = useSelector((state: RootState) => state.tab);
   const screens = useBreakpoint();
   const isLogin = localStorage.getItem("accessToken") !== null;
-  const userName = localStorage.getItem("userName");
+  const userName = useSelector(
+    (state: RootState) => state.user
+)
 
   return (
     <Header className={`header${!screens.lg ? ' header--md' : ''}`}>

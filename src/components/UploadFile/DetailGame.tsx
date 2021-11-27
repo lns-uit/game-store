@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
 import axios from 'axios';
 import { GenreType } from '../../interfaces/rootInterface';
+import adminApi from '../../api/adminApi'
 
 const { Option } = Select;
 
@@ -27,19 +28,32 @@ function DetailGame(){
             getLinkFileImage(e.file.originFileObj);
         }
     }
-    const getDataGame = () => {
-        return axios.get("https://localhost:5001/api/genre").then((response) => {
-          response.data.forEach((data) =>{
-              if (data.lastestVersion!==-1){
+    const getDataGame = async () => {
+        // return axios.get("https://localhost:5001/api/genre").then((response) => {
+        //   response.data.forEach((data) =>{
+        //       if (data.lastestVersion!==-1){
+        //         allGame.push(
+        //             <Option key={data.idGenre} value={data.nameGenre}>
+        //                 {data.nameGenre}
+        //             </Option>
+        //         )
+        //       }
+        //   })
+        //   setGameData(allGame);
+        // });
+        const res = await adminApi.getGenre();
+        
+        if (res){
+            res.forEach((data)=>{
                 allGame.push(
                     <Option key={data.idGenre} value={data.nameGenre}>
                         {data.nameGenre}
                     </Option>
-                )
-              }
-          })
-          setGameData(allGame);
-        });
+                )  
+            })
+            setGameData(allGame);
+        }
+
       };
     function getLinkFileImage(file){
         const uploadTask = storage.ref(`gameAvatar/${file.name}`).put(file);

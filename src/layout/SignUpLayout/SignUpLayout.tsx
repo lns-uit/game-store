@@ -7,7 +7,7 @@ function SignUpLayout(){
         <div className="responsive-page-sign-up">
             <div className="page-content">
                 <div className="d-flex center">
-                    <SignUpComponent></SignUpComponent>
+                    <SignUpComponent/>
                 </div>
             </div>
         </div>

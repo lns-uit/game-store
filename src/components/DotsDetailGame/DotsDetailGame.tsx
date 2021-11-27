@@ -6,8 +6,8 @@ import "slick-carousel/slick/slick-theme.css";
 
 interface Images{
     images: {
-        name: string,
-        link: string
+        id: string,
+        url: string
     }[];
     onChange: (newImg: any) => void;
 }
@@ -49,7 +49,7 @@ function DotsDetailGame({
                     images.map((image,index)=>{
                         return(
                             <div key={index}>
-                                <img className="width-169 height-93 pd-2-percent m-10 relative" src={image.link} alt={image.name} />
+                                <img className="width-169 height-93 pd-2-percent m-10 relative" src={image.url} alt={image.id} />
                             </div>
                         )
                     })
