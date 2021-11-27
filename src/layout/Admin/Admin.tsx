@@ -32,6 +32,7 @@ import {RootState} from '../../redux/reducers/index';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
+import {useForm} from 'react-hook-form';
 
 const { Option } = Select;
 
@@ -47,6 +48,7 @@ function Admin(){
     const url = useSelector(
         (state: RootState) => state.gameAvatar
     )
+    const [form] = Form.useForm();
     
     const hashConfig = {
         trigger: '#',
@@ -72,6 +74,7 @@ function Admin(){
     }
 
     const onFinish = (values: any) => {
+        form.resetFields();
         let error: string[] = [];
         let count = 0;
         let stringErr = "";
@@ -101,8 +104,6 @@ function Admin(){
         //     error.push("Url video không đúng định dạng đường dẫn trang web");
         // }
 
-        console.log(markup)
-
         if (count !== 0){
             for (var i = 0; i < error.length; i++){
                 stringErr += error[i] + '\n';
@@ -111,7 +112,6 @@ function Admin(){
         }else{
             values.fileGame = urlDownload;
             // urlImages.push(url);
-
             values.images = JSON.stringify(urlImages);
             // values.avatarGame = url; 
             // console.log(values.avatarGame.url);
@@ -217,6 +217,7 @@ function Admin(){
     return (
         <div className="white">
             <Form
+                form={form}
                 name="validate_other"
                 onFinish={onFinish}
             >
