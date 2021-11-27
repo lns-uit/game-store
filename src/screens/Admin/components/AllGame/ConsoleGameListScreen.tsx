@@ -5,7 +5,7 @@ import axios from "axios";
 import './style.css';
 import { useHistory } from "react-router-dom";
 const { Search } = Input;
-
+import {Endpoint} from "../../../../api/endpoint"
 
 function ConsoleGameListScreen() {
   const onSearch = (value) => console.log(value);
@@ -13,7 +13,7 @@ function ConsoleGameListScreen() {
   const [searchGame, setSearchGame] = useState('');
   const history = useHistory();
   const getDataGame = () => {
-    return axios.get("https://localhost:5001/api/game").then((response) => {
+    return axios.get(Endpoint.mainApi + "api/game").then((response) => {
       setGameData(response.data);
     });
   };
@@ -46,8 +46,8 @@ function ConsoleGameListScreen() {
     },
     {
       title: "Bought",
-      dataIndex: "numberOfBuyer",
-      key: "numberOfBuyer",
+      dataIndex: "numberOfBuyers",
+      key: "numberOfBuyers",
     },
     {
       title: "Installed",

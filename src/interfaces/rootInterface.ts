@@ -17,7 +17,7 @@ interface GameType {
   plaform: any;
   cost: any;
   lastestVersion: any;
-  numberOfBuyer: any;
+  numberOfBuyers: any;
   numberOfDowloaders: any;
   discount: any;
   genres: {

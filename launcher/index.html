@@ -8,8 +8,8 @@
     <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'"> -->
 
   <title>Hello World!</title>
-  <link rel="stylesheet" type="text/css" href="./src/css/titlebar.css">
   <link rel="stylesheet" type="text/css" href="./src/css/container.css">
+  <link rel="stylesheet" type="text/css" href="./src/css/titlebar.css">
   <link rel="stylesheet" type="text/css" href="./src/css/content.css">
   <link rel="stylesheet" type="text/css" href="./src/css/bottom.css">
   <link rel="stylesheet" type="text/css" href="./src/css/gameview.css">
@@ -26,14 +26,19 @@
       <div class="title-text draggable">
         <div class="title-box-container">
           <p class="text-main" id="title-name-file">
-            Stun Launcher
           </p>
         </div>
       </div>
       <div class="btn-title-bar prevent-select">
-        <button class="minimize" id="btn-minimize"></button>
-        <button class="maximize" id="btn-maximize"></button>
-        <button class="exit-app" id="btn-exit"></button>
+        <button class="minimize" id="btn-minimize">
+          <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="18px" fill="#ffffff"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M6 19h12v2H6z"/></svg>
+        </button>
+        <button class="maximize" id="btn-maximize">
+          <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="18px" fill="#ffffff"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/></svg>
+        </button>
+        <button class="exit-app" id="btn-exit">
+          <svg xmlns="http://www.w3.org/2000/svg" height="15px" viewBox="0 0 24 24" width="18px" fill="#ffffff"><path d="M0 0h24v24H0z" fill="none"/><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
       </div>
     </div>
 
@@ -51,18 +56,37 @@
       </div>
       <div class="content-view">
         <div class="account-personal">
-
+          <button id = "btn-logout">
+            LOGOUT
+          </button>
         </div>
         <div>
           <div class="game-view">
-            <div class="game-view-list-btn">
-  
+            <div class="game-view-list-btn" id = "game-view-list-btn">
+          
             </div>
             <div class="gutter-col divide-gameview">
               <div></div>
             </div>
-            <div class="game-view-content">
-              
+            <div class="game-view-content" id = "game-view-content">
+                <div class = "img-game-view-header">
+                  <img src = "src/texture/GokuNFT.png">
+                </div>
+                <div class = "game-view-body">
+                  <div class = "avatar-game-view">
+                    <img src = "src/texture/GokuNFT.png">
+                  </div>
+                  <h1>
+                    Dragonball Super Market
+                  </h1>
+                  <div class = "btn-play-update">
+                    PLAY
+                  </div>
+                  
+                </div>
+                <div class = "downloading-bar">
+                  <div class = "handle-downloading"></div>
+                </div>
             </div>
           </div>
         </div>
@@ -75,6 +99,7 @@
 
     <!-- You can also require other files to run in this process -->
     <script src="./renderer.js"></script>
+    <script src="./src/js/data.js"></script>
     <script src="./src/js/titlebar.js" defer type='module'></script>
     <script src="./src/js/gameview.js" defer type='module'></script>
 </body>
