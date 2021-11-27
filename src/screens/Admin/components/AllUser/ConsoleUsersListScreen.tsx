@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Input, Menu, Space, Table, Tag } from "antd";
 import { GameType, UserType } from "../../../../interfaces/rootInterface";
+import {Endpoint} from "../../../../api/endpoint"
 import './style.css'
 import axios from "axios";
 import Item from "antd/lib/list/Item";
@@ -85,7 +86,7 @@ function ConsoleUsersListScreen() {
   const [searchUser, setSearchUser] = useState('');
 
   const getUserData = () => {
-    return axios.get("https://localhost:5001/api/user").then((response) => {
+    return axios.get( Endpoint.mainApi + "api/user").then((response) => {
       setUserData(response.data);
     });
   };

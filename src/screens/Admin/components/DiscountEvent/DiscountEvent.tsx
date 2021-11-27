@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {Endpoint} from "../../../../api/endpoint"
 import { Button, Input, Modal, Space, Table, DatePicker, InputNumber, Select } from "antd";
 import { GameType, DiscountType } from "../../../../interfaces/rootInterface";
 import axios from "axios";
@@ -40,7 +41,11 @@ function DiscountEvent() {
         setIsModalVisible(false);
         };
     const getDiscountData = () => {
-        return axios.get("https://localhost:5001/api/discount").then((response) => {
+        return axios.get(Endpoint.mainApi + "api/discount",{
+          headers: {
+              Authorization: "Bearer ", // token here
+          }
+      }).then((response) => {
         setListDiscount(response.data);
         });
     };

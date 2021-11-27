@@ -1,9 +1,9 @@
 .title-bar{
     position: relative;
-    background: rgb(26, 26, 26);
+    background: var(--color-gray);
     width: 100%;
     display: flex;
-    border-bottom: 1px solid rgb(53, 53, 53);
+    border-bottom: 1px solid var(--color-gray);
 }
 
 .logo{
@@ -17,10 +17,9 @@
 }
 .btn-title-bar{
     z-index:1000000000;
-    height: 35px;
+    height: 30px;
     display: flex;
     justify-self: flex-end;
-    padding: 8px 10px 0 0;
 }
 .btn-title-bar button {
     z-index:1000000001;
@@ -30,8 +29,8 @@
 
 .minimize, .maximize, .exit-app{
     z-index:1000000001;
-    height: 20px;
-    width: 40px;
+    height: 100%;
+    width: 50px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -39,33 +38,28 @@
     background: transparent;
 }
 .exit-app{
-    background:rgb(197, 25, 25);
+
     /* clip-path: polygon(25% 0%, 100% 0%, 100% 100%, 25% 100%, 0% 50%); */
-    clip-path: circle(28% at 50% 50%);
 }
 .maximize , .minimize{
     /* clip-path: polygon(100% 0%, 75% 50%, 100% 100%, 25% 100%, 0% 50%, 25% 0%); */
-    clip-path: circle(28% at 50% 50%);
 }
-.minimize {
-    background:#899e12;
-}
-.maximize {
-    background:#c44c14
+.minimize,.maximize {
+    background:transparent;
 }
 
 .minimize:hover {
-    background:#d9ff00;
+    background:rgb(51, 51, 51);
 }
 .maximize:hover {
-    background:#ff5100
+    background:rgb(51, 51, 51);
 }
 .exit-app:hover{
-    background:rgb(255, 0, 0);
+    background:rgb(179, 14, 14);
 }
 .title-text{    
     display: flex;
-    width: calc(100vw - 190px)
+    width: calc(100vw - 210px)
 }
 
 .title-box-container{

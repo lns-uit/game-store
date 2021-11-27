@@ -6,6 +6,7 @@ import "./style.css";
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import 'draft-js/dist/Draft.css';
+import {Endpoint} from "../../../../api/endpoint"
 
 function PrivacyPolicyEditor() {
   let _contentState = ContentState.createFromText('');

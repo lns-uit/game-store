@@ -5,14 +5,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button, Input, Modal, Space, Table, Tag } from "antd";
 import Search from "antd/lib/transfer/search";
-
-
+import {Endpoint} from "../../../../api/endpoint"
 
 function GenresManager() {
   const [listGenre, setListGenre] = useState<GenreType[]>([]);
-  const [genreSearch,setGenreSearch] = useState("");
+  const [genreSearch, setGenreSearch] = useState("");
   const [genreCreate, setGenreCreate] = useState("");
-  const [idGenreUpdate,setIdGenreUpdate] = useState();
+  const [idGenreUpdate, setIdGenreUpdate] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [action, setAction] = useState("create");
 
@@ -20,20 +19,18 @@ function GenresManager() {
     setIsModalVisible(true);
   };
 
-  const handleOk = (a:any) => {
-    if (a === "create"){
-        if (genreCreate === "") alert("You have not entered anything");
-        else {
-          postGenre(genreCreate);
-        }
-    } else
-    if (a === "update") {
-        if (genreCreate === "") alert("You have not entered anything");
-        else {
-          updateGenre(idGenreUpdate);
-        }
+  const handleOk = (a: any) => {
+    if (a === "create") {
+      if (genreCreate === "") alert("You have not entered anything");
+      else {
+        postGenre(genreCreate);
+      }
+    } else if (a === "update") {
+      if (genreCreate === "") alert("You have not entered anything");
+      else {
+        updateGenre(idGenreUpdate);
+      }
     }
-    
   };
   const columns = [
     {
@@ -46,23 +43,23 @@ function GenresManager() {
       title: "Action",
       key: "idGenre",
       dataIndex: "idGenre",
-      render: (id,obj) => (
+      render: (id, obj) => (
         <Space size="middle">
           <Button
-            onClick={()=>{
-                setGenreCreate(obj.nameGenre);
-                setIdGenreUpdate(obj);
-                showModal();
-                setAction("update")
-            }}>
+            onClick={() => {
+              setGenreCreate(obj.nameGenre);
+              setIdGenreUpdate(obj);
+              showModal();
+              setAction("update");
+            }}
+          >
             Update
           </Button>
         </Space>
-
       ),
     },
   ];
-  
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -73,9 +70,17 @@ function GenresManager() {
   };
   const postGenre = (genre: any) => {
     axios
-      .post("https://localhost:5001/api/genre/create", {
-        nameGenre: genre,
-      })
+      .post(
+        "https://localhost:5001/api/genre/create",
+        {
+          nameGenre: genre,
+        },
+        {
+          headers: {
+            Authorization: "Bearer ", // token here
+          },
+        }
+      )
       .then((response) => {
         alert("Add Success");
         setIsModalVisible(false);
@@ -88,22 +93,31 @@ function GenresManager() {
         alert("It took too long to respond, please check the internet again");
       });
   };
-  const updateGenre = (genre:any) =>{
-     axios.put("https://localhost:5001/api/genre/update/"+genre.idGenre,{
-       nameGenre: genreCreate
-     })
-     .then ((response)=>{
-        alert("Update Success")
+  const updateGenre = (genre: any) => {
+    axios
+      .put(
+        Endpoint.mainApi + "api/genre/update/" + genre.idGenre,
+        {
+          nameGenre: genreCreate,
+        },
+        {
+          headers: {
+            Authorization: "Bearer ", // token here
+          },
+        }
+      )
+      .then((response) => {
+        alert("Update Success");
         setIsModalVisible(false);
         setGenreCreate("");
         fetchDataGenre();
-     })
-     .catch((error)=>{
+      })
+      .catch((error) => {
         setIsModalVisible(false);
         setGenreCreate("");
         alert("It took too long to respond, please check the internet again");
-     })
-  }
+      });
+  };
   useEffect(() => {
     fetchDataGenre();
   }, []);
@@ -112,7 +126,7 @@ function GenresManager() {
       <Modal
         title="Create New Genre"
         visible={isModalVisible}
-        onOk={()=>handleOk(action)}
+        onOk={() => handleOk(action)}
         onCancel={handleCancel}
       >
         <Input
@@ -123,18 +137,32 @@ function GenresManager() {
       </Modal>
       <div className="genre-action-btn">
         <div className="search-container">
-            <Input
-              onChange={(event) => setGenreSearch(event.target.value)}
-              placeholder="input search text"
-            />
-          <Button type="primary" danger onClick={()=>{showModal();setAction("create")}}>
+          <Input
+            onChange={(event) => setGenreSearch(event.target.value)}
+            placeholder="input search text"
+          />
+          <Button
+            type="primary"
+            danger
+            onClick={() => {
+              showModal();
+              setAction("create");
+            }}
+          >
             Create New Genre
           </Button>
         </div>
       </div>
 
       <br />
-      <Table columns={columns} dataSource={listGenre.filter(item=> item.nameGenre.toLowerCase().indexOf(genreSearch.toLowerCase())!==-1)} />
+      <Table
+        columns={columns}
+        dataSource={listGenre.filter(
+          (item) =>
+            item.nameGenre.toLowerCase().indexOf(genreSearch.toLowerCase()) !==
+            -1
+        )}
+      />
     </div>
   );
 }
