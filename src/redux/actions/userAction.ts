@@ -1,6 +1,6 @@
 import rootType from '../types';
 
-const login = (user) => {
+const login = (user: any) => {
   return {
     type: rootType.user.LOGIN,
     payload: user,

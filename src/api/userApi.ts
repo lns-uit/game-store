@@ -1,8 +1,10 @@
 import callApi from '../utils/callApi';
 import { AxiosError } from 'axios';
 
-const loginApi = async (formLogin) => {
+const loginApi = async formLogin => {
   try {
+    console.log(formLogin);
+
     const request = await callApi(
       'post',
       'https://localhost:5001/api/user/login',

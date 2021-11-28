@@ -1,7 +1,8 @@
 import React from "react";
 import "./styles.css";
-import {dotNumber} from '../../function/index';
+import {dotNumber} from '../../utils/index';
 import {GameDetailss} from "../../interfaces/rootInterface"
+import Moment from "react-moment";
 
 interface Detail{
     game: GameDetailss;
@@ -63,7 +64,7 @@ function PriceGame({
                     </div>
                     <div className={3 === 3 ? "d-flex border-top-bottom-gray pd-top-bottom-22 space-between" : "d-flex border-top-gray pd-top-bottom-22 space-between"}>
                         <p className="gray-3 m-0 fs-12 lh-21">Release Date</p>
-                        <p className="m-0 fs-12 lh-21">{game.releaseDate}</p>
+                        <Moment format="DD-MM-yyyy">{game.releaseDate}</Moment>
                     </div>
                     <div className={3 === 3 ? "d-flex border-top-bottom-gray pd-top-bottom-22 space-between" : "d-flex border-top-gray pd-top-bottom-22 space-between"}>
                         <p className="gray-3 m-0 fs-12 lh-21">Plaform</p>
