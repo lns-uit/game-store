@@ -32,18 +32,18 @@ function RootNavigation() {
         path='/buyer/sign-in'
         render={() => {
           return localStorage.getItem('accessToken') === null ? (
-            <SignIn></SignIn>
+            <SignIn/>
           ) : (
-            <Redirect to='/'></Redirect>
+            <Redirect to='/'/>
           );
         }}></Route>
       <Route
         path='/buyer/sign-up'
         render={() => {
           return localStorage.getItem('accessToken') === null ? (
-            <SignUp></SignUp>
+            <SignUp/>
           ) : (
-            <Redirect to='/'></Redirect>
+            <Redirect to='/'/>
           );
         }}></Route>
       <Route path='/user/:idUser'>
