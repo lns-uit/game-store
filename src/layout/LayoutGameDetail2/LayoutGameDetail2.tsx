@@ -3,9 +3,9 @@ import {Row,Col} from "antd";
 import AboutGame from '../../components/AboutGame/AboutGame';
 import SystemRequirements from '../../components/SystemRequirements/SystemRequirements';
 import MoreLikeThis from '../../components/MoreLikeThis/MoreLikeThis';
-import RareAndComment from '../../components/RateAndComment/RateAndComment';
 import "./styles.css";
 import {GameDetailss} from "../../interfaces/rootInterface"
+import CommentContainer from "../../components/Comment/CommentContainer"
 
 interface Detail{
     game: GameDetailss
@@ -59,7 +59,8 @@ function LayoutGameDetail2({
                     <AboutGame game={game}/>
                     <SystemRequirements game={game}/>
                     <MoreLikeThis/>
-                    <RareAndComment/>
+                    {/* <RareAndComment/> */}
+                    <CommentContainer idGame = {game.idGame}/>
                 </Col>
                 <Col
                     xxl={6}

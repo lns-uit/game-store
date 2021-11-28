@@ -128,9 +128,22 @@ interface GameDetailss{
   }
 }
 
+interface CommentType{
+  idComment: string;
+  idGame: string;
+  idUser: string;
+  content: string;
+  likes: number;
+  dislike: number;
+  time: Date;
+  rate: number;
+  userName: string;
+  avatar: string;
+}
+ 
 export enum ActionType {
   ADD = "add",
   REMOVE = "remove",
 }
 
-export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType, Imgs, GameDetailss};
+export type {CommentType, ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType, Imgs, GameDetailss};

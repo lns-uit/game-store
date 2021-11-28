@@ -1,6 +1,6 @@
 import React from "react";
 import "./styles.css";
-import {dotNumber} from '../../utils/index';
+import numberWithCommas from '../../utils/numOfWithCommas';
 import {GameDetailss} from "../../interfaces/rootInterface"
 import Moment from "react-moment";
 
@@ -21,16 +21,16 @@ function PriceGame({
                             <span>-{game.discount.percentDiscount}%</span>
                         </div>
                         <div className="m-left-right-8">
-                            <span className="gray-2 fs-12 lh-16">{dotNumber(game.cost)}₫</span>
+                            <span className="gray-2 fs-12 lh-16">{numberWithCommas(game.cost)}</span>
                         </div>
                         <div className="m-left-8">
-                            <span className="fs-12 lh-16">{dotNumber((game.discount.percentDiscount/100)*game.cost)}₫</span>
+                            <span className="fs-12 lh-16">{numberWithCommas((game.discount.percentDiscount/100)*game.cost)}</span>
                         </div>
                     </div>
                     :
                     <div className="d-flex align-items-end">
                         <div className="m-left-8">
-                            <span className="fs-12 lh-16">{dotNumber(game.cost)}₫</span>
+                            <span className="fs-12 lh-16">{numberWithCommas(game.cost)}</span>
                         </div>
                     </div>
                 }
