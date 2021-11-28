@@ -1,5 +1,7 @@
 .my-footer {
   background-color: var(--grayContainer-color) !important;
+  z-index: 3;
+  border-top: 1px solid #111111;
 }
 .my-footer__bottom {
   border-top: 1px solid var(--border-color);

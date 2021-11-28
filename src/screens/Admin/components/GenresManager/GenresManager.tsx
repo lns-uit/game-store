@@ -102,7 +102,7 @@ function GenresManager() {
         },
         {
           headers: {
-            Authorization: "Bearer ", // token here
+            Authorization: "Bearer " + localStorage.getItem('accessToken') 
           },
         }
       )
@@ -159,7 +159,7 @@ function GenresManager() {
         columns={columns}
         dataSource={listGenre.filter(
           (item) =>
-            item.nameGenre.toLowerCase().indexOf(genreSearch.toLowerCase()) !==
+            item.nameGenre?.toLowerCase().indexOf(genreSearch?.toLowerCase()) !==
             -1
         )}
       />

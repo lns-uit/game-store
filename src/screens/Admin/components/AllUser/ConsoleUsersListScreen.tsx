@@ -74,7 +74,6 @@ const MyMenu = ({id}) => (
       <a
         target="_blank"
         rel="noopener noreferrer"
-        href="https://www.luohanacademy.com"
       >
         UnLock Acocount
       </a>
@@ -86,9 +85,15 @@ function ConsoleUsersListScreen() {
   const [searchUser, setSearchUser] = useState('');
 
   const getUserData = () => {
-    return axios.get( Endpoint.mainApi + "api/user").then((response) => {
+    return axios.get( Endpoint.mainApi + "api/user",{
+      headers: {
+          Authorization: "Bearer "+ localStorage.getItem('accessToken') // token here
+      }
+    }).then((response) => {
       setUserData(response.data);
-    });
+    }).catch(err => {
+      console.log(err)
+    })
   };
   useEffect(() => {
     getUserData();
@@ -99,14 +104,14 @@ function ConsoleUsersListScreen() {
         <div className="search-container">
           <Input
             placeholder="input search text"
-            onChange = {event=>setSearchUser(event.target.value.toLowerCase())}
+            onChange = {event=>setSearchUser(event.target.value?.toLowerCase())}
           />
         </div>
         <div className="console-list-name">
           <Table columns={columns} dataSource={
             userData.filter(item=>
-              item.email.toLowerCase().indexOf(searchUser) !==-1 || item.userName.toLowerCase().indexOf(searchUser) !== -1
-              || item.realName.toLowerCase().indexOf(searchUser) !== -1
+              item.email?.toLowerCase().indexOf(searchUser) !==-1 || item.userName?.toLowerCase().indexOf(searchUser) !== -1
+              || item.realName?.toLowerCase().indexOf(searchUser) !== -1
             )} 
           />
         </div>

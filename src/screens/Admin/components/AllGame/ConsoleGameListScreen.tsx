@@ -74,7 +74,7 @@ function ConsoleGameListScreen() {
           <div className="search-container">
             <Input
               placeholder="input search text"
-              onChange = {event=>setSearchGame(event.target.value.toLowerCase())}
+              onChange = {event=>setSearchGame(event.target.value?.toLowerCase())}
             />
           </div>
           <div></div>
@@ -85,7 +85,7 @@ function ConsoleGameListScreen() {
         </div>
         <div className="console-list-name">
           <Table columns={columns} dataSource={
-              gameData.filter(item=> item.nameGame.toLowerCase().indexOf(searchGame) !== -1
+              gameData.filter(item=> item.nameGame?.toLowerCase().indexOf(searchGame) !== -1
           
             )} />
         </div>

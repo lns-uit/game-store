@@ -17,7 +17,7 @@
     overflow-x: hidden;
 }
 .img-game-view-header{
-    height: 100px;
+    height: 130px;
     width: 100%;
     overflow: hidden;
     
@@ -28,6 +28,7 @@
 }
 .img-game-view-header img{
     width: 100%;
+    object-fit: cover;
 }
 h1{
     margin-left: 30px;
@@ -38,13 +39,15 @@ h1{
 .avatar-game-view {
     z-index: 10;
     margin-top: -30px;
-    outline: 7px solid rgb(235, 235, 235);
+    outline: 7px solid #222222;
     height: 120px;
     width: 120px;
     overflow:hidden;
 }
 .avatar-game-view img{
     width: 100%;
+    object-fit: cover;
+    height: 100%;
 }
 .btn-play-update{
     height: 40px;
@@ -112,11 +115,14 @@ h1{
     text-overflow: ellipsis;
     display: flex;
     align-items: center;
-    background-color: rgb(44, 44, 44);
+    background-color: rgba(44, 44, 44, 0.425);
     cursor: pointer;
     border-radius: 2px;
     transition: .3s;
     margin-top: 10px;
+}
+.btn-game-item img{
+    object-fit: cover;
 }
 .btn-game-item:hover{
     background-color: rgb(65, 65, 65);

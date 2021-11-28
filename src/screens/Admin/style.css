@@ -33,3 +33,24 @@
 .ant-modal-title{
   color: white !important;  
 }
+.ant-tabs-tabpane{
+  padding-left: 50px !important;
+}
+.ant-tabs-tab:hover{
+  background-color: rgb(51, 51, 51) !important;
+}
+.ant-tabs-tab-active{
+  background-color: rgb(44, 44, 44) !important;
+}
+.ant-tabs-nav-list{
+  
+}
+.ant-tabs-nav{
+  height: 100vh !important;
+  padding: 42px 0px;
+  background-color: var(--grayContainer-color) !important;
+  position: fixed !important;
+  margin-left: -200px;
+  margin-top: -41px;
+  
+}

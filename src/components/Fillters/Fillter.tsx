@@ -29,7 +29,7 @@ function Fillter(){
         <div className="relative">
             <div className="background-white absolute">
                 <div className="lay-out-fillter">
-                    <div className="layout-1 border-bottom">
+                    <div className="border-bottom">
                         <div className="pd-top-bottom-10 pd-left-right-5">
                             <p className="fs-14 lh-16 mg-0">Fillter</p>
                         </div>

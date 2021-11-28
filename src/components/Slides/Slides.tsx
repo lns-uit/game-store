@@ -13,7 +13,7 @@ function Slides() {
   return (
     <div className='slides-container'>
       <Row>
-        <Col xxl={6} xl={6} lg={8} md={0} sm={0} xs={0}>
+        <Col xxl={6} xl={6} lg={7} md={0} sm={0} xs={0}>
           <div className='group-btn-slides'>
             {GameInfoData.map((item, index) =>
               index <= 4 ? (
@@ -31,7 +31,7 @@ function Slides() {
                     style={{
                       background:
                         index === activeCarousel
-                          ? rootColor.grayContainerColor
+                          ? '#222222'
                           : 'transparent',
                     }}>
                     <img
@@ -60,7 +60,7 @@ function Slides() {
                             : 'btn-slides-idle'
                         }
                         style={{
-                          background: rootColor.lightGrayColor,
+                          background: '#222222' ,
                         }}></div>
                     </div>
                   </div>
@@ -74,6 +74,7 @@ function Slides() {
             className='my-slides'
             ref={carouselRef}
             speed={200}
+            dots = {false}
             // effect="fade"
             afterChange={index => {
               setActiveCarousel(index);
@@ -115,7 +116,11 @@ function Slides() {
                         </h1>
                         <div className='detail-game-panel-text'>
                           {item.type}
-                          {/* <td dangerouslySetInnerHTML={{__html: item.description}} /> */}
+                          <br/><br/>
+                          <b>
+                            {item.cost} $
+                          </b>
+                   
                         </div>
                         <br />
                         <button> {item.textStatus} </button>
@@ -154,7 +159,7 @@ const GameInfoData = [
       'https://play-lh.googleusercontent.com/_ZqmvU3b-i6RwBfJzDVzs7zw-YGFq_nN1cfVgJYvZr5GZemFL_Fe5mgR9wedZpaBxZI=w1920-h975-rw',
       'https://play-lh.googleusercontent.com/K9nJ2xERJMMeN_QZ0cVkwplASNauzx6tbdg-fABwbnXUVeiYYqogw50XkJIqiv-A41k=w1920-h975-rw',
     ],
-    cost: 'Free to play',
+    cost: '123 $',
     platform: 'Android',
     type: 'Action - Shooter',
     textStatus: 'PLAY NOW',

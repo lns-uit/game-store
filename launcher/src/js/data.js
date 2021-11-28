@@ -7,7 +7,8 @@ var fs = require('fs');
 const { createElement } = require('react');
 const { doc } = require('prettier');
 var headers = storage.getSync("user");
-const {ipcRenderer, shell} = require('electron')
+const {ipcRenderer, shell } = require('electron')
+
 var gameStorage = storage.getSync('game')
 const agent = new https.Agent({
   rejectUnauthorized: false,
@@ -20,6 +21,8 @@ var dataGameItem;
 
 var gamePathStorage = storage.getDataPath()+'\\game';
 var urltest = "https://firebasestorage.googleapis.com/v0/b/docprintx.appspot.com/o/SniperLegendary.zip?alt=media&token=dfda1b30-542c-4350-925c-65d7683759d3"
+
+
 
 function GetGameData(){
     axios.get("https://localhost:5001/api/game",
@@ -47,7 +50,7 @@ function RenderGameItem(data){
     btnGameItem.classList.add('btn-game-item')
     
     var imgGameItem = document.createElement('img');
-    // imgGameItem.src = data.imageGameDetail[0];
+    imgGameItem.src = data.imageGameDetail[0].url;
     imgGameItem.height = '50';
     imgGameItem.width = '50';
     
@@ -102,34 +105,43 @@ function RenderGameDetail(data){
     nameGame.textContent = data.nameGame;
     gameViewBody.appendChild(nameGame);
 
-    var btnPlayInstall = document.createElement('div');
+    var btnPlayInstall = document.createElement('button');
     btnPlayInstall.classList.add('btn-play-update')
-    btnPlayInstall.textContent = "INSTALL"
+   
+    btnPlayInstall.disabled = true; 
 
-    gameStorage.forEach(item => {
-        if (item.idGame === data.idGame) {
-            if (item.lastestVersion === data.lastestVersion) btnPlayInstall.textContent = "PLAY";
-                else btnPlayInstall.textContent = "UPDATE";
-            return
-        } 
-    });
+    var pathGame = gamePathStorage + '\\'+ data.idGame;
+    if (fs.existsSync(pathGame)){
+        fs.readFile(pathGame+'\\'+data.idGame, function(err, d) {
+            if (err) throw err;
+            var info = JSON.parse(d);
+            if (data.lastestVersion === info.version) { 
+                btnPlayInstall.textContent = "PLAY";
+                btnPlayInstall.disabled = false; 
+            }
+                else {
+                    btnPlayInstall.textContent = "UPDATE";
+                    btnPlayInstall.disabled = false; 
+                }
+        })
+    } else {
+        btnPlayInstall.textContent = "INSTALL"
+        btnPlayInstall.disabled = false; 
+    }
+
     btnPlayInstall.onclick = function(){
         var pathGame = gamePathStorage + '\\'+ data.idGame;
         if (btnPlayInstall.textContent === 'INSTALL'){
             
-            if (!fs.existsSync(pathGame)){
-                fs.mkdirSync(pathGame);
-            }
-
             var obj = {url: urltest, pathGame: pathGame, dataGame: data};
             ipcRenderer.invoke('download',obj);
             
 
             console.log('install')
-        } else if ( btnPlayInstall.textContent = "UPDATE") {
+        } else if ( btnPlayInstall.textContent === "UPDATE") {
             console.log('update')
         } else {
-            shell.openPath(pathGame + "\\" + data.filePlay)
+            shell.openPath(pathGame + "\\Sniper Lengendary.exe")
             console.log('start')
         }
     }

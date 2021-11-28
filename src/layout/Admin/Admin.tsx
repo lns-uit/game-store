@@ -145,7 +145,11 @@ function Admin(){
                 },
                 listImageDetail: urlImgs
 
-          })
+          },{
+            headers: {
+                Authorization: "Bearer " + localStorage.getItem('accessToken') 
+            }
+        })
           .then((response) => {
             console.log(response.data)
           })

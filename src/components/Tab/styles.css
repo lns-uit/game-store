@@ -6,29 +6,34 @@
   justify-content: center;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  border-radius: 5px;
 }
 
 .tab p {
   margin: 0;
   text-transform: uppercase;
-  color: #fff;
+  color: rgb(167, 167, 167);
   font-size: 15px;
   font-weight: bold;
+  transition: .3s;
 }
 
 .tab:hover {
-  background-color: #fff;
+
   color: var(--grayContainer-color);
 }
 
 .tab:hover p {
-  color: var(--grayContainer-color);
+  color: #fff
 }
 
 .tab--active {
-  background-color: #fff;
+  background-color: rgb(255, 255, 255);
 }
 
+.tab--active p:hover {
+  color: var(--grayContainer-color) !important;
+}
 .tab--active p {
   color: var(--grayContainer-color);
 }

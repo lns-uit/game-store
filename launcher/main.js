@@ -6,6 +6,7 @@ const {
   ipcMain,
   Notification,
   dialog,
+  session
 } = require("electron");
 var fs = require("fs");
 var DecompressZip = require('decompress-zip');
@@ -14,19 +15,20 @@ const axios = require("axios");
 const https = require("https");
 const storage = require("electron-json-storage");
 const { unzip } = require("zlib");
+const { file } = require("@babel/types");
 const agent = new https.Agent({
   rejectUnauthorized: false,
 });
 let mainScreen;
 let loginScreen;
 
-const NOTIFICATION_TITLE = "Basic Notification";
-const NOTIFICATION_BODY = "Notification from the Main process";
+const NOTIFICATION_TITLE = "Game In Launcher Is Installed";
+const NOTIFICATION_BODY = "You can play it right now!";
 
-function showNotification() {
+function showNotification(TITLE,BODY) {
   new Notification({
-    title: NOTIFICATION_TITLE,
-    body: NOTIFICATION_BODY,
+    title: TITLE,
+    body: BODY,
   }).show();
 }
 
@@ -42,6 +44,7 @@ function createMainScreen() {
     // icon: __dirname + '/texture/icon-official.png',
     frame: false,
     webPreferences: {
+      webviewTag: true,
       webSecurity: false,
       enableRemoteModule: true,
       nodeIntegration: true,
@@ -97,6 +100,10 @@ ipcMain.handle("download", (event, obj) => {
     })
     .then((res) => {
       if (res.status == 200) {
+        if (!fs.existsSync(obj.pathGame)){
+          console.log('kll')
+          fs.mkdirSync(obj.pathGame);
+        }
         const dir = obj.pathGame;
         res.data.pipe(fs.createWriteStream(dir + "\\Game.zip"));
         res.data.on("end", () => {
@@ -123,14 +130,19 @@ function unZipGame(obj){
 
     // Notify when everything is extracted
     unzipper.on('extract', function (log) {
-        console.log('Finished extracting', log);
+        showNotification(obj.dataGame.nameGame, "Game is installed, you can play right now!")
+        // console.log('Finished extracting', log);
     });
 
     // Notify "progress" of the decompressed files
     unzipper.on('progress', function (fileIndex, fileCount) {
+      // obj.ng.textContent = 'Extracted file ' + (fileIndex + 1) + ' of ' + fileCount; 
         console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
     });
-
+    fs.writeFile(obj.pathGame+'\\'+obj.dataGame.idGame,'{"version":"'+obj.dataGame.lastestVersion+'"}', function (err) {
+      if (err) throw err;
+      console.log('File is created successfully.');
+    });
     // Start extraction of the content
     unzipper.extract({
         path: DESTINATION_PATH
@@ -180,6 +192,12 @@ function validateLogin(obj) {
 }
 app.commandLine.appendSwitch("ignore-certificate-errors");
 app.whenReady().then(() => {
+  session.defaultSession.cookies.get({ url: 'https://stun-store-preview-puce.vercel.app' })
+  .then((cookies) => {
+    console.log(cookies)
+  }).catch((error) => {
+    console.log(error)
+  })
   storage.has("game", function (error, hasKey) {
     if (error) throw error;
     if (!hasKey) {

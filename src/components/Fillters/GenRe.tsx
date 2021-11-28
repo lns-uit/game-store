@@ -29,7 +29,7 @@ function Genre({
         }
     }
     return (
-        <div className="layout-2 border-bottom">
+        <div className="">
             <div className="d-flex f-column">
                 <div className="option">
                     <Menu

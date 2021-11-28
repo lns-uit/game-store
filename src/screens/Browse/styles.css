@@ -41,6 +41,20 @@
 .fillter-mobile{
     display: none;
 }
+.fillter-pc *{
+    background-color: transparent !important;
+    color: white;
+}
+.ant-menu-item{
+    border-top: 1px solid rgb(58, 58, 58) !important;
+}
+.option .ant-menu-title-content{
+    color: white !important;
+}
+.option{
+    border: 0px solid transparent !important; 
+}
+
 @media only screen and (max-width: 767.5px) {
     .fillter-pc {
       display: none;

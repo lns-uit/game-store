@@ -86,22 +86,23 @@
 .btn-slides-main {
   height: 90%;
   width: 95%;
-  background: transparent;
+  background:transparent;
   border-radius: 10px;
   display: flex;
   justify-content: flex-start;
   cursor: pointer !important;
   overflow: hidden;
-  transition: 0.4s;
+  transition: .4s;
+  border: 1px solid rgb(37, 37, 37);
 }
 .btn-slides-timing-container {
-  position: absolute;
+  position:absolute;
   background: transparent;
   z-index: 1 !important;
   width: 15.2vw;
   height: 5.4vw;
   border-radius: 10px;
-  opacity: 1;
+  opacity:1;
   overflow: hidden;
 }
 .btn-slides-timing-container-lm {
@@ -115,7 +116,7 @@
   overflow: hidden;
 }
 .btn-slides:hover .btn-slides-timing-container {
-  background: var(--mainGray-color) !important;
+  background: #222222 !important;
   transition: 0.5s;
 }
 .btn-slides:hover .btn-slides-timing-container-lm {
@@ -132,7 +133,7 @@
 }
 .btn-slides-timing {
   position: relative;
-  background: rgb(65, 65, 65);
+  background: #363636 !important;
   height: 100%;
   border-inline-width: 10px !important;
   border-inline-color: white !important;

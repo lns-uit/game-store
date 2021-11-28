@@ -2,7 +2,7 @@
 
     --font-family-app: "Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
 
-    --color-gray: rgb(30, 30, 30);
+    --color-gray: rgba(30, 30, 30, 0);
     --color-icon: rgb(99, 99, 99);
     --color-icon-hover: rgb(216, 216, 216);
 }
@@ -12,6 +12,9 @@ body {
     overflow:hidden;
     background-color: var(--color-gray);;
     font-family: var(--font-family-app);
+    background-image: linear-gradient(to left,rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.9) 50%,rgba(10, 10, 10, 1) 100%),  url('../texture/gokublack.jpg') ;
+    background-position: center;
+    background-size: cover;
 }
 body *{
     box-sizing: border-box;
