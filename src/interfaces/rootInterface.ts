@@ -26,7 +26,7 @@ interface GameType {
   imageGameDetail: ImageType[];
   newVersion: any;
 }
-interface GameVersionType{
+interface GameVersionType {
   idGameVersion: string;
   idGame: string;
   versionGame: string;
@@ -44,10 +44,10 @@ interface GameVersionType{
 }
 interface DotInfoType {
   image: string;
-  name?: string;
+  // name?: string;
 }
-interface ImageType{
-  idImage:any;
+interface ImageType {
+  idImage: any;
   url: any;
 }
 interface DiscountType {
@@ -59,78 +59,91 @@ interface DiscountType {
   endDate: any;
 }
 
-interface GenreType{
+interface GenreType {
   idGenre: any;
   nameGenre: any;
 }
 
-interface UserType{
-  idUser:string;
-  userName:string;
-  password:string;
-  realName:string;
-  email:string;
-  numberPhone:string;
+interface UserType {
+  idUser: string;
+  userName: string;
+  password: string;
+  realName: string;
+  email: string;
+  numberPhone: string;
   avatar: any;
   background: any;
 }
 
-interface Imgs{
+interface Imgs {
   url: string;
 }
 
-interface GameDetailss{
-  idGame: string,
-  nameGame: string,
-  averageRate: number,
+interface GameDetailss {
+  idGame: string;
+  nameGame: string;
+  averageRate: number;
   cost: number;
-  developer: string,
-  publisher: string,
-  plaform: string,
-  releaseDate: string,
-  lastestVersion: string,
-  numberOfBuyer: number,
-  numberOfDowloaders: number,
-  numOfRate: number,
+  developer: string;
+  publisher: string;
+  plaform: string;
+  releaseDate: string;
+  lastestVersion: string;
+  numberOfBuyer: number;
+  numberOfDowloaders: number;
+  numOfRate: number;
   discount: {
-    idDiscount: string,
-    title: string,
-    percentDiscount: number,
-    startDate: string,
-    endDate: string
-  },
+    idDiscount: string;
+    title: string;
+    percentDiscount: number;
+    startDate: string;
+    endDate: string;
+  };
   genres: {
-    idGenreNavigation:{
-      idGenre: string,
-      nameGenre: string
-    }
-  }[],
-  imageGameDetail: {
-    idImage: string,
-    url: string
-  }[],
-  newVersion:{
-    idGameVersion: string,
-    idGame: string,
-    versionGame: string,
-    dateUpdate: string,
-    urlDownload: string,
-    shortDescription: string,
-    descriptions: string,
-    requires: string,
-    os: string,
-    processor: string,
-    storage: string,
-    directX: string,
-    graphics: string,
-    privacyPolicy: string,
-    memory: string
-  }
+    idGenreNavigation: {
+      idGenre: string;
+      nameGenre: string;
+    };
+  }[];
+  imageGameDetail: ImageGameDetail[];
+  newVersion: {
+    idGameVersion: string;
+    idGame: string;
+    versionGame: string;
+    dateUpdate: string;
+    urlDownload: string;
+    shortDescription: string;
+    descriptions: string;
+    requires: string;
+    os: string;
+    processor: string;
+    storage: string;
+    directX: string;
+    graphics: string;
+    privacyPolicy: string;
+    memory: string;
+  };
+}
+
+interface ImageGameDetail {
+  idImage: string;
+  url: string;
 }
 
 export enum ActionType {
-  ADD = "add",
-  REMOVE = "remove",
+  ADD = 'add',
+  REMOVE = 'remove',
 }
 
-export type {ImageType, GameInfoType, DotInfoType, DiscountType, GenreType, GameType ,UserType, GameVersionType, Imgs, GameDetailss};
+export type {
+  ImageType,
+  GameInfoType,
+  DotInfoType,
+  DiscountType,
+  GenreType,
+  GameType,
+  UserType,
+  GameVersionType,
+  Imgs,
+  GameDetailss,
+};

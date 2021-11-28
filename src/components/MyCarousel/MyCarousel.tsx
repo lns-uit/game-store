@@ -2,19 +2,22 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Carousel, Col, Row } from 'antd';
 import './styles.css';
 import DotsCustom from '../DotsCustom/DotsCustom';
-import { GameInfoType } from '../../interfaces/rootInterface';
+import { DotInfoType, GameInfoType } from '../../interfaces/rootInterface';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/lib/carousel';
 
 interface MyCarouselPropsType {
-  games: GameInfoType[];
+  images: {
+    idImage: string;
+    url: string;
+  }[];
 }
 
-function MyCarousel({ games }: MyCarouselPropsType) {
+function MyCarousel({ images }: MyCarouselPropsType) {
   const carouselRef = useRef<CarouselRef>(null);
 
-  const dotsInfo = games.map(game => {
-    return { name: game.name, image: game.image };
+  const dotsInfo = images.map(image => {
+    return { image: image.url };
   });
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -41,9 +44,9 @@ function MyCarousel({ games }: MyCarouselPropsType) {
           afterChange={index => {
             setActiveIndex(index);
           }}>
-          {games.map(game => (
+          {images.map(image => (
             <div className='my-carousel__item'>
-              <img src={game.image} alt='carousel-image' />
+              <img src={image.url} alt='carousel-image' />
             </div>
           ))}
         </Carousel>
