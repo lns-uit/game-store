@@ -2,7 +2,7 @@ import React from 'react';
 import "../../screens/User/styles.css"
 import { Avatar } from 'antd';
 function ProfileUserLayout(){
-    const backgroundUser = 'https://lienminh.garena.vn/images/Lan_h3lpm3/LoL-Patch-Notes-11-4-Article-Banner.jpg'
+    const backgroundUser = 'https://st.quantrimang.com/photos/image/2019/06/11/lol-la-gi-2.jpg'
     return (
         <div className="white">
             <div className="background-profile border-radius-8">
@@ -22,7 +22,7 @@ function ProfileUserLayout(){
                 <div className="flex-basic relative d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">
                     <div className="width-full pd-left-right-16 relative">
                         <div>
-                            <div className="relative d-flex align-center avatar">
+                            <div className="relative d-flex align-center avatars">
                                 <Avatar
                                     size={{ xs: 100, sm: 100, md: 100, lg: 168, xl: 168, xxl: 168 }}
                                     src={backgroundUser}
@@ -34,7 +34,7 @@ function ProfileUserLayout(){
             </div>
             <div className="information-profile">
                 <div className="flex-basic relative d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">
-                    <div className="width-full pd-left-right-16 relative">
+                    <div className="width-full pd-left-right-64 relative">
                         <div>
                             map dit
                         </div>

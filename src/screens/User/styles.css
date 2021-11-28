@@ -28,7 +28,9 @@
 .pd-left-right-16{
     padding: 0px 16px;
 }
-
+.pd-left-right-32{
+    padding: 0px 64px;
+}
 /*border*/
 .border-radius-8{
     border-radius: 8px;
@@ -77,7 +79,7 @@
     top: 270px;
     left: 20px;
 }
-.avatar{
+.avatars{
     position: absolute;
     top: -75px;
     left: 26px;
