@@ -28,8 +28,12 @@
 .pd-left-right-16{
     padding: 0px 16px;
 }
-.pd-left-right-32{
-    padding: 0px 64px;
+.pd-left-right-48{
+    padding: 0px 48px;
+}
+/*margin*/
+.m-bottom-4{
+    margin-bottom: 4px;
 }
 /*border*/
 .border-radius-8{
@@ -93,5 +97,5 @@
     flex-shrink: 0;
     justify-content: center;
     z-index: 0;
-    margin-top: 24px;
+    margin-top: 16px;
 }
