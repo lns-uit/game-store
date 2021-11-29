@@ -120,7 +120,6 @@ ipcMain.handle("download", (event, obj) => {
 function unZipGame(obj){
     var ZIP_FILE_PATH = obj.pathGame + "\\Game.zip";
     var DESTINATION_PATH = obj.pathGame;
-    console.log(ZIP_FILE_PATH,DESTINATION_PATH)
     var unzipper = new DecompressZip(ZIP_FILE_PATH);
 
     // Add the error event listener
