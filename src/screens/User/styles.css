@@ -115,3 +115,13 @@
 .border-bottom-profile{
     border-bottom: 1px solid #ECECEC;
 }
+.collection-profile{
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    justify-content: center;
+    z-index: 0;
+}
