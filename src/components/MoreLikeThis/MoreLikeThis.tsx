@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {dotNumber} from '../../utils/index';
+import numberWithCommas from '../../utils/numOfWithCommas';
 
 const games=[
     {
@@ -88,17 +88,17 @@ function MoreLikeThis() {
                                                     </div>
                                                     <div className="pd-0-3 d-flex">
                                                         <p className="m-0 delete-price">
-                                                            {dotNumber(game.price)}₫
+                                                            {numberWithCommas(game.price)}₫
                                                         </p>
                                                         <p className="m-0 final-price">
-                                                            {dotNumber(game.price - game.discount* game.price)}₫
+                                                            {numberWithCommas(game.price - game.discount* game.price)}₫
                                                         </p>
                                                     </div>
                                                 </div>
                                                 :
                                                 <div className="d-flex justify-content-end">
                                                     <p className="m-0 final-price">
-                                                        {dotNumber(game.price - game.discount* game.price)}₫
+                                                        {numberWithCommas(game.price - game.discount* game.price)}₫
                                                     </p>
                                                 </div>
                                             }

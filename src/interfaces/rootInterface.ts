@@ -65,10 +65,10 @@ interface GenreType {
 }
 
 interface UserType {
-  idUser: string;
+  idUser: any;
   userName: string;
   password: string;
-  realName: string;
+  realName: any;
   email: string;
   numberPhone: string;
   avatar: any;
@@ -130,6 +130,19 @@ interface ImageGameDetail {
   url: string;
 }
 
+interface CommentType{
+  idComment: string;
+  idGame: string;
+  idUser: string;
+  content: string;
+  likes: number;
+  dislike: number;
+  time: Date;
+  star: number;
+  userName: any;
+  avatar: string;
+}
+ 
 export enum ActionType {
   ADD = 'add',
   REMOVE = 'remove',
@@ -146,4 +159,5 @@ export type {
   GameVersionType,
   Imgs,
   GameDetailss,
+  CommentType,
 };
