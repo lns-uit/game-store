@@ -17,7 +17,6 @@ function App() {
   const screens = useBreakpoint();
   const [isOpen, setIsOpen] = useState(false);
   const user = useSelector((state: RootState) => state.user);
-  console.log(user);
   const onOpen = () => {
     setIsOpen(true);
   };
