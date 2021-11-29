@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Switch, useLocation, Redirect } from 'react-router';
 import { setTabAction } from '../redux/actions/tabAction';
@@ -13,123 +13,122 @@ import SignIn from '../screens/SignIn/SignIn';
 import SignUp from '../screens/SignUp/SignUp';
 import User from '../screens/User/User';
 import SplashScreen from '../screens/SplashScreen/SplashScreen';
-import userApi from "../api/userApi";
 import RootErrorMessage from '../constants/ErrorMessage';
 import { login } from '../redux/actions/userAction';
-import axios from 'axios'
+import userApi from '../api/userApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/reducers';
 
 function RootNavigation() {
   let location = useLocation();
+  const user = useSelector((state: RootState) => state.user);
+  const { idUser } = user || {};
   const dispatch = useDispatch();
-  const [isLoginToken, setIsLoginToken] = useState(false);
+  const isLogin = useMemo(() => !!idUser, [idUser]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const loginWithToken = async tokenLogin => {
+    if (!tokenLogin) return false;
+
+    const responsive = await userApi.loginToken(tokenLogin);
+    const { user, token } = responsive || {};
+    if (token) {
+      dispatch(login(user));
+      localStorage.setItem('accessToken', token);
+    }
+  };
+
+  const fetchData = useCallback(async () => {
+    const tokenLogin = localStorage.getItem('accessToken');
+    await loginWithToken(tokenLogin);
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
+  }, []);
 
   useEffect(() => {
     dispatch(setTabAction(location.pathname));
-    const tokenLogin = localStorage.getItem('accessToken');
-    async function LoginByToken(){
-      // try {
-      //   const responsive = await userApi.loginApi(localStorage.getItem("accessToken"));
-      //   const { token, user } = responsive || {};
-        
-      //   setIsLoginToken(true);
-      //   console.log(responsive);
-  
-      //   if (token) {
-      //     localStorage.setItem('accessToken', token);
-      //     dispatch(login(user));
-      //     setIsLoginToken(true);
-      //   }
-      // } catch (e) {
-      //   console.log(e);
-      //   setIsLoginToken(true);
-      //   alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
-      // }
-      axios.post("https://localhost:5001/api/user/login",{},{
-        headers:{
-          token: tokenLogin || ''
-        }
-      })
-        .then(res=>{
-          const { token, user } = res.data || {};
-          localStorage.setItem('accessToken', token);
-          dispatch(login(user));
-          setIsLoginToken(true);
-        })
-        .catch((error) => {
-          console.log(error)
-          setIsLoginToken(true);
-        })
-    }
+  }, [location]);
 
-    LoginByToken();
-  }, [location,isLoginToken]);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
-    <div>
-      {
-        isLoginToken=== false?
-        <Switch>
-          <Route path="/">
-            <SplashScreen />
-          </Route>
-        </Switch>
-        :
-        <Switch>
-          <Route path='/user/:idUser/edit'>
+    <Switch>
+      {isLoading ? (
+        <Route path='/' render={() => <SplashScreen />} />
+      ) : (
+        <>
+          {/* user login */}
+          <PrivateRoute path='/user/:idUser/edit'>
             <div>map dit</div>
-          </Route>
+          </PrivateRoute>
+
+          <PrivateRoute path='/user/:idUser'>
+            <User></User>
+          </PrivateRoute>
+
+          <PrivateRoute path='/admin/create-game'>
+            <AdminCreateGame></AdminCreateGame>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console'>
+            <AdminScreen />
+          </PrivateRoute>
+
+          {/* Auth*/}
+          <Route
+            path='/buyer/sign-in'
+            render={() => (isLogin ? <Redirect to='/' /> : <SignIn />)}
+          />
+          <Route
+            path='/buyer/sign-up'
+            render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
+          />
+
+          {/* everyone */}
           <Route path='/game/:idGame/:version'>
             <GameDetail />
           </Route>
           <Route path='/browse'>
             <BrowseScreen />
           </Route>
-          <Route
-            path='/buyer/sign-in'
-            render={() => {
-              return localStorage.getItem('accessToken') === null ? (
-                <SignIn/>
-              ) : (
-                <Redirect to='/'/>
-              );
-            }}></Route>
-          <Route
-            path='/buyer/sign-up'
-            render={() => {
-              return localStorage.getItem('accessToken') === null ? (
-                <SignUp/>
-              ) : (
-                <Redirect to='/'/>
-              );
-            }}></Route>
-          <Route path='/user/:idUser'>
-            <User></User>
-          </Route>
-
           <Route path='/help'>
             <HelpScreen />
           </Route>
           <Route path='/faq'>
             <FAQScreen />
           </Route>
-          <Route path='/admin/create-game'>
-            <AdminCreateGame></AdminCreateGame>
-          </Route>
-          <Route
-            path='/admin/console'
-            render={() => {
-              return localStorage.getItem('accessToken') === null ? (
-                <Redirect to='/'></Redirect>
-              ) : (
-                <AdminScreen />
-              );
-            }}></Route>
-          <Route path='/'>
+          <Route exact path='/'>
             <DiscoverScreen />
           </Route>
-        </Switch>
-      }
-    </div>
+        </>
+      )}
+    </Switch>
   );
 }
+
+const PrivateRoute = ({ children, ...rest }) => {
+  const user = useSelector((state: RootState) => state.user);
+  const { idUser } = user || {};
+
+  return (
+    <Route
+      {...rest}
+      render={({ location }) =>
+        idUser ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: '/buyer/sign-in',
+              state: { from: location },
+            }}
+          />
+        )
+      }
+    />
+  );
+};
 
 export default RootNavigation;

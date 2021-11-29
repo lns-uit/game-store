@@ -1,8 +1,8 @@
 import callApi from '../utils/callApi';
 import { AxiosError } from 'axios';
-import {Endpoint} from "./endpoint";
+import { Endpoint } from './endpoint';
 
-const loginApi = async (formLogin) => {
+const loginApi = async formLogin => {
   try {
     console.log(formLogin);
 
@@ -19,29 +19,33 @@ const loginApi = async (formLogin) => {
   }
 };
 
-const loginToken = async (accessToken) =>{
-  console.log(accessToken)
-  try{
+const loginToken = async accessToken => {
+  console.log(accessToken);
+  try {
+    const emptyUser = {
+      email: '',
+      password: '',
+    };
     const request = await callApi(
       'post',
-      Endpoint + 'api/user/login',
-      {},
+      Endpoint.mainApi + 'api/user/login',
+      emptyUser,
       {
         headers: {
-          token: accessToken
-        }
+          token: accessToken,
+        },
       }
     );
-    const {data} = request;
+    const { data } = request;
     return data;
   } catch (e) {
     const error: any = e;
     return error.response.data;
   }
-}
+};
 
 const userApi = {
   loginApi,
-  loginToken
+  loginToken,
 };
 export default userApi;
