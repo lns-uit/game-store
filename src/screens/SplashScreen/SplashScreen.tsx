@@ -1,7 +1,9 @@
 import React from 'react';
 
 function SplashScreen(){
-    <div>SplashScreen</div>
+    return(
+        <div className="white">Loading...</div>
+    )
 }
 
 export default SplashScreen;

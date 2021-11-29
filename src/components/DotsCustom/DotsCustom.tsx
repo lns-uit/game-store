@@ -15,7 +15,6 @@ function DotsCustom({ dotsInfo, activeIndex, slideTo }: DotsCustomPropsType) {
   useEffect(() => {
     if (activeIndex % 4 === 0 && activeIndex > 0) {
       const ox = ref.current.offsetWidth;
-      console.log('moveeeeeeeeeeeee', ox);
       if (dotsInfo.length - activeIndex < 4) {
         ref.current.scrollLeft += ox / (dotsInfo.length - activeIndex);
       } else {

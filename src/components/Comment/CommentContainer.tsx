@@ -4,13 +4,14 @@ import {
     LogLevel,
 } from "@microsoft/signalr";
 import { Avatar, Button, Input, Comment, Form, Rate } from "antd";
-import { CommentType, GameVersionType } from "../../interfaces/rootInterface";
+import { CommentType, GameVersionType, UserType } from "../../interfaces/rootInterface";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector} from 'react-redux';
 import { RootState } from "../../redux/reducers/index";
 import axios from "axios";
 import { Endpoint } from "../../api/endpoint";
 import CommentItem from "./CommentItem";
+import { existsTypeAnnotation } from "@babel/types";
 const { TextArea } = Input;
 
 interface IdGame{
@@ -24,6 +25,7 @@ function CommentContainer({idGame}:IdGame) {
     const [rateInput, setRateInput] = useState(-1);
     const user = useSelector((state:RootState)=> state.user);
     const { userName = '', idUser = ''} = user || {};
+    const [userInfo, setUserInfo]  = useState<UserType>();
 
     const joinRoom = async (user, room) => {
         try {
@@ -42,11 +44,11 @@ function CommentContainer({idGame}:IdGame) {
             })
 
             connection.on("ReceiveUpdateComment", (user, comment: CommentType) => {
-
+                setComment(cmts => [comment,...cmts.slice(cmts.findIndex(item => item.idComment === comment.idComment))])
             })
 
             connection.on("ReceiveDeleteComment", (user, id: string) => {
-
+                setComment(cmts => cmts.filter(item => item.idComment !== id))
             })
 
             await connection.start();
@@ -56,6 +58,7 @@ function CommentContainer({idGame}:IdGame) {
             console.log(e);
         }
     };
+
     const sendMessage = async (message) => {
         try {
             await connection?.invoke("SendMessage", message);
@@ -70,22 +73,38 @@ function CommentContainer({idGame}:IdGame) {
             console.log(e);
         }
     }
+
+    const updateComment = async (data : CommentType) =>{
+        try {
+            await connection?.invoke("UpdateComment",data)
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    const deleteComment = async (idcmt: string) => {
+        try {
+            await connection?.invoke("DeleteComment",idcmt)
+        } catch (e) {
+            console.log(e);
+        }
+    }
     const Editor = () => (
         <Form
             onFinish={(value) => {
                 let data: CommentType = {
                     idComment: '',
                     idGame: idGame,
-                    idUser: "d5d56be0-e414-47d5-be4d-05ff7bcd9311",
+                    idUser: userInfo?.idUser,
                     content: value.comment,
                     likes: 0,
                     dislike: 0,
                     time: new Date(),
-                    rate: value.rate,
-                    userName: "https://joeschmoe.io/api/v1/random",
-                    avatar: "https://joeschmoe.io/api/v1/random"
+                    star: value.rate,
+                    userName: userInfo?.userName,
+                    avatar: userInfo?.avatar
                 }
-                createComment(data)
+
+                createComment(data);
             }}
         >
             <Form.Item
@@ -122,9 +141,25 @@ function CommentContainer({idGame}:IdGame) {
         });
     };
 
+    const getUserInfo = () => {
+        return axios.get( Endpoint.mainApi + "api/user/" + idUser,{
+          headers: {
+              Authorization: "Bearer "+ localStorage.getItem('accessToken') // token here
+          }
+        }).then((response) => {
+            setUserInfo(response.data);
+            joinRoom("stun-user", idGame);
+        }).catch(err => {
+            console.log(err)
+        })
+    };
+
     useEffect(() => {
+        if (localStorage.getItem('accessToken')!==null) {
+            getUserInfo();
+        }
         getComment();
-        joinRoom("stun-user", idGame);
+      
     }, []);
     return (
         <div>
@@ -133,13 +168,13 @@ function CommentContainer({idGame}:IdGame) {
 
                     <Comment
                         avatar={
-                            <Avatar src="https://joeschmoe.io/api/v1/random" alt="Han Solo" />
+                            <Avatar src= {userInfo?.avatar===null ? "https://firebasestorage.googleapis.com/v0/b/docprintx.appspot.com/o/logoSecondary.png?alt=media&token=d451278d-c524-46b5-a400-816b7970baa8" : userInfo?.avatar}  alt="Han Solo" />
                         }
                         content={<Editor />}
                     />
                 </div>
                 {comments.map((data, index) => (
-                    <CommentItem comment = {data} />
+                    <CommentItem comment = {data} updateCmtFunc = {updateComment} deleteCmtFunc = {deleteComment} isOwn = {idUser===data.idUser} />
                 ))}
             </div>
         </div>
