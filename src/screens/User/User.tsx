@@ -1,6 +1,8 @@
 import React from 'react';
 import "./styles.css";
-import ProfileUserLayout from "../../layout/ProfileUserLayout/ProfileUserLayout"
+import ProfileUserLayout from "../../layout/ProfileUserLayout/ProfileUserLayout";
+import CollectionLayoit from "../../layout/CollectionLayout/CollectionLayout";
+import CollectionLayout from '../../layout/CollectionLayout/CollectionLayout';
 
 function User(){
     return(
@@ -9,7 +11,8 @@ function User(){
                 <div className="min-height-inherit min-width-0 d-flex column">
                     <div className="min-height-inherit d-flex column relative">
                         <ProfileUserLayout />
-                    </div>
+                        <CollectionLayout />
+                   </div>
                 </div>
             </div>
         </div>

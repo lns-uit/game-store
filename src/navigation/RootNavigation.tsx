@@ -74,6 +74,9 @@ function RootNavigation() {
         </Switch>
         :
         <Switch>
+          <Route path='/user/:idUser/edit'>
+            <div>map dit</div>
+          </Route>
           <Route path='/game/:idGame/:version'>
             <GameDetail />
           </Route>

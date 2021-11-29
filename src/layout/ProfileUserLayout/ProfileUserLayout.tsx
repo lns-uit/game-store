@@ -1,6 +1,7 @@
 import React from 'react';
 import "../../screens/User/styles.css"
 import { Avatar } from 'antd';
+import {Link} from "react-router-dom";
 function ProfileUserLayout(){
     const backgroundUser = 'https://st.quantrimang.com/photos/image/2019/06/11/lol-la-gi-2.jpg';
     const user = {
@@ -10,7 +11,7 @@ function ProfileUserLayout(){
         phone: "0792545xxx"
     }
     return (
-        <div className="white">
+        <div className="white border-bottom-profile pd-bottom-24">
             <div className="background-profile border-radius-8">
                 <div 
                     className="flex-basic relative border-radius-8 d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">
@@ -49,7 +50,9 @@ function ProfileUserLayout(){
                                 <p className="m-0 ">Phone: {user.phone}</p>
                             </div>
                             <div>
-                                <div className="edit-profile">Edit Profile</div>
+                                <Link to={"/user/c1217ffe-de67-49fc-8515-eb6487b7dcda/edit"}>
+                                    <div className="edit-profile">Edit Profile</div>
+                                </Link>
                             </div>
                         </div>
                     </div>

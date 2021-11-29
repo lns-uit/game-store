@@ -31,6 +31,9 @@
 .pd-left-right-48{
     padding: 0px 48px;
 }
+.pd-bottom-24{
+    padding-bottom: 24px;
+}
 /*margin*/
 .m-bottom-4{
     margin-bottom: 4px;
@@ -100,5 +103,15 @@
     margin-top: 16px;
 }
 .edit-profile{
-    
+    padding: 10px 20px;    
+    background-color: #404040;
+    border-radius: 4px;
+    color: #ECECEC;
+    opacity: .8;
+}
+.edit-profile:hover{
+    opacity: 1;
+}
+.border-bottom-profile{
+    border-bottom: 1px solid #ECECEC;
 }
