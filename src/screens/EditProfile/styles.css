@@ -1,3 +1,7 @@
+/*padding*/
+.pd-24-20{
+    padding: 24px 20px;
+}
 /*margin*/
 .m-left-right-8{
     margin-left: 8px;
@@ -92,4 +96,43 @@
 }
 .hover-edit-profile-navigation:hover{
     background-position: 0 0;
+}
+.DialogHeader{
+    color: #ffffff;
+    font-size: 24px;
+    letter-spacing: 1px;
+    margin: 0px 5px 0px 5px;
+}
+.DialogBodyText{
+    margin-left: 5px;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    line-height: normal;
+    color: #969696;
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 300;
+    margin-bottom: 32px;
+    user-select: none;
+}
+.edit-general{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 0 0 15px 0;
+}
+.general-title{
+    color: #ffffff;
+    padding: 0px 0px 6px 10px;
+    border-bottom: 2px solid rgba(228,228,228,.1);
+}
+.DialogLabel{
+    font-weight: 300;
+    color: #ffffff;
+    text-transform: uppercase;
+    line-height: 19px;
+    font-size: 13px;
+    margin-bottom: 4px;
+    user-select: none;
+    letter-spacing: initial;
 }
