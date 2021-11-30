@@ -14,18 +14,26 @@ import { useDispatch } from 'react-redux';
 import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
 import axios from 'axios';
 import { GenreType } from '../../interfaces/rootInterface';
-import adminApi from '../../api/adminApi'
+import adminApi from '../../api/adminApi';
+import reactImageSize from 'react-image-size';
 
 const { Option } = Select;
 
 function DetailGame(){
+    const [iconGame, setIconGame] = useState<any>(null);
+    const [loadingIconGame, setLoadingIconGame] = useState<any>(true);
     const dispatch = useDispatch();
     const [gameData, setGameData] = useState<any[]>([]);
     let allGame: any[] = [];
 
     const normFileImages = (e) => {
+        console.log(e);
         if(e.file.status === "error"){
             getLinkFileImage(e.file.originFileObj);
+        }
+        setLoadingIconGame(false);
+        if(e.file.status === "removed"){
+            setLoadingIconGame(true);
         }
     }
     const getDataGame = async () => {
@@ -54,7 +62,7 @@ function DetailGame(){
             setGameData(allGame);
         }
 
-      };
+    };
     function getLinkFileImage(file){
         const uploadTask = storage.ref(`gameAvatar/${file.name}`).put(file);
         uploadTask.on(
@@ -69,11 +77,26 @@ function DetailGame(){
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        console.log(1);
-                        dispatch(setUrlGameAvatar('getLink', file.name,url,));
+                        checkWidthHeight(url,file.name);
                     })
             }
         )
+    }
+    async function checkWidthHeight(imageUrl,name) {
+        try {
+            const { width, height } = await reactImageSize(imageUrl);
+            if (width !== 1080 && height !== 1080){
+                setLoadingIconGame(true); 
+                alert("Icon Game default 1080x1080")
+            }else{
+                setIconGame(imageUrl);
+                setLoadingIconGame(true);
+                dispatch(setUrlGameAvatar('getLink', name ,imageUrl));
+            }
+        } catch(err){
+            console.log(err);
+            setLoadingIconGame(true);
+        }
     }
     useEffect(() => {
         getDataGame();
@@ -167,15 +190,31 @@ function DetailGame(){
                     >
                         <Input placeholder="Version" />
                     </Form.Item>
+                    <div className="background-profile border-radius-8">
+                        <div 
+                            className="flex-basic relative border-radius-8 d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">
+                            <div className="width-full border-radius-8 height-300 icon-game">
+                                {
+                                    loadingIconGame === true ?
+                                        iconGame !== null
+                                        ?
+                                        <img src={iconGame} alt="icon Game"/>
+                                        : null
+                                    :<div className="loadding-icon-game">
+                                        Uploading...
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
                     <Form.Item
                         name="iconGame"
                         valuePropName="fileList"
                         label = "Main Image Game ( 1080px x 1080px )"
                         getValueFromEvent={normFileImages}
-                        rules={[{ required: true, message: 'Please upload main image game!'  }]}
                     >
                         <Upload name="iconGame">
-                        <Button icon={<UploadOutlined />}>Upload icon game</Button>
+                            <Button icon={<UploadOutlined />}>Upload icon game</Button>
                         </Upload>
                     </Form.Item>
                 </Col>
