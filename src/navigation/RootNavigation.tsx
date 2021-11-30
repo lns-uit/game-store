@@ -18,6 +18,7 @@ import { login } from '../redux/actions/userAction';
 import userApi from '../api/userApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/reducers';
+
 import ConsoleGameListScreen from '../screens/Admin/components/AllGame/ConsoleGameListScreen';
 import ConsoleUsersListScreen from '../screens/Admin/components/AllUser/ConsoleUsersListScreen';
 import DiscountEvent from '../screens/Admin/components/DiscountEvent/DiscountEvent';
@@ -26,6 +27,8 @@ import PrivacyPolicyEditor from '../screens/Admin/components/PrivacyPolicy/Priva
 import StoreRefundPolicyEditor from '../screens/Admin/components/StoreRefundPolicy/StoreRefundPolicyEditor';
 import TermOfService from '../screens/Admin/components/TermOfService/TermOfServiceEditor';
 import DiscoverCMS from '../screens/Admin/components/DiscoverCMS/DiscoverCMS'
+import EditProfile from '../screens/EditProfile/EditProfile'
+
 
 function RootNavigation() {
   let location = useLocation();
@@ -69,16 +72,15 @@ function RootNavigation() {
       ) : (
         <>
           {/* user login */}
-          <PrivateRoute path='/user/:idUser/edit'>
-            <div>map dit</div>
-          </PrivateRoute>
 
+          <PrivateRoute path='/edit/user/:id'>
+            <EditProfile/>
+          </PrivateRoute>
           <PrivateRoute path='/user/:idUser'>
-            <User></User>
+            <User/>
           </PrivateRoute>
-
           <PrivateRoute path='/admin/create-game'>
-            <AdminCreateGame></AdminCreateGame>
+            <AdminCreateGame/>
           </PrivateRoute>
 
           

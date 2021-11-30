@@ -50,7 +50,7 @@ function ProfileUserLayout(){
                                 <p className="m-0 ">Phone: {user.phone}</p>
                             </div>
                             <div>
-                                <Link to={"/user/c1217ffe-de67-49fc-8515-eb6487b7dcda/edit"}>
+                                <Link to="/edit/user/c1217ffe-de67-49fc-8515-eb6487b7dcda">
                                     <div className="edit-profile">Edit Profile</div>
                                 </Link>
                             </div>
