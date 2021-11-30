@@ -18,6 +18,7 @@ import { login } from '../redux/actions/userAction';
 import userApi from '../api/userApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/reducers';
+import EditProfile from '../screens/EditProfile/EditProfile'
 
 function RootNavigation() {
   let location = useLocation();
@@ -61,16 +62,15 @@ function RootNavigation() {
       ) : (
         <>
           {/* user login */}
-          <PrivateRoute path='/user/:idUser/edit'>
-            <div>map dit</div>
-          </PrivateRoute>
 
+          <PrivateRoute path='/edit/user/:id'>
+            <EditProfile/>
+          </PrivateRoute>
           <PrivateRoute path='/user/:idUser'>
-            <User></User>
+            <User/>
           </PrivateRoute>
-
           <PrivateRoute path='/admin/create-game'>
-            <AdminCreateGame></AdminCreateGame>
+            <AdminCreateGame/>
           </PrivateRoute>
           <PrivateRoute path='/admin/console'>
             <AdminScreen />
