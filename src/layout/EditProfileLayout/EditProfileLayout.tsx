@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import { Form } from 'antd';
 import EditProfileNavigation from "../../components/EditProfileNavigavtion/EditProfileNavigavtion";
 import EditProfileGeneral from '../../components/EditProfileGeneral/EditProfileGeneral';
+import AvatarAndCoverImage from '../../components/AvatarAndCoverImage/AvatarAndCoverImage';
 
 function EditProfileLayout(){
     const avatar = "https://scr.vn/wp-content/uploads/2020/07/Avatar-Facebook-tr%E1%BA%AFng.jpg";
@@ -61,8 +62,10 @@ function EditProfileLayout(){
                                     initialValues={{ remember: true }}
                                     onFinish={onFinish}
                                     autoComplete="off"
+                                    layout= "vertical"
                                 >
-                                    <EditProfileGeneral/>
+                                    {/* <EditProfileGeneral/> */}
+                                    <AvatarAndCoverImage/>
                                 </Form>
                             </Col>
                         </Row>
