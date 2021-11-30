@@ -79,6 +79,12 @@ interface Imgs {
   url: string;
 }
 
+interface FormRegisterType {
+  username: string;
+  password: string;
+  email: string;
+}
+
 interface GameDetailss {
   idGame: string;
   nameGame: string;
@@ -130,7 +136,7 @@ interface ImageGameDetail {
   url: string;
 }
 
-interface CommentType{
+interface CommentType {
   idComment: string;
   idGame: string;
   idUser: string;
@@ -142,7 +148,7 @@ interface CommentType{
   userName: any;
   avatar: string;
 }
- 
+
 export enum ActionType {
   ADD = 'add',
   REMOVE = 'remove',
@@ -160,4 +166,5 @@ export type {
   Imgs,
   GameDetailss,
   CommentType,
+  FormRegisterType,
 };

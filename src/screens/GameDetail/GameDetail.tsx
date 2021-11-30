@@ -3,31 +3,32 @@ import { useParams } from 'react-router-dom';
 import LayoutGameDetail1 from '../../layout/LayoutGameDetail1/LayoutGameDetail1';
 import LayoutGameDetail2 from '../../layout/LayoutGameDetail2/LayoutGameDetail2';
 import gamesApi from '../../api/gamesApi';
+import { GameDetailss } from '../../interfaces/rootInterface';
 
 function GameDetail() {
-  let slug: any = {};
-  slug = useParams();
-  const [game, setGame] = useState<any>(undefined);
+  const slug = useParams();
+  const [game, setGame] = useState<GameDetailss>();
+
+  const fetchGameData = async () => {
+    const response = await gamesApi.getGameDetail(slug);
+    if (response) {
+      console.log(response);
+      setGame(response);
+    }
+  };
 
   useEffect(() => {
-    async function getApiGameDetail() {
-      const response = await gamesApi.getGameDetail(slug);
-      console.log(response.discount);
-      if (response) {
-        setGame(response);
-      }
-    }
-
-    getApiGameDetail();
+    fetchGameData();
   }, []);
+
   return (
     <div>
-      {game === undefined ? (
+      {!game?.idGame ? (
         <div>Loadding</div>
       ) : (
         <div>
-          <LayoutGameDetail1 game={GAME} />
-          <LayoutGameDetail2 game={GAME} />
+          <LayoutGameDetail1 game={game} />
+          <LayoutGameDetail2 game={game} />
         </div>
       )}
     </div>
