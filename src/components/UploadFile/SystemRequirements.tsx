@@ -19,9 +19,10 @@ function SystemRequirements() {
                     sm={24}
                     xs={24}
                 >
-                    <h3 className="uppercase m-0 white">Minimum</h3>
+
                     <Form.Item
                         name="processor"
+                        label = "Processor"
                         rules={[{ required: true, message: 'Please input processor!' }]}
                     >
                         <Input placeholder="Processor" />
@@ -29,6 +30,7 @@ function SystemRequirements() {
 
                     <Form.Item
                         name="memory"
+                        label = "Memory"
                         rules={[{ required: true, message: 'Please select memory!' }]}
                     >
                         <Input placeholder="Memory" />
@@ -36,6 +38,7 @@ function SystemRequirements() {
 
                     <Form.Item
                         name="graphics"
+                        label = "Graphics"
                         rules={[{ required: true, message: 'Please select graphics!' }]}
                     >
                         <Input placeholder="Graphics" />
@@ -43,6 +46,7 @@ function SystemRequirements() {
 
                     <Form.Item
                         name="storage"
+                        label = "Storage"
                         rules={[{ required: true, message: 'Please input storage!' }]}
                     >
                         <Input placeholder="Storage" />
@@ -50,6 +54,7 @@ function SystemRequirements() {
 
                     <Form.Item
                         name="OS"
+                        label = "OS"
                         rules={[{ required: true, message: 'Please input OS!' }]}
                     >
                         <Input placeholder="OS" />

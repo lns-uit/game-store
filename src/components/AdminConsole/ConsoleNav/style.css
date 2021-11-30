@@ -1,0 +1,39 @@
+.console-nav-container{
+    height: 100vh;
+    position: fixed;
+    width: 300px;
+    margin-top: 90px;
+    padding: 0px 20px 0 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.btn-console-nav{
+    padding-left: 20px;
+    min-height: 45px;
+    height: fit-content;
+    width: 100%;
+    cursor: pointer;
+    border-top-right-radius: 45px;
+    border-bottom-right-radius:45px;
+    transition: .3s;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+}
+.btn-console-nav:hover{
+    background-color: #1b1b1b !important; 
+}
+.text-btn-console-nav{
+    padding-left: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: .2s;
+}
+.inactive-btn-consle svg{
+    fill: rgb(184, 184, 184) !important;
+    width: 30px;
+}
+.active-btn-console svg{
+    fill: var(--console-nav-btn-color) !important;
+    width: 30px;
+}

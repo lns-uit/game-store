@@ -1,0 +1,38 @@
+.console-header-container{
+    width: 100%;
+    height: 70px;
+    position: fixed;
+    background: #1a1a1a;
+    border-bottom: 1px solid rgb(49, 49, 49);
+}
+.box-header{
+    height: 70px;
+    display: flex;
+    align-items: center;
+    padding-left: 30px;
+}
+.btn-nav{
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 40px;
+    transition: .2s;
+}
+.btn-nav:hover{
+    background-color: rgb(59, 59, 59);
+}
+.btn-nav svg{
+    fill: rgb(196, 196, 196);
+    height: 26px;
+    width: 26px;
+}
+.box-header img{
+    height: 70px;
+    user-select: none;
+}
+.console-nav-box{
+    transition: .2s;
+}

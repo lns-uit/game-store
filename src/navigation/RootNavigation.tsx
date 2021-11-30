@@ -18,6 +18,14 @@ import { login } from '../redux/actions/userAction';
 import userApi from '../api/userApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/reducers';
+import ConsoleGameListScreen from '../screens/Admin/components/AllGame/ConsoleGameListScreen';
+import ConsoleUsersListScreen from '../screens/Admin/components/AllUser/ConsoleUsersListScreen';
+import DiscountEvent from '../screens/Admin/components/DiscountEvent/DiscountEvent';
+import GenresManager from '../screens/Admin/components/GenresManager/GenresManager';
+import PrivacyPolicyEditor from '../screens/Admin/components/PrivacyPolicy/PrivacyPolicyEditor';
+import StoreRefundPolicyEditor from '../screens/Admin/components/StoreRefundPolicy/StoreRefundPolicyEditor';
+import TermOfService from '../screens/Admin/components/TermOfService/TermOfServiceEditor';
+import DiscoverCMS from '../screens/Admin/components/DiscoverCMS/DiscoverCMS'
 
 function RootNavigation() {
   let location = useLocation();
@@ -72,8 +80,31 @@ function RootNavigation() {
           <PrivateRoute path='/admin/create-game'>
             <AdminCreateGame></AdminCreateGame>
           </PrivateRoute>
-          <PrivateRoute path='/admin/console'>
-            <AdminScreen />
+
+          
+          <PrivateRoute path='/admin/console/game-list'>
+            <ConsoleGameListScreen></ConsoleGameListScreen>  
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/user-list'>
+            <ConsoleUsersListScreen></ConsoleUsersListScreen>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/discount-list'>
+            <DiscountEvent></DiscountEvent>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/genres-list'>
+            <GenresManager></GenresManager>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/privacy-policy-edit'>
+            <PrivacyPolicyEditor></PrivacyPolicyEditor>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/store-refund-edit'>
+            <StoreRefundPolicyEditor></StoreRefundPolicyEditor>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/term-of-service-edit'>
+            <TermOfService></TermOfService>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/discover-cms'>
+            <DiscoverCMS></DiscoverCMS>
           </PrivateRoute>
 
           {/* Auth*/}

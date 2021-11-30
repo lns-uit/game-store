@@ -220,45 +220,61 @@ function Admin(){
         setUrlImgs(arr => [ '', ...arr.slice(0)])
       }, []);
     return (
-        <div className="white">
-            <Form
-                form={form}
-                name="validate_other"
-                onFinish={onFinish}
+      <div className="white console-container">
+        <div className="console-detail-header">
+          <h1>CREATE NEW GAME</h1>
+          <div className="console-toolbar"></div>
+        </div>
+        <div style = {{height:'150px'}}></div>
+        <Form  layout="vertical" form={form} name="validate_other" onFinish={onFinish}>
+          <Form.Item
+            style={{ backgroundColor: "#111" }}
+            rules={[{ required: true, message: "Please upload" }]}
+          >
+            <Form.Item
+              name="fileGame"
+              label = "File Game.zip"
+              valuePropName="fileGame"
+              getValueFromEvent={normFileZip}
+   
+              rules={[{ required: true, message: "Please upload Game!" }]}
+              noStyle
             >
-                <Form.Item style ={{backgroundColor: "#111"}} rules={[{ required: true, message: 'Please upload' }]}>
-                    <Form.Item name="fileGame" valuePropName="fileGame" getValueFromEvent={normFileZip} noStyle>
-                        <Upload.Dragger name="fileGame">
-                                <p className="ant-upload-drag-icon">
-                                <InboxOutlined />
-                                </p>
-                            <p className="ant-upload-text uppercase">Upload File Zip</p>
-                        </Upload.Dragger>
-                    </Form.Item>
-                </Form.Item>
-                <DetailGame/>
-                <div className="decription-photo">
-                    <h3 className="uppercase m-0 white"> description photo</h3>
-                    <p className="m-0 gray-1">(1920x1080 Required size)</p>
-                    <div className="upload">
-                        <Form.Item
-                            name="images"
-                            valuePropName="images"
-                            getValueFromEvent={normFileImages}
-                        >
-                            <Upload
-                                listType="picture-card"
-                            >
-                                {fileList.length < 8 && '+ Upload Image'}
-                            </Upload>
-                        </Form.Item>
-                    </div>
-                </div>
-                <ShortDescription/>
-                <div className="detail-description" onClick={focus}>
-                    <h3 className="uppercase m-0 white"> detail description</h3>
+              <Upload.Dragger name="fileGame">
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text uppercase">Upload File Zip</p>
+              </Upload.Dragger>
+            </Form.Item>
+          </Form.Item>
+          <DetailGame />
+          <div className="decription-photo">
+            <div className="upload">
+              <Form.Item
+                label = "DESCRIPTION PHOTO (1920x1080 Required size)"
+                rules={[{ required: true, message: "Please upload" }]}
+                name="images"
+                valuePropName="images"
+                getValueFromEvent={normFileImages}
+                
+              >
+                <Upload listType="picture-card">
+                  {fileList.length < 8 && "+ Upload Image"}
+                </Upload>
+              </Form.Item>
+            </div>
+          </div>
+          <ShortDescription />
+          <Form.Item
+                label = "* DETAIL DESCRIPTION"
+                rules={[{ required: true, message: "Please Input Detail Description" }]}
+                
+              >
+                 <div className="detail-description" onClick={focus}>
+
                     <Editor
-                        // ref={editorRef}
+                    // ref={editorRef}
                         defaultContentState={contentState}
                         onContentStateChange={setContentState}
                         wrapperClassName="wrapper-class"
@@ -266,46 +282,39 @@ function Admin(){
                         toolbarClassName="toolbar-class"
                     />
                 </div>
-                <SystemRequirements/>
-                <Row gutter={[48, 8]}>
-                    <Col
-                        xxl={14}
-                        xl={14}
-                        lg={16}
-                        md={16}
-                        sm={24}
-                        xs={24}
-                    >
-                        <h3 className="uppercase m-0 white">cost</h3>
-                        <Form.Item
-                            name="cost"
-                            rules={[{ required: true, message: 'Please input cost!' }]}
-                        >
-                            <InputNumber
-                                defaultValue={0}
-                                min = {0}
-                                formatter={value => `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            />
-                        </Form.Item>
-                    </Col>
-                    <Col
-                        xxl={10}
-                        xl={100}
-                        lg={8}
-                        md={8}
-                        sm={24}
-                        xs={24}
-                    >
-                        <Form.Item wrapperCol={{ span: 12, offset: 6 }} className="m-top-24">
-                            <Button type="primary" htmlType="submit">
-                                Submit
-                            </Button>
-                        </Form.Item>
-                    </Col>
-                </Row>
-            </Form>
-        </div>
-    )
+            </Form.Item>
+         
+          <SystemRequirements />
+          <Row gutter={[48, 8]}>
+            <Col xxl={14} xl={14} lg={16} md={16} sm={24} xs={24}>
+              <Form.Item
+                name="cost"
+                label = "Game Cost"
+                rules={[{ required: true, message: "Please input cost!" }]}
+              >
+                <InputNumber
+                  defaultValue={0}
+                  min={0}
+                  formatter={(value) =>
+                    `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col xxl={10} xl={100} lg={8} md={8} sm={24} xs={24}>
+              <Form.Item
+                wrapperCol={{ span: 12, offset: 6 }}
+                className="m-top-24"
+              >
+                <Button type="primary" htmlType="submit">
+                  Submit
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+      </div>
+    );
 }
 
 export default Admin;

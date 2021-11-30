@@ -1,4 +1,4 @@
-import { Button, InputNumber, Space } from "antd";
+import { Button, Form, InputNumber, Space } from "antd";
 import { EditorState, EditorRef, RichUtils  } from "draft-js";
 import {  ContentState, convertToRaw  } from 'draft-js';
 import { useRef, useState } from "react";
@@ -15,35 +15,77 @@ function StoreRefundPolicyEditor() {
   const [hour,setHour] = useState(0);
   const [minute,setMinute] = useState(0);
   const [second,setSecond] = useState(0);
+  const [form] = Form.useForm();
 
   return (
-    <div className="privacy-policy-container-editor">
-      <div style = {{display:'flex',justifyContent:'space-between'}}>
-        <div className = "time-refund-editor">
-          <h3>
-            Time Refund
-          </h3>
-          <InputNumber min={0} defaultValue={0} onChange={value=>setHour(value)} /> &nbsp; Hour&ensp;
-          <InputNumber min={0} max={59} defaultValue={0} onChange={value=>setMinute(value)} />&nbsp; Minute&ensp;
-          <InputNumber min={0} max={59} defaultValue={0} onChange={value=>setSecond(value)} />&nbsp; Second&ensp;
+    <Form
+    form={form}
+    layout="vertical"
+    onFinish={()=>{}}
+    onFinishFailed={()=>{}}
+    autoComplete="off"
+  >
+      <div className="console-container">
+        <div className="console-detail-header">
+          <h1>
+            STORE REFUND POLICY MANAGER
+          </h1>
+          <div className="console-toolbar">
+            <div style = {{width:'20px'}}></div>
+            <Form.Item>
+              <Button type = "primary" htmlType="submit" className = "btn">
+                SAVE
+              </Button>
+            </Form.Item>
+          </div>
         </div>
-        <Button type="primary" danger onClick={()=>console.log(hour,minute,second)}>
-            Save
-        </Button>
-      
+        <div className = "console-list" style = {{display:'flex',justifyContent:'space-between'}}>
+          <div className = "time-refund-editor">
+            
+            <Space size='large'>
+              <h3>
+                Time Refund
+              </h3>
+              <Form.Item
+                name="Hour"
+                label="Hour"
+                rules={[{ required: true }]}
+              >
+                <InputNumber min={0} defaultValue={0}  />
+              </Form.Item>
+              <Form.Item
+                name="Minutes"
+                label="Minutes"
+                rules={[{ required: true }]}
+              >
+                <InputNumber min={0} max={59} defaultValue={0}  />
+              </Form.Item>
+          
+              <Form.Item
+                name="Seconds"
+                label="Seconds"
+                rules={[{ required: true }]}
+              >           
+                <InputNumber  min={0} max={59} defaultValue={0}/>
+              </Form.Item>
+            </Space>
+            
+
+          </div>
+        </div>
+        <div className="custom-editor" onClick={focus}>
+          <br/>
+          <Editor
+              // ref={editorRef}
+              defaultContentState={contentState}
+              onContentStateChange={setContentState}
+              wrapperClassName="wrapper-class"
+              editorClassName="editor-class"
+              toolbarClassName="toolbar-class"
+          />
+        </div>
       </div>
-      <div className="custom-editor" onClick={focus}>
-        <br/>
-        <Editor
-            // ref={editorRef}
-            defaultContentState={contentState}
-            onContentStateChange={setContentState}
-            wrapperClassName="wrapper-class"
-            editorClassName="editor-class"
-            toolbarClassName="toolbar-class"
-        />
-      </div>
-    </div>
+    </Form>
   );
 }
 

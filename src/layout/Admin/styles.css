@@ -1,111 +1,136 @@
 /*diff*/
-.ant-form-item .ant-upload.ant-upload-drag{
-    background-color: #262626 !important;
+.ant-form-item .ant-upload.ant-upload-drag {
+  background-color: #262626 !important;
 }
-.ant-upload.ant-upload-drag p.ant-upload-text{
-    color: #ffffff !important;
+.ant-upload.ant-upload-drag p.ant-upload-text {
+  color: #ffffff !important;
 }
-.ant-upload.ant-upload-drag{
-    border: none !important;
+.ant-upload.ant-upload-drag {
+  border: none !important;
 }
 .ant-select:not(.ant-select-customize-input) .ant-select-selector {
-    background-color: #111 !important;
+  background-color: #111 !important;
 }
 .ant-select {
-    color: #ffffff !important;
+  color: #ffffff !important;
 }
-.ant-select-arrow{
-    color: #ffffff !important;
+.ant-select-arrow {
+  color: #ffffff !important;
 }
-.upload .ant-form-item-control-input-content{
-    background-color: #262626 !important;
-    border-radius: 4px;
-    padding: 12px 28px;
+.upload .ant-form-item-control-input-content {
+  background-color: #262626 !important;
+  border-radius: 4px;
+  padding: 12px 28px;
+}
+.upload .ant-upload-list-picture-card-container,
+.upload .ant-upload.ant-upload-select-picture-card {
+  width: 180px;
+  height: 180px;
+}
+.ant-input-textarea-show-count::after {
+  color: #ffffff !important;
+}
+.ant-select-selection-item-content {
+  color: white !important;
+}
+.ant-input-number {
+  width: 100% !important;
+  background-color: transparent !important;
+}
+.ant-input-number .ant-input-number-input-wrap input {
+    border: 1px solid rgb(145, 145, 145);
+    height: 40px;
 }
 .upload .ant-upload-list-picture-card-container, .upload .ant-upload.ant-upload-select-picture-card{
-    width: 180px;
-    height: 180px;
+    width: 160px;
+    height: 90px;
 }
-.ant-input-textarea-show-count::after{
-    color: #ffffff !important;
+.ant-upload-list-item{
+    padding: 0 !important;
 }
-.ant-select-selection-item-content{
-    color: white !important;
+.ant-upload-list-picture-card .ant-upload-list-item-thumbnail, .ant-upload-list-picture-card .ant-upload-list-item-thumbnail img{
+    object-fit: cover !important;
 }
-.ant-input-number{
-    width: 100% !important;
-    border-color: rgb(110, 110, 110) !important;
-}
-
 .custom-editor {
-    padding: 24px 200px;
-  }
-  
-  .DraftEditor-root {
-    min-height: 200px;
-    border: solid 1px #bbb;
-    box-sizing: border-box;
-    border: 1px solid #ddd;
-    cursor: text;
-    padding: 16px;
-    border-radius: 2px;
-    margin-bottom: 2em;
-    box-shadow: inset 0px 1px 8px -3px #ABABAB;
-    background: #fefefe;
-  }
-  .btn-bold{
-      padding: 5px 10px;
-      background: #ffffff;
-  }
-.btn-submit{
-    background-color: rgb(224, 83, 83);
+  padding: 24px 200px;
 }
-.detail-game .ant-select-selection-item{
-    color: black;
+.ant-upload.ant-upload-select-picture-card{
+    background: rgb(71, 71, 71) !important;
 }
-.detail-game .center{
-    text-align: center;
+.ant-upload{
+    color: rgb(199, 199, 199) !important;
 }
-.detail-game .white .ant-select-selection-item{
-    color: #ffffff;
+.ant-upload.ant-upload-select-picture-card:hover{
+    border-color: red !important;
 }
-.m-top-24{
-    margin-top: 24px !important;
+.ant-input:hover{
+    border: 1px solid rgb(122, 122, 122) !important;
 }
-.m-left-2{
-    margin-left: 2px !important;
+.DraftEditor-root {
+  min-height: 200px;
+  border: solid 1px #bbb;
+  box-sizing: border-box;
+  border: 1px solid #ddd;
+  cursor: text;
+  padding: 16px;
+  border-radius: 2px;
+  margin-bottom: 2em;
+  box-shadow: inset 0px 1px 8px -3px #ababab;
+  background: #fefefe;
 }
-.fw-700{
-    font-weight: 700;
+.btn-bold {
+  padding: 5px 10px;
+  background: #ffffff;
+}
+.btn-submit {
+  background-color: rgb(224, 83, 83);
+}
+.detail-game .ant-select-selection-item {
+  color: black;
+}
+.detail-game .center {
+  text-align: center;
+}
+.detail-game .white .ant-select-selection-item {
+  color: #ffffff;
+}
+.m-top-24 {
+  margin-top: 24px !important;
+}
+.m-left-2 {
+  margin-left: 2px !important;
+}
+.fw-700 {
+  font-weight: 700;
 }
 .wrapper-class {
-    padding: 1rem;
-    border: 1px solid #ccc;
+  padding: 1rem;
+  border: 1px solid #ccc;
 }
 .editor-class {
-    background-color:lightgray;
-    padding: 1rem;
-    border: 1px solid #ccc;
+  background-color: lightgray;
+  padding: 1rem;
+  border: 1px solid #ccc;
 }
 .toolbar-class {
-    border: 1px solid #ccc;
+  border: 1px solid #ccc;
 }
-.detail-description{
-    margin-bottom: 20px;
+.detail-description {
+  margin-bottom: 20px;
 }
-.m-bottom-0{
-    margin-bottom: 0px !important;
+.m-bottom-0 {
+  margin-bottom: 0px !important;
 }
-.ant-picker-input input{
-    color: #ffffff !important;
+.ant-picker-input input {
+  color: #ffffff !important;
 }
 .ant-picker {
-    background-color: #111 !important;
+  background-color: #111 !important;
 }
-.detail-game .m-bottom-24{
-    margin-bottom: 24px;
+.detail-game .m-bottom-24 {
+  margin-bottom: 24px;
 }
-.wrapper-class{
-    padding: 0 !important;
-    border: 0 solid transparent;
+.wrapper-class {
+  padding: 0 !important;
+  border: 0 solid transparent;
 }

@@ -14,15 +14,20 @@ function TermOfService() {
   const [contentState, setContentState] = useState(raw);
 
   return (
-    <div className="privacy-policy-container-editor">
-      <div style = {{float:'right'}}>
-        <Button type="primary" danger onClick={()=>console.log(contentState)}>
-            Save
-        </Button>
-      
+    <div className="console-container">
+      <div className="console-detail-header">
+        <h1>
+            TERM OF SERVICE MANAGER
+        </h1>
+        <div className="console-toolbar">
+          
+          <div className = "btn" onClick={() => { }}>
+            {" "}
+            Save{" "}
+          </div>
+        </div>
       </div>
-      <br/><br/>
-      <div className="custom-editor" onClick={focus}>
+      <div className="console-list" onClick={focus}>
         <br/>
         <Editor
             // ref={editorRef}

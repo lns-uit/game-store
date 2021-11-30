@@ -233,27 +233,31 @@ function DiscountEvent() {
           </Select>
       </Modal>
       <div className="console-content">
-        <div className="console-content-toolbar">
-          <div className="search-container">
-            <Input
-              placeholder="input search text"
-              onChange={(event) => setSearchDiscount(event.target.value)}
-            />
+        <div className="console-detail-header">
+          <h1>
+              DISCOUNT EVENT
+          </h1>
+          <div className="console-toolbar">
+            
+            <div className="search-container">
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#c0c0c0"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+              <div style = {{width:'5px'}}></div>
+              <Input
+                placeholder="input search text"
+                onChange={(event) => setSearchDiscount(event.target.value)}
+              />
+            </div>
+            <div style = {{width:'20px'}}></div>
+            <div className = "btn" onClick={() => {}}>
+              {" "}
+              Create New Discount{" "}
+            </div>
           </div>
-          <div></div>
-          <Button
-            type="primary"
-            danger
-            onClick={() => {
-              showModal();
-            }}
-          >
-            {" "}
-            Create Discount{" "}
-          </Button>
         </div>
-        <div className="console-list-name">
+
+        <div className="console-list">
           <Table
+            pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30']}}
             columns={columns}
             dataSource={listDiscount.filter(
               (item) => item.title?.toLowerCase().indexOf(searchDiscount?.toLowerCase()) !== -1)}

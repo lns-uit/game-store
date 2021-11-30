@@ -14,6 +14,12 @@
   --gutterHorizontal-size: 200px;
   --carouselHeigh-size: 460px;
   --buttonHeaderHeight-size: 42px;
+  --padding-console: 0px 30px 200px 100px;
+  --console-margin-left: 250px;
+  --console-nav-width: 300px;
+  --console-nav-width-forheader: 300px;
+  --console-nav-btn-color: #ffffff;
+  --console-nav-btn-border-color: #6d6d6d42;
 }
 
 * {

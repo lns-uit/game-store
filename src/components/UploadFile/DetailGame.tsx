@@ -91,6 +91,7 @@ function DetailGame(){
                 >
                     <Form.Item
                         name="nameGame"
+                        label = "Name of Game"
                         rules={[{ required: true, message: 'Please input name game!' }]}
                         className="m-bottom-24"
                     >
@@ -99,6 +100,7 @@ function DetailGame(){
 
                     <Form.Item
                         name="select-multiple"
+                        label = "Genres"
                         rules={[{ required: true, message: 'Please select genres', type: 'array' }]}
                     >
                         <Select mode="multiple" placeholder="Please select genres">
@@ -109,6 +111,7 @@ function DetailGame(){
                     <Form.Item
                         name="platform"
                         className="white"
+                        label = "Platform"
                         rules={[{ required: true, message: 'Please select platform!' }]}
                     >
                         <Select placeholder="Please select platform">
@@ -119,6 +122,7 @@ function DetailGame(){
 
                     <Form.Item
                         name="developer"
+                        label = "Developer"
                         rules={[{ required: true, message: 'Please input developer!' }]}
                     >
                         <Input placeholder="Developer" />
@@ -126,6 +130,7 @@ function DetailGame(){
 
                     <Form.Item
                         name="publisher"
+                        label = "Publisher"
                         rules={[{ required: true, message: 'Please input publisher!' }]}
                     >
                         <Input placeholder="Publisher" />
@@ -133,14 +138,16 @@ function DetailGame(){
 
                     <Form.Item
                         name="privacyPolicy"
+                        label = "Privacy Policy"
                         rules={[{ required: true, message: 'Please input privacy policy!' }]}
                     >
-                        <Input placeholder="Privacy Policy" />
+                        <Input placeholder="https://url.com" />
                     </Form.Item>
 
                     <Form.Item
                         name="urlVideo"
-                        rules={[{ required: true, message: 'Please input url video!' }]}
+                        label = "Url Video"
+                        // rules={[{ required: true, message: 'Please input url video!' }]}
                     >
                         <Input placeholder="URL Video" />
                     </Form.Item>
@@ -155,6 +162,7 @@ function DetailGame(){
                 >
                     <Form.Item
                         name="version"
+                        label = "Version"
                         rules={[{ required: true, message: 'Please input version!' }]}
                     >
                         <Input placeholder="Version" />
@@ -162,7 +170,9 @@ function DetailGame(){
                     <Form.Item
                         name="iconGame"
                         valuePropName="fileList"
+                        label = "Main Image Game ( 1080px x 1080px )"
                         getValueFromEvent={normFileImages}
+                        rules={[{ required: true, message: 'Please upload main image game!'  }]}
                     >
                         <Upload name="iconGame">
                         <Button icon={<UploadOutlined />}>Upload icon game</Button>
