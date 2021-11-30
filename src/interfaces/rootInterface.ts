@@ -142,7 +142,14 @@ interface CommentType{
   userName: any;
   avatar: string;
 }
- 
+
+interface SuggestionType{
+  idSuggestion: string;
+  title: string;
+  value: string;
+  position: number;
+}
+
 export enum ActionType {
   ADD = 'add',
   REMOVE = 'remove',
@@ -160,4 +167,5 @@ export type {
   Imgs,
   GameDetailss,
   CommentType,
+  SuggestionType,
 };

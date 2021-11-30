@@ -27,6 +27,7 @@ import PrivacyPolicyEditor from '../screens/Admin/components/PrivacyPolicy/Priva
 import StoreRefundPolicyEditor from '../screens/Admin/components/StoreRefundPolicy/StoreRefundPolicyEditor';
 import TermOfService from '../screens/Admin/components/TermOfService/TermOfServiceEditor';
 import DiscoverCMS from '../screens/Admin/components/DiscoverCMS/DiscoverCMS'
+import AllGameVersion from '../screens/Admin/components/GameVersion/AllGameVersion';
 import EditProfile from '../screens/EditProfile/EditProfile'
 
 
@@ -107,6 +108,9 @@ function RootNavigation() {
           </PrivateRoute>
           <PrivateRoute path='/admin/console/discover-cms'>
             <DiscoverCMS></DiscoverCMS>
+          </PrivateRoute>
+          <PrivateRoute path='/admin/console/history/:idGame'>
+            <AllGameVersion></AllGameVersion>
           </PrivateRoute>
 
           {/* Auth*/}
