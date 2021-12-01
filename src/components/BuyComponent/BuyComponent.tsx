@@ -1,13 +1,30 @@
 import React,{useState} from 'react';
 import "../../layout/LayoutGameDetail1/styles.css";
 import { Form, Input, Button } from 'antd';
+import visa from "./visa.png";
+import NumberFormat from 'react-number-format'
 
 function BuyComponent() {
     const [Err, setErr] = useState(false);
     const [strErr, setStrErr] = useState('');
+    const [numberCard, setNumberCard] = useState('1234');
+    console.log(numberCard);
     const onFinish = async (values: any) => {
         console.log(values)
     };
+    const formatCreddit = (e) =>{
+        console.log(e);
+        var v = e.target.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '')
+        var matches = v.match(/\d{0,16}/g);
+        var match: string = matches && matches[0] || ''
+        var parts = []
+
+        console.log(typeof match);
+
+        for (var i=0, len=match.length; i<len; i+=4) {
+            
+        }
+    }
     return(
         <div className="buy-content">
             <div
@@ -34,15 +51,18 @@ function BuyComponent() {
                     </Form.Item>
                 </div>
 
-                <div style={{ textAlign: 'left' }}>
+                <div style={{ textAlign: 'left', position: 'relative'}}>
                     <Form.Item
                         name='number'
                         label='NUMBER'
                         rules={[
                         { required: true, message: 'Please input your number!' },
                         ]}>
-                        <Input type="number" placeholder='NUMBER'/>
+                            <NumberFormat className="number-format-creddit" format="#### #### #### ####"/>
                     </Form.Item>
+                    <div className="visa-card">
+                        <img src={visa} alt="master card" />
+                    </div>
                 </div>
 
                 <div style={{ display: 'flex', gap: "10px"}}>
@@ -53,7 +73,7 @@ function BuyComponent() {
                             rules={[
                             { required: true, message: 'Please input your ccv2!' },
                             ]}>
-                            <Input placeholder='CCV2'/>
+                                <Input placeholder='CCV2'/>
                         </Form.Item>
                     </div>
 
@@ -64,7 +84,7 @@ function BuyComponent() {
                             rules={[
                             { required: true, message: 'Please input your expiration date!' },
                             ]}>
-                            <Input placeholder='EXPIRATION DATE'/>
+                                <Input type="month" placeholder='MONTH'/>
                         </Form.Item>
                     </div>
                 </div>
@@ -75,7 +95,7 @@ function BuyComponent() {
                     <Button
                         style={{ height: '40px' }}
                         htmlType='submit'
-                        className='full-width'>
+                        className='full-width btn-pay'>
                         Pay Now
                     </Button>
                 </Form.Item>
