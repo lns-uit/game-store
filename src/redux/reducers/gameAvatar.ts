@@ -1,11 +1,11 @@
 export interface StateUrl{
-  name: string;
-  url: string;
+  name: any;
+  url: any;
 }
 
 const initialState ={
-  name: '',
-  url: ''
+  name: null,
+  url: null
 }
 
 interface GameActionType {

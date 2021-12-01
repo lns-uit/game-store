@@ -27,7 +27,6 @@ function DetailGame(){
     let allGame: any[] = [];
 
     const normFileImages = (e) => {
-        console.log(e);
         if(e.file.status === "error"){
             getLinkFileImage(e.file.originFileObj);
         }
@@ -85,7 +84,7 @@ function DetailGame(){
     async function checkWidthHeight(imageUrl,name) {
         try {
             const { width, height } = await reactImageSize(imageUrl);
-            if (width !== 1080 && height !== 1080){
+            if (width < 1080 && height < 1080){
                 setLoadingIconGame(true); 
                 alert("Icon Game default 1080x1080")
             }else{
@@ -95,6 +94,7 @@ function DetailGame(){
             }
         } catch(err){
             console.log(err);
+            alert("This is not Image");
             setLoadingIconGame(true);
         }
     }

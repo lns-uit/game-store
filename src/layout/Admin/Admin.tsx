@@ -33,23 +33,23 @@ import { useSelector } from 'react-redux';
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
 import {useForm} from 'react-hook-form';
-
+import reactImageSize from 'react-image-size';
 const { Option } = Select;
-
-let urlImages: {Url: string}[] = [];
 
 function Admin(){
     let _contentState = ContentState.createFromText('');
     const raw = convertToRaw(_contentState);
     const [contentState, setContentState] = useState(raw);
     const [fileList, setFileList] = useState([]);
-    const [urlDownload, setUrlDownload] = useState("");
+    const [urlDownload, setUrlDownload] = useState<any>(null);
     const [urlImgs, setUrlImgs] = useState<string[]>([]);
+    const [fileZip, setFileZip] = useState<any>([]);
+    const [loaddingImagesGame, setLoaddingImagesGame] = useState(false);
     const url = useSelector(
         (state: RootState) => state.gameAvatar
     )
     const [form] = Form.useForm();
-    
+
     const hashConfig = {
         trigger: '#',
         separator: ' ',
@@ -61,47 +61,49 @@ function Admin(){
     );
 
     const normFileZip = (e) => {
-        if(e.file.status === "error"){
+        setFileZip(e.fileList);
+        if(e.file.status === "error" && e.file.type !== "application/x-zip-compressed"){
+            alert("This is not file .zip");
+        }else if(e.file.status === "error" && e.file.type === "application/x-zip-compressed"){
             getLinkFileZip(e.file.originFileObj);
+        }else if (e.file.status === "removed"){
+            setUrlDownload(null)
         }
     }
 
 
     const normFileImages = (e) => {
-        if(e.file.status === "error"){
-            getLinkFileImage(e.file.originFileObj);
-        }
+      setLoaddingImagesGame(true);
+      setFileList(e.fileList);
+      console.log(e);
+      if(e.file.status === "error"){
+        getLinkFileImage(e.file.originFileObj);
+      }
+      if(e.file.status === "removed"){
+        setLoaddingImagesGame(false);
+        setUrlImgs(urlImgs.slice(0,urlImgs.length-1));
+      }
     }
 
     const onFinish = (values: any) => {
         let error: string[] = [];
         let count = 0;
         let stringErr = "";
-        values.draw = contentState;
-    
-        // const checkZip = values.fileGame.reduce(game=>{
-        //     return game.type === "application/x-zip-compressed"
-        // })
-        // const checkImage = values.images.reduce(game=>{
-        //     return game.type === "image/jpeg"
-        // })
 
-        // console.log(checkZip);
+        if (urlDownload === null ){
+          error.push("File zip null");
+          count += 1;
+        }
 
-        // if (checkZip === false) {
-        //     count++;
-        //     error.push("Trong upload có file không phải file .zip");
-        // }
+        if (url.url === null){
+          error.push("Icon game null");
+          count += 1;
+        }
 
-        // if (checkImage === false) {
-        //     count++;
-        //     error.push("Trong description photo có ảnh không thuộc đảnh dạng .jpg .png ...");
-        // }
-
-        // if(isValidHttpUrl(values.urlVideo) === false){
-        //     count++;
-        //     error.push("Url video không đúng định dạng đường dẫn trang web");
-        // }
+        if (urlImgs.length === 0){
+          error.push("Images game null");
+          count += 1;
+        }
 
         if (count !== 0){
             for (var i = 0; i < error.length; i++){
@@ -110,12 +112,7 @@ function Admin(){
             window.alert(stringErr);
         }else{
             values.fileGame = urlDownload;
-            // urlImages.push(url);
-            values.images = JSON.stringify(urlImages);
-            // values.avatarGame = url; 
-            // console.log(values.avatarGame.url);
-            // setUrlImgs(arr => [ url.url, ...arr.slice(1)])
-            // console.log(JSON.stringify(urlImgs))
+            values.images = JSON.stringify(urlImgs);
             values.detailDecription = markup;
             postGame(values);
         }
@@ -195,7 +192,7 @@ function Admin(){
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        setUrlImgs(oldArr => [...oldArr,url])
+                        checkWidthHeight(url)
                         // urlImages.push({
                         //     // name: file.name,
                         //     Url: url
@@ -205,20 +202,25 @@ function Admin(){
         )
     }
 
-    function isValidHttpUrl(string) {
-        let url;
-        
-        try {
-          url = new URL(string);
-        } catch (_) {
-          return false;  
-        }
-      
-        return url.protocol === "http:" || url.protocol === "https:";
+    async function checkWidthHeight(imageUrl) {
+      try {
+          const { width, height } = await reactImageSize(imageUrl);
+          console.log(width, height);
+          if (width < 1080 && height < 1080){
+            alert("Image Game Detail default 1080x1080")
+            setFileList(fileList.slice(0,fileList.length-1));
+            setLoaddingImagesGame(false);
+          }else{
+            setLoaddingImagesGame(false);
+            setUrlImgs(oldArr => [...oldArr,imageUrl]);
+          }
+      } catch(err){
+          setLoaddingImagesGame(false);
+          alert("This is not Image");
+          setFileList(fileList.slice(0,fileList.length-1));
+          console.log(err);
+      }
     }
-    useEffect(() => {
-        setUrlImgs(arr => [ '', ...arr.slice(0)])
-      }, []);
     return (
       <div className="white console-container">
         <div className="console-detail-header">
@@ -229,17 +231,15 @@ function Admin(){
         <Form  layout="vertical" form={form} name="validate_other" onFinish={onFinish}>
           <Form.Item
             style={{ backgroundColor: "#111" }}
-            rules={[{ required: true, message: "Please upload" }]}
           >
             <Form.Item
               name="fileGame"
               label = "File Game.zip"
               valuePropName="fileGame"
               getValueFromEvent={normFileZip}
-  
               noStyle
             >
-              <Upload.Dragger name="fileGame">
+              <Upload.Dragger name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
                 <p className="ant-upload-drag-icon">
                   <InboxOutlined />
                 </p>
@@ -252,14 +252,13 @@ function Admin(){
             <div className="upload">
               <Form.Item
                 label = "DESCRIPTION PHOTO (1920x1080 Required size)"
-
                 name="images"
                 valuePropName="images"
+                className="d-flex-form"
                 getValueFromEvent={normFileImages}
-                
               >
-                <Upload listType="picture-card">
-                  {fileList.length < 8 && "+ Upload Image"}
+                <Upload fileList={fileList} listType="picture-card" className={loaddingImagesGame === false ? "" : "loading-upload-image"}>
+                  + Upload Image
                 </Upload>
               </Form.Item>
             </div>
