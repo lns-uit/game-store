@@ -27,7 +27,7 @@ function DiscountEvent() {
   const [searchDiscount, setSearchDiscount] = useState("");
   const [titleDiscount, setTitleDiscount] = useState("");
   const [listGameDiscount, setListGameDiscount] = useState<string[]>([]);
-
+  const [form] = Form.useForm();
   let allGame: any[] = [];
 
   const getDataGame = () => {
@@ -51,7 +51,7 @@ function DiscountEvent() {
     setListGameDiscount([])
     setIsModalVisible(true);
   };
-  const handleOk = () => { 
+  const handleOk = () => {
     // postDiscount(
     //   percent,
     //   titleDiscount,
@@ -71,6 +71,7 @@ function DiscountEvent() {
         },
       })
       .then((response) => {
+        console.log(response.data)
         setListDiscount(response.data);
       });
   };
@@ -104,7 +105,14 @@ function DiscountEvent() {
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button> Update </Button>
+          <Button 
+          onClick={()=> {
+            console.log(form)
+            form.setFieldsValue({title:record.title,percent:record.percentDiscount})
+            showModal()
+          }} 
+            type="default"> Update 
+          </Button>
           <Button> Detail </Button>
         </Space>
       ),
@@ -121,7 +129,7 @@ function DiscountEvent() {
       .post(
         Endpoint.mainApi + "api/discount/create",
         {
-          discount : {
+          discount: {
             percentDiscount: percentDiscount,
             title: title,
             startDate: startDate,
@@ -155,7 +163,7 @@ function DiscountEvent() {
       .put(
         Endpoint.mainApi + "api/discount/update/" + idDiscount,
         {
-          discount : {
+          discount: {
             percentDiscount: percentDiscount,
             title: title,
             startDate: startDate,
@@ -165,7 +173,7 @@ function DiscountEvent() {
         },
         {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("accessToken"), 
+            Authorization: "Bearer " + localStorage.getItem("accessToken"),
           },
         }
       )
@@ -182,73 +190,91 @@ function DiscountEvent() {
   }, []);
   return (
     <div className="console-container">
+
       <Modal
-        title="Create New Genre"
+        footer={[
+        ]}
+        title="Create New Discount"
         visible={isModalVisible}
         onOk={() => handleOk()}
         onCancel={() => handleCancel()}
       >
-          <Input
-            placeholder="Title Group Discount"
-            value={titleDiscount}
-            onChange={(event) => setTitleDiscount(event.target.value)}
-          ></Input>
-          <br />
-          <br />
-          <RangePicker
-            showTime
-            onChange={(value, dateString) => {
-              setDateDiscount(dateString);
-            }}
-          />
-          <br />
-          <br />
-          <div style={{ color: "white" }}>
-            &nbsp; Percent Discount&emsp;
+        <Form
+          form={form}
+          layout="vertical"
+          onFinish={(value) => { console.log(value) }}
+          onFinishFailed={() => { }}
+          autoComplete="off"
+        >
+          <Form.Item
+            name="title"
+            label="Title Group Discount"
+            rules={[{ required: true }]}
+          >
+            <Input
+              placeholder="Title Group Discount"
+            ></Input>
+          </Form.Item>
+          <Form.Item
+            name="time"
+            label="Time Apply"
+            rules={[{ required: true }]}
+          >
+            <RangePicker
+              showTime
+            />
+          </Form.Item>
+          <Form.Item
+            name="percent"
+            label="* Percent Discount"
+          >
             <InputNumber
               defaultValue={0}
               min={0}
               max={100}
-              value = {percent}
               formatter={(value) => `${value}%`}
-              onChange={(value) => setPercent(value)}
             />
-          </div>
-          <br />
-          <div style={{ color: "white" }}>&nbsp;&nbsp;List Game</div>
-          <Select
+          </Form.Item>
+          <Form.Item
+            name="games"
+            label="List Game Apply"
+            rules={[{ required: true }]}
+          >
+            <Select
               mode="multiple"
               size="large"
               placeholder="Please select"
-              onChange={(value, key) => {
-                setListGameDiscount(
-                  key.map((x) => {
-                    return x.key;
-                  })
-                );
-              }}
               style={{ width: "100%" }}
             >
               {gameData}
-          </Select>
+            </Select>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+
+        </Form>
       </Modal>
+
       <div className="console-content">
         <div className="console-detail-header">
           <h1>
-              DISCOUNT EVENT
+            DISCOUNT EVENT
           </h1>
           <div className="console-toolbar">
-            
+
             <div className="search-container">
-              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#c0c0c0"><path d="M0 0h24v24H0z" fill="none"/><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-              <div style = {{width:'5px'}}></div>
+              <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#c0c0c0"><path d="M0 0h24v24H0z" fill="none" /><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" /></svg>
+              <div style={{ width: '5px' }}></div>
               <Input
                 placeholder="input search text"
                 onChange={(event) => setSearchDiscount(event.target.value)}
               />
             </div>
-            <div style = {{width:'20px'}}></div>
-            <div className = "btn" onClick={() => {}}>
+            <div style={{ width: '20px' }}></div>
+            <div className="btn" onClick={() => { form.resetFields(); showModal() }}>
               {" "}
               Create New Discount{" "}
             </div>
@@ -257,7 +283,7 @@ function DiscountEvent() {
 
         <div className="console-list">
           <Table
-            pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30']}}
+            pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
             columns={columns}
             dataSource={listDiscount.filter(
               (item) => item.title?.toLowerCase().indexOf(searchDiscount?.toLowerCase()) !== -1)}

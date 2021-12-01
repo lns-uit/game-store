@@ -20,8 +20,9 @@ function GameItem({
 }: GameItemPropsType) {
   return (
     <div
-      className={isHorizontal ? 'game-item game-item--horizontal' : 'game-item'}
-    >
+      className={
+        isHorizontal ? 'game-item game-item--horizontal' : 'game-item'
+      }>
       {action && (
         <Tooltip
           overlayInnerStyle={{ fontSize: 14 }}
@@ -32,8 +33,7 @@ function GameItem({
               : 'Remove from wishlist'
           }
           color={rootColor.redColor}
-          key={rootColor.whiteColor}
-        >
+          key={rootColor.whiteColor}>
           <button className='game-item__action'>
             {action === ActionType.REMOVE ? (
               <MinusCircleOutlined className='game-item__action__icon' />
@@ -46,8 +46,7 @@ function GameItem({
       <div className='game-item__container'>
         <div
           style={heightImage ? { height: heightImage } : {}}
-          className='game-item__image'
-        >
+          className='game-item__image'>
           <img src={game.image} alt='game-item' />
         </div>
         <div className='game-item__detail-wrapper'>

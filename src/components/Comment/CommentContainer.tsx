@@ -12,6 +12,7 @@ import axios from "axios";
 import { Endpoint } from "../../api/endpoint";
 import CommentItem from "./CommentItem";
 import { existsTypeAnnotation } from "@babel/types";
+import numberDot from "../../utils/numberDot"
 const { TextArea } = Input;
 
 interface IdGame{
@@ -26,6 +27,8 @@ function CommentContainer({idGame}:IdGame) {
     const user = useSelector((state:RootState)=> state.user);
     const { userName = '', idUser = ''} = user || {};
     const [userInfo, setUserInfo]  = useState<UserType>();
+    const [myComment, setMyComment] = useState<CommentType>();
+    const [commentCount, setCommentCount] = useState(0);
 
     const joinRoom = async (user, room) => {
         try {
@@ -40,7 +43,9 @@ function CommentContainer({idGame}:IdGame) {
 
             connection.on("ReceiveCreateComment", (user , comment: CommentType) => {
                 console.log('comment is created')
+                if (comment.idUser === idUser)  setMyComment(comment);
                 setComment(cmts => [comment,...cmts])
+                setCommentCount(cmt => cmt+1)
             })
 
             connection.on("ReceiveUpdateComment", (user, comment: CommentType) => {
@@ -48,7 +53,9 @@ function CommentContainer({idGame}:IdGame) {
             })
 
             connection.on("ReceiveDeleteComment", (user, id: string) => {
+                setMyComment(cmt => cmt?.idComment === id ? undefined : cmt);
                 setComment(cmts => cmts.filter(item => item.idComment !== id))
+                setCommentCount(cmt => cmt-1)
             })
 
             await connection.start();
@@ -105,6 +112,7 @@ function CommentContainer({idGame}:IdGame) {
                 }
 
                 createComment(data);
+
             }}
         >
             <Form.Item
@@ -144,7 +152,7 @@ function CommentContainer({idGame}:IdGame) {
     const getUserInfo = () => {
         return axios.get( Endpoint.mainApi + "api/user/" + idUser,{
           headers: {
-              Authorization: "Bearer "+ localStorage.getItem('accessToken') // token here
+              Authorization: "Bearer "+ localStorage.getItem('accessToken') 
           }
         }).then((response) => {
             setUserInfo(response.data);
@@ -153,28 +161,65 @@ function CommentContainer({idGame}:IdGame) {
             console.log(err)
         })
     };
-
+    const getCommentCount = () =>{
+        return axios.get(Endpoint.mainApi + "api/comments/count/" + idGame)
+            .then (res => {
+                setCommentCount(res.data)
+            })
+            .catch (err=> console.log(err))
+    }
+    const getMyComment = () =>{
+        return axios.get(Endpoint.mainApi + "api/comments/" + idGame + "/" + idUser)
+                    .then(res => {{
+                        console.log(res)
+                        setMyComment(res.data);
+                    }})
+                    .catch (err => console.log(err))
+    }
     useEffect(() => {
         if (localStorage.getItem('accessToken')!==null) {
             getUserInfo();
         }
         getComment();
-      
+        getMyComment();
+        getCommentCount();
     }, []);
     return (
         <div>
-            <div>
+            <div className = "font-w500">
+                <div style ={{fontSize:"16px",display:"flex"}}>
+                    <div>
+                        COMMENTS
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style = {{color:"#6b6b6b"}}>
+                        {numberDot(commentCount)} Comments
+                    </div>
+                </div>
+                <br/> <br/>
                 <div className="rate-input-container">
-
+                {
+                    myComment?.idComment === undefined ?
                     <Comment
                         avatar={
                             <Avatar src= {userInfo?.avatar===null ? "https://firebasestorage.googleapis.com/v0/b/docprintx.appspot.com/o/logoSecondary.png?alt=media&token=d451278d-c524-46b5-a400-816b7970baa8" : userInfo?.avatar}  alt="Han Solo" />
                         }
                         content={<Editor />}
-                    />
+                    /> : null
+                                        
+                }
                 </div>
+                {
+                    myComment?.idComment !== undefined ? 
+                        <CommentItem comment = {myComment} updateCmtFunc = {updateComment} deleteCmtFunc = {deleteComment} isOwn = {true} />
+                    : null
+                }
+                <div style = {{borderBottom: "1px solid #6b6b6b",width: "100%"}}></div>
+                <br/> <br/>
                 {comments.map((data, index) => (
-                    <CommentItem comment = {data} updateCmtFunc = {updateComment} deleteCmtFunc = {deleteComment} isOwn = {idUser===data.idUser} />
+                    data.idUser !== idUser ?
+                        <CommentItem comment = {data} updateCmtFunc = {updateComment} deleteCmtFunc = {deleteComment} isOwn = {idUser===data.idUser} />
+                    : null
                 ))}
             </div>
         </div>

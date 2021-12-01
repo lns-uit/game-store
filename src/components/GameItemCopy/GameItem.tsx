@@ -1,7 +1,7 @@
 import { Tag, Row, Col, Tooltip } from 'antd';
 import React from 'react';
 import { rootColor } from '../../constants/rootColor';
-import { ActionType, GameDetailss} from '../../interfaces/rootInterface';
+import { ActionType, GameDetailss } from '../../interfaces/rootInterface';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import './styles.css';
 
@@ -18,12 +18,14 @@ function GameItem({
   isHorizontal,
   heightImage,
 }: GameItemPropsType) {
-  const urlGameDefault = "https://yt3.ggpht.com/hN71s4RgKl13k2T3a7C_mL-ktwEC6k-F0-Ucb2i7BFSFdM222sBu64u4yZANtTTeTGGHFqWBysE=s900-c-k-c0x00ffffff-no-rj"
+  const urlGameDefault =
+    'https://yt3.ggpht.com/hN71s4RgKl13k2T3a7C_mL-ktwEC6k-F0-Ucb2i7BFSFdM222sBu64u4yZANtTTeTGGHFqWBysE=s900-c-k-c0x00ffffff-no-rj';
   return (
     <div
-      className={isHorizontal ? 'game-item game-item--horizontal' : 'game-item'}
-    >
-      {action && (
+      className={
+        isHorizontal ? 'game-item game-item--horizontal' : 'game-item'
+      }>
+      {/* {action && (
         <Tooltip
           overlayInnerStyle={{ fontSize: 14 }}
           placement='topLeft'
@@ -75,7 +77,7 @@ function GameItem({
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
       {/* <Row gutter={[2, 2]}>
         <Col span={isHorizontal ? 7 : 24}>
           <div className='game-item__image'>

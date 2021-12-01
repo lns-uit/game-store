@@ -236,8 +236,7 @@ function Admin(){
               label = "File Game.zip"
               valuePropName="fileGame"
               getValueFromEvent={normFileZip}
-   
-              rules={[{ required: true, message: "Please upload Game!" }]}
+  
               noStyle
             >
               <Upload.Dragger name="fileGame">
@@ -253,7 +252,7 @@ function Admin(){
             <div className="upload">
               <Form.Item
                 label = "DESCRIPTION PHOTO (1920x1080 Required size)"
-                rules={[{ required: true, message: "Please upload" }]}
+
                 name="images"
                 valuePropName="images"
                 getValueFromEvent={normFileImages}
