@@ -228,7 +228,7 @@ function Admin(){
           <div className="console-toolbar"></div>
         </div>
         <div style = {{height:'150px'}}></div>
-        <Form  layout="vertical" form={form} name="validate_other" onFinish={onFinish}>
+        <Form  layout="vertical" className="create-game" form={form} name="validate_other" onFinish={onFinish}>
           <Form.Item
             style={{ backgroundColor: "#111" }}
           >

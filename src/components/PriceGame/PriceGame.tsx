@@ -1,14 +1,29 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
 import { GameDetailss } from '../../interfaces/rootInterface';
 import Moment from 'react-moment';
+import { Modal, Button } from 'antd';
+import BuyComponent from "../BuyComponent/BuyComponent";
 
 interface Detail {
   game: GameDetailss;
 }
 
 function PriceGame({ game }: Detail) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   return (
     <div className='d-flex align-items-start column justify-content-end height-full'>
       <div className='width-full'>
@@ -38,9 +53,12 @@ function PriceGame({ game }: Detail) {
           </div>
         )}
         <div className='m-top-36'>
-          <div className='bgr-blue1 pd-8-16 width-full border-radius-4 pointer hover-buy transition-dot-3'>
-            <p className='m-0 center uppercase'>Buy Now</p>
-          </div>
+          <Button type="primary" className="bgr-blue1 pd-8-16 width-full border-radius-4 " onClick={showModal}>
+            Buy Now
+          </Button>
+          <Modal className="master-card" title={"Buy Game " + game.nameGame} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+            <BuyComponent/>
+          </Modal>
         </div>
         <div className='m-top-28 m-bottom-48'>
           <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>
