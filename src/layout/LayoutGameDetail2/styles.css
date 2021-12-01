@@ -286,8 +286,8 @@
     padding: 1px;
     cursor: pointer;
     text-decoration: none !important;
-    color: #2F2F2F;
-    background-color: #757575;
+    color: #7c7c7c;
+    border: 1px solid #757575;
 }
 .vote-btn p{
     height: 21px;
@@ -297,7 +297,7 @@
 }
 
 .btnv6_grey_black:hover{
-    color: #ffffff;
+    color: #ffffff !important;
     background-color: #BB2C23;
 }
 .comment-box{
