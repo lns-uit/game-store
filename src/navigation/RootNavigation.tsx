@@ -84,7 +84,7 @@ function RootNavigation() {
           <PrivateRoute path='/admin/create-game'>
             <AdminCreateGame/>
           </PrivateRoute>
-          <PrivateRoute path='/admin/update-game/:idGame'>
+          <PrivateRoute path='/admin/update-game/:idGame/:version'>
             <AdminUpdateGame/>
           </PrivateRoute>
           

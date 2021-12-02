@@ -125,6 +125,8 @@ function Admin(){
                     developer: values.developer,
                     publisher: values.publisher,
                     plaform: values.platform,
+                    privacyPolicy: values.privacyPolicy,
+                    urlVideo: values.urlVideo,
                     cost: values.cost,
                     lastestversion: values.version,
                 },
