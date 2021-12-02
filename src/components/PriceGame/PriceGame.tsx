@@ -1,24 +1,52 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
 import { GameDetailss } from '../../interfaces/rootInterface';
 import Moment from 'react-moment';
 import { Modal, Button } from 'antd';
-import BuyComponent from "../BuyComponent/BuyComponent";
+import BuyComponent from '../BuyComponent/BuyComponent';
+import gamesApi from '../../api/gamesApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 
 interface Detail {
   game: GameDetailss;
 }
 
 function PriceGame({ game }: Detail) {
+  const { idUser } = useSelector((state: RootState) => state.user) || {};
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
     setIsModalVisible(true);
   };
 
-  const handleOk = () => {
+  const showMessage = (message: string) => {
+    alert(message);
     setIsModalVisible(false);
+  };
+
+  const onSubmitPayment = async card => {
+    if (idUser) {
+      const dataRequest = {
+        card,
+        newBill: {
+          idGame: game.idGame,
+          idUser,
+        },
+      };
+      const response = await gamesApi.createNewBillGame(dataRequest);
+      const { actions, cost, datePaygame, idBill, message } = response || {};
+      if (idBill) {
+        showMessage(
+          `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${
+            game.nameGame
+          } with $${cost} at ${datePaygame}`
+        );
+      } else if (message) {
+        showMessage(message);
+      }
+    }
   };
 
   const handleCancel = () => {
@@ -53,11 +81,20 @@ function PriceGame({ game }: Detail) {
           </div>
         )}
         <div className='m-top-36'>
-          <Button type="primary" className="bgr-blue1 pd-8-16 width-full border-radius-4 " onClick={showModal}>
+          <Button
+            type='primary'
+            className='bgr-blue1 pd-8-16 width-full border-radius-4 '
+            onClick={showModal}>
             Buy Now
           </Button>
-          <Modal className="master-card" title={"Buy Game " + game.nameGame} visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
-            <BuyComponent/>
+          <Modal
+            wrapClassName='master-card'
+            title={'Buy Game ' + game.nameGame}
+            visible={isModalVisible}
+            onOk={onSubmitPayment}
+            onCancel={handleCancel}
+            footer={null}>
+            <BuyComponent onSubmitPayment={onSubmitPayment} />
           </Modal>
         </div>
         <div className='m-top-28 m-bottom-48'>
