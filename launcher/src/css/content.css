@@ -20,12 +20,14 @@
     align-items: center;
 }
 .btn-navbar:hover{
-    background-color: rgb(41, 41, 41);
+    background-color: rgb(26, 26, 26) !important;
 }
 .content-view{
     display: grid;
     grid-template-rows: 60px auto;
 }
-.account-personal{
-
+.title-content-view{
+    color: white;
+    font-size: 19px;
+    font-weight: 600;
 }

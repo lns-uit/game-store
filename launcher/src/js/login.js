@@ -1,29 +1,79 @@
+"use-strict";
 const {ipcRenderer} = require('electron')
 
 let btnLogin;
 let email;
 let pwd;
-
+var slideIndex = 1;
+var rightSlide;
+var leftSlide;
+var keepLoginCheckBox;
+var lbKeepLogin;
 window.onload = function () {
     email = document.getElementById("email");
     pwd = document.getElementById("pwd");
     btnLogin = document.getElementById("btn-login");
-    
+    rightSlide = document.getElementById("right-slide")
+    leftSlide = document.getElementById("left-slide")
+    keepLoginCheckBox = document.getElementById('keep-login')
+    lbKeepLogin = document.getElementById('label-keep-login')
+
+    lbKeepLogin.onclick = () => {
+        keepLoginCheckBox.checked = !keepLoginCheckBox.checked;
+    }
     email.onkeydown = function (e){
         if (e.keyCode === 13) {
-            const obj = {email: email.value, pwd: pwd.value}
-            ipcRenderer.invoke("login",obj);
+            onLogin();
         }
     }
     pwd.onkeydown = function (e){
         if (e.keyCode === 13) {
-            const obj = {email: email.value, pwd: pwd.value}
-            ipcRenderer.invoke("login",obj);
+            onLogin();
         }
     }
 
     btnLogin.onclick = function () {
-        const obj = {email: email.value, pwd: pwd.value}
+        onLogin();
+    }
+
+    function onLogin(){
+        const obj = {email: email.value, pwd: pwd.value, keepLogin: keepLoginCheckBox.checked}
         ipcRenderer.invoke("login",obj);
     }
+
+    rightSlide.onclick = function () {
+        plusSlides(1);
+    }
+    leftSlide.onclick = function () {
+        plusSlides(-1);
+    }
+    showSlides(slideIndex);
+    
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+    function plusSlidesAuto(n) {
+        showSlides(slideIndex += n);
+        setTimeout(plusSlidesAuto,15000,1)
+    }
+    
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+    
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";  
+      }
+
+      slides[slideIndex-1].style.display = "block";  
+
+
+    }
+    setTimeout(plusSlidesAuto,15000,1)
+
 }

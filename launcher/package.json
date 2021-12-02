@@ -1,18 +1,25 @@
 {
-  "name": "stun-launcher",
+  "name": "stun",
   "main": "./main.js",
   "version": "1.0.0",
   "author": "nguyenphuc",
   "license": "MIT",
+  "private": true,
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build": "npx electron-packager ./ Stun --platform=win32 --arch=x64 --icon=src/texture/icon.ico",
+    "rebuild": "electron-rebuild"
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "axios-progress-bar": "^1.2.0",
     "decompress-zip": "^0.3.3",
+    "electron-rebuild": "^3.2.3",
     "electron-json-storage": "^4.5.0",
+    "electron-packager": "^15.4.0",
     "electron-store": "^8.0.1",
-    "split-grid": "^1.0.11"
+    "split-grid": "^1.0.11",
+    "uaup-js": "^0.0.22"
   },
   "devDependencies": {
     "electron": "13.1.7"

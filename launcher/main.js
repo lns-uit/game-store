@@ -14,13 +14,17 @@ const path = require("path");
 const axios = require("axios");
 const https = require("https");
 const storage = require("electron-json-storage");
-const { unzip } = require("zlib");
-const { file } = require("@babel/types");
+// const { unzip } = require("zlib");
+// const { file } = require("@babel/types");
+
 const agent = new https.Agent({
   rejectUnauthorized: false,
 });
 let mainScreen;
 let loginScreen;
+let updateScreen;
+let isKeepLogin = true;
+let userInfo;
 
 const NOTIFICATION_TITLE = "Game In Launcher Is Installed";
 const NOTIFICATION_BODY = "You can play it right now!";
@@ -39,11 +43,10 @@ function createMainScreen() {
     height: 600,
     minWidth: 900,
     minHeight: 600,
-    maxWidth: 900,
-    maxHeight: 600,
-    // icon: __dirname + '/texture/icon-official.png',
+    icon: __dirname + './icon.png',
     frame: false,
     webPreferences: {
+      devTools: false,
       webviewTag: true,
       webSecurity: false,
       enableRemoteModule: true,
@@ -52,12 +55,35 @@ function createMainScreen() {
       preload: path.join(__dirname, "preload.js"),
     },
   });
-
+  mainScreen.removeMenu();
   // and load the index.html of the app.
   mainScreen.loadFile("index.html");
 
   // Open the DevTools.
-  mainScreen.webContents.openDevTools();
+  // mainScreen.webContents.openDevTools();
+}
+function createUpdateScreen(){
+    updateScreen = new BrowserWindow({
+      width: 400,
+      height: 200,
+      minWidth: 400,
+      minHeight: 200,
+      maxWidth: 400,
+      maxHeight: 200,
+      frame: false,
+      icon: __dirname + './icon.png',
+      webPreferences: {
+        devTools: false,
+        webSecurity: false,
+        enableRemoteModule: true,
+        nodeIntegration: true,
+        contextIsolation: false,
+        preload: path.join(__dirname, "./src/js/update.js"),
+      },
+    });
+    updateScreen.removeMenu();
+    updateScreen.loadFile("update.html");
+  // loginScreen.webContents.openDevTools();
 }
 function createLoginScreen() {
   loginScreen = new BrowserWindow({
@@ -68,7 +94,9 @@ function createLoginScreen() {
     maxWidth: 700,
     maxHeight: 500,
     frame: false,
+    icon: __dirname + './icon.png',
     webPreferences: {
+      devTools: false,
       webSecurity: false,
       enableRemoteModule: true,
       nodeIntegration: true,
@@ -76,9 +104,9 @@ function createLoginScreen() {
       preload: path.join(__dirname, "/src/js/login.js"),
     },
   });
-
+  loginScreen.removeMenu();
   loginScreen.loadFile("login.html");
-  loginScreen.webContents.openDevTools();
+  // loginScreen.webContents.openDevTools();
 }
 
 ipcMain.handle("login", (event, obj) => {
@@ -92,7 +120,22 @@ ipcMain.handle("logout", (event) => {
   mainScreen.close();
   loginScreen.show();
 });
-
+ipcMain.handle("request-info-user", (event, obj) =>{
+  mainScreen.webContents.send('user-login', {'data': userInfo});
+})
+ipcMain.handle("alert", (event,obj) =>{
+  const options = {
+    type: "question",
+    buttons: ["OK"],
+    defaultId: 2,
+    title: "Notification",
+    message: obj.content,
+  };
+  dialog.showMessageBox(null, options, (response, checkboxChecked) => {
+    console.log(response);
+    console.log(checkboxChecked);
+  });
+})
 ipcMain.handle("download", (event, obj) => {
   axios
     .get(obj.url, {
@@ -101,22 +144,35 @@ ipcMain.handle("download", (event, obj) => {
     .then((res) => {
       if (res.status == 200) {
         if (!fs.existsSync(obj.pathGame)){
-          console.log('kll')
           fs.mkdirSync(obj.pathGame);
         }
         const dir = obj.pathGame;
         res.data.pipe(fs.createWriteStream(dir + "\\Game.zip"));
+        var process = 0;
+        res.data.on("data",(chunk)=>{
+            process += chunk.length;
+            mainScreen.webContents.send('downloading-bar', {'status': ( Math.round(process/ res.headers["content-length"] * 10000)/100) + "%"});
+        })
+    
         res.data.on("end", () => {
+          mainScreen.webContents.send('downloading-game', {'status': 'done'});
           unZipGame(obj);
         });
       } else {
-        console.log(`ERROR >> ${res.status}`);
+        mainScreen.webContents.send('get-link-fail', {'status': 'fail'});
       }
     })
     .catch((err) => {
-      console.log("Error ", err);
+      mainScreen.webContents.send('get-link-fail', {'status': 'fail'});
     });
 });
+
+ipcMain.handle("start-update",(event,obj) => {
+    createUpdateScreen();
+    mainScreen.close();
+    updateScreen.show();
+})
+
 function unZipGame(obj){
     var ZIP_FILE_PATH = obj.pathGame + "\\Game.zip";
     var DESTINATION_PATH = obj.pathGame;
@@ -129,32 +185,31 @@ function unZipGame(obj){
 
     // Notify when everything is extracted
     unzipper.on('extract', function (log) {
-        showNotification(obj.dataGame.nameGame, "Game is installed, you can play right now!")
-        // console.log('Finished extracting', log);
+      try {
+        fs.rmdirSync(ZIP_FILE_PATH, { recursive: true });
+      } catch (err) {
+        console.log(err);
+      }
+      mainScreen.webContents.send('end-extract', {'status': 'end-extract'});
+      showNotification(obj.dataGame.nameGame, "Game is installed, you can play right now!")
     });
 
     // Notify "progress" of the decompressed files
     unzipper.on('progress', function (fileIndex, fileCount) {
-      // obj.ng.textContent = 'Extracted file ' + (fileIndex + 1) + ' of ' + fileCount; 
-        console.log('Extracted file ' + (fileIndex + 1) + ' of ' + fileCount);
+      var text = 'Installed file game ' + (fileIndex + 1) + ' of ' + fileCount + ' ....';
+      mainScreen.webContents.send('extracting', {'status': text});
     });
     fs.writeFile(obj.pathGame+'\\'+obj.dataGame.idGame,'{"version":"'+obj.dataGame.lastestVersion+'"}', function (err) {
       if (err) throw err;
-      console.log('File is created successfully.');
     });
     // Start extraction of the content
     unzipper.extract({
         path: DESTINATION_PATH
-        // You can filter the files that you want to unpack using the filter option
-        //filter: function (file) {
-            //console.log(file);
-            //return file.type !== "SymbolicLink";
-        //}
+
     });
 
 }
-const storagePath = storage.getDataPath();
-console.log(storagePath);
+
 function validateLogin(obj) {
   axios
     .post(
@@ -168,12 +223,15 @@ function validateLogin(obj) {
       }
     )
     .then((response) => {
-      storage.set("user", response.data, function (error) {
+      storage.set("user", response.data.token, function (error) {
         if (error) throw error;
       });
+      if (!obj.keepLogin) isKeepLogin = false;
+      userInfo = response.data;
       createMainScreen();
       mainScreen.show();
       loginScreen.close();
+      
     })
     .catch((error) => {
       const options = {
@@ -181,7 +239,7 @@ function validateLogin(obj) {
         buttons: ["OK"],
         defaultId: 2,
         title: "Notification",
-        message: "Wrong email or password",
+        message: "Something wrong",
       };
       dialog.showMessageBox(null, options, (response, checkboxChecked) => {
         console.log(response);
@@ -190,13 +248,8 @@ function validateLogin(obj) {
     });
 }
 app.commandLine.appendSwitch("ignore-certificate-errors");
-app.whenReady().then(() => {
-  session.defaultSession.cookies.get({ url: 'https://stun-store-preview-puce.vercel.app' })
-  .then((cookies) => {
-    console.log(cookies)
-  }).catch((error) => {
-    console.log(error)
-  })
+
+function OnStartLauncher(){
   storage.has("game", function (error, hasKey) {
     if (error) throw error;
     if (!hasKey) {
@@ -221,22 +274,35 @@ app.whenReady().then(() => {
             {
               httpsAgent: agent,
               headers: {
-                token: headers.token,
+                token: headers,
               },
             }
           )
           .then((response) => {
+            userInfo = response.data;
             createMainScreen();
             mainScreen.show();
           })
           .catch((error) => {
             createLoginScreen();
+            loginScreen.show();
           });
-      else createLoginScreen();
+      else{
+        createLoginScreen();
+        loginScreen.show();
+      }
     } else {
       createLoginScreen();
+      loginScreen.show();
     }
   });
+}
+
+app.whenReady().then(() => {
+  // OnStartLauncher();
+  
+  OnStartLauncher();
+  
 });
 // app.whenReady().then(() => {
 //   createWindow()
@@ -248,9 +314,10 @@ app.whenReady().then(() => {
 //   })
 // })
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on("window-all-closed", function () {
-  if (process.platform !== "darwin") app.quit();
+  if (!isKeepLogin)
+      storage.set("user", "{}", function (error) {
+        app.quit();
+      });
+  else app.quit();
 });

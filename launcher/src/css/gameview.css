@@ -1,20 +1,64 @@
+.account-personal{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 8px;
+  
+
+}
+#game-browse{
+    height: 100%; 
+    width: 100%;
+    display: none;
+}
+.account-personal img{
+    height: 40px;
+    width: 40px;
+    border-radius: 40px;
+    overflow:hidden;
+    border: 2px solid rgb(102, 102, 102);
+}
+#username{
+    color: rgb(199, 199, 199);
+    font-weight: 500;
+    padding: 0 20px;
+}
+#btn-logout {
+    background: transparent;
+    cursor: pointer;
+    height: 100%;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#btn-logout svg{
+    fill: rgb(199, 199, 199);
+    height: 32px;
+    width: 32px;
+}
+#btn-logout:hover svg{
+    fill: rgb(255, 255, 255);
+}
 .game-view{
     height: 100%;
-
     display: grid;
     grid-template-columns: 260px 10px 1fr;
+    border-top: 1px solid rgb(49, 49, 49);
 }
 .game-view-list-btn{
-    border-top: 1px solid rgb(49, 49, 49);
     padding: 0 10px 20px 10px;
     overflow-y: scroll !important;
     height: calc(100vh - 95px);
+    color: white;
 }
 .game-view-content{
     border-top: 1px solid rgb(49, 49, 49);
     height: calc(100vh - 95px);
     overflow-y: scroll;
     overflow-x: hidden;
+    min-width: 400px !important;
+    display: none;
 }
 .img-game-view-header{
     height: 130px;
@@ -30,11 +74,27 @@
     width: 100%;
     object-fit: cover;
 }
+.btn-play, .btn-uninstall{
+    border: 1px solid rgba(184, 184, 184, 0.637);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    width: fit-content;
+    background-color: rgba(255, 17, 0, 0.514);
+    height: 35px;
+    padding: 0 5px;
+}
+.btn-uninstall{
+    margin-left: 20px;
+    background-color: rgba(87, 87, 87, 0.514);
+    display: none;
+}
 h1{
-    margin-left: 30px;
     color: white;
     font-size: 21px;
     font-weight: 600;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .avatar-game-view {
     z-index: 10;
@@ -48,47 +108,63 @@ h1{
     width: 100%;
     object-fit: cover;
     height: 100%;
+    border: 1px solid rgb(160, 160, 160);
 }
+
 .btn-play-update{
     height: 40px;
-    width: 100px;
+    width: fit-content;
+    padding: 0 10px 0 5px;
     border-radius: 4px;
-    background-color: rgb(16, 159, 216);
     cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: rgb(194, 194, 194);
     font-weight: 700;
-    margin-left: -120px;
-    margin-top: 55px;
+    font-size: 14px;
     transition: .3s;
 }
+.e3sd232123{
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+    overflow: hidden;
+}
 .btn-play-update:hover{
-    background-color: rgb(231, 69, 69);
+    color: rgb(255, 255, 255);
 }
 .short-description{
-    color: white;
-    font-weight: 500;
-    height: 50px;
-    margin-top: 120px;
-    margin-left: -250px;
+    color: rgba(255, 255, 255, 0.808);
+    font-weight: 700;
+    font-size: 18px;
+    padding: 20px 20px
 }
-
+.detail-description{
+    padding: 0px 20px
+}
+.detail-description *{
+    background-color: transparent !important;
+}
+#text-downloading{
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 600;
+    padding-left: 20px;
+    margin-top: 20px;
+}
 .downloading-bar {
     width: 90%;
     height: 2px;
     background-color: rgb(66, 66, 66);
-    margin-top: 20px;
+    margin-top: 10px;
     margin-left: 20px;
 }
 .handle-downloading{
-    background-color: rgb(16, 159, 216);
+    background-color: rgb(255, 255, 255);
     height: 2px;
-    width: 0%;
+    width: 0;
 }
-
-
 .gutter-col {
     cursor:e-resize;
 }
