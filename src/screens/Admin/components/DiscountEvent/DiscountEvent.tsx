@@ -35,7 +35,7 @@ function DiscountEvent() {
       response.data.forEach((data) => {
         if (data.lastestVersion !== -1) {
           allGame.push(
-            <Option key={data.idGame} value={data.nameGame}>
+            <Option value={data.idGame} key={data.idGame} >
               {data.nameGame}
             </Option>
           );
@@ -236,7 +236,7 @@ function DiscountEvent() {
             />
           </Form.Item>
           <Form.Item
-            name="games"
+            name = "games"
             label="List Game Apply"
             rules={[{ required: true }]}
           >
@@ -245,6 +245,7 @@ function DiscountEvent() {
               size="large"
               placeholder="Please select"
               style={{ width: "100%" }}
+   
             >
               {gameData}
             </Select>

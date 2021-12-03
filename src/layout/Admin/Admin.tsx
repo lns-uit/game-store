@@ -5,6 +5,7 @@ import DescriptionPhoto from '../../components/UploadFile/DescriptionPhoto';
 import ShortDescription from '../../components/UploadFile/ShortDescription';
 import SystemRequirements from '../../components/UploadFile/SystemRequirements';
 import {
+  message,
   Form,
   Select,
   InputNumber,
@@ -34,9 +35,12 @@ import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
 import { useForm } from 'react-hook-form';
 import reactImageSize from 'react-image-size';
+import { Endpoint } from '../../api/endpoint';
+import { useHistory } from 'react-router';
 const { Option } = Select;
 
 function Admin() {
+  const history = useHistory();
   let _contentState = ContentState.createFromText('');
   const raw = convertToRaw(_contentState);
   const [contentState, setContentState] = useState(raw);
@@ -63,7 +67,7 @@ function Admin() {
   const normFileZip = (e) => {
     setFileZip(e.fileList);
     if (e.file.status === "error" && e.file.type !== "application/x-zip-compressed") {
-      alert("This is not file .zip");
+      message.error("Require file .zip");
     } else if (e.file.status === "error" && e.file.type === "application/x-zip-compressed") {
       getLinkFileZip(e.file.originFileObj);
     } else if (e.file.status === "removed") {
@@ -110,55 +114,54 @@ function Admin() {
       window.alert(stringErr);
     } else {
       values.fileGame = urlDownload;
-      values.images = JSON.stringify(fileList.map(image => {
+      values.images = fileList.map(image => {
         return image.url
-      }));
+      });
       values.detailDecription = markup;
       postGame(values);
     }
   }
   const postGame = (values: any) => {
-    const createGame: any = {
-      Game: {
-        namegame: values.nameGame,
-        developer: values.developer,
-        publisher: values.publisher,
-        plaform: values.platform,
-        privacyPolicy: values.privacyPolicy,
-        urlVideo: values.urlVideo,
-        cost: values.cost,
-        lastestversion: values.version,
-      },
-      Genres: values.selectMultiple,
-      GameVersion: {
-        versiongame: values.version,
-        urldownload: values.fileGame,
-        shortdescription: values.shortDecription.currentTarget.value,
-        descriptions: values.detailDecription,
-        os: values.OS,
-        processor: values.processor,
-        storage: values.storage,
-        graphics: values.graphics,
-        privacyPolicy: values.privacyPolicy
-      },
-      iconGame: url.url,
-      listImageDetail: values.images
-    }
-    console.log(createGame)
+    values.images.splice(0,0,url.url)
     axios
-      .post("https://localhost:5001/api/game/create", {
-        createGame
-      }, {
+      .post(Endpoint.mainApi + "api/game/create", {
+        game: {
+          namegame: values.nameGame,
+          developer: values.developer,
+          publisher: values.publisher,
+          plaform: values.platform,
+          urlVideo: values.urlVideo,
+          cost: values.cost,
+          lastestversion: values.version,
+        },
+        
+        gameVersion: {
+          versiongame: values.version,
+          urldowload: values.fileGame,
+          ShortDescription: values.shortDecription.currentTarget.value,
+          Descriptions: values.detailDecription,
+          os: values.OS,
+          Processor: values.processor,
+          Storage: values.storage,
+          Graphics: values.graphics,
+          PrivacyPolicy: values.privacyPolicy,
+          Memory: values.memory,
+          filePlay: values.fileLauncher
+        },
+        listImageDetail: values.images,
+        listGenreDetail: values.selectMultiple
+      }, 
+      {
         headers: {
           Authorization: "Bearer " + localStorage.getItem('accessToken')
         }
       })
       .then((response) => {
         form.resetFields();
+        history.push("admin/console/game-list");
         console.log(response.data)
       })
       .catch((error) => {
-        form.resetFields();
         console.log(error);
       });
   };

@@ -53,7 +53,7 @@ function DetailGame(){
         if (res){
             res.forEach((data)=>{
                 allGame.push(
-                    <Option key={data.idGenre} value={data.nameGenre}>
+                    <Option value={data.idGenre} key={data.idGenre} >
                         {data.nameGenre}
                     </Option>
                 )  
@@ -184,12 +184,20 @@ function DetailGame(){
                     xs={24}
                 >
                     <Form.Item
+                        name="fileLauncher"
+                        label = "Name file launcher game"
+                        rules={[{ required: true, message: 'Please input name file launcher game!' }]}
+                    >
+                        <Input placeholder="Name Game.exe" />
+                    </Form.Item>
+                    <Form.Item
                         name="version"
                         label = "Version"
                         rules={[{ required: true, message: 'Please input version!' }]}
                     >
                         <Input placeholder="Version" />
                     </Form.Item>
+                    
                     <div className="background-profile border-radius-8">
                         <div 
                             className="flex-basic relative border-radius-8 d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">
