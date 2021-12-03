@@ -24,11 +24,12 @@ import { RootState } from '../../redux/reducers/index';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
-import { useForm } from 'react-hook-form';
 import reactImageSize from 'react-image-size';
 import '../../screens/AdminUpdateGame/styles.css';
 import gamesApi from '../../api/gamesApi'
 import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
 
 function AdminUpdateGameLayout() {
     const slug = useParams();
@@ -36,7 +37,6 @@ function AdminUpdateGameLayout() {
     const raw = convertToRaw(_contentState);
     const [contentState, setContentState] = useState(raw);
     const [urlDownload, setUrlDownload] = useState<any>(null);
-    const [urlImgs, setUrlImgs] = useState<string[]>([]);
     const [fileZip, setFileZip] = useState<any>([]);
     const [loaddingImagesGame, setLoaddingImagesGame] = useState(false);
     const url = useSelector(
@@ -45,6 +45,7 @@ function AdminUpdateGameLayout() {
     const [form] = Form.useForm();
     const [game, setGame] = useState<any>(null);
     const [fileList, setFileList] = useState<any>([]);
+    const dispatch = useDispatch();
 
     const hashConfig = {
         trigger: '#',
@@ -77,7 +78,6 @@ function AdminUpdateGameLayout() {
         }
         if (e.file.status === "removed") {
             setLoaddingImagesGame(false);
-            setUrlImgs(urlImgs.slice(0, urlImgs.length - 1));
         }
     }
 
@@ -96,7 +96,7 @@ function AdminUpdateGameLayout() {
             count += 1;
         }
 
-        if (urlImgs.length === 0) {
+        if (fileList.length === 0) {
             error.push("Images game null");
             count += 1;
         }
@@ -108,35 +108,45 @@ function AdminUpdateGameLayout() {
             window.alert(stringErr);
         } else {
             values.fileGame = urlDownload;
-            values.images = JSON.stringify(urlImgs);
+            values.images = JSON.stringify(fileList.map(image=>{
+                return image.url
+            }));
             values.detailDecription = markup;
+            console.log(values);
             postGame(values);
         }
     }
     const postGame = (values: any) => {
+        const updateGame: any ={
+            Game: {
+                namegame: values.nameGame || game.nameGame,
+                developer: values.developer || game.developer,
+                publisher: values.publisher || game.publisher,
+                plaform: values.platform || game.plaform,
+                privacyPolicy: values.privacyPolicy || game.privacyPolicy,
+                urlVideo: values.urlVideo || game.urlVideo,
+                cost: values.cost || game.cost,
+                lastestversion: values.version || game.lastestVersion,
+            },
+            Genre: values.selectMultiple || game.genres.map(genre=>{return genre.idGenreNavigation.nameGenre}),
+            GameVersion: {
+                versiongame: values.version || game.newVersion.versionGame,
+                urldownload: values.fileGame,
+                shortdescription: values.shortDecription || game.newVersion.shortDescription,
+                descriptions: values.detailDecription || game.newVersion.descriptions,
+                os: values.OS || game.newVersion.os,
+                processor: values.processor || game.newVersion.processor,
+                storage: values.storage || game.newVersion.storage,
+                graphics: values.graphics || game.newVersion.graphics,
+                privacyPolicy: values.privacyPolic || game.newVersion.privacyPolicy,
+            },
+            iconGame: url.url.toString(),
+            listImageDetail: values.images
+        }
+        console.log(updateGame);
         axios
             .post("https://localhost:5001/api/game/create", {
-                Game: {
-                    namegame: values.nameGame,
-                    developer: values.developer,
-                    publisher: values.publisher,
-                    plaform: values.platform,
-                    cost: values.cost,
-                    lastestversion: values.version,
-                },
-                GameVersion: {
-                    versiongame: values.version,
-                    urldownload: values.fileGame,
-                    shortdescription: values.shortDecription.currentTarget.value,
-                    descriptions: values.detailDecription,
-                    os: values.OS,
-                    processor: values.processor,
-                    storage: values.storage,
-                    graphics: values.graphics,
-                    privacyPolicy: values.privacyPolicy
-                },
-                listImageDetail: urlImgs
-
+                updateGame
             }, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('accessToken')
@@ -199,6 +209,7 @@ function AdminUpdateGameLayout() {
     }
 
     async function checkWidthHeight(imageUrl) {
+        let tmpImageUrl: any = {};
         try {
             const { width, height } = await reactImageSize(imageUrl);
             console.log(width, height);
@@ -208,7 +219,14 @@ function AdminUpdateGameLayout() {
                 setLoaddingImagesGame(false);
             } else {
                 setLoaddingImagesGame(false);
-                setUrlImgs(oldArr => [...oldArr, imageUrl]);
+                tmpImageUrl = {
+                    uid: fileList.length-1,
+                    name: "image" + (fileList.length-1).toString(),
+                    status: "error",
+                    url: imageUrl
+                }
+                fileList[fileList.length - 1] = tmpImageUrl;
+                setFileList(fileList);
             }
         } catch (err) {
             setLoaddingImagesGame(false);
@@ -218,17 +236,22 @@ function AdminUpdateGameLayout() {
         }
     }
 
+    useEffect(()=>{
+        normFileImages
+    },[fileList]);
+
     useEffect(() => {
         const fetchGameData = async () => {
             const response = await gamesApi.getGameDetail(slug);
             if (response) {
                 console.log(response);
                 setGame(response);
+                dispatch(setUrlGameAvatar('getLink', "icon game" ,response.imageGameDetail[0].url));
                 setFileList(response.imageGameDetail.slice(1).map((image,index)=>{
                     return {
                         uid: index,
                         name: 'image'+index.toString(),
-                        status: 'error',
+                        status: 'done',
                         url: image.url
                     }
                 }))
@@ -243,11 +266,13 @@ function AdminUpdateGameLayout() {
                 :
                 <div className="white console-container">
                     <div className="console-detail-header">
-                        <h1>CREATE NEW GAME</h1>
+                        <h1>UPDATE GAME</h1>
                         <div className="console-toolbar"></div>
                     </div>
                     <div style={{ height: '150px' }}></div>
-                    <Form layout="vertical" className="create-game" form={form} name="validate_other" onFinish={onFinish}>
+                    <Form 
+                        layout="vertical" className="create-game" form={form} onFinish={onFinish}
+                    >
                         <Form.Item
                             style={{ backgroundColor: "#111" }}
                         >
@@ -286,7 +311,6 @@ function AdminUpdateGameLayout() {
                         <Form.Item
                             label="* DETAIL DESCRIPTION"
                             rules={[{ required: true, message: "Please Input Detail Description" }]}
-
                         >
                             <div className="detail-description" onClick={focus}>
 
@@ -306,10 +330,9 @@ function AdminUpdateGameLayout() {
                                 <Form.Item
                                     name="cost"
                                     label="Game Cost"
-                                    rules={[{ required: true, message: "Please input cost!" }]}
                                 >
                                     <InputNumber
-                                        defaultValue={0}
+                                        defaultValue={game.cost}
                                         min={0}
                                         formatter={(value) =>
                                             `$ ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")

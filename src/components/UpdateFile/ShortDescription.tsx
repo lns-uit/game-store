@@ -18,7 +18,6 @@ function ShortDescription({
                 name="shortDecription"
                 valuePropName="shortDecription"
                 label = "SHORT DESCRIPTION"
-                rules={[{ required: true, message: 'Please input short decription' }]}
             >
                 <Input.TextArea showCount maxLength={500} defaultValue={game.newVersion.shortDescription}/>
             </Form.Item>

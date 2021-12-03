@@ -122,7 +122,7 @@ function DetailGame(){
                     </Form.Item>
 
                     <Form.Item
-                        name="select-multiple"
+                        name="selectMultiple"
                         label = "Genres"
                         rules={[{ required: true, message: 'Please select genres', type: 'array' }]}
                     >

@@ -122,16 +122,14 @@ function DetailGame({
                     <Form.Item
                         name="nameGame"
                         label = "Name of Game"
-                        rules={[{ required: true, message: 'Please input name game!' }]}
                         className="m-bottom-24"
                     >
                         <Input placeholder="Name Game" defaultValue={game.nameGame} />
                     </Form.Item>
 
                     <Form.Item
-                        name="select-multiple"
+                        name="selectMultiple"
                         label = "Genres"
-                        rules={[{ required: true, message: 'Please select genres', type: 'array' }]}
                     >
                         <Select mode="multiple" placeholder="Please select genres" 
                             defaultValue={
@@ -148,7 +146,6 @@ function DetailGame({
                         name="platform"
                         className="white"
                         label = "Platform"
-                        rules={[{ required: true, message: 'Please select platform!' }]}
                     >
                         <Select placeholder="Please select platform" defaultValue={game.plaform}>
                             <Option value="window">Window</Option>
@@ -159,7 +156,6 @@ function DetailGame({
                     <Form.Item
                         name="developer"
                         label = "Developer"
-                        rules={[{ required: true, message: 'Please input developer!' }]}
                     >
                         <Input placeholder="Developer" defaultValue={game.developer} />
                     </Form.Item>
@@ -167,7 +163,6 @@ function DetailGame({
                     <Form.Item
                         name="publisher"
                         label = "Publisher"
-                        rules={[{ required: true, message: 'Please input publisher!' }]}
                     >
                         <Input placeholder="Publisher" defaultValue={game.publisher}/>
                     </Form.Item>
@@ -175,7 +170,6 @@ function DetailGame({
                     <Form.Item
                         name="privacyPolicy"
                         label = "Privacy Policy"
-                        rules={[{ required: true, message: 'Please input privacy policy!' }]}
                     >
                         <Input placeholder="https://url.com" defaultValue={game.privacyPolicy} />
                     </Form.Item>
@@ -183,7 +177,6 @@ function DetailGame({
                     <Form.Item
                         name="urlVideo"
                         label = "Url Video"
-                        // rules={[{ required: true, message: 'Please input url video!' }]}
                     >
                         <Input placeholder="URL Video" defaultValue={game.urlVideo}/>
                     </Form.Item>
@@ -199,7 +192,6 @@ function DetailGame({
                     <Form.Item
                         name="version"
                         label = "Version"
-                        rules={[{ required: true, message: 'Please input version!' }]}
                     >
                         <Input placeholder="Version" defaultValue={game.lastestVersion}/>
                     </Form.Item>

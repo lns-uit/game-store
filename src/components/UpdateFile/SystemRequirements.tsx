@@ -30,7 +30,6 @@ function SystemRequirements({
                     <Form.Item
                         name="processor"
                         label = "Processor"
-                        rules={[{ required: true, message: 'Please input processor!' }]}
                     >
                         <Input placeholder="Processor" defaultValue={game.newVersion.processor}/>
                     </Form.Item>
@@ -38,7 +37,6 @@ function SystemRequirements({
                     <Form.Item
                         name="memory"
                         label = "Memory"
-                        rules={[{ required: true, message: 'Please select memory!' }]}
                     >
                         <Input placeholder="Memory" defaultValue={game.newVersion.memory}/>
                     </Form.Item>
@@ -46,7 +44,6 @@ function SystemRequirements({
                     <Form.Item
                         name="graphics"
                         label = "Graphics"
-                        rules={[{ required: true, message: 'Please select graphics!' }]}
                     >
                         <Input placeholder="Graphics" defaultValue={game.newVersion.graphics}/>
                     </Form.Item>
@@ -54,7 +51,6 @@ function SystemRequirements({
                     <Form.Item
                         name="storage"
                         label = "Storage"
-                        rules={[{ required: true, message: 'Please input storage!' }]}
                     >
                         <Input placeholder="Storage" defaultValue={game.newVersion.storage}/>
                     </Form.Item>
@@ -62,7 +58,6 @@ function SystemRequirements({
                     <Form.Item
                         name="OS"
                         label = "OS"
-                        rules={[{ required: true, message: 'Please input OS!' }]}
                     >
                         <Input placeholder="OS" defaultValue={game.newVersion.os}/>
                     </Form.Item>
