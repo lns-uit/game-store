@@ -26,10 +26,10 @@ import GenresManager from '../screens/Admin/components/GenresManager/GenresManag
 import PrivacyPolicyEditor from '../screens/Admin/components/PrivacyPolicy/PrivacyPolicyEditor';
 import StoreRefundPolicyEditor from '../screens/Admin/components/StoreRefundPolicy/StoreRefundPolicyEditor';
 import TermOfService from '../screens/Admin/components/TermOfService/TermOfServiceEditor';
-import DiscoverCMS from '../screens/Admin/components/DiscoverCMS/DiscoverCMS'
+import DiscoverCMS from '../screens/Admin/components/DiscoverCMS/DiscoverCMS';
 import AllGameVersion from '../screens/Admin/components/GameVersion/AllGameVersion';
-import EditProfile from '../screens/EditProfile/EditProfile'
-
+import EditProfile from '../screens/EditProfile/EditProfile';
+import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
 
 function RootNavigation() {
   let location = useLocation();
@@ -73,44 +73,43 @@ function RootNavigation() {
       ) : (
         <>
           {/* user login */}
-
           <PrivateRoute path='/edit/user/:id'>
-            <EditProfile/>
+            <EditProfile />
           </PrivateRoute>
           <PrivateRoute path='/user/:idUser'>
-            <User/>
+            <User />
           </PrivateRoute>
           <PrivateRoute path='/admin/create-game'>
-            <AdminCreateGame/>
+            <AdminCreateGame />
           </PrivateRoute>
 
-          
+          {/* admin */}
           <PrivateRoute path='/admin/console/game-list'>
-            <ConsoleGameListScreen></ConsoleGameListScreen>  
+            <ConsoleGameListScreen />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/user-list'>
-            <ConsoleUsersListScreen></ConsoleUsersListScreen>
+            <ConsoleUsersListScreen />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/discount-list'>
-            <DiscountEvent></DiscountEvent>
+            <DiscountEvent />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/genres-list'>
-            <GenresManager></GenresManager>
+            <GenresManager />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/privacy-policy-edit'>
-            <PrivacyPolicyEditor></PrivacyPolicyEditor>
+            <PrivacyPolicyEditor />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/store-refund-edit'>
-            <StoreRefundPolicyEditor></StoreRefundPolicyEditor>
+            <StoreRefundPolicyEditor />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/term-of-service-edit'>
-            <TermOfService></TermOfService>
+            <TermOfService />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/discover-cms'>
-            <DiscoverCMS></DiscoverCMS>
+            <DiscoverCMS />
           </PrivateRoute>
           <PrivateRoute path='/admin/console/history/:idGame'>
-            <AllGameVersion></AllGameVersion>
+            <AllGameVersion />
           </PrivateRoute>
 
           {/* Auth*/}
@@ -124,21 +123,15 @@ function RootNavigation() {
           />
 
           {/* everyone */}
-          <Route path='/game/:idGame/:version'>
-            <GameDetail />
-          </Route>
-          <Route path='/browse'>
-            <BrowseScreen />
-          </Route>
-          <Route path='/help'>
-            <HelpScreen />
-          </Route>
-          <Route path='/faq'>
-            <FAQScreen />
-          </Route>
-          <Route exact path='/'>
-            <DiscoverScreen />
-          </Route>
+          <Route path='/game/:idGame/:version' component={GameDetail} />
+          <Route path='/browse' component={BrowseScreen} />
+          <Route path='/help' component={HelpScreen} />
+          <Route path='/faq' component={FAQScreen} />
+          <Route path='/404' component={NotFoundScreen} />
+          <Route exact path='/' component={DiscoverScreen} />
+
+          {/* move to not found page */}
+          <Redirect from='*' to='/404' />
         </>
       )}
     </Switch>
