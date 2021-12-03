@@ -16,7 +16,7 @@ const loginApi = async formLogin => {
     return data;
   } catch (e) {
     const error: any = e;
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -41,7 +41,7 @@ const loginToken = async accessToken => {
     return data;
   } catch (e) {
     const error: any = e;
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
@@ -56,7 +56,7 @@ const registerUserApi = async (newUser: FormRegisterType) => {
     return data;
   } catch (e) {
     const error: any = e;
-    return error.response.data;
+    return error.response?.data;
   }
 };
 
