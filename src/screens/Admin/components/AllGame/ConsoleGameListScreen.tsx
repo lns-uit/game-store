@@ -108,7 +108,7 @@ function ConsoleGameListScreen() {
           columns={columns} dataSource={
             gameData.filter(item => item.nameGame?.toLowerCase().indexOf(searchGame) !== -1
 
-            )} />
+          )} />
       </div>
     </div>
   );

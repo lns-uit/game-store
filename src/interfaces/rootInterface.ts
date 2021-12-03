@@ -93,6 +93,8 @@ interface GameDetailss {
   developer: string;
   publisher: string;
   plaform: string;
+  privacyPolicy: string,
+  urlVideo: string,
   releaseDate: string;
   lastestVersion: string;
   numberOfBuyer: number;

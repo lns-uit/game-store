@@ -30,6 +30,7 @@ import DiscoverCMS from '../screens/Admin/components/DiscoverCMS/DiscoverCMS';
 import AllGameVersion from '../screens/Admin/components/GameVersion/AllGameVersion';
 import EditProfile from '../screens/EditProfile/EditProfile';
 import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
+import AdminUpdateGame from '../screens/AdminUpdateGame/AdminUpdateGame';
 
 function RootNavigation() {
   let location = useLocation();
@@ -82,8 +83,10 @@ function RootNavigation() {
           <PrivateRoute path='/admin/create-game'>
             <AdminCreateGame />
           </PrivateRoute>
+          <PrivateRoute path='/admin/update-game/:idGame/:version'>
+            <AdminUpdateGame />
+          </PrivateRoute>
 
-          {/* admin */}
           <PrivateRoute path='/admin/console/game-list'>
             <ConsoleGameListScreen />
           </PrivateRoute>
