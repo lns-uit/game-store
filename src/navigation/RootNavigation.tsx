@@ -130,11 +130,11 @@ function RootNavigation() {
           <Route path='/browse' component={BrowseScreen} />
           <Route path='/help' component={HelpScreen} />
           <Route path='/faq' component={FAQScreen} />
-          <Route path='/404' component={NotFoundScreen} />
           <Route exact path='/' component={DiscoverScreen} />
+          <Route path='*' component={NotFoundScreen} />
 
           {/* move to not found page */}
-          <Redirect from='*' to='/404' />
+          {/* <Redirect from='*' to='/404' /> */}
         </>
       )}
     </Switch>

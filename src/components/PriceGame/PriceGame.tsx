@@ -23,7 +23,6 @@ function PriceGame({ game }: Detail) {
 
   const showMessage = (message: string) => {
     alert(message);
-    setIsModalVisible(false);
   };
 
   const onSubmitPayment = async card => {
@@ -43,6 +42,7 @@ function PriceGame({ game }: Detail) {
             game.nameGame
           } with $${cost} at ${datePaygame}`
         );
+        setIsModalVisible(false);
       } else if (message) {
         showMessage(message);
       }
