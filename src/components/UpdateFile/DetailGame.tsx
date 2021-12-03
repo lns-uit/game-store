@@ -16,11 +16,18 @@ import axios from 'axios';
 import { GenreType } from '../../interfaces/rootInterface';
 import adminApi from '../../api/adminApi';
 import reactImageSize from 'react-image-size';
+import {GameDetailss} from "../../interfaces/rootInterface";
+
+interface GameDetail{
+    game: GameDetailss;
+}
 
 const { Option } = Select;
 
-function DetailGame(){
-    const [iconGame, setIconGame] = useState<any>(null);
+function DetailGame({
+    game
+}: GameDetail){
+    const [iconGame, setIconGame] = useState<any>(game.imageGameDetail[0].url);
     const [loadingIconGame, setLoadingIconGame] = useState<any>(true);
     const dispatch = useDispatch();
     const [gameData, setGameData] = useState<any[]>([]);
@@ -115,18 +122,22 @@ function DetailGame(){
                     <Form.Item
                         name="nameGame"
                         label = "Name of Game"
-                        rules={[{ required: true, message: 'Please input name game!' }]}
                         className="m-bottom-24"
                     >
-                        <Input placeholder="Name Game" />
+                        <Input placeholder="Name Game" defaultValue={game.nameGame} />
                     </Form.Item>
 
                     <Form.Item
                         name="selectMultiple"
                         label = "Genres"
-                        rules={[{ required: true, message: 'Please select genres', type: 'array' }]}
                     >
-                        <Select mode="multiple" placeholder="Please select genres">
+                        <Select mode="multiple" placeholder="Please select genres" 
+                            defaultValue={
+                                game.genres.map(genre=>{
+                                    return genre.idGenreNavigation.nameGenre
+                                })
+                            }
+                        >
                             {gameData}
                         </Select>
                     </Form.Item>
@@ -135,9 +146,8 @@ function DetailGame(){
                         name="platform"
                         className="white"
                         label = "Platform"
-                        rules={[{ required: true, message: 'Please select platform!' }]}
                     >
-                        <Select placeholder="Please select platform">
+                        <Select placeholder="Please select platform" defaultValue={game.plaform}>
                             <Option value="window">Window</Option>
                             <Option value="macOS">MacOS</Option>
                         </Select>
@@ -146,33 +156,29 @@ function DetailGame(){
                     <Form.Item
                         name="developer"
                         label = "Developer"
-                        rules={[{ required: true, message: 'Please input developer!' }]}
                     >
-                        <Input placeholder="Developer" />
+                        <Input placeholder="Developer" defaultValue={game.developer} />
                     </Form.Item>
 
                     <Form.Item
                         name="publisher"
                         label = "Publisher"
-                        rules={[{ required: true, message: 'Please input publisher!' }]}
                     >
-                        <Input placeholder="Publisher" />
+                        <Input placeholder="Publisher" defaultValue={game.publisher}/>
                     </Form.Item>
 
                     <Form.Item
                         name="privacyPolicy"
                         label = "Privacy Policy"
-                        rules={[{ required: true, message: 'Please input privacy policy!' }]}
                     >
-                        <Input placeholder="https://url.com" />
+                        <Input placeholder="https://url.com" defaultValue={game.privacyPolicy} />
                     </Form.Item>
 
                     <Form.Item
                         name="urlVideo"
                         label = "Url Video"
-                        // rules={[{ required: true, message: 'Please input url video!' }]}
                     >
-                        <Input placeholder="URL Video" />
+                        <Input placeholder="URL Video" defaultValue={game.urlVideo}/>
                     </Form.Item>
                 </Col>
                 <Col
@@ -186,9 +192,8 @@ function DetailGame(){
                     <Form.Item
                         name="version"
                         label = "Version"
-                        rules={[{ required: true, message: 'Please input version!' }]}
                     >
-                        <Input placeholder="Version" />
+                        <Input placeholder="Version" defaultValue={game.lastestVersion}/>
                     </Form.Item>
                     <div className="background-profile border-radius-8">
                         <div 

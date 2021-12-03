@@ -1,14 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
 import { GameDetailss } from '../../interfaces/rootInterface';
 import Moment from 'react-moment';
+import { Modal, Button } from 'antd';
+import BuyComponent from '../BuyComponent/BuyComponent';
+import gamesApi from '../../api/gamesApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 
 interface Detail {
   game: GameDetailss;
 }
 
 function PriceGame({ game }: Detail) {
+  const { idUser } = useSelector((state: RootState) => state.user) || {};
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const showMessage = (message: string) => {
+    alert(message);
+    setIsModalVisible(false);
+  };
+
+  const onSubmitPayment = async card => {
+    if (idUser) {
+      const dataRequest = {
+        card,
+        newBill: {
+          idGame: game.idGame,
+          idUser,
+        },
+      };
+      const response = await gamesApi.createNewBillGame(dataRequest);
+      const { actions, cost, datePaygame, idBill, message } = response || {};
+      if (idBill) {
+        showMessage(
+          `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${
+            game.nameGame
+          } with $${cost} at ${datePaygame}`
+        );
+      } else if (message) {
+        showMessage(message);
+      }
+    }
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
   return (
     <div className='d-flex align-items-start column justify-content-end height-full'>
       <div className='width-full'>
@@ -38,9 +81,21 @@ function PriceGame({ game }: Detail) {
           </div>
         )}
         <div className='m-top-36'>
-          <div className='bgr-blue1 pd-8-16 width-full border-radius-4 pointer hover-buy transition-dot-3'>
-            <p className='m-0 center uppercase'>Buy Now</p>
-          </div>
+          <Button
+            type='primary'
+            className='bgr-blue1 pd-8-16 width-full border-radius-4 '
+            onClick={showModal}>
+            Buy Now
+          </Button>
+          <Modal
+            wrapClassName='master-card'
+            title={'Buy Game ' + game.nameGame}
+            visible={isModalVisible}
+            onOk={onSubmitPayment}
+            onCancel={handleCancel}
+            footer={null}>
+            <BuyComponent onSubmitPayment={onSubmitPayment} />
+          </Modal>
         </div>
         <div className='m-top-28 m-bottom-48'>
           <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>

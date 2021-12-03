@@ -6,13 +6,6 @@ const callApi = (
   data?: any,
   configs?: AxiosRequestConfig
 ) => {
-  console.log({
-    method,
-    url: endpoint,
-    data,
-    ...configs,
-  });
-
   return axios({
     ...configs,
     method,
