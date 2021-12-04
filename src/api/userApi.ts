@@ -12,10 +12,14 @@ const loginApi = async formLogin => {
       'https://localhost:5001/api/user/login',
       formLogin
     );
+    console.log(request);
+
     const { data } = request;
     return data;
   } catch (e) {
     const error: any = e;
+    console.log(error.response);
+
     return error.response?.data;
   }
 };

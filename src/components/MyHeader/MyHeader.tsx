@@ -10,6 +10,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../assets/images/logo.png';
 import logoSecondary from '../../assets/images/logoSecondary.png';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import rootConfigtab from '../../constants/configTab';
 import { Menu, Dropdown } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers/index';
@@ -18,24 +19,7 @@ import { logout } from '../../redux/actions/userAction';
 
 const { Header } = Layout;
 
-const tabs = [
-  {
-    name: 'discover',
-    linkTo: '/',
-  },
-  {
-    name: 'browse',
-    linkTo: '/browse',
-  },
-  {
-    name: 'help',
-    linkTo: '/help',
-  },
-  {
-    name: 'faq',
-    linkTo: '/faq',
-  },
-];
+const tabs = rootConfigtab.HEADER_TABS;
 
 interface MyHeaderPropstype {
   onOpen: () => void;

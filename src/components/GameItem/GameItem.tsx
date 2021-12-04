@@ -10,6 +10,8 @@ interface GameItemPropsType {
   action?: ActionType;
   isHorizontal?: boolean;
   heightImage?: string;
+  titleTooltip?: string;
+  onClickGameItem?: () => void;
 }
 
 function GameItem({
@@ -17,6 +19,8 @@ function GameItem({
   action,
   isHorizontal,
   heightImage,
+  titleTooltip,
+  onClickGameItem,
 }: GameItemPropsType) {
   return (
     <div
@@ -27,14 +31,10 @@ function GameItem({
         <Tooltip
           overlayInnerStyle={{ fontSize: 14 }}
           placement='topLeft'
-          title={
-            action === ActionType.ADD
-              ? 'Add to wishlist'
-              : 'Remove from wishlist'
-          }
+          title={titleTooltip}
           color={rootColor.redColor}
           key={rootColor.whiteColor}>
-          <button className='game-item__action'>
+          <button className='game-item__action' onClick={onClickGameItem}>
             {action === ActionType.REMOVE ? (
               <MinusCircleOutlined className='game-item__action__icon' />
             ) : (
@@ -68,34 +68,6 @@ function GameItem({
           </div>
         </div>
       </div>
-      {/* <Row gutter={[2, 2]}>
-        <Col span={isHorizontal ? 7 : 24}>
-          <div className='game-item__image'>
-            <img src={game.image} alt='game-item' />
-          </div>
-        </Col>
-
-        <Col span={isHorizontal ? 7 : 24}>
-          <div className='game-item__detail-wrapper'>
-            <p className='game-item__detail-wrapper__name'>{game.name}</p>
-            <p className='game-item__detail-wrapper__type'>{game.type}</p>
-            <div className='game-item__detail-wrapper__price-container'>
-              {game.onSale ? (
-                <div className='price-container__sale-container'>
-                  <div className='price-container__sale'>
-                    <p>-{game.onSale}%</p>
-                  </div>
-                  <p className='price-container__cost'>{game.cost}</p>
-                </div>
-              ) : null}
-
-              <p className='price-container__current-price'>
-                {game.cost - (game.cost * game.onSale) / 100}
-              </p>
-            </div>
-          </div>
-        </Col>
-      </Row> */}
     </div>
   );
 }

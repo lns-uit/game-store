@@ -4,8 +4,6 @@ import { Route, Switch, useLocation, Redirect } from 'react-router';
 import { setTabAction } from '../redux/actions/tabAction';
 import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
-import FAQScreen from '../screens/FAQ/FAQScreen';
-import HelpScreen from '../screens/Help/HelpScreen';
 import AdminScreen from '../screens/Admin/AdminScreen';
 import AdminCreateGame from '../screens/AdminCreateGame/AdminCreateGame';
 import GameDetail from '../screens/GameDetail/GameDetail';
@@ -128,8 +126,6 @@ function RootNavigation() {
           {/* everyone */}
           <Route path='/game/:idGame/:version' component={GameDetail} />
           <Route path='/browse' component={BrowseScreen} />
-          <Route path='/help' component={HelpScreen} />
-          <Route path='/faq' component={FAQScreen} />
           <Route exact path='/' component={DiscoverScreen} />
           <Route path='*' component={NotFoundScreen} />
 
