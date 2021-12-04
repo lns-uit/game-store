@@ -2,8 +2,11 @@
   background-color: var(--grayContainer-color) !important;
   height: auto !important;
   position: fixed;
-  z-index: 2;
+  z-index: 1000;
   width: 100%;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+  box-shadow: 0 2px 8px 0 rgba(0,0,0,.1);
 }
 
 .header__top-wrapper {
@@ -21,8 +24,10 @@
 
 .header__top-wrapper--right__btn-get-launcher {
   height: 42px !important;
-  font-size: 12px !important;
+  font-weight: 500 !important;
+  font-size: 13px !important;
   margin-left: 12px;
+  border-radius: 5px !important;
 }
 
 .header__bottom-wrapper {
@@ -31,21 +36,28 @@
   align-items: center;
   background-color: var(--grayContainer-color) !important;
 }
-
+.header__bottom-wrapper__input .ant-input-lg{
+  padding: 0 10px !important;
+  margin-left: 10px !important;
+  border-radius: 5px !important;
+}
 .header__bottom-wrapper__input {
+  border-radius: 5px !important;
   width: 50% !important;
   margin: 0 35px !important;
-  background-color: #232323 !important;
+  background-color: #2e2e2e !important;
   border-color: #232323 !important;
   color: var(--white-color) !important;
+  padding: 4px 5px 4px 20px!important;
 }
 
 .header__bottom-wrapper__logo {
   width: 240px;
-  height: 86px;
+  height: 80px;
   padding: 15px 0;
   display: flex;
   align-items: center;
+  cursor: pointer;
 }
 .header__bottom-wrapper__logo img {
   width: 100%;
@@ -56,6 +68,14 @@
   color: var(--white-color);
   font-size: var(--normalText-size);
   font-weight: bold;
+  width: 100px;
+  text-align: center;
+}
+.header__bottom-wrapper__wish-list a{
+  color: rgb(179, 179, 179);
+}
+.header__bottom-wrapper__wish-list a:hover{
+  color: rgb(255, 255, 255);
 }
 .header--md {
   display: flex;
@@ -109,13 +129,14 @@
 }
 .ant-dropdown-menu {
   background-color: var(--grayContainer-color) !important;
+  border-radius: 5px;
 }
 .ant-dropdown-menu-title-content {
   width: 100%;
   height: 100%;
   color: var(--white-color) !important;
   text-transform: uppercase !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
   text-align: center !important;
 }
 .ant-dropdown-menu-item:hover,
@@ -124,4 +145,23 @@
 }
 .ant-dropdown-menu-item {
   padding: 8px 12px !important;
+  height: 40px !important;
+  width: 170px;
+}
+.global_action_link {
+  color: #b8b6b4;
+  padding: 0px 4px;
+  line-height: 24px;
+  font-size: 13px;
+}
+.sign_in_hover:hover {
+  color: #ffffff;
+}
+.gray-6 {
+  color: #b8b6b4 !important;
+}
+.flex-start{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }

@@ -1,0 +1,13 @@
+.genre-action-btn button {
+  background-color: rgb(197, 36, 36) !important;
+  height: 40px;
+}
+.genre-action-btn button:hover {
+  background-color: rgb(165, 33, 33) !important;
+}
+.genre-action-btn button:focus {
+  background-color: rgb(165, 33, 33) !important;
+}
+.genres-manager-container{
+    padding: 0 0 0 20px;
+}

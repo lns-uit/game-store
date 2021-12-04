@@ -1,0 +1,138 @@
+.game-view{
+    height: 100%;
+
+    display: grid;
+    grid-template-columns: 260px 10px 1fr;
+}
+.game-view-list-btn{
+    border-top: 1px solid rgb(49, 49, 49);
+    padding: 0 10px 20px 10px;
+    overflow-y: scroll !important;
+    height: calc(100vh - 95px);
+}
+.game-view-content{
+    border-top: 1px solid rgb(49, 49, 49);
+    height: calc(100vh - 95px);
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.img-game-view-header{
+    height: 130px;
+    width: 100%;
+    overflow: hidden;
+    
+}
+.game-view-body{
+    display: flex;
+    padding-left: 20px;
+}
+.img-game-view-header img{
+    width: 100%;
+    object-fit: cover;
+}
+h1{
+    margin-left: 30px;
+    color: white;
+    font-size: 21px;
+    font-weight: 600;
+}
+.avatar-game-view {
+    z-index: 10;
+    margin-top: -30px;
+    outline: 7px solid #222222;
+    height: 120px;
+    width: 120px;
+    overflow:hidden;
+}
+.avatar-game-view img{
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+}
+.btn-play-update{
+    height: 40px;
+    width: 100px;
+    border-radius: 4px;
+    background-color: rgb(16, 159, 216);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    margin-left: -120px;
+    margin-top: 55px;
+    transition: .3s;
+}
+.btn-play-update:hover{
+    background-color: rgb(231, 69, 69);
+}
+.short-description{
+    color: white;
+    font-weight: 500;
+    height: 50px;
+    margin-top: 120px;
+    margin-left: -250px;
+}
+
+.downloading-bar {
+    width: 90%;
+    height: 2px;
+    background-color: rgb(66, 66, 66);
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.handle-downloading{
+    background-color: rgb(16, 159, 216);
+    height: 2px;
+    width: 0%;
+}
+
+
+.gutter-col {
+    cursor:e-resize;
+}
+
+.divide-gameview {
+    width: 10px;
+}
+.divide-gameview div{
+    margin: auto;
+    height: 100%;
+    width: 1px;
+    background-color:rgb(87, 87, 87);
+    transition: .3s;
+}
+.divide-gameview:hover div {
+    width: 4px;
+    background-color:rgb(117, 117, 117);
+}
+.btn-game-item{
+    height: 50px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    background-color: rgba(44, 44, 44, 0.425);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: .3s;
+    margin-top: 10px;
+}
+.btn-game-item img{
+    object-fit: cover;
+}
+.btn-game-item:hover{
+    background-color: rgb(65, 65, 65);
+}
+.title-game-item{
+  
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    height: 100%;
+    width: 100%;
+    padding: 5px 10px 5px 10px;
+}

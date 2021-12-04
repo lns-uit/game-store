@@ -2,37 +2,25 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Carousel, Col, Row } from 'antd';
 import './styles.css';
 import DotsCustom from '../DotsCustom/DotsCustom';
-import { GameInfoType } from '../../interfaces/rootInterface';
-import { Grid } from 'antd';
-import { SwapLeftOutlined, SwapRightOutlined } from '@ant-design/icons';
+import { DotInfoType, GameInfoType } from '../../interfaces/rootInterface';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/lib/carousel';
 
-const { useBreakpoint } = Grid;
-
 interface MyCarouselPropsType {
-  games: GameInfoType[];
-  dotsHorizontal?: boolean;
-  showDescription?: boolean;
-  showName?: boolean;
+  images: {
+    idImage: string;
+    url: string;
+  }[];
 }
 
-function MyCarousel({
-  games,
-  dotsHorizontal,
-  showDescription,
-  showName,
-}: MyCarouselPropsType) {
-  const screens = useBreakpoint();
+function MyCarousel({ images }: MyCarouselPropsType) {
   const carouselRef = useRef<CarouselRef>(null);
 
-  useEffect(() => {
-    console.log(screens);
-  }, [screens]);
-
-  const dotsInfo = games.map(game => {
-    return { name: game.name, image: game.image };
+  const dotsInfo = images.map(image => {
+    return { image: image.url };
   });
   const [activeIndex, setActiveIndex] = useState(0);
+
   const handleCarouselAction = (action: string, value: number | null) => {
     if (action === 'prev') {
       carouselRef.current?.prev();
@@ -47,62 +35,45 @@ function MyCarousel({
 
   return (
     <Row gutter={[16, 16]}>
-      <Col
-        className='my-carousel__dots-container'
-        xxl={dotsHorizontal ? 24 : 6}
-        xl={dotsHorizontal ? 24 : 6}
-        lg={dotsHorizontal ? 24 : 6}
-        md={24}
-        sm={24}
-        xs={24}
-        order={dotsHorizontal ? 2 : 1}>
-        {dotsHorizontal && (
-          <>
-            <button
-              className='my-carousel__action my-carousel__action--prev'
-              onClick={() => handleCarouselAction('prev', null)}>
-              <SwapLeftOutlined />
-            </button>
-            <button
-              className='my-carousel__action my-carousel__action--next'
-              onClick={() => handleCarouselAction('next', null)}>
-              <SwapRightOutlined />
-            </button>
-          </>
-        )}
-        <DotsCustom
-          isHorizontal={dotsHorizontal}
-          dotsInfo={dotsInfo}
-          activeIndex={activeIndex}
-          slideTo={handleCarouselAction}
-        />
-      </Col>
-      <Col
-        xxl={dotsHorizontal ? 24 : 18}
-        xl={dotsHorizontal ? 24 : 18}
-        lg={dotsHorizontal ? 24 : 18}
-        md={24}
-        sm={24}
-        xs={24}
-        order={dotsHorizontal ? 1 : 2}>
+      <Col xxl={24} xl={24} lg={24} md={24} sm={24} xs={24}>
         <Carousel
           ref={carouselRef}
           className='my-carousel'
           autoplay
-          dots={dotsHorizontal}
+          dots={false}
           afterChange={index => {
             setActiveIndex(index);
           }}>
-          {games.map(game => (
+          {images.map(image => (
             <div className='my-carousel__item'>
-              <img src={game.image} alt='carousel-image' />
-              <div className='my-carousel__item__description'>
-                {(showName || dotsHorizontal) && <h2>{game.name}</h2>}
-                {showDescription && <p>{game.description}</p>}
-              </div>
+              <img src={image.url} alt='carousel-image' />
             </div>
           ))}
         </Carousel>
+      </Col>
+      <Col
+        className='my-carousel__dots-container'
+        xxl={24}
+        xl={24}
+        lg={24}
+        md={24}
+        sm={24}
+        xs={24}>
+        <button
+          className='my-carousel__action'
+          onClick={() => handleCarouselAction('prev', null)}>
+          <LeftOutlined />
+        </button>
+        <DotsCustom
+          dotsInfo={dotsInfo}
+          activeIndex={activeIndex}
+          slideTo={handleCarouselAction}
+        />
+        <button
+          className='my-carousel__action'
+          onClick={() => handleCarouselAction('next', null)}>
+          <RightOutlined />
+        </button>
       </Col>
     </Row>
   );

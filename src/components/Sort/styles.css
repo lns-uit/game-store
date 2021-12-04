@@ -1,0 +1,76 @@
+/*postion*/
+.relative{
+    position: relative;
+}
+.absolute{
+    position: absolute;
+}
+/*display*/
+.align-items-center{
+    align-items: center;
+}
+.d-inline-block{
+    display: inline-block;
+}
+/*padding*/
+.pd-left-right-4{
+    padding-left: 4px;
+    padding-right: 4px;
+}
+.pd-0{
+    padding: 0px;
+}
+.pd-top-bottom-12{
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+.pd-left-13{
+    padding-left: 13px;
+}
+/*color*/
+.gray-1{
+    color: #C2C2C2;
+}
+.brg-brown{
+    background-color: #2A2A2A;
+}
+/*margin*/
+.mr-0{
+    margin: 0px;
+}
+.mr-top-8{
+    margin-top: 8px;
+}
+/*different*/
+.list-style-none{
+    list-style: none;
+}
+.min-width-200{
+    min-width: 200px;
+}
+.hig-0{
+    height: 0px;
+}
+.visibility-hidden{
+    visibility: hidden;
+}
+.animition{
+    transition: height .5s;
+}
+.hover-1:hover{
+    background-color: #404040;
+}
+.bgr-gray2{
+    background-color: #404040;
+}
+.z-index-100{
+    z-index: 100;
+}
+.noselect{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+    -moz-user-select: none; 
+    -ms-user-select: none;
+    user-select: none;
+}

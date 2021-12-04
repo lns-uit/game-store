@@ -1,0 +1,24 @@
+.rating-date-container{
+    display: flex;
+    justify-content: space-between;
+}
+.btn-delete-cmt{
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+}
+.btn-delete-cmt svg{
+    fill: rgb(124, 13, 13) !important;
+    height: 30px;
+    width: 30px;
+}
+.btn-delete-cmt:hover svg{
+    fill: rgb(179, 0, 0) !important;
+}
+.btnv6_grey_black{
+    padding: 3px 7px;
+    height: fit-content !important;
+}
+.comment-like-dislike-text{
+    margin-top: 5px;
+}

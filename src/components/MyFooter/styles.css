@@ -1,5 +1,7 @@
 .my-footer {
   background-color: var(--grayContainer-color) !important;
+  z-index: 3;
+  border-top: 1px solid #111111;
 }
 .my-footer__bottom {
   border-top: 1px solid var(--border-color);
@@ -13,6 +15,9 @@
 .my-footer__company-name {
   color: var(--white-color);
   margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 20px;
 }
 .my-footer__company-members__title {
   color: #878787;

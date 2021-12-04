@@ -1,0 +1,28 @@
+.not-found-screen_container {
+  height: calc(100vh - var(--header-height));
+  width: 100% !important;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding-bottom: var(--header-height);
+}
+.not-found__text-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.not-found__text-wrapper p {
+  margin: 0 20px;
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--white-color);
+}
+.not-found__text-wrapper a {
+  color: var(--red-color) !important;
+  font-size: 1.5rem !important;
+}
+.not-found-screen_container img {
+  width: 300px;
+}

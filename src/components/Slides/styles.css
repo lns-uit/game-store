@@ -1,0 +1,290 @@
+.slides-container {
+  z-index: 1 !important;
+}
+.ant-carousel {
+  width: 100% !important;
+}
+.my-slides {
+  width: 100% !important;
+  height: 30vw;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.my-slides-element {
+  width: 100% !important;
+  height: 30vw;
+  color: #fff;
+  background: #000000;
+  border-radius: 10px;
+  display: flex;
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  transition: 0.5s;
+}
+
+.my-slides-element img {
+  width: 100%;
+  height: 100%;
+  filter: brightness(70%);
+  object-fit: cover;
+  border-radius: 10px;
+  transition: 0.5s;
+}
+.detail-game-panel {
+  padding-left: 30px;
+  transition: 0.4s;
+  padding-bottom: 50px;
+  position: absolute;
+  z-index: 3;
+}
+.detail-game-panel-title-text {
+  font-size: 20;
+  font-weight: 700;
+}
+.detail-game-panel-text {
+  width: 100%;
+  font-size: 15;
+  font-weight: 500;
+}
+.detail-game-panel-title-text,
+.detail-game-panel-text,
+.text-btn-slides-container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  color: white;
+}
+.detail-game-panel button {
+  height: 50px;
+  width: 150px;
+  border-radius: 5px;
+  color: black;
+  background-color: white;
+  font-size: 16px;
+  font-weight: 700;
+  border-width: 0;
+  cursor: pointer;
+  transition: 0.35s;
+}
+.detail-game-panel button:hover {
+  background-color: rgb(221, 221, 221);
+}
+.detail-game-panel button:focus {
+  border-width: 0;
+  border-color: transparent;
+}
+.btn-slides {
+  display: flex;
+  align-items: center;
+  border-width: 0;
+  height: 6vw;
+  width: 17vw;
+  padding-right: 1vw;
+}
+.btn-slides-main {
+  height: 90%;
+  width: 95%;
+  background:transparent;
+  border-radius: 10px;
+  display: flex;
+  justify-content: flex-start;
+  cursor: pointer !important;
+  overflow: hidden;
+  transition: .4s;
+  border: 1px solid rgb(37, 37, 37);
+}
+.btn-slides-timing-container {
+  position:absolute;
+  background: transparent;
+  z-index: 1 !important;
+  width: 15.2vw;
+  height: 5.4vw;
+  border-radius: 10px;
+  opacity:1;
+  overflow: hidden;
+}
+.btn-slides-timing-container-lm {
+  position: absolute;
+  background: transparent;
+  z-index: 1 !important;
+  width: 15.2vw;
+  height: 5.4vw;
+  border-radius: 10px;
+  opacity: 1;
+  overflow: hidden;
+}
+.btn-slides:hover .btn-slides-timing-container {
+  background: #222222 !important;
+  transition: 0.5s;
+}
+.btn-slides:hover .btn-slides-timing-container-lm {
+  background: white !important;
+  transition: 0.5s;
+}
+@keyframes Timingslides {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 102%;
+  }
+}
+.btn-slides-timing {
+  position: relative;
+  background: #363636 !important;
+  height: 100%;
+  border-inline-width: 10px !important;
+  border-inline-color: white !important;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border: 3px var(--red-color);
+  border-style: none none solid none;
+  animation-name: Timingslides;
+  animation-duration: 7s;
+  animation-timing-function: linear;
+}
+.btn-slides-idle {
+  position: relative;
+}
+
+@keyframes zoom {
+  0% {
+    transform: scale(1, 1);
+  }
+  50% {
+    transform: scale(1.1, 1.1);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
+.btn-slides-main-img-scale {
+  width: 23%;
+  height: 80%;
+  border-radius: 10px;
+  margin-left: 3%;
+  margin-top: 3%;
+  object-fit: cover;
+  z-index: 2;
+  animation-name: zoom;
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+}
+.btn-slides-main-img-normal {
+  width: 23%;
+  height: 80%;
+  border-radius: 10px;
+  margin-left: 3%;
+  margin-top: 3%;
+  object-fit: cover;
+  z-index: 2;
+}
+.text-btn-slides-container {
+  padding-top: 2%;
+  padding-right: 5%;
+  padding-left: 5%;
+  z-index: 2;
+}
+.text-title-slides {
+  z-index: 3;
+  color: white;
+  font-weight: 500;
+  font-size: 15px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  height: fit-content;
+  -webkit-line-clamp: 2; /* Write the number of 
+                              lines you want to be 
+                              displayed */
+  -webkit-box-orient: vertical;
+}
+.text-type-slides {
+  color: rgb(136, 136, 136);
+  font-weight: 500;
+  font-size: 14px;
+  z-index: 3;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+@media screen and (max-width: 1600px) {
+  .my-slides,
+  .my-slides-element {
+    width: 55.7vw;
+    height: 31.3vw;
+  }
+  .btn-slides {
+    width: 18.8vw;
+    height: 6.2vw;
+  }
+  .text-title-slides {
+    font-size: 14px;
+    font-weight: 500;
+    -webkit-line-clamp: 1;
+  }
+  .text-type-slides {
+    font-size: 13px;
+  }
+  .btn-slides-timing-container {
+    width: 16.91vw; /* height 90% with 95% */
+    height: 5.58vw;
+  }
+  .btn-slides-timing-container-lm {
+    width: 16.91vw; /* height 90% with 95% */
+    height: 5.58vw;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .text-title-slides {
+    -webkit-line-clamp: 1;
+  }
+  .my-slides,
+  .my-slides-element {
+    width: 69.7vw;
+    height: 39vw;
+  }
+  .btn-slides {
+    width: 100%;
+    height: 7.8vw;
+  }
+  .text-title-slides {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .text-type-slides {
+    font-size: 13px;
+  }
+  .btn-slides-timing-container {
+    width: 20.185vw; /* height 90% with 95% */
+    height: 7.02vw;
+  }
+  .btn-slides-timing-container-lm {
+    width: 20.185vw; /* height 90% with 95% */
+    height: 7.02vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .my-slides,
+  .my-slides-element {
+    width: 100vw;
+    height: 100vw;
+    border-radius: 0px;
+  }
+  .my-slides {
+    margin-top: -50px;
+  }
+  .my-slides-element img {
+    border-radius: 0px;
+  }
+  .btn-slides {
+    display: none;
+  }
+}

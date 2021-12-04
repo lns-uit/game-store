@@ -1,0 +1,16 @@
+.ant-picker{
+    border-color: rgb(90, 90, 90) !important;
+}
+.ant-select-selection-item-remove{
+    color: white !important;
+}
+.ant-select-selection-item{
+    background-color: transparent !important;
+    border-color: rgb(117, 117, 117) !important;
+}
+.ant-select-selector {
+    fill: white !important;
+}
+.ant-select-selector {
+    border-color:rgb(117, 117, 117) !important;
+}

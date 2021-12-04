@@ -1,0 +1,23 @@
+/*margin*/
+.mr-top-10{
+    margin-top: 10px;
+}
+/*display*/
+.d-gird{
+    display: grid;
+}
+.grid-col-auto-auto{
+    grid-template-columns: 256px auto;
+}
+.gird-col-5{
+    grid-template-columns: auto auto auto auto;
+}
+/*padding*/
+.pd-left-right-10{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.pd-bottom-30{
+    padding-bottom: 30px;
+}
+/*different*/

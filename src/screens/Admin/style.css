@@ -1,0 +1,56 @@
+
+.admin-container h2 {
+  color: white;
+}
+
+.tag-discount {
+  display: flex;
+
+  color: white;
+  margin-top: 10px;
+  height: 30px;
+}
+.tag-discount-name {
+  background-color: rgb(168, 48, 48);
+  height: 30px;
+  width: 200px;
+  padding: 5px 0px 5px 10px;
+}
+.tag-discount-date {
+  background-color: rgb(66, 66, 66);
+  height: 30px;
+  width: 500px;
+  padding: 5px 0px 5px 10px;
+}
+
+@media screen and (max-width: 1600px) {
+
+}
+.ant-modal-content, .ant-modal-header, .ant-modal-footer{
+  background-color: rgb(26, 26, 26) !important; 
+  border-color: rgb(78, 78, 78) !important;
+}
+.ant-modal-title{
+  color: white !important;  
+}
+.ant-tabs-tabpane{
+  padding-left: 50px !important;
+}
+.ant-tabs-tab:hover{
+  background-color: rgb(51, 51, 51) !important;
+}
+.ant-tabs-tab-active{
+  background-color: rgb(44, 44, 44) !important;
+}
+.ant-tabs-nav-list{
+  
+}
+.ant-tabs-nav{
+  height: 100vh !important;
+  padding: 42px 0px;
+  background-color: var(--grayContainer-color) !important;
+  position: fixed !important;
+  margin-left: -200px;
+  margin-top: -41px;
+  
+}

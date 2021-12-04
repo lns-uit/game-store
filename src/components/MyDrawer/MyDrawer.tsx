@@ -5,44 +5,23 @@ import { rootColor } from '../../constants/rootColor';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
+import rootConfigTab from '../../constants/configTab';
 
 interface MyDrawerPropsType {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const tabs = [
-  {
-    name: 'discover',
-    linkTo: '/',
-  },
-  {
-    name: 'browse',
-    linkTo: '/browse',
-  },
-  {
-    name: 'help',
-    linkTo: '/help',
-  },
-  {
-    name: 'faq',
-    linkTo: '/faq',
-  },
-  {
-    name: 'account',
-    linkTo: '/account',
-  },
-  {
-    name: 'library',
-    linkTo: '/library',
-  },
-];
+const tabs = rootConfigTab.DRAWER_TABS;
 
 function MyDrawer({ isOpen, onClose }: MyDrawerPropsType) {
   const currentTab = useSelector((state: RootState) => state.tab);
+  const user = useSelector((state: RootState) => state.user);
+  const { realName, username } = user || {};
+
   return (
     <Drawer
-      title='Hello NguyenPhuc'
+      title={`Hello ${realName || username}`}
       className='my-drawer'
       placement='right'
       onClose={onClose}

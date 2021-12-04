@@ -1,0 +1,33 @@
+.cms-manager{
+    display: flex;
+    height: fit-content;
+    justify-content: space-between;
+}
+.sugesstion-edit-view{
+    border-radius: 5px;
+    width: 100%;
+    height: fit-content;
+    min-height: 600px;
+    padding: 10px 10px 10px 10px;
+    border: 1px solid rgb(51, 51, 51);
+}
+.sugesstion-edit{
+    border-radius: 5px;
+    width: 100%;
+    height: fit-content;
+    min-height: 600px;
+    padding: 10px 10px 10px 10px;
+}
+.btn-suggestion-drag{
+    height: fit-content;
+    width: 100%;
+    border: 1px solid rgb(139, 139, 139);
+    margin-top: 10px;
+    border-radius: 5px;
+    padding: 10px 10px;
+    user-select: none;
+    padding: 16;
+    margin: 0 0 8px 0;
+    min-height: 70px;
+    color: white;
+}

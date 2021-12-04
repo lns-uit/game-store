@@ -1,0 +1,12 @@
+.time-refund-editor{
+    display: flex;
+}
+
+.time-refund-editor .ant-input-number .ant-input-number-input-wrap{
+    height: 40px !important;
+}
+.time-refund-editor .ant-input-number .ant-input-number-input-wrap input{
+    border: 1px solid rgb(145, 145, 145);
+    width: 200px;
+    height: 40px;
+}

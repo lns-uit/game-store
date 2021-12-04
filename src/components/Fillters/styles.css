@@ -1,0 +1,139 @@
+.background-white{
+    background: var(--white-color);
+}
+.lay-out-fillter{
+    min-width: 256px;
+}
+/*padding*/
+.pd-top-bottom-10{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+.pd-top-bottoms-10 .ant-menu-submenu-title{
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+.pd-left-rights-5 .ant-menu-submenu-title{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.pd-left-right-5{
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+}
+.pd-right-5{
+    padding-right: 5px;
+}
+.pd-right-10{
+    padding-right: 10px;
+}
+/*border*/
+.border-bottom{
+    border-bottom: 1px solid rgb(216, 216, 216);
+}
+.ant-menu-item::after{
+    border-right: 4px solid var(--red-color) !important;
+}
+.ant-menu-vertical{
+    border-right: 0;
+}
+/*display*/
+.d-flex{
+    display: flex;
+}
+.align-center{
+    align-items: center;
+}
+.space-between{
+    justify-content: space-between;    
+}
+.center{
+    justify-content: center;
+}
+.f-column{
+    flex-direction: column;
+}
+/*diffrent*/
+.uppercase{
+    text-transform: uppercase;
+}
+.spin{
+    transform:rotate(90deg);
+}
+.pointer{
+    cursor: pointer;
+}
+.overflow-y-auto{
+    overflow-y: auto;
+}
+.drop-down{
+    max-height: 0px;
+}   
+.ant-menu-submenu-title .ant-menu-title-content{
+    color: #B4B4B4;
+    font-weight: 900;
+    line-height: 16px;
+    font-size: 14px;
+}
+/*font*/
+.fs-14{
+    font-size: 14px;
+}
+.fs-15{
+    font-size: 15px;
+}
+.lh-16{
+    line-height: 16px;
+}
+.lh-18{
+    line-height: 18px;
+}
+.fw-900{
+    font-weight: 900;
+}
+.fs-11-that-5{
+    font-size: 11.5px;
+}
+/*color*/
+.color-gray{
+    color: #B4B4B4;
+}
+.bgr-gray{
+    background-color: #B4B4B4;
+}
+/*margin*/
+.m-0{
+    margin: 0px !important;
+}
+.mg-childrent-0 .ant-menu-submenu-title{
+    margin: 0px !important;
+}
+.m-bottom-12{
+    margin-bottom: 12px;
+}
+/*diff*/
+.float-right{
+    float: right;
+}
+.line-1,.line-2,.line-3, .line-4{
+    display: block;
+    border-top: 1px solid #ffffff;
+    height: 1px;
+}
+.line-1{
+    width: 16px;
+    padding-bottom: 4px;
+}
+.line-2{
+    width: 10px;
+    padding-bottom: 4px;
+}
+.line-3{
+    width: 6px;
+}
+.option .ant-menu-title-content{
+    color: #000000 !important;
+}
+.browse .game-item__image{
+    min-height: 250px !important;
+}

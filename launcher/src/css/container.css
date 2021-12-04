@@ -1,0 +1,77 @@
+:root{
+
+    --font-family-app: "Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+
+    --color-gray: rgba(30, 30, 30, 0);
+    --color-icon: rgb(99, 99, 99);
+    --color-icon-hover: rgb(216, 216, 216);
+}
+body {
+    padding: 0;
+    margin: 0;
+    overflow:hidden;
+    background-color: var(--color-gray);;
+    font-family: var(--font-family-app);
+    background-image: linear-gradient(to left,rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.9) 50%,rgba(10, 10, 10, 1) 100%),  url('../texture/gokublack.jpg') ;
+    background-position: center;
+    background-size: cover;
+}
+body *{
+    box-sizing: border-box;
+}
+.draggable {
+    -webkit-app-region: drag;
+}
+.prevent-select{
+    user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+}
+.body-container{
+    height: 100vh;
+    padding: 0;
+    display: grid;
+    width: 100%;
+    grid-template-rows: 35px auto 25px;
+    background-color: var(--color-gray);
+}
+/* width */
+::-webkit-scrollbar {
+    width: 4px;
+}
+  
+  /* Track */
+::-webkit-scrollbar-track {
+    background: var(--mainGray-color); 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgb(63, 63, 63);
+    border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(88, 88, 88); 
+}
+.text-main{
+    color: rgb(177, 177, 177);
+    font-size: 13px;
+    font-weight: 600;
+    margin: auto;
+    user-select: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+.line-h{
+    width: 100%;
+    height: 1px;
+    background-color: rgb(61, 61, 61);
+}
+.line-v{
+    width: 1px;
+    height: 100%;
+    background-color: rgb(61, 61, 61);
+}

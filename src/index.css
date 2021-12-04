@@ -2,24 +2,35 @@
   --red-color: #bb2c23;
   --white-color: #fff;
   --textDisable-color: #777777;
-  --grayContainer-color: #2a2a2a;
+  --grayContainer-color: #242424;
   --border-color: #3d3d3d;
   --mainGray-color: #404040;
-  --lightGray-color: #5f5f5f;
+  --lightGray-color: #474747;
   --normalText-size: 14px;
   --smallText-size: 12px;
   --largeText-size: 15px;
   --header-height: 120px;
   --header-height-on-tablet: 60px;
-  --gutterHorizontal-size: 160px;
+  --gutterHorizontal-size: 200px;
   --carouselHeigh-size: 460px;
   --buttonHeaderHeight-size: 42px;
+  --padding-console: 0px 30px 200px 100px;
+  --console-margin-left: 250px;
+  --console-nav-width: 300px;
+  --console-nav-width-forheader: 300px;
+  --console-nav-btn-color: #ffffff;
+  --console-nav-btn-border-color: #6d6d6d42;
 }
 
 * {
   font-family: 'Poppins', sans-serif;
   margin: 0;
   padding: 0;
+  
+}
+
+button:focus {
+  outline: none;
 }
 
 body {
@@ -34,4 +45,27 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgb(27, 27, 27);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(48, 48, 48);
+  border-radius: 100px;
+  cursor:default !important;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(78, 78, 78);
 }
