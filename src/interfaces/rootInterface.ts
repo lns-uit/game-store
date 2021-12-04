@@ -26,6 +26,39 @@ interface GameType {
   imageGameDetail: ImageType[];
   newVersion: any;
 }
+
+interface CollectionType {
+  game: gameCollection;
+  isInstalled: any;
+}
+
+interface gameCollection{
+  averageRate: number;
+  cost: number;
+  developer: string;
+  discount: any;
+  genres: {
+    idGenreNavigation:{
+      idGenre: string;
+      nameGenre: string;
+    }
+  }[];
+  idGame: string;
+  imageGameDetail:{
+    idImage: string;
+    url: string;
+  }[],
+  lastestVersion:string;
+  nameGame: string;
+  newVersion: any;
+  numberOfRare: number;
+  numberOfBuyer: number;
+  numberOfDowloaders: number;
+  plaform: string;
+  publisher: string;
+  releaseDate: string;
+}
+
 interface GameVersionType {
   idGameVersion: string;
   idGame: string;
@@ -177,4 +210,6 @@ export type {
   CommentType,
   SuggestionType,
   FormRegisterType,
+  CollectionType,
+  gameCollection
 };

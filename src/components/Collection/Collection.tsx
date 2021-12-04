@@ -4,17 +4,16 @@ import {Link} from "react-router-dom"
 import GameItem from "../GameItemCopy/GameItem"
 import {Row,Col} from "antd";
 import { ActionType } from '../../interfaces/rootInterface';   
-import {GameDetailss} from "../../interfaces/rootInterface" 
+import {CollectionType} from "../../interfaces/rootInterface" 
 
 interface GameSearch{
-    games: GameDetailss[]
+    collection: CollectionType[]
 }
 
 function Collection({
-    games
+    collection
 }:GameSearch){
-    
-    // console.log(gameSearch)
+    console.log(collection)
     // useEffect(() =>{
     //     // const accessToken = localStorage.getItem("accessToken")
     //     // axios.get("https://localhost:5001/api/game")
@@ -38,7 +37,7 @@ function Collection({
         <div className="mr-top-10">
                 <Row>
                     {
-                        games.map((game,index)=>{
+                        collection.map((collection,index)=>{
                             return (
                                 <Col
                                     key={`game-info-${index}`}
@@ -49,9 +48,9 @@ function Collection({
                                     sm={12}
                                     xs={24}
                                 >
-                                    <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
+                                    <Link to={'/game/' + collection.game.idGame + '/' + collection.game.lastestVersion}>
                                         <div className="pd-left-right-10 pd-bottom-30 m-bottom-12">
-                                            <GameItem game={game} action={ActionType.REMOVE} />
+                                            <GameItem game={collection.game} action={ActionType.REMOVE} />
                                         </div>
                                     </Link>
                                 </Col>

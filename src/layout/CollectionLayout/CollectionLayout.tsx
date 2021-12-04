@@ -3,15 +3,15 @@ import '../../screens/User/styles.css';
 import { Form, Input } from 'antd';
 import Collection from '../../components/Collection/Collection';
 import gameApi from '../../api/gamesApi';
-import { GameType } from '../../interfaces/rootInterface';
+import { CollectionType } from '../../interfaces/rootInterface';
 
 interface CollectionLayoutPropsType {
-  collection: GameType[];
+  collection: CollectionType[];
 }
 function CollectionLayout({ collection }: CollectionLayoutPropsType) {
   const [search, setSerach] = useState('');
-  const [games, setGame] = useState<any[]>([]);
-  const [gameSearch, setGameSeach] = useState<any[]>([]);
+  const [games, setGame] = useState<any[]>(collection);
+  const [gameSearch, setGameSeach] = useState<any[]>(collection);
   const onSearch = (values: any) => {
     const search = values.target.value;
 
@@ -19,9 +19,9 @@ function CollectionLayout({ collection }: CollectionLayoutPropsType) {
       setGameSeach(games);
     } else {
       setGameSeach(
-        games.filter(game => {
+        games.filter(gameX => {
           return (
-            game.nameGame.toLowerCase().indexOf(search.toLowerCase()) !== -1
+            gameX.game.nameGame.toLowerCase().indexOf(search.toLowerCase()) !== -1
           );
         })
       );
@@ -52,7 +52,7 @@ function CollectionLayout({ collection }: CollectionLayoutPropsType) {
               </Form>
             </div>
           </div>
-          <Collection games={gameSearch} />
+          <Collection collection={gameSearch} />
         </div>
       </div>
     </div>

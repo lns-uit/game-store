@@ -1,12 +1,12 @@
 import { Tag, Row, Col, Tooltip } from 'antd';
 import React from 'react';
 import { rootColor } from '../../constants/rootColor';
-import { ActionType, GameDetailss} from '../../interfaces/rootInterface';
+import { ActionType, gameCollection} from '../../interfaces/rootInterface';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import './styles.css';
 
 interface GameItemPropsType {
-  game: GameDetailss;
+  game: gameCollection;
   action?: ActionType;
   isHorizontal?: boolean;
   heightImage?: string;

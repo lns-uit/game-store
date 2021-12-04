@@ -6,10 +6,10 @@ import CollectionLayout from '../../layout/CollectionLayout/CollectionLayout';
 import getCollectionByUserApi from '../../api/collectionApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
-import { GameType } from '../../interfaces/rootInterface';
+import { CollectionType } from '../../interfaces/rootInterface';
 
 function User() {
-  const [collection, setCollection] = useState<GameType[]>([]);
+  const [collection, setCollection] = useState<CollectionType[]>([]);
   const user = useSelector((state: RootState) => state.user);
 
   const fetchCollection = async idUser => {
@@ -30,7 +30,11 @@ function User() {
         <div className='min-height-inherit min-width-0 d-flex column'>
           <div className='min-height-inherit d-flex column relative'>
             <ProfileUserLayout user={user} />
-            <CollectionLayout collection={collection} />
+            {collection.length === 0 ?
+              <div>loadding.....</div>
+              :
+              <CollectionLayout collection={collection} />
+            }
           </div>
         </div>
       </div>
