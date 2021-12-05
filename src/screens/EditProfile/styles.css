@@ -14,6 +14,9 @@
 .gap-20{
     gap: 20px;
 }
+.flex-end {
+    justify-content: flex-end;
+}
 /*width*/
 .max-width-1010{
     max-width: 1010px;
@@ -29,6 +32,9 @@
     font-size: 16px;
 }
 /*diff*/
+.float-right{
+    float: right !important;
+}
 .page-edit-content{
     padding-bottom: 78px;
 }
@@ -141,4 +147,9 @@
 }
 .edit-avatar-cover-image .ant-upload-list-item-error{
     display: none !important;
+}
+.background-user-edit{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }

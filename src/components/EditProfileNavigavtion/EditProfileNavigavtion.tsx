@@ -3,9 +3,15 @@ import { Menu } from 'antd';
 import "../../screens/EditProfile/styles.css";
 const { SubMenu } = Menu;
 
-function EditProfileNavigavtion(){
+interface EditProfileNavigationType{
+    navigation: (index: any) => void;
+}
+
+function EditProfileNavigavtion({
+    navigation
+}:EditProfileNavigationType){
     const handleClick = (e) => {
-        console.log('click ', e);
+        navigation(parseInt(e.key));
     };
     return (
         <div className="edit-profile-navigation">

@@ -26,8 +26,7 @@ function GamesBrowse({ page }: Pages) {
       const gamesBrowse = await gameApi.getGamesApi();
 
       if (gamesBrowse) {
-        console.log(gamesBrowse);
-        setGame(gamesBrowse);
+        setGame(gamesBrowse.slice((page-1)*12,(page-1)*12 + 12));
       } else {
         console.log('err');
       }

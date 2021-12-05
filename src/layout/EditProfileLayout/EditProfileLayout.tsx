@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import '../../screens/EditProfile/styles.css';
 import { Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
@@ -11,12 +11,17 @@ import AvatarAndCoverImage from '../../components/AvatarAndCoverImage/AvatarAndC
 
 function EditProfileLayout() {
   const user = useSelector((state: RootState) => state.user);
+  const [navigationEditProfile,setNavigationEditProfile] = useState(1); 
   const avatar =
     'https://scr.vn/wp-content/uploads/2020/07/Avatar-Facebook-tr%E1%BA%AFng.jpg';
 
   const onFinish = (values: any) => {
     console.log('Success:', values);
   };
+
+  const navigation = (index) =>{
+    setNavigationEditProfile(index);
+  }
   return (
     <div className='responsive-page-template-content'>
       <div className='page-edit-content'>
@@ -44,7 +49,7 @@ function EditProfileLayout() {
           <div className='profile-edit'>
             <Row gutter={[48, 8]}>
               <Col xxl={6} xl={6} lg={4} md={4} sm={24} xs={24}>
-                <EditProfileNavigation />
+                <EditProfileNavigation navigation={navigation}/>
               </Col>
               <Col xxl={18} xl={18} lg={20} md={20} sm={24} xs={24}>
                 <Form
@@ -54,7 +59,13 @@ function EditProfileLayout() {
                   initialValues={{ remember: true }}
                   onFinish={onFinish}
                   autoComplete='off'>
-                  <EditProfileGeneral />
+                  {
+                    navigationEditProfile === 1 ?
+                    <EditProfileGeneral />
+                    : navigationEditProfile === 2 ?
+                    <AvatarAndCoverImage/>
+                    : null
+                  }
                 </Form>
               </Col>
             </Row>
