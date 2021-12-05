@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import GameItem from '../../components/GameItemCopy/GameItem';
+import GameItem from '../../components/GameItemCopy/GameItem';
 import { ActionType } from '../../interfaces/rootInterface';    
 import {Link} from "react-router-dom";
 import { Row, Col } from 'antd';
@@ -54,7 +54,7 @@ function GamesBrowse({
                                 >
                                     <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
                                         <div className="pd-left-right-10 pd-bottom-30 m-bottom-12">
-                                            {/* <GameItem game={game} action={ActionType.REMOVE} /> */}
+                                            <GameItem game={game} action={ActionType.REMOVE} />
                                         </div>
                                     </Link>
                                 </Col>
