@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 import ProfileUserLayout from '../../layout/ProfileUserLayout/ProfileUserLayout';
-import CollectionLayoit from '../../layout/CollectionLayout/CollectionLayout';
 import CollectionLayout from '../../layout/CollectionLayout/CollectionLayout';
 import getCollectionByUserApi from '../../api/collectionApi';
 import { useSelector } from 'react-redux';
@@ -15,6 +14,7 @@ function User() {
   const fetchCollection = async idUser => {
     const res = await getCollectionByUserApi(idUser);
     const { listGame } = res || {};
+
     if (listGame) {
       setCollection(listGame);
     }
@@ -30,11 +30,11 @@ function User() {
         <div className='min-height-inherit min-width-0 d-flex column'>
           <div className='min-height-inherit d-flex column relative'>
             <ProfileUserLayout user={user} />
-            {collection.length === 0 ?
+            {collection.length === 0 ? (
               <div>loadding.....</div>
-              :
+            ) : (
               <CollectionLayout collection={collection} />
-            }
+            )}
           </div>
         </div>
       </div>

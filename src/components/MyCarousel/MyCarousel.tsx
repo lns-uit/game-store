@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Carousel, Col, Row } from 'antd';
 import './styles.css';
 import DotsCustom from '../DotsCustom/DotsCustom';
-import { DotInfoType, GameInfoType } from '../../interfaces/rootInterface';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/lib/carousel';
 

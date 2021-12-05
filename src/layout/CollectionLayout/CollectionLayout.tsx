@@ -10,9 +10,9 @@ interface CollectionLayoutPropsType {
 }
 function CollectionLayout({ collection }: CollectionLayoutPropsType) {
   const [search, setSerach] = useState('');
-  const [games, setGame] = useState<any[]>(collection);
-  const [gameSearch, setGameSeach] = useState<any[]>(collection);
-  const onSearch = (values: any) => {
+  const [games, setGame] = useState<CollectionType[]>(collection);
+  const [gameSearch, setGameSeach] = useState<CollectionType[]>(collection);
+  const onSearch = values => {
     const search = values.target.value;
 
     if (search === '') {
@@ -21,7 +21,8 @@ function CollectionLayout({ collection }: CollectionLayoutPropsType) {
       setGameSeach(
         games.filter(gameX => {
           return (
-            gameX.game.nameGame.toLowerCase().indexOf(search.toLowerCase()) !== -1
+            gameX.game.nameGame.toLowerCase().indexOf(search.toLowerCase()) !==
+            -1
           );
         })
       );
