@@ -12,7 +12,6 @@ const loginApi = async formLogin => {
       'https://localhost:5001/api/user/login',
       formLogin
     );
-    console.log(request);
 
     const { data } = request;
     return data;
@@ -25,7 +24,6 @@ const loginApi = async formLogin => {
 };
 
 const loginToken = async accessToken => {
-  console.log(accessToken);
   try {
     const emptyUser = {
       email: '',

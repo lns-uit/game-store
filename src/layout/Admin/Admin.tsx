@@ -300,7 +300,6 @@ function Admin() {
             <Form.Item
               name="cost"
               label="Game Cost"
-              rules={[{ required: true, message: "Please input cost!" }]}
             >
               <InputNumber
                 defaultValue={0}

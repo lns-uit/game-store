@@ -11,7 +11,8 @@ import {
     Button,
     Upload,
     Row,
-    Col
+    Col,
+    message
 } from 'antd';
 import { UploadOutlined, InboxOutlined, PlusOutlined } from '@ant-design/icons';
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
@@ -27,12 +28,14 @@ import draftToHtml from 'draftjs-to-html';
 import reactImageSize from 'react-image-size';
 import '../../screens/AdminUpdateGame/styles.css';
 import gamesApi from '../../api/gamesApi'
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
+import { Endpoint } from '../../api/endpoint';
 
 function AdminUpdateGameLayout() {
     const slug = useParams();
+    const history = useHistory();
     let _contentState = ContentState.createFromText('');
     const raw = convertToRaw(_contentState);
     const [contentState, setContentState] = useState(raw);
@@ -46,6 +49,8 @@ function AdminUpdateGameLayout() {
     const [game, setGame] = useState<any>(null);
     const [fileList, setFileList] = useState<any>([]);
     const dispatch = useDispatch();
+    const [isUpdate, setIsUpdate] = useState(true);
+    const [isInvalidVersion, setIsInvalidVersion] = useState(false);
 
     const hashConfig = {
         trigger: '#',
@@ -61,10 +66,14 @@ function AdminUpdateGameLayout() {
         setFileZip(e.fileList);
         if (e.file.status === "error" && e.file.type !== "application/x-zip-compressed") {
             alert("This is not file .zip");
+            setUrlDownload(null)
+            setIsUpdate(true);
         } else if (e.file.status === "error" && e.file.type === "application/x-zip-compressed") {
             getLinkFileZip(e.file.originFileObj);
+            setIsUpdate(false);
         } else if (e.file.status === "removed") {
             setUrlDownload(null)
+            setIsUpdate(true);
         }
     }
 
@@ -85,12 +94,20 @@ function AdminUpdateGameLayout() {
         let error: string[] = [];
         let count = 0;
         let stringErr = "";
-
-        if (urlDownload === null) {
-            error.push("File zip null");
+        if (isInvalidVersion) {
+            error.push("Invalid Version Game");
             count += 1;
         }
-
+        if (values.urlVideo !== "")
+            if (values.urlVideo.indexOf('http')===-1) {
+                error.push('Please input valid url video')
+                count += 1;
+            }
+        if (!isUpdate)
+            if (values.privacyPolicy.indexOf('http')===-1) {
+                error.push('Please input valid url Privacy Policy')
+                count += 1;
+            }
         if (url.url === null) {
             error.push("Icon game null");
             count += 1;
@@ -105,7 +122,8 @@ function AdminUpdateGameLayout() {
             for (var i = 0; i < error.length; i++) {
                 stringErr += error[i] + '\n';
             }
-            window.alert(stringErr);
+            message.error(stringErr);
+            console.log('here')
         } else {
             values.fileGame = urlDownload;
             values.images = JSON.stringify(fileList.map(image=>{
@@ -113,40 +131,37 @@ function AdminUpdateGameLayout() {
             }));
             values.detailDecription = markup;
             console.log(values);
-            postGame(values);
+            if (isUpdate) postGameUpdate(values);
+                else postGameCreateUpdate(values);
         }
     }
-    const postGame = (values: any) => {
-        const updateGame: any ={
-            Game: {
-                namegame: values.nameGame || game.nameGame,
-                developer: values.developer || game.developer,
-                publisher: values.publisher || game.publisher,
-                plaform: values.platform || game.plaform,
-                privacyPolicy: values.privacyPolicy || game.privacyPolicy,
-                urlVideo: values.urlVideo || game.urlVideo,
-                cost: values.cost || game.cost,
-                lastestversion: values.version || game.lastestVersion,
-            },
-            Genre: values.selectMultiple || game.genres.map(genre=>{return genre.idGenreNavigation.nameGenre}),
-            GameVersion: {
-                versiongame: values.version || game.newVersion.versionGame,
-                urldownload: values.fileGame,
-                shortdescription: values.shortDecription || game.newVersion.shortDescription,
-                descriptions: values.detailDecription || game.newVersion.descriptions,
-                os: values.OS || game.newVersion.os,
-                processor: values.processor || game.newVersion.processor,
-                storage: values.storage || game.newVersion.storage,
-                graphics: values.graphics || game.newVersion.graphics,
-                privacyPolicy: values.privacyPolic || game.newVersion.privacyPolicy,
-            },
-            iconGame: url.url.toString(),
-            listImageDetail: values.images
-        }
-        console.log(updateGame);
+    const postGameCreateUpdate = (values: any) => {
+
         axios
-            .post("https://localhost:5001/api/game/create", {
-                updateGame
+            .put(Endpoint.mainApi + "api/game/create-update/" + game.idGame, {
+                game: {
+                    namegame: values.nameGame,
+                    developer: values.developer,
+                    publisher: values.publisher,
+                    urlVideo: values.urlVideo,
+                    lastestVersion: values.version,
+                  },
+                  
+                gameVersion: {
+                    versiongame: values.version,
+                    urldowload: values.fileGame,
+                    ShortDescription: values.shortDecription,
+                    Descriptions: values.detailDecription,
+                    os: values.OS,
+                    Processor: values.processor,
+                    Storage: values.storage,
+                    Graphics: values.graphics,
+                    PrivacyPolicy: values.privacyPolicy,
+                    Memory: values.memory,
+                    filePlay: values.fileLauncher
+                  },
+                listImageDetail: values.images,
+                listGenreDetail: values.selectMultiple
             }, {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('accessToken')
@@ -154,10 +169,35 @@ function AdminUpdateGameLayout() {
             })
             .then((response) => {
                 form.resetFields();
+                history.push("admin/console/game-list");
                 console.log(response.data)
             })
             .catch((error) => {
+                console.log(error);
+            });
+    };
+    const postGameUpdate = (values: any) => {
+        axios
+            .put(Endpoint.mainApi + "api/game/update/" + game.idGame, {
+                game: {
+                    namegame: values.nameGame,
+                    developer: values.developer,
+                    publisher: values.publisher,
+                    urlVideo: values.urlVideo,
+                },
+                listImageDetail: values.images,
+                listGenreDetail: values.selectMultiple
+            }, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem('accessToken')
+                }
+            })
+            .then((response) => {
                 form.resetFields();
+                history.push("admin/console/game-list");
+                console.log(response.data)
+            })
+            .catch((error) => {
                 console.log(error);
             });
     };
@@ -245,6 +285,26 @@ function AdminUpdateGameLayout() {
             const response = await gamesApi.getGameDetail(slug);
             if (response) {
                 console.log(response);
+                form.setFieldsValue({
+                    nameGame: response.nameGame,
+                    developer: response.developer,
+                    publisher: response.publisher,
+                    selectMultiple: response.genres.map(genre=>{
+                        return genre.idGenreNavigation.nameGenre
+                    }),
+                    urlVideo: response.urlVideo,
+                    shortDecription: response.newVersion.shortDescription,
+                    detailDecription: response.newVersion.descriptions,
+                    OS: response.newVersion.os,
+                    storage: response.newVersion.storage,
+                    graphics: response.newVersion.graphics,
+                    privacyPolicy: response.newVersion.privacyPolicy,
+                    processor: response.newVersion.processor,
+                    memory: response.newVersion.memory,
+                    fileLauncher: response.newVersion.filePlay,
+                    platform: response.plaform,
+                    version: response.lastestVersion + '-new'
+                })
                 setGame(response);
                 dispatch(setUrlGameAvatar('getLink', "icon game" ,response.imageGameDetail[0].url));
                 setFileList(response.imageGameDetail.slice(1).map((image,index)=>{
@@ -291,7 +351,7 @@ function AdminUpdateGameLayout() {
                                 </Upload.Dragger>
                             </Form.Item>
                         </Form.Item>
-                        <DetailGame game={game} />
+                        <DetailGame game={game} isUpdate={isUpdate} setInvalidVer = {setIsInvalidVersion}  />
                         <div className="decription-photo">
                             <div className="upload">
                                 <Form.Item
@@ -307,10 +367,11 @@ function AdminUpdateGameLayout() {
                                 </Form.Item>
                             </div>
                         </div>
-                        <ShortDescription game={game}/>
+                        <ShortDescription isUpdate = {isUpdate} game={game}/>
                         <Form.Item
                             label="* DETAIL DESCRIPTION"
-                            rules={[{ required: true, message: "Please Input Detail Description" }]}
+                            style = {{display: isUpdate ? 'none' : 'block'}}
+                            rules={[{ required: !isUpdate, message: "Please Input Detail Description" }]}
                         >
                             <div className="detail-description" onClick={focus}>
 
@@ -324,14 +385,16 @@ function AdminUpdateGameLayout() {
                                 />
                             </div>
                         </Form.Item>
-                        <SystemRequirements game={game}/>
-                        <Row gutter={[48, 8]}>
-                            <Col xxl={14} xl={14} lg={16} md={16} sm={24} xs={24}>
+                        <SystemRequirements game={game} isUpdate = {isUpdate}/>
+                        <div style = {{display:'flex', alignItems:'flex-end', justifyContent:'space-between'}}> 
+                        
                                 <Form.Item
                                     name="cost"
                                     label="Game Cost"
                                 >
                                     <InputNumber
+                                        width = "90vw"
+                                        disabled = {true}
                                         defaultValue={game.cost}
                                         min={0}
                                         formatter={(value) =>
@@ -339,18 +402,19 @@ function AdminUpdateGameLayout() {
                                         }
                                     />
                                 </Form.Item>
-                            </Col>
-                            <Col xxl={10} xl={100} lg={8} md={8} sm={24} xs={24}>
+                  
+         
                                 <Form.Item
-                                    wrapperCol={{ span: 12, offset: 6 }}
-                                    className="m-top-24"
+    
                                 >
                                     <Button type="primary" htmlType="submit">
-                                        Submit
+                                        {isUpdate ? "Update Game" : "Create Update Game"}
                                     </Button>
                                 </Form.Item>
-                            </Col>
-                        </Row>
+                
+               
+                        </div>
+                     
                     </Form>
                 </div>
             }

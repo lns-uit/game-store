@@ -45,6 +45,10 @@
 .ant-table-tbody > tr.ant-table-row:hover > td {
   background-color: rgba(107, 107, 107, 0.137) !important;
 }
+.ant-form-item-explain-success{
+  color: #111111;
+  user-select: none;
+}
 .console-container {
   width: calc(100vw - var(--console-nav-width));
   margin-left: var(--console-margin-left);

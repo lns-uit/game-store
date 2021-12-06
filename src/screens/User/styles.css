@@ -52,7 +52,10 @@
     flex-shrink: 0;
     justify-content: center;
     z-index: 0;
-    background-color: #404040;
+    overflow:hidden;
+}
+.background-profile img {
+    border-radius: 5px;
 }
 .box-sizing{
     box-sizing: border-box;

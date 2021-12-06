@@ -35,7 +35,7 @@ body *{
     padding: 0;
     display: grid;
     width: 100%;
-    grid-template-rows: 35px auto 25px;
+    grid-template-rows: 35px auto;
     background-color: var(--color-gray);
 }
 /* width */

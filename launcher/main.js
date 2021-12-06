@@ -16,7 +16,7 @@ const https = require("https");
 const storage = require("electron-json-storage");
 // const { unzip } = require("zlib");
 // const { file } = require("@babel/types");
-
+const Endpoint = "http://103.142.139.104:5111/"
 const agent = new https.Agent({
   rejectUnauthorized: false,
 });
@@ -25,6 +25,7 @@ let loginScreen;
 let updateScreen;
 let isKeepLogin = true;
 let userInfo;
+
 
 const NOTIFICATION_TITLE = "Game In Launcher Is Installed";
 const NOTIFICATION_BODY = "You can play it right now!";
@@ -137,6 +138,7 @@ ipcMain.handle("alert", (event,obj) =>{
   });
 })
 ipcMain.handle("download", (event, obj) => {
+
   axios
     .get(obj.url, {
       responseType: "stream",
@@ -190,8 +192,9 @@ function unZipGame(obj){
       } catch (err) {
         console.log(err);
       }
-      mainScreen.webContents.send('end-extract', {'status': 'end-extract'});
+      mainScreen.webContents.send('end-extract', obj.dataGame);
       showNotification(obj.dataGame.nameGame, "Game is installed, you can play right now!")
+
     });
 
     // Notify "progress" of the decompressed files
@@ -213,7 +216,7 @@ function unZipGame(obj){
 function validateLogin(obj) {
   axios
     .post(
-      "https://localhost:5001/api/user/login",
+      Endpoint + "api/user/login",
       {
         email: obj.email,
         password: obj.pwd,
@@ -269,7 +272,7 @@ function OnStartLauncher(){
       if (headers !== "{}")
         axios
           .post(
-            "https://localhost:5001/api/user/login",
+            Endpoint + "api/user/login",
             {},
             {
               httpsAgent: agent,
@@ -315,9 +318,9 @@ app.whenReady().then(() => {
 // })
 
 app.on("window-all-closed", function () {
-  if (!isKeepLogin)
+    if (!isKeepLogin)
       storage.set("user", "{}", function (error) {
         app.quit();
       });
-  else app.quit();
+      else app.quit();
 });

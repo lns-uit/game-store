@@ -1,69 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Space, Table, Tag } from "antd";
-import { GameType, ImageType } from "../../../../interfaces/rootInterface";
+import { GameType, GameVersionType, ImageType } from "../../../../interfaces/rootInterface";
 import axios from "axios";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 const { Search } = Input;
 import { Endpoint } from "../../../../api/endpoint"
+import Moment from "react-moment";
 
 function AllGameVersion() {
     let slug: any = {};
     slug = useParams();
-    const [gameData, setGameData] = useState<GameType[]>([]);
+    const [gameData, setGameData] = useState<GameVersionType[]>([]);
     const [searchGame, setSearchGame] = useState('');
     const history = useHistory();
+    const location = useLocation();
+
     const getDataGame = () => {
-        return axios.get(Endpoint.mainApi + "api/game").then((response) => {
+        let routePath = location.pathname.split('/');
+        let id = routePath[routePath.length-1];
+        return axios.get(Endpoint.mainApi + "api/gameversion/by-game/" + id,
+            {
+                headers: {
+                    Authorization: "Bearer "+ localStorage.getItem("accessToken")
+                }
+            }
+        ).then((response) => {
             setGameData(response.data);
         });
     };
     const columns = [
         {
-            title: "Game",
-            dataIndex: "imageGameDetail",
-            key: "imageGameDetail",
-            width: "40px",
-            render: (text) =>
-                text.length !== 0 ? (
-                    <img className="cover" height="40px" width="40px" src={text[0].url} />
-                ) : null,
-        },
-        {
-            dataIndex: "nameGame",
-            key: "nameGame",
-            render: (text) => <h3>{text}</h3>,
-        },
-        {
             title: "Version",
             dataIndex: "versionGame",
             key: "versionGame",
-            render: (ver) =>
-                ver === -1 ? (
-                    <Tag color={"#b80f00"}>DELETED</Tag>
-                ) : (
-                    <Tag color={"transparent"}>PUBLISHED</Tag>
-                ),
+            render: (text) => <h3>{text}</h3>,
         },
         {
-            title: "dateUpdate",
+            title: "DateUpdate",
             dataIndex: "dateUpdate",
             key: "dateUpdate",
-        },
-        {
-            key: "action",
-            render: (text, record) => (
-                <Space size="middle">
-                    <div
-                        className="btn-view-game-browser"
-                        onClick={(event) => {
-                            event.stopPropagation()
-                            window.open("/game/" + record.idGame + "/" + record.lastestVersion)
-                        }}
-                    >
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><path d="M0 0h24v24H0V0z" fill="none" /><path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" /></svg>
-                    </div>
-                </Space>
-            ),
+            render: (date) => <Moment format="DD-MM-yyyy | HH:mm:ss">{date}</Moment>
         },
     ];
     useEffect(() => {
@@ -86,9 +62,12 @@ function AllGameVersion() {
                         />
                     </div>
                     <div style={{ width: '20px' }}></div>
-                    <div className="btn" onClick={() => { history.push("/admin/create-game") }}>
-                        {" "}
-                        Create New Update{" "}
+                    <div className="btn" onClick={() => { 
+                            let routePath = location.pathname.split('/');
+                            let id = routePath[routePath.length-1];
+                            history.push("/admin/update-game/"+ id) 
+                        }}>
+                        Create New Update
                     </div>
                 </div>
             </div>
@@ -101,7 +80,7 @@ function AllGameVersion() {
                     }}
                     pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
                     columns={columns} dataSource={
-                        gameData.filter(item => item.nameGame?.toLowerCase().indexOf(searchGame) !== -1
+                        gameData.filter(item => item.versionGame?.toLowerCase().indexOf(searchGame) !== -1
 
                         )} />
             </div>

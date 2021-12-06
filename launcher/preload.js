@@ -4,9 +4,9 @@ const axios = require('axios');
 const https = require('https')
 const storage = require('electron-json-storage');
 var fs = require('fs');
-const {ipcRenderer, shell } = require('electron')
+const {ipcRenderer, shell, remote } = require('electron')
 const { loadProgressBar } = require('axios-progress-bar')
-
+const Endpoint = "http://103.142.139.104:5111/"
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector)
@@ -44,6 +44,10 @@ var gameViewContainer;
 var ecs234a11;
 var userInfo;
 var btnUpdateLauncher;
+let isOnInstall = false;
+let pathGameOnInstall = "";
+
+const fsPromises = require('fs').promises;
 
 window.onload = function(){
     ipcRenderer.invoke('request-info-user',null)
@@ -107,6 +111,7 @@ window.onload = function(){
         textDownloading.textContent = "";
         downloadProcess.style.width = "0";
         btnUninstallContainer.style.display = "flex";
+        OnGameInstalled(data);
     })
     ipcRenderer.on('downloading-bar',function(event,data){
         textDownloading.textContent = "Downloading " + data.status;
@@ -144,7 +149,7 @@ function FailGetDownload(){
 
 function GetGameData(){
    
-    axios.get("https://localhost:5001/api/wishlist/" + userInfo.user.idUser,
+    axios.get(Endpoint+"api/collection/" + userInfo.user.idUser,
         {
             headers: {
                 Authorization: "Bearer " + userInfo.token
@@ -153,9 +158,8 @@ function GetGameData(){
     )
     .then(res => {
         btnListGame.textContent = null;
-        dataGameItem =res.data;
-        res.data.forEach(item => {
-            RenderGameItem(item);
+        res.data.listGame.forEach(item => {
+            RenderGameItem(item.game);
         });
  
     })
@@ -165,14 +169,11 @@ function GetGameData(){
 }
 
 function RenderGameItem(data){
-    
     var btnGameItem = document.createElement('div');
     btnGameItem.classList.add('btn-game-item')
     
     var imgGameItem = document.createElement('img');
     imgGameItem.src = data.imageGameDetail[0].url;
-    imgGameItem.height = '50';
-    imgGameItem.width = '50';
     
     var titleGameItem = document.createElement('div');
     titleGameItem.classList.add('title-game-item');
@@ -188,7 +189,13 @@ function RenderGameItem(data){
 
 function GetGameDetail(game){
 
-    axios.get("https://localhost:5001/api/gameversion/by-game/"+game.idGame + "/"+ game.lastestVersion,
+    imgGameHeader.src = "./src/texture/backLoading.gif";
+    imgAvatar.src =  "./src/texture/iconLoading.gif";
+    nameGame.textContent = "";
+    shortDescription.textContent = "";
+    detailDescription.innerHTML = "";
+
+    axios.get(Endpoint+"api/gameversion/by-game/"+game.idGame + "/"+ game.lastestVersion,
         {
             headers: {
                 Authorization: "Bearer " + userInfo.token
@@ -216,18 +223,25 @@ function RenderGameDetail(data){
     var pathGame = gamePathStorage + '\\'+ data.idGame;
     if (fs.existsSync(pathGame)){
         fs.readFile(pathGame+'\\'+data.idGame, function(err, d) {
-            if (err) throw err;
-            var info = JSON.parse(d);
-            if (data.lastestVersion === info.version) { 
-                btnPlayInstall.textContent = "PLAY";
+            if (err) {
+                btnPlayInstall.textContent = "INSTALL"
                 btnPlayInstall.disabled = false; 
-                btnUninstallContainer.style.display = "flex";
-            }
-                else {
-                    btnPlayInstall.textContent = "UPDATE";
+                btnUninstallContainer.style.display = "none";
+                throw err;
+            } else {
+                var info = JSON.parse(d);
+                if (data.lastestVersion === info.version) { 
+                    btnPlayInstall.textContent = "PLAY";
                     btnPlayInstall.disabled = false; 
                     btnUninstallContainer.style.display = "flex";
                 }
+                    else {
+                        btnPlayInstall.textContent = "UPDATE";
+                        btnPlayInstall.disabled = false; 
+                        btnUninstallContainer.style.display = "flex";
+                    }
+            }
+            
         })
     } else {
         btnPlayInstall.textContent = "INSTALL"
@@ -252,6 +266,7 @@ function RenderGameDetail(data){
  
     }
     btnPlayContainer.onclick = function(){
+        
         var pathGame = gamePathStorage + '\\'+ data.idGame;
         if (btnPlayInstall.textContent === 'INSTALL'){
             ChangeBtnPlayStatus("DOWNLOADING...","wait",true);
@@ -261,7 +276,7 @@ function RenderGameDetail(data){
             ChangeBtnPlayStatus("UPDATING...","wait",true);
             GetUrlDownload(pathGame,data)
         } else {
-            shell.openPath(pathGame + "\\Sniper Lengendary.exe")
+            shell.openPath(pathGame + "\\" + data.newVersion.filePlay)
         }
     }
 
@@ -275,7 +290,7 @@ function ChangeBtnPlayStatus(text,cursor,status){
 }
 
 function GetUrlDownload(pathGame,data){
-    axios.get("https://localhost:5001/api/gameversion/by-game/url-download",
+    axios.get(Endpoint+"api/gameversion/by-game/url-download",
         {
             headers: {
                 'idGameVersion': data.newVersion.idGameVersion,
@@ -284,11 +299,32 @@ function GetUrlDownload(pathGame,data){
         }
     )
     .then(res => {
+        isOnInstall = true;
+        pathGameOnInstall = pathGame;
         var obj = {url: res.data, pathGame: pathGame, dataGame: data};
         ipcRenderer.invoke('download',obj);
     })
     .catch(error => {
         ChangeBtnPlayStatus("INSTALL","pointer",false);
+    })
+}
+
+
+function OnGameInstalled(data){
+    isOnInstall = false;
+    pathGameOnInstall = "";
+    axios.get(Endpoint+"api/game/installed",
+        {
+            headers: {
+                'idGame': data.idGame,
+                Authorization: "Bearer " + userInfo.token
+            }
+        }
+    )
+    .then(res => {
+        console.log(res);
+    })
+    .catch(error => {
     })
 }
 

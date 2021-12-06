@@ -10,6 +10,7 @@ function GameDetail() {
   const [game, setGame] = useState<GameDetailss>();
 
   const fetchGameData = async () => {
+    console.log(slug);
     const response = await gamesApi.getGameDetail(slug);
     if (response) {
       console.log(response);

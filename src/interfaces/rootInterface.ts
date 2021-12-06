@@ -163,7 +163,9 @@ interface GameDetailss {
     graphics: string;
     privacyPolicy: string;
     memory: string;
+    filePlay: string;
   };
+
 }
 
 interface ImageGameDetail {

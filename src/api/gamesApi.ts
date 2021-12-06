@@ -17,7 +17,7 @@ const getGameDetail = async slug => {
   try {
     const res = await callApi(
       'get',
-      `https://localhost:5001/api/gameversion/by-game/${slug.idGame}/${slug.version}`
+      `https://localhost:5001/api/gameversion/by-game/lastest-version/${slug.idGame}`
     );
     return res.data;
   } catch (err) {

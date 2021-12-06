@@ -81,7 +81,7 @@ function RootNavigation() {
           <PrivateRoute path='/admin/create-game'>
             <AdminCreateGame />
           </PrivateRoute>
-          <PrivateRoute path='/admin/update-game/:idGame/:version'>
+          <PrivateRoute path='/admin/update-game/:idGame'>
             <AdminUpdateGame />
           </PrivateRoute>
 
@@ -124,7 +124,7 @@ function RootNavigation() {
           />
 
           {/* everyone */}
-          <Route path='/game/:idGame/:version' component={GameDetail} />
+          <Route path='/game/:idGame' component={GameDetail} />
           <Route path='/browse' component={BrowseScreen} />
           <Route exact path='/' component={DiscoverScreen} />
           <Route path='*' component={NotFoundScreen} />
