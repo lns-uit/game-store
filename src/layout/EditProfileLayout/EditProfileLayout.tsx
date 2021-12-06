@@ -2,22 +2,78 @@ import React,{useState} from 'react';
 import '../../screens/EditProfile/styles.css';
 import { Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
-import { Form } from 'antd';
+import { Form, Button } from 'antd';
 import EditProfileNavigation from '../../components/EditProfileNavigavtion/EditProfileNavigavtion';
 import EditProfileGeneral from '../../components/EditProfileGeneral/EditProfileGeneral';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import AvatarAndCoverImage from '../../components/AvatarAndCoverImage/AvatarAndCoverImage';
+import EditPassWord from '../../components/EditPassWord/EditPassWord'
 
 function EditProfileLayout() {
   const user = useSelector((state: RootState) => state.user);
   const [navigationEditProfile,setNavigationEditProfile] = useState(1); 
   const avatar =
-    'https://scr.vn/wp-content/uploads/2020/07/Avatar-Facebook-tr%E1%BA%AFng.jpg';
-
+    'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg';
+  const [urlCoverImage, setUrlCoverImage] = useState<any>(null);
+  const [urlAvatar, setUrlAvatar] = useState<any>(null);
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    let userEdited: any = null
+    if (navigationEditProfile === 1) {
+      userEdited = {
+        username: values.username,
+        realName: values.realName,
+        email: values.email,
+        phone: values.phone,
+        background: null,
+        avatar: null,
+        password: null,
+        newpassword: null
+      }
+      postEditUser(userEdited);
+    }else if (navigationEditProfile === 2){
+      userEdited = {
+        username: null,
+        realName: null,
+        email: null,
+        phone: null,
+        background: urlCoverImage,
+        avatar: urlAvatar,
+        password: null,
+        newpassword: null
+      }
+      postEditUser(userEdited);
+    }else{
+      if(values.newPassword !== values.comfirmPassword || values.newPassword === values.oldPassword){
+        console.log("mật khẩu mới và xác nhận mật khẩu không trùng nhau hoặc mật khẩu mới và mật khẩu cũ trùng nhau!!");
+      }else{
+        userEdited = {
+          username: null,
+          realName: null,
+          email: null,
+          phone: null,
+          background: null,
+          avatar: null,
+          password: values.oldPassword,
+          newpassword: values.newPassword
+        }
+        postEditUser(userEdited);
+      }
+    }
   };
+
+  const postEditUser = (values: any) => {
+    console.log(values);
+    //post api
+  }
+
+  const getUrlCoverImage = (url: string) =>{
+    setUrlCoverImage(url);
+  }
+
+  const getUrlAvatar = (url: string) =>{
+    setUrlAvatar(url);
+  }
 
   const navigation = (index) =>{
     setNavigationEditProfile(index);
@@ -58,14 +114,19 @@ function EditProfileLayout() {
                   wrapperCol={{ span: 16 }}
                   initialValues={{ remember: true }}
                   onFinish={onFinish}
-                  autoComplete='off'>
+                  autoComplete='off'
+                  layout="vertical"
+                >
                   {
                     navigationEditProfile === 1 ?
                     <EditProfileGeneral />
                     : navigationEditProfile === 2 ?
-                    <AvatarAndCoverImage/>
-                    : null
+                    <AvatarAndCoverImage getUrlAvatar={getUrlAvatar} getUrlCoverImage={getUrlCoverImage}/>
+                    : <EditPassWord/>
                   }
+                  <Button type="primary" htmlType="submit" className="float-right">
+                    Submit
+                  </Button>
                 </Form>
               </Col>
             </Row>
