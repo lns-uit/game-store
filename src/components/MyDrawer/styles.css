@@ -2,7 +2,9 @@
   background-color: #1a1a1a !important;
   color: var(--white-color) !important;
   margin-right: 0px !important;
-  padding: 17px !important;
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
 }
 .my-drawer__tabs {
   display: flex;
@@ -51,7 +53,8 @@
   color: var(--red-color) !important;
   font-size: 14px !important;
   font-family: 'Poppins', sans-serif !important;
-  font-weight: bold;
+  font-weight: bold !important;
+  margin-left: 10px !important;
 }
 
 .my-drawer__tab--active {

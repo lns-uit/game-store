@@ -5,7 +5,11 @@ import GameItem from '../../components/GameItem/GameItem';
 import GameItemFree from '../../components/GameItemFree/GameItemFree';
 import './styles.css';
 import { Row, Col, Button, Radio } from 'antd';
-import { ActionType, GameInfoType } from '../../interfaces/rootInterface';
+import {
+  ActionType,
+  GameInfoType,
+  GameType,
+} from '../../interfaces/rootInterface';
 import Slides from '../../components/Slides/Slides';
 import GamesContainer from '../../components/GamesContainer/GamesContainer';
 import ViewMoreBtn from '../../components/ViewMoreBtn/ViewMoreBtn';
@@ -24,17 +28,14 @@ const EMPTYARR = ['', '', ''];
 
 function DiscoverScreen() {
   const screens = useBreakpoint();
-  const [itemsFree, setItemsFree] = useState<GameInfoType[]>(
-    gamesInfoMockData.slice(0, 4)
-  );
-  const [topGamesWeek, setTopGamesWeek] = useState<GameInfoType[]>(
-    gamesInfoMockData.slice(0, 10)
-  );
-  const [mostPopular, setMostPopular] = useState<GameInfoType[]>(
-    gamesInfoMockData.slice(0, 4)
-  );
+  const [itemsFree, setItemsFree] = useState<GameType[]>([]);
+  // gamesInfoMockData.slice(0, 4)
+  const [topGamesWeek, setTopGamesWeek] = useState<GameType[]>([]);
+  // gamesInfoMockData.slice(0, 10)
+  const [mostPopular, setMostPopular] = useState<GameType[]>([]);
+  // gamesInfoMockData.slice(0, 4)
   const topGamesWeekRef = useRef<any>(null);
-  const handleSlide = (action) => {
+  const handleSlide = action => {
     const ox = topGamesWeekRef.current.offsetWidth;
     if (action === 'next') {
       topGamesWeekRef.current.scrollLeft += ox;
@@ -43,9 +44,6 @@ function DiscoverScreen() {
     }
   };
 
-  useEffect(() => {
-    console.log(screens);
-  }, [screens]);
   return (
     <div className='discover-screen'>
       <div style={{ marginBottom: 40, marginTop: 40 }}>
@@ -54,8 +52,7 @@ function DiscoverScreen() {
       {/* Top game week */}
       <GamesContainer
         title='Top Games Week !'
-        leftAction={<ActionLeftTopGameWeek handleSlide={handleSlide} />}
-      >
+        leftAction={<ActionLeftTopGameWeek handleSlide={handleSlide} />}>
         <Row ref={topGamesWeekRef} className='top-game-week' gutter={[35, 35]}>
           {topGamesWeek.map((game, index) => (
             <Col
@@ -65,8 +62,7 @@ function DiscoverScreen() {
               lg={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
               md={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
               sm={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
-              xs={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
-            >
+              xs={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}>
               <GameItem game={game} action={ActionType.ADD} />
             </Col>
           ))}
@@ -79,8 +75,7 @@ function DiscoverScreen() {
         gutterHorizontal={30}
         title='FREE NOW !'
         leftAction={<ViewMoreBtn />}
-        backgroundColor={rootColor.grayContainerColor}
-      >
+        backgroundColor={rootColor.grayContainerColor}>
         <Row gutter={[35, 35]}>
           {itemsFree.map((game, index) => (
             <Col
@@ -90,8 +85,7 @@ function DiscoverScreen() {
               lg={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
               md={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
               sm={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
-              xs={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
-            >
+              xs={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}>
               <GameItemFree game={game} heightImage='25vw' />
             </Col>
           ))}
@@ -107,21 +101,18 @@ function DiscoverScreen() {
             md={24}
             sm={24}
             xs={24}
-            key={`ab4-${index}`}
-          >
+            key={`ab4-${index}`}>
             <div
               className={
                 index !== EMPTYARR.length - 1
                   ? 'games-container-horizontal'
                   : ''
-              }
-            >
+              }>
               <GamesContainer
                 key={`abc-${index}`}
                 gutterHorizontal={30}
                 title='Top Seller'
-                leftAction={<ViewMoreBtn />}
-              >
+                leftAction={<ViewMoreBtn />}>
                 <>
                   {itemsFree.map((game, index) => (
                     <div style={{ marginBottom: 20 }}>
@@ -145,8 +136,7 @@ function DiscoverScreen() {
               lg={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
               md={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
               sm={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
-              xs={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
-            >
+              xs={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}>
               <GameItem
                 game={game}
                 action={ActionType.ADD}

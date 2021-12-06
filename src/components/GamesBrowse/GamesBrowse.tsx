@@ -1,69 +1,63 @@
-import React, { useState, useEffect } from "react";
-import GameItem from '../../components/GameItemCopy/GameItem';
-import { ActionType } from '../../interfaces/rootInterface';    
-import {Link} from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import GameItem from '../../components/GameItem/GameItem';
+import { ActionType } from '../../interfaces/rootInterface';
+import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
-import "./styles.css"
-import axios from "axios";
-import gameApi from "../../api/gamesApi";
+import './styles.css';
+import axios from 'axios';
+import gameApi from '../../api/gamesApi';
 
-interface Pages{
-    page: number;
+interface Pages {
+  page: number;
 }
 
-function GamesBrowse({
-    page
-}:Pages){
-    const [Games, setGame] = useState<any[]>([]);
+function GamesBrowse({ page }: Pages) {
+  const [Games, setGame] = useState<any[]>([]);
 
-     useEffect(() =>{
-        // const accessToken = localStorage.getItem("accessToken")
-        // axios.get("https://localhost:5001/api/game")
-        //     .then(res=>{
-        //         console.log(res.data)
-        //         setGame(res.data.slice((page-1)*12,(page-1)*12 + 12));
-        //     })
-        //     .catch(err => {console.log(err)})
-        async function callApiGames(){
-            const gamesBrowse = await gameApi.getGamesApi();
+  useEffect(() => {
+    // const accessToken = localStorage.getItem("accessToken")
+    // axios.get("https://localhost:5001/api/game")
+    //     .then(res=>{
+    //         console.log(res.data)
+    //         setGame(res.data.slice((page-1)*12,(page-1)*12 + 12));
+    //     })
+    //     .catch(err => {console.log(err)})
+    async function callApiGames() {
+      const gamesBrowse = await gameApi.getGamesApi();
 
-            if (gamesBrowse){
-                console.log(gamesBrowse)
-                setGame(gamesBrowse);
-            }else{
-                console.log("err");
-            }
-        }
+      if (gamesBrowse) {
+        setGame(gamesBrowse.slice((page-1)*12,(page-1)*12 + 12));
+      } else {
+        console.log('err');
+      }
+    }
 
-        callApiGames();
-    }, [])
-    return(
-        <div className="mr-top-10">
-                <Row>
-                    {
-                        Games.map((game,index)=>{
-                            return (
-                                <Col
-                                    key={`game-info-${index}`}
-                                    xxl={6}
-                                    xl={8}
-                                    lg={24}
-                                    md={12}
-                                    sm={12}
-                                    xs={24}
-                                >
-                                    <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
-                                        <div className="pd-left-right-10 pd-bottom-30 m-bottom-12">
-                                            <GameItem game={game} action={ActionType.REMOVE} />
-                                        </div>
-                                    </Link>
-                                </Col>
-                            )
-                        })
-                    }
-                </Row>
-        </div>
-    )
+    callApiGames();
+  }, []);
+  return (
+    <div className='mr-top-10'>
+      <Row>
+        {Games.map((game, index) => {
+          return (
+            <Col
+              key={`game-info-${index}`}
+              xxl={6}
+              xl={8}
+              lg={24}
+              md={12}
+              sm={12}
+              xs={24}>
+              <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
+                <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                  <GameItem game={game} action={ActionType.REMOVE} />
+                </div>
+              </Link>
+            </Col>
+          );
+        })}
+      </Row>
+    </div>
+  );
 }
 
 export default GamesBrowse;

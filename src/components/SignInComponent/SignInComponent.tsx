@@ -93,7 +93,7 @@ function SignInComponent() {
             </Form.Item>
           </Form>
           <div className='not-account'>
-            <Link to='/buyer/sign-up' className="a-create-account">
+            <Link to='/buyer/sign-up' className='a-create-account'>
               Not Account Yet? Sign Up Now
             </Link>
           </div>
