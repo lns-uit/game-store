@@ -33,6 +33,8 @@ import { useDispatch } from 'react-redux';
 import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
 import { Endpoint } from '../../api/endpoint';
 
+const { Option } = Select;
+
 function AdminUpdateGameLayout() {
     const slug = useParams();
     const history = useHistory();
@@ -51,6 +53,7 @@ function AdminUpdateGameLayout() {
     const dispatch = useDispatch();
     const [isUpdate, setIsUpdate] = useState(true);
     const [isInvalidVersion, setIsInvalidVersion] = useState(false);
+    const [genres, setGenres] = useState<any[]>([]);
 
     const hashConfig = {
         trigger: '#',
@@ -98,7 +101,7 @@ function AdminUpdateGameLayout() {
             error.push("Invalid Version Game");
             count += 1;
         }
-        if (values.urlVideo !== "")
+        if (values.urlVideo !== "" && values.urlVideo!==null)
             if (values.urlVideo.indexOf('http')===-1) {
                 error.push('Please input valid url video')
                 count += 1;
@@ -131,8 +134,8 @@ function AdminUpdateGameLayout() {
             }));
             values.detailDecription = markup;
             console.log(values);
-            if (isUpdate) postGameUpdate(values);
-                else postGameCreateUpdate(values);
+            // if (isUpdate) postGameUpdate(values);
+            //     else postGameCreateUpdate(values);
         }
     }
     const postGameCreateUpdate = (values: any) => {
@@ -283,15 +286,18 @@ function AdminUpdateGameLayout() {
     useEffect(() => {
         const fetchGameData = async () => {
             const response = await gamesApi.getGameDetail(slug);
+
             if (response) {
                 console.log(response);
                 form.setFieldsValue({
                     nameGame: response.nameGame,
                     developer: response.developer,
                     publisher: response.publisher,
-                    selectMultiple: response.genres.map(genre=>{
-                        return genre.idGenreNavigation.nameGenre
-                    }),
+                    selectMultiple: response.genres.map((genre,index)=>(
+                        <Option key={genre.idGenreNavigation.idGenre} value={genre.idGenreNavigation.idGenre}>
+                            {genre.idGenreNavigation.nameGenre}
+                        </Option>
+                    )),
                     urlVideo: response.urlVideo,
                     shortDecription: response.newVersion.shortDescription,
                     detailDecription: response.newVersion.descriptions,
@@ -351,7 +357,7 @@ function AdminUpdateGameLayout() {
                                 </Upload.Dragger>
                             </Form.Item>
                         </Form.Item>
-                        <DetailGame game={game} isUpdate={isUpdate} setInvalidVer = {setIsInvalidVersion}  />
+                        <DetailGame game={game} isUpdate={isUpdate} setInvalidVer = {setIsInvalidVersion} setGenres = {setGenres} />
                         <div className="decription-photo">
                             <div className="upload">
                                 <Form.Item

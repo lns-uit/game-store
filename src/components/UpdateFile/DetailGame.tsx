@@ -24,12 +24,13 @@ interface GameDetail{
     game: GameDetailss;
     isUpdate: boolean;
     setInvalidVer: any;
+    setGenres: any;
 }
 
 const { Option } = Select;
 
 function DetailGame({
-    game,isUpdate, setInvalidVer
+    game,isUpdate, setInvalidVer, setGenres
 }: GameDetail){
     const [isValidVersion, setIsValidVersion] = useState(true);
     const [isValidPrivacyPolicy, SetIsValidPrivacyPolicy] = useState(true);
@@ -65,9 +66,10 @@ function DetailGame({
         const res = await adminApi.getGenre();
         
         if (res){
+            console.log(res)
             res.forEach((data)=>{
                 allGame.push(
-                    <Option key={data.idGenre} value={data.nameGenre}>
+                    <Option key={data.idGenre} value={data.idGenre}>
                         {data.nameGenre}
                     </Option>
                 )  

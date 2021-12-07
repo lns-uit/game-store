@@ -233,6 +233,11 @@ function Admin() {
       console.log(err);
     }
   }
+  useEffect(()=>{
+      form.setFieldsValue({
+        cost: 0
+      })
+  },[])
   return (
     <div className="white console-container">
       <div className="console-detail-header">
@@ -300,6 +305,7 @@ function Admin() {
             <Form.Item
               name="cost"
               label="Game Cost"
+              rules={[{ required: true, message: "Please Input Cost Game" }]}
             >
               <InputNumber
                 defaultValue={0}
