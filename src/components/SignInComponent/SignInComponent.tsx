@@ -7,6 +7,10 @@ import userApi from '../../api/userApi';
 import { login } from '../../redux/actions/userAction';
 import { useDispatch } from 'react-redux';
 import RootErrorMessage from '../../constants/ErrorMessage';
+import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
+import fbIcon from '../../assets/images/facebook-4-50.png';
+
 
 function SignInComponent() {
   const [loginErr, setLoginErr] = useState(false);
@@ -39,9 +43,71 @@ function SignInComponent() {
       alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
     }
   };
+  const responseGoogle = async (response) => {
+    let data = response.profileObj;
+    console.log(data);
+    try {
+      const responsive = await userApi.loginWithSMA({
+          iLogin: {
+              email: data.email,
+          },
+          iUser: {
+              email: data.email,
+              realname: data.name,
+              avatar: data.imageUrl,
+              userName: data.email
+          }
+      })
+      console.log(responsive);
 
+      const {message, token, user} = responsive || {}
+      if (message) {
+        setLoginErr(true);
+        setStrLoginErr(message);
+      }
+      if (token) {
+        localStorage.setItem('accessToken',token);
+        dispatch(login(user));
+        history.replace('/')
+      }
+    } catch (e) {
+      console.log(e);
+      alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
+    }
+  }
+  const responseFacebook = async (response) => {
+    let data = response;
+    try {
+      const responsive = await userApi.loginWithSMA({
+          iLogin: {
+              email: data.id + "@facebook.com",
+          },
+          iUser: {
+              email: data.id + "@facebook.com",
+              realname: data.name,
+              avatar: data.picture.data.url,
+              userName: data.id
+          }
+      })
+      console.log(responsive);
+
+      const {message, token, user} = responsive || {}
+      if (message) {
+        setLoginErr(true);
+        setStrLoginErr(message);
+      }
+      if (token) {
+        localStorage.setItem('accessToken',token);
+        dispatch(login(user));
+        history.replace('/')
+      }
+    } catch (e) {
+      console.log(e);
+      alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
+    }
+  }
   return (
-    <div className='bgr-brow2 border-radius-4'>
+    <div className='bgr-brow2 b-radius-5'>
       <div className='pd-sign-in'>
         <div className='login-content'>
           <div>
@@ -65,7 +131,7 @@ function SignInComponent() {
                 rules={[
                   { required: true, message: 'Please input your username!' },
                 ]}>
-                <Input placeholder='Username and Email' />
+                <Input className = "b-radius-5" placeholder='Username and Email' />
               </Form.Item>
             </div>
 
@@ -76,7 +142,7 @@ function SignInComponent() {
                 rules={[
                   { required: true, message: 'Please input your password!' },
                 ]}>
-                <Input placeholder='Password' type='password' />
+                <Input className = "b-radius-5" placeholder='Password' type='password' />
               </Form.Item>
             </div>
 
@@ -87,13 +153,28 @@ function SignInComponent() {
                 style={{ height: '40px' }}
                 type='primary'
                 htmlType='submit'
-                className='full-width'>
+                className='full-width btn-login-submit'>
                 Sign In
               </Button>
             </Form.Item>
+            <GoogleLogin
+              className = "btn-login-with-google"
+              clientId="436864193139-pp683cr97eg03a8jri9lmmmonfa0963e.apps.googleusercontent.com"
+              buttonText="Sign In with Google"
+              onSuccess={responseGoogle}
+              cookiePolicy={'single_host_origin'}
+            />
+            <br/><br/>
+            <FacebookLogin
+              appId="4499644436831251"
+              fields="name,email,picture"
+              // onClick={responseFacebook}
+              cssClass="btn-login-with-facebook"
+              icon= {<img src={fbIcon} height="25px"/>}
+              callback={responseFacebook} />
           </Form>
           <div className='not-account'>
-            <Link to='/buyer/sign-up' className='a-create-account'>
+            <Link to='/sign-up' className='a-create-account'>
               Not Account Yet? Sign Up Now
             </Link>
           </div>

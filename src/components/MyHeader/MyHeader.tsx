@@ -129,13 +129,13 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           ) : (
             <div className='header__top-wrapper--right__user gray-6'>
               <Link
-                to='/buyer/sign-up'
+                to='/sign-up'
                 className='m-0 global_action_link pointer sign_in_hover'>
                 Sign Up
               </Link>
               &nbsp;|&nbsp;
               <Link
-                to='/buyer/sign-in'
+                to='/sign-in'
                 className='m-0 global_action_link pointer sign_in_hover'>
                 Sign In
               </Link>

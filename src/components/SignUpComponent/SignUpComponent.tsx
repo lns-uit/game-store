@@ -28,7 +28,7 @@ function SignUpComponent() {
   };
 
   return (
-    <div className='bgr-brow2 border-radius-4'>
+    <div className='bgr-brow2 b-radius-5'>
       <div className='pd-sign-in'>
         <div className='sign-up-content'>
           <div>
@@ -52,7 +52,7 @@ function SignUpComponent() {
                 rules={[
                   { required: true, message: 'Please input your email!' },
                 ]}>
-                <Input placeholder='Email' type='email' />
+                <Input className = "b-radius-5" placeholder='Email' type='email' />
               </Form.Item>
             </div>
             <div style={{ textAlign: 'left' }}>
@@ -62,7 +62,7 @@ function SignUpComponent() {
                 rules={[
                   { required: true, message: 'Please input your username!' },
                 ]}>
-                <Input placeholder='Username' />
+                <Input className = "b-radius-5" placeholder='Username' />
               </Form.Item>
             </div>
 
@@ -75,7 +75,7 @@ function SignUpComponent() {
                   { min: 8, message: 'Password must be minimum 8 characters.' },
                   { max: 20, message: 'Password must be max 20 characters.' },
                 ]}>
-                <Input placeholder='Password' type='password' />
+                <Input className = "b-radius-5" placeholder='Password' type='password' />
               </Form.Item>
             </div>
 
@@ -89,7 +89,7 @@ function SignUpComponent() {
                     message: 'Please input your confirm password!',
                   },
                 ]}>
-                <Input placeholder='Confirm Password' type='password' />
+                <Input className = "b-radius-5" placeholder='Confirm Password' type='password' />
               </Form.Item>
             </div>
 
@@ -100,13 +100,13 @@ function SignUpComponent() {
                 style={{ height: '40px' }}
                 type='primary'
                 htmlType='submit'
-                className='full-width'>
+                className='full-width b-radius-5'>
                 Sign Up
               </Button>
             </Form.Item>
           </Form>
           <div className='not-account'>
-            <Link to='/buyer/sign-in' className='a-create-account'>
+            <Link to='/sign-in' className='a-create-account'>
               Already have an account? Sign In Now
             </Link>
           </div>

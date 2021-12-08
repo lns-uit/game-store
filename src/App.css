@@ -8,15 +8,17 @@
 }
 .ant-layout {
   overflow-x: hidden;
+  background-color: #111 !important;
 }
 .site-layout {
   padding: 50px var(--gutterHorizontal-size);
   min-height: calc(100vh - var(--header-height)) !important;
   margin-top: var(--header-height);
-  background-color: #111;
+  background-color: #111 !important;
   width: 100% !important;
 }
 .site-layout--md {
+  background-color: #111 !important;
   margin-top: var(--header-height-on-tablet);
 }
 

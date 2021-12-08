@@ -34,7 +34,7 @@
 }
 .page-content{
     max-width: 940px;
-    margin: 0px auto;
+    margin: 70px auto;
     display: flex;
     justify-content: center;
 }
@@ -62,7 +62,7 @@
     text-transform: uppercase;
     text-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
     font-size: 34px;
-    color: #2369BB;
+    color: var(--red-color);
     margin-bottom: 30px;
     font-weight: bold;
     letter-spacing: 2px;
@@ -93,4 +93,46 @@
 .sign-up-content .ant-btn-primary{
     background-color: #BB9023 !important;
     border-color: #BB9023 !important;
+}
+.btn-login-with-google{
+    width: 100% !important;
+    height: 40px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: .3s;
+    border-radius: 5px !important;
+}
+.btn-login-with-google div{
+    height: 40px !important;
+}
+.btn-login-with-facebook{
+    height: 40px !important;
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background-color: #0072c9;
+    border: 0px;
+    border-radius: 5px;
+    transition: .3s;
+    cursor: pointer;
+}
+.btn-login-with-facebook:hover{
+    background-color: #005596;
+}
+.btn-login-with-facebook img{
+    padding-right: 18px;
+}
+.btn-login-submit{
+    background-color: var(--red-color) !important;
+    border-radius: 5px !important;
+    border: 0 !important;
+}
+.btn-login-submit:hover{
+    background-color: rgb(175, 0, 0) !important;
+}
+.b-radius-5{
+    border-radius: 5px !important;
 }

@@ -115,11 +115,11 @@ function RootNavigation() {
 
           {/* Auth*/}
           <Route
-            path='/buyer/sign-in'
+            path='/sign-in'
             render={() => (isLogin ? <Redirect to='/' /> : <SignIn />)}
           />
           <Route
-            path='/buyer/sign-up'
+            path='/sign-up'
             render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
           />
 
