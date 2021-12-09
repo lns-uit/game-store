@@ -125,7 +125,7 @@ function RootNavigation() {
 
           {/* everyone */}
           <Route path='/game/:idGame' component={GameDetail} />
-          <Route path='/browse' component={BrowseScreen} />
+          <Route path='/browse/' component={BrowseScreen} />
           <Route exact path='/' component={DiscoverScreen} />
           <Route path='*' component={NotFoundScreen} />
 

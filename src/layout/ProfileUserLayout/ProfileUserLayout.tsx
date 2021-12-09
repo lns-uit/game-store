@@ -33,7 +33,7 @@ function ProfileUserLayout({ user }: ProfileUserLayoutPropsType) {
                   size={{
                     xs: 100,
                     sm: 100,
-                    md: 100,
+                    md: 168,
                     lg: 168,
                     xl: 168,
                     xxl: 168,
