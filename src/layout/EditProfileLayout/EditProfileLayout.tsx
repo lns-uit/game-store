@@ -24,7 +24,7 @@ function EditProfileLayout() {
         username: values.username,
         realName: values.realName,
         email: values.email,
-        phone: values.phone,
+        phone: values.phone.toString(),
         background: null,
         avatar: null,
         password: null,

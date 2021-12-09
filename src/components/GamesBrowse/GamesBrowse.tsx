@@ -13,6 +13,7 @@ interface Pages {
 
 function GamesBrowse({ page }: Pages) {
   const [Games, setGame] = useState<any[]>([]);
+  console.log(Games);
 
   useEffect(() => {
     // const accessToken = localStorage.getItem("accessToken")

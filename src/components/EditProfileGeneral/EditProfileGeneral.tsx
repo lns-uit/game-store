@@ -46,8 +46,9 @@ function EditProfileGeneral(){
                         <Form.Item
                             label="Phone"
                             name="phone"
+                            className="none-error"
                         >
-                            <Input placeholder="Phone" defaultValue={user.phone}/>
+                            <Input placeholder="Phone" type="number" defaultValue={user.phone}/>
                         </Form.Item>
                     </div>
                 </div>
