@@ -104,7 +104,7 @@
     line-height:20px;
 }
 .fs-11{
-    font-size: 11px;
+    font-size: 13px;
 }
 .fs-13{
     font-size: 13px;
@@ -157,7 +157,7 @@
 }
 .sys-minimum strong, .sys-recommended strong{
     font-weight: normal;
-    font-size: 10px;
+    font-size: 12px;
     display: inline-block;
     margin-right: 4px;
 }

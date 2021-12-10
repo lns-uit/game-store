@@ -18,13 +18,14 @@ function AboutGame({
             <div className="max-height-850 overflow-hidden">
                 <div className="game_area_description">
                     <h2 className="white uppercase lh-26 pd-top-2 m-bottom-10 fs-14 weight-normal brg-img">About this game</h2>
-                    <span>
-                        {game.newVersion.shortDescription}
+                    <br/>
+                    <span style = {{fontSize: '27px'}}>
+                       {game.newVersion.shortDescription}
                     </span>
                     <h2 className="blue-3 fs-15 m-top-18 pd-top-2">
-                        <strong>Game Description</strong>
+                        <strong></strong>
                     </h2>
-                    <div className="pd-0 m-left-18 white">
+                    <div className="pd-0 white">
                         <div dangerouslySetInnerHTML={{ __html: game.newVersion.descriptions }} />
                     </div>
                 </div>

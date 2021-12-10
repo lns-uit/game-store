@@ -15,7 +15,7 @@ function SignUpComponent() {
   const [emailWarning, setEmailWarning] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
   const onFinish = async (values: any) => {
-    
+    if (!isValidEmail) return;
     if (!isValidUsername) return;
     if (values.password !== values.confirmPassword) {
       // setSignUpErr(true);

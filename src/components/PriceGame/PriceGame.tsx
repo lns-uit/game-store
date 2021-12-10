@@ -135,7 +135,9 @@ function PriceGame({ game }: Detail) {
                 : 'd-flex border-top-gray pd-top-bottom-22 space-between'
             }>
             <p className='gray-3 m-0 fs-12 lh-21'>Release Date</p>
-            <Moment format='DD-MM-yyyy'>{game.releaseDate}</Moment>
+            <div className='fs-12'>
+              <Moment format='DD-MM-yyyy'>{game.releaseDate}</Moment>
+            </div>
           </div>
           <div
             className={

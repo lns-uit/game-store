@@ -27,7 +27,7 @@ function GameDetail() {
       {!game?.idGame ? (
         <div>Loadding</div>
       ) : (
-        <div>
+        <div style = {{marginTop: '30px'}}>
           <LayoutGameDetail1 game={game} />
           <LayoutGameDetail2 game={game} />
         </div>
