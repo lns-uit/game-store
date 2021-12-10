@@ -29,6 +29,7 @@ import AllGameVersion from '../screens/Admin/components/GameVersion/AllGameVersi
 import EditProfile from '../screens/EditProfile/EditProfile';
 import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
 import AdminUpdateGame from '../screens/AdminUpdateGame/AdminUpdateGame';
+import ConfirmEmail from '../screens/ConfirmEmail/ConfirmEmail';
 
 function RootNavigation() {
   let location = useLocation();
@@ -37,6 +38,10 @@ function RootNavigation() {
   const dispatch = useDispatch();
   const isLogin = useMemo(() => !!idUser, [idUser]);
   const [isLoading, setIsLoading] = useState(true);
+  const email = useSelector(
+    (state: RootState) => state.email
+  )
+  console.log(email);
 
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
@@ -121,6 +126,10 @@ function RootNavigation() {
           <Route
             path='/sign-up'
             render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
+          />
+          <Route
+            path='/confirm-email'
+            render={() => (email === null ? <Redirect to='/' /> :  <ConfirmEmail />)}
           />
 
           {/* everyone */}

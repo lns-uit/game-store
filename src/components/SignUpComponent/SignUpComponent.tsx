@@ -5,6 +5,8 @@ import userApi from '../../api/userApi';
 import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
 import CheckValidEmail  from '../../utils/validEmail';
+import { useDispatch } from 'react-redux';
+import {setEmail} from '../../redux/actions/actionEmail';
 
 function SignUpComponent() {
   const history = useHistory();
@@ -14,15 +16,18 @@ function SignUpComponent() {
   const [stunIdWarning, setStunIdWarning] = useState("");
   const [emailWarning, setEmailWarning] = useState("");
   const [isValidEmail, setIsValidEmail] = useState(false);
+  const dispatch = useDispatch();
   const onFinish = async (values: any) => {
     if (!isValidEmail) return;
     if (!isValidUsername) return;
+    if (!isValidEmail) return;
     if (values.password !== values.confirmPassword) {
       // setSignUpErr(true);
       Mss.error('Password and confirm password are not the same');
     } else {
       // setSignUpErr(false);
       // setStrSignUpErr('');
+      dispatch(setEmail('getEmail', values.email));
       const newUser = {
         username: values.username,
         password: values.password,
@@ -30,9 +35,10 @@ function SignUpComponent() {
       };
       const responsive = await userApi.registerUserApi(newUser);
       const { idUser, message } = responsive || {};
+      console.log(responsive)
       if (message) {
         Mss.success(message);
-        history.push('sign-in');
+        history.push('/confirm-email');
         return;
       }
     }
