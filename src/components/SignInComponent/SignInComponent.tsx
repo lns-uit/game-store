@@ -120,27 +120,28 @@ function SignInComponent() {
             </div>
           </div>
           <Form
+            layout = "vertical"
             name='sign_in'
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 50 }}
             onFinish={onFinish}>
             <div style={{ textAlign: 'left' }}>
-              <p className='gray-5 fs-14 lh-18'>Username or Email</p>
               <Form.Item
                 name='userName'
+                label = "Stun ID or Email"
                 rules={[
-                  { required: true, message: 'Please input your username!' },
+                  { required: true, message: 'Input require !' },
                 ]}>
-                <Input className = "b-radius-5" placeholder='Username and Email' />
+                <Input className = "b-radius-5" placeholder='Stun ID and Email' />
               </Form.Item>
             </div>
 
             <div style={{ textAlign: 'left' }}>
-              <p className='gray-5 fs-14 lh-18'>Password</p>
               <Form.Item
                 name='password'
+                label = "Password"
                 rules={[
-                  { required: true, message: 'Please input your password!' },
+                  { required: true, message: 'Input require !' },
                 ]}>
                 <Input className = "b-radius-5" placeholder='Password' type='password' />
               </Form.Item>
@@ -157,6 +158,11 @@ function SignInComponent() {
                 Sign In
               </Button>
             </Form.Item>
+            <span style = {{color:'#787878', padding:'0 10px', background: '#161616'}}>OR</span>
+            <div style = {{borderTop: '1px solid #454545',marginTop:'-10px'}}>
+            </div>
+        
+            <br/>
             <GoogleLogin
               className = "btn-login-with-google"
               clientId="436864193139-pp683cr97eg03a8jri9lmmmonfa0963e.apps.googleusercontent.com"

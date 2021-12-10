@@ -30,6 +30,7 @@ import EditProfile from '../screens/EditProfile/EditProfile';
 import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
 import AdminUpdateGame from '../screens/AdminUpdateGame/AdminUpdateGame';
 import ConfirmEmail from '../screens/ConfirmEmail/ConfirmEmail';
+import ConfirmEmailWithLink from '../components/ConfirmEmailComponent/ConfirmEmailWithLink'
 
 function RootNavigation() {
   let location = useLocation();
@@ -131,6 +132,9 @@ function RootNavigation() {
             path='/confirm-email'
             render={() => (email === null ? <Redirect to='/' /> :  <ConfirmEmail />)}
           />
+          <Route path = '/email-verify/:url'>
+            <ConfirmEmailWithLink/>
+          </Route>
 
           {/* everyone */}
           <Route path='/game/:idGame' component={GameDetail} />

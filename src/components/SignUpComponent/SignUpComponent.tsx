@@ -122,13 +122,13 @@ function SignUpComponent() {
                 name='username'
                 label = "Stun ID"
                 rules={[
-                  { required: true, message: 'Please input your username!' },
+                  { required: true, message: 'Please input your Stun ID!' },
                 ]}
                 hasFeedback
                 help= {stunIdWarning}
                 validateStatus = {isValidUsername ? "success" : "error"}
                 >
-                <Input className = "b-radius-5" placeholder='Username' onBlur={(e)=> ValidStunId(e.target.value)} />
+                <Input className = "b-radius-5" placeholder='Stun ID' onBlur={(e)=> ValidStunId(e.target.value)} />
               </Form.Item>
             </div>
 

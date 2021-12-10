@@ -1,0 +1,40 @@
+.confirm-email-with-link-container{
+    width: 100%;
+    padding: 100px 0;
+}
+.confirm-email-with-link-box {
+    background-color: rgb(36, 36, 36);
+    height: 200px;
+    width: 450px;
+    border-radius: 5px;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.confirm-email-with-link-box .btn{
+    cursor: pointer;
+    background-color: var(--red-color);
+    width: 80%;
+    color: white;
+    height: 40px;
+    transition: .3s;
+}
+.confirm-email-with-link-box .btn:hover{
+   background-color: rgb(214, 45, 15);
+}
+.b-r5{
+    border-radius: 5px;
+}
+.fs-tt{
+    color: white;
+    font-size: 28px;
+}
+.flex-row{
+    flex-direction: row;
+}
+.flex-column{
+    flex-direction: column;
+}
