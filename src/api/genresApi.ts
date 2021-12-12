@@ -1,11 +1,11 @@
 import callApi from '../utils/callApi';
-
-const endpoint = 'https://localhost:44303/api/genre';
+import { Endpoint } from './endpoint';
 
 const getGenresApi = async () => {
   try {
-    const res = await callApi('get', endpoint);
-    console.log(res);
+    const res = await callApi('get', Endpoint.mainApi + 'api/genre');
+    const { data } = res || {};
+    return data;
   } catch (error) {
     console.log(error);
   }

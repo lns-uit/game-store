@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import GameItem from '../../components/GameItem/GameItem';
-import { ActionType } from '../../interfaces/rootInterface';
+import { ActionType, GameType } from '../../interfaces/rootInterface';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'antd';
 import './styles.css';
@@ -8,37 +8,14 @@ import axios from 'axios';
 import gameApi from '../../api/gamesApi';
 
 interface Pages {
-  page: number;
+  games: GameType[];
 }
 
-function GamesBrowse({ page }: Pages) {
-  const [Games, setGame] = useState<any[]>([]);
-  console.log(Games);
-
-  useEffect(() => {
-    // const accessToken = localStorage.getItem("accessToken")
-    // axios.get("https://localhost:5001/api/game")
-    //     .then(res=>{
-    //         console.log(res.data)
-    //         setGame(res.data.slice((page-1)*12,(page-1)*12 + 12));
-    //     })
-    //     .catch(err => {console.log(err)})
-    async function callApiGames() {
-      const gamesBrowse = await gameApi.getGamesApi();
-
-      if (gamesBrowse) {
-        setGame(gamesBrowse.slice((page-1)*12,(page-1)*12 + 12));
-      } else {
-        console.log('err');
-      }
-    }
-
-    callApiGames();
-  }, []);
+function GamesBrowse({ games }: Pages) {
   return (
     <div className='mr-top-10'>
       <Row>
-        {Games.map((game, index) => {
+        {games.map((game, index) => {
           return (
             <Col
               key={`game-info-${index}`}

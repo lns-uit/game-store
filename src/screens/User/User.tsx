@@ -12,6 +12,7 @@ function User() {
   const user = useSelector((state: RootState) => state.user);
 
   const fetchCollection = async idUser => {
+    console.log('fetch collection');
     const res = await getCollectionByUserApi(idUser);
     const { listGame } = res || {};
 
@@ -22,6 +23,7 @@ function User() {
 
   useEffect(() => {
     fetchCollection(user.idUser);
+    console.log('fetch collection');
   }, []);
 
   return (

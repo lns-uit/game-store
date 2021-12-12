@@ -1,44 +1,61 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Fillter from '../../components/Fillters/Fillter';
 import ListGameBrowse from '../../layout/ListGameBrowse/ListGameBrowse';
 import FillterMobile from '../../components/Fillters/FillterMobile';
-import {useLocation} from "react-router-dom";
-import {Row,Col} from 'antd';
+import { useLocation } from 'react-router-dom';
+import { Row, Col } from 'antd';
 import './styles.css';
 import { parse } from 'path';
+import genresApi from '../../api/genresApi';
+import { GameType, GenreType } from '../../interfaces/rootInterface';
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
 }
 
-
 function BrowseScreen() {
-  const page = parseInt(useQuery().get('page')||'0');
+  const [genres, setGenres] = useState<GenreType[]>([]);
+  const [games, setGames] = useState<GameType[]>([]);
+  const [sortValues, setSortValues] = useState<GenreType[]>([]);
 
-  return(
-    <div className="browse">
+  const checkCurrentGenreInSortValues = (idGenre: string) => {
+    return sortValues.findIndex(value => value.idGenre == idGenre);
+  };
+
+  const handleChangeSortValue = (value: GenreType) => {
+    const indexValue = checkCurrentGenreInSortValues(value.idGenre);
+    if (indexValue > -1) {
+      setSortValues([
+        ...sortValues.slice(0, indexValue),
+        ...sortValues.slice(indexValue + 1),
+      ]);
+    } else {
+      setSortValues([...sortValues, value]);
+    }
+  };
+
+  const fetchData = async () => {
+    const res = await genresApi.getGenresApi();
+    if (Array.isArray(res)) {
+      setGenres(res);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div className='browse'>
       <Row gutter={[8, 8]}>
-        <Col
-          xxl={6}
-          xl={7}
-          lg={9}
-          md={8}
-          sm={24}
-          xs={24}
-        >
-          <div className="fillter-pc">
-            <Fillter/>
-          </div>
-        </Col>
-        <Col
-          xxl={18}
-          xl={17}
-          lg={15}
-          md={16}
-          sm={24}
-          xs={24}
-        >
-          <ListGameBrowse page={page}/>
+        <Col>
+          <ListGameBrowse
+            genres={genres}
+            games={games}
+            sortValues={sortValues}
+            handleChangeSortValue={handleChangeSortValue}
+            checkCurrentGenreInSortValues={checkCurrentGenreInSortValues}
+          />
         </Col>
       </Row>
     </div>

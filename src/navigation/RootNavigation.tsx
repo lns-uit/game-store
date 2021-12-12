@@ -30,7 +30,7 @@ import EditProfile from '../screens/EditProfile/EditProfile';
 import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
 import AdminUpdateGame from '../screens/AdminUpdateGame/AdminUpdateGame';
 import ConfirmEmail from '../screens/ConfirmEmail/ConfirmEmail';
-import ConfirmEmailWithLink from '../components/ConfirmEmailComponent/ConfirmEmailWithLink'
+import ConfirmEmailWithLink from '../components/ConfirmEmailComponent/ConfirmEmailWithLink';
 
 function RootNavigation() {
   let location = useLocation();
@@ -39,10 +39,7 @@ function RootNavigation() {
   const dispatch = useDispatch();
   const isLogin = useMemo(() => !!idUser, [idUser]);
   const [isLoading, setIsLoading] = useState(true);
-  const email = useSelector(
-    (state: RootState) => state.email
-  )
-  console.log(email);
+  const email = useSelector((state: RootState) => state.email);
 
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
@@ -130,10 +127,12 @@ function RootNavigation() {
           />
           <Route
             path='/confirm-email'
-            render={() => (email === null ? <Redirect to='/' /> :  <ConfirmEmail />)}
+            render={() =>
+              email === null ? <Redirect to='/' /> : <ConfirmEmail />
+            }
           />
-          <Route path = '/email-verify/:url'>
-            <ConfirmEmailWithLink/>
+          <Route path='/email-verify/:url'>
+            <ConfirmEmailWithLink />
           </Route>
 
           {/* everyone */}

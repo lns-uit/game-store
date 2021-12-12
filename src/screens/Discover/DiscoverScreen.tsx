@@ -44,6 +44,10 @@ function DiscoverScreen() {
     }
   };
 
+  useEffect(() => {
+    console.log('test');
+  }, []);
+
   return (
     <div className='discover-screen'>
       <div style={{ marginBottom: 40, marginTop: 40 }}>
