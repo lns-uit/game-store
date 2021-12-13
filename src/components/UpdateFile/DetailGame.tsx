@@ -92,28 +92,30 @@ function DetailGame({
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        checkWidthHeight(url,file.name);
+                        setIconGame(url);
+                        setLoadingIconGame(true);
+                        dispatch(setUrlGameAvatar('getLink', file.name ,url));
                     })
             }
         )
     }
-    async function checkWidthHeight(imageUrl,name) {
-        try {
-            const { width, height } = await reactImageSize(imageUrl);
-            if (width < 1080 && height < 1080){
-                setLoadingIconGame(true); 
-                alert("Icon Game default 1080x1080")
-            }else{
-                setIconGame(imageUrl);
-                setLoadingIconGame(true);
-                dispatch(setUrlGameAvatar('getLink', name ,imageUrl));
-            }
-        } catch(err){
-            console.log(err);
-            alert("This is not Image");
-            setLoadingIconGame(true);
-        }
-    }
+    // async function checkWidthHeight(imageUrl,name) {
+    //     try {
+    //         const { width, height } = await reactImageSize(imageUrl);
+    //         if (width < 1080 && height < 1080){
+    //             setLoadingIconGame(true); 
+    //             alert("Icon Game default 1080x1080")
+    //         }else{
+    //             setIconGame(imageUrl);
+    //             setLoadingIconGame(true);
+    //             dispatch(setUrlGameAvatar('getLink', name ,imageUrl));
+    //         }
+    //     } catch(err){
+    //         console.log(err);
+    //         alert("This is not Image");
+    //         setLoadingIconGame(true);
+    //     }
+    // }
 
     const checkVersionExist = (value) => {
         axios.get(Endpoint.mainApi + "api/game/check-version-exist/" +  game.idGame + "/" + value,{

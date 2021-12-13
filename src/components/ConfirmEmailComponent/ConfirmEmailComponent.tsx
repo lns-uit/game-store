@@ -14,7 +14,7 @@ import { login } from '../../redux/actions/userAction';
 function ConfirmEmailComponent() {
   const [loginErr, setLoginErr] = useState(false);
   const [strLoginErr, setStrLoginErr] = useState('');
-  const [second,setSecond] = useState(20);
+  const [second,setSecond] = useState(60);
   const dispatch = useDispatch();
   const history = useHistory();
   const email = useSelector(
@@ -41,7 +41,6 @@ function ConfirmEmailComponent() {
   const countDownTime = () => {
     var timer = setTimeout(function(){
       setSecond(second-1);
-      console.log(1);
       if (second === 0 ){
         clearTimeout(timer)
       }
@@ -101,7 +100,7 @@ function ConfirmEmailComponent() {
                 <div 
                   className={second === 0 ? "white center pointer" : "gray-4 center"}
                   onClick={()=>{
-                    second === 0 ? setSecond(20): null;
+                    second === 0 ? setSecond(60): null;
                     sendEmailConfirm(email);
                   }}
                 >

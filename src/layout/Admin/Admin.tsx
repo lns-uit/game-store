@@ -122,6 +122,7 @@ function Admin() {
     }
   }
   const postGame = (values: any) => {
+    console.log(values);
     values.images.splice(0,0,url.url)
     axios
       .post(Endpoint.mainApi + "api/game/create", {
@@ -202,37 +203,36 @@ function Admin() {
           .child(file.name)
           .getDownloadURL()
           .then(url => {
-            checkWidthHeight(url)
-            // urlImages.push({
-            //     // name: file.name,
-            //     Url: url
-            // });
+            setLoaddingImagesGame(false);
+            fileList[fileList.length - 1].url = url;
+            fileList[fileList.length - 1].status = "error";
+            setFileList(fileList);
           })
       }
     )
   }
 
-  async function checkWidthHeight(imageUrl) {
-    try {
-      const { width, height } = await reactImageSize(imageUrl);
-      console.log(width, height);
-      if (width < 1080 && height < 1080) {
-        alert("Image Game Detail default 1080x1080")
-        setFileList(fileList.slice(0, fileList.length - 1));
-        setLoaddingImagesGame(false);
-      } else {
-        setLoaddingImagesGame(false);
-        fileList[fileList.length - 1].url = imageUrl;
-        fileList[fileList.length - 1].status = "error";
-        setFileList(fileList);
-      }
-    } catch (err) {
-      setLoaddingImagesGame(false);
-      alert("This is not Image");
-      setFileList(fileList.slice(0, fileList.length - 1));
-      console.log(err);
-    }
-  }
+  // async function checkWidthHeight(imageUrl) {
+  //   try {
+  //     const { width, height } = await reactImageSize(imageUrl);
+  //     console.log(width, height);
+  //     if (width < 1080 && height < 1080) {
+  //       alert("Image Game Detail default 1080x1080")
+  //       setFileList(fileList.slice(0, fileList.length - 1));
+  //       setLoaddingImagesGame(false);
+  //     } else {
+  //       setLoaddingImagesGame(false);
+  //       fileList[fileList.length - 1].url = imageUrl;
+  //       fileList[fileList.length - 1].status = "error";
+  //       setFileList(fileList);
+  //     }
+  //   } catch (err) {
+  //     setLoaddingImagesGame(false);
+  //     alert("This is not Image");
+  //     setFileList(fileList.slice(0, fileList.length - 1));
+  //     console.log(err);
+  //   }
+  // }
   useEffect(()=>{
       form.setFieldsValue({
         cost: 0

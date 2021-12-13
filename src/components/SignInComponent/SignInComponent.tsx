@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../layout/SignInLayout/styles.css';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, Alert } from 'antd';
+import { Form, Input, Button, Checkbox, Alert, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import userApi from '../../api/userApi';
 import { login } from '../../redux/actions/userAction';
@@ -10,6 +10,8 @@ import RootErrorMessage from '../../constants/ErrorMessage';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import fbIcon from '../../assets/images/facebook-4-50.png';
+import axios from 'axios';
+import { Endpoint } from '../../api/endpoint';
 
 
 function SignInComponent() {
@@ -23,15 +25,20 @@ function SignInComponent() {
         email: values.userName,
         password: values.password,
       });
-
-      console.log(responsive);
-
       const { message, token, user } = responsive || {};
+      console.log(user)
 
-      if (message) {
-        setLoginErr(true);
-        setStrLoginErr(message);
-      }
+      // if (user){
+      //   axios.get(Endpoint.mainApi + `api/user/verification-email-status/${user.idUser}`)
+      //   .then(res=>{
+      //     console.log(res);
+      //   })
+      //   .catch(err => {console.log(err)})
+      // }
+      // if (message) {
+      //   setLoginErr(true);
+      //   setStrLoginErr(message);
+      // }
 
       if (token) {
         localStorage.setItem('accessToken', token);
