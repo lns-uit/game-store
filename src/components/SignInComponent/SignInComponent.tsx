@@ -12,11 +12,12 @@ import FacebookLogin from 'react-facebook-login';
 import fbIcon from '../../assets/images/facebook-4-50.png';
 import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
-
+import {setEmail} from '../../redux/actions/actionEmail';
 
 function SignInComponent() {
   const [loginErr, setLoginErr] = useState(false);
   const [strLoginErr, setStrLoginErr] = useState('');
+  const [verificationEmail, setVerificationEmail] = useState(null);
   const dispatch = useDispatch();
   let history = useHistory();
   const onFinish = async (values: any) => {
@@ -26,24 +27,27 @@ function SignInComponent() {
         password: values.password,
       });
       const { message, token, user } = responsive || {};
-      console.log(user)
 
-      // if (user){
-      //   axios.get(Endpoint.mainApi + `api/user/verification-email-status/${user.idUser}`)
-      //   .then(res=>{
-      //     console.log(res);
-      //   })
-      //   .catch(err => {console.log(err)})
-      // }
-      // if (message) {
-      //   setLoginErr(true);
-      //   setStrLoginErr(message);
-      // }
-
-      if (token) {
-        localStorage.setItem('accessToken', token);
-        dispatch(login(user));
-        history.replace('/');
+      if (user){
+        axios.get(Endpoint.mainApi + `api/user/verification-email-status/${user.idUser}`)
+        .then(res=>{
+          if (res.data === true ){
+            if (token) {
+              localStorage.setItem('accessToken', token);
+              dispatch(login(user));
+              history.replace('/');
+            }
+          }else{
+            dispatch(setEmail('getEmail', user.email));
+            history.push('/confirm-email');
+          }
+        })
+        .catch(err => {console.log(err)})
+        
+      }
+      if (message) {
+        setLoginErr(true);
+        setStrLoginErr(message);
       }
     } catch (e) {
       console.log(e);
