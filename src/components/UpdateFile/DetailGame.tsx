@@ -39,7 +39,9 @@ function DetailGame({
     const [loadingIconGame, setLoadingIconGame] = useState<any>(true);
     const dispatch = useDispatch();
     const [gameData, setGameData] = useState<any[]>([]);
+    const [genress, setGenress] = useState<any[]>([]);
     let allGame: any[] = [];
+    console.log(game)
 
     const normFileImages = (e) => {
         if(e.file.status === "error"){
@@ -66,7 +68,6 @@ function DetailGame({
         const res = await adminApi.getGenre();
         
         if (res){
-            console.log(res)
             res.forEach((data)=>{
                 allGame.push(
                     <Option key={data.idGenre} value={data.idGenre}>
@@ -165,8 +166,7 @@ function DetailGame({
                         label = "Genres"
                         rules={[{ required: true, message: "Please Choice Genres" }]}
                     >
-                        <Select mode="multiple" placeholder="Select genres" 
-                        >
+                        <Select mode="multiple" placeholder="Select genres" >
                             {gameData}
                         </Select>
                     </Form.Item>

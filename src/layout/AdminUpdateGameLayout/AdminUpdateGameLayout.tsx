@@ -297,11 +297,7 @@ function AdminUpdateGameLayout() {
                     nameGame: response.nameGame,
                     developer: response.developer,
                     publisher: response.publisher,
-                    selectMultiple: response.genres.map((genre,index)=>(
-                        <Option key={genre.idGenreNavigation.idGenre} value={genre.idGenreNavigation.idGenre}>
-                            {genre.idGenreNavigation.nameGenre}
-                        </Option>
-                    )),
+                    selectMultiple: response.genres.map((genre,index)=>{return genre.idGenreNavigation.idGenre}),
                     urlVideo: response.urlVideo,
                     shortDecription: response.newVersion.shortDescription,
                     detailDecription: response.newVersion.descriptions,
