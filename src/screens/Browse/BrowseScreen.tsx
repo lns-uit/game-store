@@ -1,25 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import Fillter from '../../components/Fillters/Fillter';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ListGameBrowse from '../../layout/ListGameBrowse/ListGameBrowse';
-import FillterMobile from '../../components/Fillters/FillterMobile';
-import { useLocation } from 'react-router-dom';
-import { Row, Col } from 'antd';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import './styles.css';
-import { parse } from 'path';
 import genresApi from '../../api/genresApi';
-import { GameType, GenreType } from '../../interfaces/rootInterface';
+import { GenreType } from '../../interfaces/rootInterface';
+import OrderBy from '../../components/OrderBy/OrderBy';
+import Sort from '../../components/Sort/Sort';
+import useGames from '../../hooks/useGames';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
+const ORDER_BY = ['abc', 'new-release', 'price-to-high', 'price-to-low'];
 
 function BrowseScreen() {
   const [genres, setGenres] = useState<GenreType[]>([]);
-  const [games, setGames] = useState<GameType[]>([]);
   const [sortValues, setSortValues] = useState<GenreType[]>([]);
+  const [valueOrderBy, setValueOrderBy] = useState(ORDER_BY[0]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { games, isLoading, hasMore } = useGames({
+    currentPage,
+    sortValues,
+    valueOrderBy,
+  });
 
+  const observer = useRef<any>();
+  const lastGameRef = useCallback(
+    node => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        console.log(entries);
+        if (entries[0].isIntersecting && hasMore) {
+          console.log('visible');
+          setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
   const checkCurrentGenreInSortValues = (idGenre: string) => {
     return sortValues.findIndex(value => value.idGenre == idGenre);
+  };
+
+  const onClickOrderByValue = value => {
+    setValueOrderBy(value);
   };
 
   const handleChangeSortValue = (value: GenreType) => {
@@ -35,9 +58,9 @@ function BrowseScreen() {
   };
 
   const fetchData = async () => {
-    const res = await genresApi.getGenresApi();
-    if (Array.isArray(res)) {
-      setGenres(res);
+    const resGenre = await genresApi.getGenresApi();
+    if (Array.isArray(resGenre)) {
+      setGenres(resGenre);
     }
   };
 
@@ -46,18 +69,20 @@ function BrowseScreen() {
   }, []);
 
   return (
-    <div className='browse'>
-      <Row gutter={[8, 8]}>
-        <Col>
-          <ListGameBrowse
-            genres={genres}
-            games={games}
-            sortValues={sortValues}
-            handleChangeSortValue={handleChangeSortValue}
-            checkCurrentGenreInSortValues={checkCurrentGenreInSortValues}
-          />
-        </Col>
-      </Row>
+    <div className='browse white'>
+      <OrderBy
+        valueOrderBy={valueOrderBy}
+        valuesOrderBy={ORDER_BY}
+        onClickOrderByValue={onClickOrderByValue}
+      />
+      <Sort
+        genres={genres}
+        sortValues={sortValues}
+        handleChangeSortValue={handleChangeSortValue}
+        checkCurrentGenreInSortValues={checkCurrentGenreInSortValues}
+      />
+      <ListGameBrowse games={games} lastGameRef={lastGameRef} />
+      {isLoading && <SpinLoading />}
     </div>
   );
 }

@@ -72,7 +72,7 @@ function Sort({
         className='d-flex pointer sort-header'
         onClick={() => setDropDown(!dropDown)}>
         <p className='fs-15 lh-18 gray-1 mr-0 sort-label'>
-          Sort by
+          Filter by:
           <i className='fa fa-chevron-down icon-down'></i>
         </p>
 

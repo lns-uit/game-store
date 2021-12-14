@@ -139,7 +139,7 @@ function RootNavigation() {
           <Route path='/game/:idGame' component={GameDetail} />
           <Route path='/browse/' component={BrowseScreen} />
           <Route exact path='/' component={DiscoverScreen} />
-          <Route path='*' component={NotFoundScreen} />
+          {/* <Route path='*' component={NotFoundScreen} /> */}
 
           {/* move to not found page */}
           {/* <Redirect from='*' to='/404' /> */}
