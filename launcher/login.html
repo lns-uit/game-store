@@ -17,7 +17,6 @@
     <div class="login-container">
         <div class="title-bar">
             <div class="logo draggable prevent-select">
-                <!-- <img src = "src/texture/pirexcode.svg" /> -->
             </div>
 
             <div class="title-text draggable">
@@ -52,14 +51,51 @@
                 </button>
             </div>
         </div>
-        <div class = "content-login">
-            <div></div>
+        <div class="content-login">
+            <div class="slideshow-container">
+
+                <div class="mySlides fade">
+                    <div class="numbertext"></div>
+                    <img src="./src/texture/lmth.jpg" style="width:100%; height: 85vh; object-fit: cover;">
+
+                </div>
+                <div class="mySlides fade">
+                    <div class="numbertext"></div>
+                    <img src="./src/texture/gokublack.jpg" style="width:100%; height: 85vh; object-fit: cover;">
+
+                </div>
+                <div class="mySlides fade">
+                    <div class="numbertext"></div>
+                    <img src="./src/texture/arcane.png"  style="width:100%; height: 85vh; object-fit: cover;">
+
+                </div>
+                <div class="mySlides fade">
+                    <div class="numbertext"></div>
+                    <img src="./src/texture/majinvgt.jpg" style="width:100%; height: 85vh; object-fit: cover;">
+
+                </div>
+
+                <a class="prev" id = "right-slide" >&#10094;</a>
+                <a class="next" id = "left-slide">&#10095;</a>
+
+            </div>
+
             <div class="form-login-container">
-                <input placeholder="Email" type="text" id="email" name="email"/>
+                <div class="title-login">
+                    &emsp;&emsp;&emsp;&emsp;&emsp;<img src = "./src/texture/logo.png" height="40px"/> 
+                    <br/> 
+                </div>
+                <input placeholder="Email" type="text" id="email" name="email" />
                 <br>
-                <input placeholder="Password" type="password" id="pwd" name="pwd"/>
+                <input placeholder="Password" type="password" id="pwd" name="pwd" />
                 <br>
-                <div id = 'btn-login'>
+                <div style = "display: flex;cursor: pointer;width: fit-content;">
+                    <input type="checkbox" id="keep-login" name="keeplogin" value="keeplogin">
+                    <div id = "label-keep-login" style = "color:rgb(160, 160, 160); font-size: 13px; font-weight: 600;padding:0 20px" 
+                        for="keeplogin"> Keep login</div>
+                </div>
+                <br/>
+                <div id='btn-login'>
                     SIGN IN
                 </div>
                 <br>
@@ -69,14 +105,21 @@
                     Forgot password
                 </div>
                 <br>
-                <div class='btn-other'>
+                <div class='btn-other' onclick="signUp()">
                     Not Account Yet ? Sign up now
                 </div>
             </div>
         </div>
-        
+
     </div>
     <script src="./src/js/titlebar.js" defer type='module'></script>
+    <script>
+   
+        function signUp() {
+            window.open("https://stun-store-preview-puce.vercel.app/buyer/sign-up")
+        }
+        </script>
+   
 </body>
 
 </html>

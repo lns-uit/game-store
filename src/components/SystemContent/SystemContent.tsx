@@ -77,8 +77,9 @@ function SystemContent({
                     </div>
                 </Col>
             </Row>
-            <div className="border-top">
-                <p className="m-top-10 textAlign">{game.newVersion.privacyPolicy}</p>
+            <br/>
+            <div className="border-top textAlign" style={{padding: '15px 0'}}>
+                <a href = {game.newVersion.privacyPolicy} style={{color:'white'}}>Privacy Policy</a>
             </div>
         </div>
     )

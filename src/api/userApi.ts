@@ -9,10 +9,9 @@ const loginApi = async formLogin => {
 
     const request = await callApi(
       'post',
-      'https://localhost:5001/api/user/login',
+      Endpoint.mainApi + 'api/user/login',
       formLogin
     );
-    console.log(request);
 
     const { data } = request;
     return data;
@@ -24,8 +23,24 @@ const loginApi = async formLogin => {
   }
 };
 
+const loginWithSMA = async info => {
+  try {
+    const request = await callApi(
+      'post',
+      Endpoint.mainApi + 'api/user/login-sma',
+      info
+    )
+    const { data } = request;
+    return data;
+  } catch (e) {
+    const error: any = e;
+    console.log(error.response);
+
+    return error.response?.data;
+  }
+};
+
 const loginToken = async accessToken => {
-  console.log(accessToken);
   try {
     const emptyUser = {
       email: '',
@@ -68,5 +83,6 @@ const userApi = {
   loginApi,
   loginToken,
   registerUserApi,
+  loginWithSMA,
 };
 export default userApi;

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Form, Input } from 'antd';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
 
 function EditProfileGeneral(){
+    const user = useSelector((state: RootState) => state.user);
+    console.log(user)
     return(
         <div>
             <div className="DialogHeader">About</div>
@@ -15,35 +19,36 @@ function EditProfileGeneral(){
                 <div className="fs-16 lh-28 uppercase general-title">General</div>
                 <div className="pd-24-20">
                     <div>
-                        <p className="DialogLabel">Username</p>
                         <Form.Item
+                            label="Username"
                             name="username"
                         >
-                            <Input placeholder="UserName"/>
+                            <Input placeholder="UserName" defaultValue={user.userName}/>
                         </Form.Item>
                     </div>
                     <div>
-                        <p className="DialogLabel">Real Name</p>
                         <Form.Item
+                            label="Real Name"
                             name="realName"
                         >
-                            <Input placeholder="Real Name"/>
+                            <Input placeholder="Real Name" defaultValue={user.realName}/>
                         </Form.Item>
                     </div>
                     <div>
-                        <p className="DialogLabel">Email</p>
                         <Form.Item
+                            label="Email"
                             name="email"
                         >
-                            <Input placeholder="Email"/>
+                            <Input type="email" placeholder="Email" defaultValue={user.email}/>
                         </Form.Item>
                     </div>
                     <div>
-                        <p className="DialogLabel">Phone</p>
                         <Form.Item
+                            label="Phone"
                             name="phone"
+                            className="none-error"
                         >
-                            <Input placeholder="Phone"/>
+                            <Input placeholder="Phone" type="number" defaultValue={user.phone}/>
                         </Form.Item>
                     </div>
                 </div>

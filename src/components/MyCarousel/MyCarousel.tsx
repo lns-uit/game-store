@@ -2,23 +2,28 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Carousel, Col, Row } from 'antd';
 import './styles.css';
 import DotsCustom from '../DotsCustom/DotsCustom';
-import { DotInfoType, GameInfoType } from '../../interfaces/rootInterface';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { CarouselRef } from 'antd/lib/carousel';
+import ReactPlayer from 'react-player';
+import ImgPlayVideo from '../../assets/images/playvideo.png';
 
 interface MyCarouselPropsType {
   images: {
     idImage: string;
     url: string;
   }[];
+  urlVideo: string;
 }
 
-function MyCarousel({ images }: MyCarouselPropsType) {
+function MyCarousel({ images,urlVideo }: MyCarouselPropsType) {
   const carouselRef = useRef<CarouselRef>(null);
-
+  images = images.filter((value,index)=> index !== 0)
   const dotsInfo = images.map(image => {
     return { image: image.url };
   });
+  if (urlVideo !== null && urlVideo !== '') {
+    dotsInfo.splice(0,0,{image: ImgPlayVideo})
+  }
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleCarouselAction = (action: string, value: number | null) => {
@@ -39,15 +44,31 @@ function MyCarousel({ images }: MyCarouselPropsType) {
         <Carousel
           ref={carouselRef}
           className='my-carousel'
-          autoplay
           dots={false}
           afterChange={index => {
             setActiveIndex(index);
           }}>
-          {images.map(image => (
-            <div className='my-carousel__item'>
-              <img src={image.url} alt='carousel-image' />
-            </div>
+            {
+              (urlVideo === null || urlVideo === "") ? null :
+              <div className='my-carousel__item'>
+                <ReactPlayer
+                  style={{ position: 'relative',borderRadius:"10px",overflow: "hidden"}}
+                  url={urlVideo}
+                  vertical={true}
+                  width={"100%"} 
+                  height={"100%"} 
+                  loop={true}
+                  controls={true}
+                  playing={true}
+                  muted={true}
+                />
+              </div>
+            }
+            {  
+              images.map(image => (
+              <div className='my-carousel__item'>
+                <img src={image.url} alt='carousel-image' />
+              </div>
           ))}
         </Carousel>
       </Col>

@@ -1,5 +1,4 @@
 .header {
-  background-color: var(--grayContainer-color) !important;
   height: auto !important;
   position: fixed;
   z-index: 1000;
@@ -7,6 +6,7 @@
   padding-top: 10px !important;
   padding-bottom: 10px !important;
   box-shadow: 0 2px 8px 0 rgba(0,0,0,.1);
+  transition: .2s;
 }
 
 .header__top-wrapper {
@@ -34,7 +34,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: var(--grayContainer-color) !important;
+  transition: .2s;
 }
 .header__bottom-wrapper__input .ant-input-lg{
   padding: 0 10px !important;
@@ -123,10 +123,9 @@
   justify-content: center;
   align-items: center;
   color: var(--white-color) !important;
+  cursor: pointer;
 }
-.header__top-wrapper--right__user span {
-  margin-right: 10px;
-}
+
 .ant-dropdown-menu {
   background-color: var(--grayContainer-color) !important;
   border-radius: 5px;
@@ -164,4 +163,18 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+}
+.header_button-scroll-top{
+  height: 40px;
+  width: 40px;
+  background-color: var(--grayContainer-color);
+  cursor: pointer;
+  position: fixed;
+  top: 100vh;
+  border-radius: 5px;
+  right: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid rgb(116, 116, 116);
 }

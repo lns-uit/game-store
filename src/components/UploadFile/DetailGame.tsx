@@ -53,7 +53,7 @@ function DetailGame(){
         if (res){
             res.forEach((data)=>{
                 allGame.push(
-                    <Option key={data.idGenre} value={data.nameGenre}>
+                    <Option value={data.idGenre} key={data.idGenre} >
                         {data.nameGenre}
                     </Option>
                 )  
@@ -76,28 +76,30 @@ function DetailGame(){
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        checkWidthHeight(url,file.name);
+                        setIconGame(url);
+                        setLoadingIconGame(true);
+                        dispatch(setUrlGameAvatar('getLink', file.name ,url));
                     })
             }
         )
     }
-    async function checkWidthHeight(imageUrl,name) {
-        try {
-            const { width, height } = await reactImageSize(imageUrl);
-            if (width < 1080 && height < 1080){
-                setLoadingIconGame(true); 
-                alert("Icon Game default 1080x1080")
-            }else{
-                setIconGame(imageUrl);
-                setLoadingIconGame(true);
-                dispatch(setUrlGameAvatar('getLink', name ,imageUrl));
-            }
-        } catch(err){
-            console.log(err);
-            alert("This is not Image");
-            setLoadingIconGame(true);
-        }
-    }
+    // async function checkWidthHeight(imageUrl,name) {
+    //     try {
+    //         const { width, height } = await reactImageSize(imageUrl);
+    //         if (width < 1080 && height < 1080){
+    //             setLoadingIconGame(true); 
+    //             alert("Icon Game default 1080x1080")
+    //         }else{
+    //             setIconGame(imageUrl);
+    //             setLoadingIconGame(true);
+    //             dispatch(setUrlGameAvatar('getLink', name ,imageUrl));
+    //         }
+    //     } catch(err){
+    //         console.log(err);
+    //         alert("This is not Image");
+    //         setLoadingIconGame(true);
+    //     }
+    // }
     useEffect(() => {
         getDataGame();
       }, []);
@@ -107,7 +109,7 @@ function DetailGame(){
                 <Col
                     xxl={14}
                     xl={14}
-                    lg={16}
+                    lg={10}
                     md={16}
                     sm={24}
                     xs={24}
@@ -177,12 +179,19 @@ function DetailGame(){
                 </Col>
                 <Col
                     xxl={10}
-                    xl={100}
-                    lg={8}
-                    md={8}
+                    xl={10}
+                    lg={14}
+                    md={18}
                     sm={24}
                     xs={24}
                 >
+                    <Form.Item
+                        name="fileLauncher"
+                        label = "Name file launcher game"
+                        rules={[{ required: true, message: 'Please input name file launcher game!' }]}
+                    >
+                        <Input placeholder="Name Game.exe" />
+                    </Form.Item>
                     <Form.Item
                         name="version"
                         label = "Version"
@@ -190,15 +199,16 @@ function DetailGame(){
                     >
                         <Input placeholder="Version" />
                     </Form.Item>
+                    
                     <div className="background-profile border-radius-8">
                         <div 
                             className="flex-basic relative border-radius-8 d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">
-                            <div className="width-full border-radius-8 height-300 icon-game">
+                            <div className="width-full border-radius-8 height-300 icon-game" >
                                 {
                                     loadingIconGame === true ?
                                         iconGame !== null
                                         ?
-                                        <img src={iconGame} alt="icon Game"/>
+                                        <img src={iconGame} alt="icon Game" className='img-upload-main-game'/>
                                         : null
                                     :<div className="loadding-icon-game">
                                         Uploading...
@@ -210,7 +220,7 @@ function DetailGame(){
                     <Form.Item
                         name="iconGame"
                         valuePropName="fileList"
-                        label = "Main Image Game ( 1080px x 1080px )"
+                        label = "Main Image Game ( Recommend 1080px x 1080px )"
                         getValueFromEvent={normFileImages}
                     >
                         <Upload name="iconGame">

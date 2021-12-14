@@ -24,7 +24,7 @@ function LayoutGameDetail1({ game }: Detail) {
             </div>
             <div className='d-inline-block width-full cover-img button-none'>
               <div className='max-width-910 max-height-580'>
-                <MyCarousel images={game.imageGameDetail} />
+                <MyCarousel images={game.imageGameDetail} urlVideo={game.urlVideo} />
               </div>
             </div>
           </div>

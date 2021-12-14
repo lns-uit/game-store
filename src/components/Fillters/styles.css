@@ -112,9 +112,6 @@
     margin-bottom: 12px;
 }
 /*diff*/
-.float-right{
-    float: right;
-}
 .line-1,.line-2,.line-3, .line-4{
     display: block;
     border-top: 1px solid #ffffff;

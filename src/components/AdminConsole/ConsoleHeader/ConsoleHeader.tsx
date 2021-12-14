@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './style.css'
 import ConsoleNav from "../ConsoleNav/ConsoleNav";
 import imgConsole from "../../../assets/images/icon-console.png"
 import { Button } from "antd";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux/reducers";
 
 function ConsoleHeader(){
     const [isNav, setIsNav] = useState(true);
+    const user = useSelector((state: RootState) => state.user);
 
     const onNavChange = () => {
         if (!isNav) {
@@ -22,7 +25,14 @@ function ConsoleHeader(){
         }
         setIsNav(!isNav)
     }
-
+    const checkAuthorize = () =>{
+        let pathRoute = window.location.pathname;
+        let route = pathRoute.split('/')[1]
+        if (user?.roles !== 'admin' && route === 'admin' && user !== null) window.open('/','_self')
+    }
+    useEffect(()=>{
+        checkAuthorize()
+    })
     return(
         <div className = "console-header-container">
             <div 

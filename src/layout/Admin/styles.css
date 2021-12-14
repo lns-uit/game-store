@@ -136,7 +136,8 @@
 }
 .icon-game img{
   height: 350px !important;
-  width: 366.66px !important;
+  width: 100% !important;
+  object-position: center;
 }
 .detail-game .ant-upload-list-item-error{
   display: none;
@@ -154,7 +155,7 @@
   display: none;
 }
 .d-block{
-  display: block;
+  display: block !important;
 }
 .d-flex-form .ant-form-item-control-input-content{
   display: flex;

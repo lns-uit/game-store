@@ -2,6 +2,9 @@
 .pd-24-20{
     padding: 24px 20px;
 }
+.pd-top-15{
+    padding-top: 15px;
+}
 /*margin*/
 .m-left-right-8{
     margin-left: 8px;
@@ -10,9 +13,15 @@
 .m-bottom-16{
     margin-bottom: 16px;
 }
+.m-bottom-32{
+    margin-bottom: 32px;
+}
 /*display*/
 .gap-20{
     gap: 20px;
+}
+.flex-end {
+    justify-content: flex-end;
 }
 /*width*/
 .max-width-1010{
@@ -28,22 +37,37 @@
 .fs-16{
     font-size: 16px;
 }
+.fs-9{
+    font-size: 9px;
+}
+.lh-11{
+    line-height: 11px;
+}
+/*color*/
+.gray-7{
+    color:#969696;
+}
 /*diff*/
+.float-right{
+    float: right !important;
+}
 .page-edit-content{
     padding-bottom: 78px;
+    padding-top: 40px;
 }
 .profile-header{
-    max-width: 1150px;
+    max-width: 100%;
     height: 102px;
     margin: -28px 0px 0px;
 }
 .profile-header-texture{
     width: 100%;
     height: 100%;
-    background: rgba(58, 62, 71, 0.5);
+    background: rgb(36, 36, 36);
     display: flex;
     align-items: center;
     padding: 0px 32px;
+    border-radius: 5px;
 }
 .profile-header-avatar img{
     height: 64px;
@@ -80,7 +104,7 @@
     background-color: #111 !important;
 }
 .edit-profile-navigation .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
-    background-color: #3d4450;
+    background-color: rgb(36, 36, 36);
     background-position: 0 0;
 }
 .hover-edit-profile-navigation{
@@ -127,7 +151,7 @@
 .general-title{
     color: #ffffff;
     padding: 0px 0px 6px 10px;
-    border-bottom: 2px solid rgba(228,228,228,.1);
+    border-bottom: 2px solid rgb(36, 36, 36);
 }
 .DialogLabel{
     font-weight: 300;
@@ -140,5 +164,53 @@
     letter-spacing: initial;
 }
 .edit-avatar-cover-image .ant-upload-list-item-error{
+    display: none !important;
+}
+.background-user-edit{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.avatar-AvatarRow{
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: flex-end;
+    padding: 8px 0px 22px 18px;
+}
+.avatar-big{
+    margin-right: 24px;
+    width: 184px;
+}
+.avatar-small{
+    width: 32px;
+}
+.avatar-medium{
+    margin-right: 24px;
+    width: 64px;
+}
+.cover-image{
+    width: 100%;
+    border-radius: 50%;
+}
+.avatar-big .cover-image img{
+    width: 184px;
+    height: 184px;
+    display: block;
+    border-radius: 50%;
+}
+.avatar-small .cover-image img{
+    width: 32px;
+    height: 32px;
+    display: block;
+    border-radius: 50%;
+}
+.avatar-medium .cover-image img{
+    width: 64px;
+    height: 64px;
+    display: block;
+    border-radius: 50%;
+}
+.file-list-none .ant-upload-list {
     display: none !important;
 }

@@ -57,7 +57,6 @@ function CommentContainer({ idGame }: IdGame) {
                     ...cmts.slice(cmts.findIndex(item => item.idComment === comment.idComment) + 1)
                 ])
 
-
             })
 
             connection.on("ReceiveDeleteComment", (user, id: string) => {

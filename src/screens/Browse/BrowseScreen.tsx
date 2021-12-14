@@ -1,46 +1,88 @@
-import React from 'react';
-import Fillter from '../../components/Fillters/Fillter';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import ListGameBrowse from '../../layout/ListGameBrowse/ListGameBrowse';
-import FillterMobile from '../../components/Fillters/FillterMobile';
-import {useLocation} from "react-router-dom";
-import {Row,Col} from 'antd';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
 import './styles.css';
-import { parse } from 'path';
+import genresApi from '../../api/genresApi';
+import { GenreType } from '../../interfaces/rootInterface';
+import OrderBy from '../../components/OrderBy/OrderBy';
+import Sort from '../../components/Sort/Sort';
+import useGames from '../../hooks/useGames';
 
-function useQuery() {
-  return new URLSearchParams(useLocation().search);
-}
-
+const ORDER_BY = ['abc', 'new-release', 'price-to-high', 'price-to-low'];
 
 function BrowseScreen() {
-  const page = parseInt(useQuery().get('page')||'0');
+  const [genres, setGenres] = useState<GenreType[]>([]);
+  const [sortValues, setSortValues] = useState<GenreType[]>([]);
+  const [valueOrderBy, setValueOrderBy] = useState(ORDER_BY[0]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const { games, isLoading, hasMore } = useGames({
+    currentPage,
+    sortValues,
+    valueOrderBy,
+  });
 
-  return(
-    <div className="browse">
-      <Row gutter={[8, 8]}>
-        <Col
-          xxl={6}
-          xl={7}
-          lg={9}
-          md={8}
-          sm={24}
-          xs={24}
-        >
-          <div className="fillter-pc">
-            <Fillter/>
-          </div>
-        </Col>
-        <Col
-          xxl={18}
-          xl={17}
-          lg={15}
-          md={16}
-          sm={24}
-          xs={24}
-        >
-          <ListGameBrowse page={page}/>
-        </Col>
-      </Row>
+  const observer = useRef<any>();
+  const lastGameRef = useCallback(
+    node => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        console.log(entries);
+        if (entries[0].isIntersecting && hasMore) {
+          console.log('visible');
+          setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
+        }
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
+  const checkCurrentGenreInSortValues = (idGenre: string) => {
+    return sortValues.findIndex(value => value.idGenre == idGenre);
+  };
+
+  const onClickOrderByValue = value => {
+    setValueOrderBy(value);
+  };
+
+  const handleChangeSortValue = (value: GenreType) => {
+    const indexValue = checkCurrentGenreInSortValues(value.idGenre);
+    if (indexValue > -1) {
+      setSortValues([
+        ...sortValues.slice(0, indexValue),
+        ...sortValues.slice(indexValue + 1),
+      ]);
+    } else {
+      setSortValues([...sortValues, value]);
+    }
+  };
+
+  const fetchData = async () => {
+    const resGenre = await genresApi.getGenresApi();
+    if (Array.isArray(resGenre)) {
+      setGenres(resGenre);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  return (
+    <div className='browse white'>
+      <OrderBy
+        valueOrderBy={valueOrderBy}
+        valuesOrderBy={ORDER_BY}
+        onClickOrderByValue={onClickOrderByValue}
+      />
+      <Sort
+        genres={genres}
+        sortValues={sortValues}
+        handleChangeSortValue={handleChangeSortValue}
+        checkCurrentGenreInSortValues={checkCurrentGenreInSortValues}
+      />
+      <ListGameBrowse games={games} lastGameRef={lastGameRef} />
+      {isLoading && <SpinLoading />}
     </div>
   );
 }

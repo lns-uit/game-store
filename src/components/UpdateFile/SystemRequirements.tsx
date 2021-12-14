@@ -9,60 +9,56 @@ import {GameDetailss} from "../../interfaces/rootInterface";
 
 interface GameDetail{
     game: GameDetailss;
+    isUpdate: boolean;
 }
 
 function SystemRequirements({
-    game
+    game,isUpdate
 }:GameDetail) {
     return (
-        <div className="system-requirements">
+        <div style = {{display: isUpdate ? 'none' : 'block'}} className="system-requirements">
             <h3 className="uppercase m-0 white">System requirements</h3>
-            <Row gutter={[48, 8]}>
-                <Col
-                    xxl={14}
-                    xl={14}
-                    lg={16}
-                    md={16}
-                    sm={24}
-                    xs={24}
-                >
 
                     <Form.Item
                         name="processor"
                         label = "Processor"
+                        rules={[{ required: !isUpdate, message: "Please Input Processor" }]}
                     >
-                        <Input placeholder="Processor" defaultValue={game.newVersion.processor}/>
+                        <Input disabled = {isUpdate} placeholder="Processor"/>
                     </Form.Item>
 
                     <Form.Item
                         name="memory"
                         label = "Memory"
+                        rules={[{ required: !isUpdate, message: "Please Input Memory" }]}
                     >
-                        <Input placeholder="Memory" defaultValue={game.newVersion.memory}/>
+                        <Input disabled = {isUpdate} placeholder="Memory"/>
                     </Form.Item>
 
                     <Form.Item
                         name="graphics"
                         label = "Graphics"
+                        rules={[{ required: !isUpdate, message: "Please Input Graphics" }]}
                     >
-                        <Input placeholder="Graphics" defaultValue={game.newVersion.graphics}/>
+                        <Input disabled = {isUpdate} placeholder="Graphics" />
                     </Form.Item>
 
                     <Form.Item
                         name="storage"
                         label = "Storage"
+                        rules={[{ required: !isUpdate, message: "Please Input Storage" }]}
                     >
-                        <Input placeholder="Storage" defaultValue={game.newVersion.storage}/>
+                        <Input disabled = {isUpdate} placeholder="Storage" />
                     </Form.Item>
 
                     <Form.Item
                         name="OS"
                         label = "OS"
+                        rules={[{ required: !isUpdate, message: "Please Input OS" }]}
                     >
-                        <Input placeholder="OS" defaultValue={game.newVersion.os}/>
+                        <Input disabled = {isUpdate} placeholder="OS"/>
                     </Form.Item>
-                </Col>
-            </Row>
+   
         </div>
     )
 }

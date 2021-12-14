@@ -8,15 +8,17 @@
 }
 .ant-layout {
   overflow-x: hidden;
+  background-color: #111 !important;
 }
 .site-layout {
   padding: 50px var(--gutterHorizontal-size);
   min-height: calc(100vh - var(--header-height)) !important;
   margin-top: var(--header-height);
-  background-color: #111;
+  background-color: #111 !important;
   width: 100% !important;
 }
 .site-layout--md {
+  background-color: #111 !important;
   margin-top: var(--header-height-on-tablet);
 }
 
@@ -44,6 +46,10 @@
 }
 .ant-table-tbody > tr.ant-table-row:hover > td {
   background-color: rgba(107, 107, 107, 0.137) !important;
+}
+.ant-form-item-explain-success{
+  color: transparent;
+  user-select: none;
 }
 .console-container {
   width: calc(100vw - var(--console-nav-width));
@@ -174,4 +180,12 @@ label {
 }
 .flex-center-x{
   align-items: center;
+}
+.img-upload-main-game{
+  object-fit: cover;
+  width: 400px;
+  object-position: center;
+}
+.space-between{
+  justify-content: space-between;
 }

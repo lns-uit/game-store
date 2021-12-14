@@ -1,0 +1,149 @@
+.my-slides .my-slides-element {
+  background-color: #222222;
+}
+
+@keyframes LoadingAnim {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+.btn-slides-main-loading {
+  height: 90%;
+  width: 95%;
+  background: #222222;
+  border-radius: 10px;
+  border: 1px solid rgb(37, 37, 37);
+  animation-name: LoadingAnim;
+  animation-duration: 2s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.my-slides-element-loading {
+  width: 100% !important;
+  height: 30vw;
+  color: #fff;
+  background: #222222;
+  border-radius: 10px;
+  animation-name: LoadingAnim;
+  animation-duration: 1.7s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-delay: 0.7s;
+}
+.game-item-loading {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.game-item--horizontal-loading {
+  height: 230px;
+  background-color: white;
+  min-height: 0;
+  width: 25%;
+  margin-right: 20px;
+  border-radius: 4px;
+}
+.top-game-week-loading {
+  display: flex;
+}
+.bottom-loading-discover, .bottom-loading-discover-short{
+    width: 100%;
+    background-color: #222222;
+    margin-top: 40px;
+    border-radius: 10px;
+    animation-name: LoadingAnim;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+.bottom-loading-discover-short{
+    height: 50px;
+}
+.bottom-loading-discover{
+    height: 20vw;
+}
+@media screen and (max-width: 1600px) {
+  .my-slides,
+  .my-slides-element,
+  .my-slides-element-loading {
+    width: 55.7vw;
+    height: 31.3vw;
+  }
+  .btn-slides {
+    width: 18.8vw;
+    height: 6.2vw;
+  }
+  .text-title-slides {
+    font-size: 14px;
+    font-weight: 500;
+    -webkit-line-clamp: 1;
+  }
+  .text-type-slides {
+    font-size: 13px;
+  }
+  .btn-slides-timing-container {
+    width: 16.91vw; /* height 90% with 95% */
+    height: 5.58vw;
+  }
+  .btn-slides-timing-container-lm {
+    width: 16.91vw; /* height 90% with 95% */
+    height: 5.58vw;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .text-title-slides {
+    -webkit-line-clamp: 1;
+  }
+  .my-slides,
+  .my-slides-element,
+  .my-slides-element-loading {
+    width: 69.7vw;
+    height: 39vw;
+  }
+  .btn-slides {
+    width: 100%;
+    height: 7.8vw;
+  }
+  .text-title-slides {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  .text-type-slides {
+    font-size: 13px;
+  }
+  .btn-slides-timing-container {
+    width: 20.185vw; /* height 90% with 95% */
+    height: 7.02vw;
+  }
+  .btn-slides-timing-container-lm {
+    width: 20.185vw; /* height 90% with 95% */
+    height: 7.02vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .my-slides,
+  .my-slides-element,
+  .my-slides-element-loading {
+    width: 100vw;
+    height: 100vw;
+    border-radius: 0px;
+  }
+  .my-slides {
+    margin-top: -50px;
+  }
+  .my-slides-element img {
+    border-radius: 0px;
+  }
+  .btn-slides {
+    display: none;
+  }
+}

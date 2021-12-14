@@ -43,6 +43,11 @@
     border-radius: 8px;
 }
 /*diff*/
+.none-error input::-webkit-outer-spin-button,
+.none-error input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 .background-profile{
     position: relative;
     display: flex;
@@ -52,7 +57,12 @@
     flex-shrink: 0;
     justify-content: center;
     z-index: 0;
-    background-color: #404040;
+    background-color: rgb(24, 24, 24);
+    overflow:hidden;
+    margin-top: -100px;
+}
+.background-profile img {
+    border-radius: 5px;
 }
 .box-sizing{
     box-sizing: border-box;
@@ -125,3 +135,10 @@
     justify-content: center;
     z-index: 0;
 }
+@media only screen and (max-width: 800px) {
+    .avatars {
+      position: relative;
+      justify-content: center;
+    }
+}
+  

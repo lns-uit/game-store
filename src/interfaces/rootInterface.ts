@@ -25,7 +25,41 @@ interface GameType {
   }[];
   imageGameDetail: ImageType[];
   newVersion: any;
+  urlVideo: string;
 }
+
+interface CollectionType {
+  game: GameType;
+  isInstalled: any;
+}
+
+interface gameCollection {
+  averageRate: number;
+  cost: number;
+  developer: string;
+  discount: any;
+  genres: {
+    idGenreNavigation: {
+      idGenre: string;
+      nameGenre: string;
+    };
+  }[];
+  idGame: string;
+  imageGameDetail: {
+    idImage: string;
+    url: string;
+  }[];
+  lastestVersion: string;
+  nameGame: string;
+  newVersion: any;
+  numberOfRare: number;
+  numberOfBuyer: number;
+  numberOfDowloaders: number;
+  plaform: string;
+  publisher: string;
+  releaseDate: string;
+}
+
 interface GameVersionType {
   idGameVersion: string;
   idGame: string;
@@ -52,7 +86,7 @@ interface ImageType {
 }
 interface DiscountType {
   idDiscount: any;
-  listGame: any[];
+  listGame?: any[];
   percentDiscount: any;
   title: any;
   startDate: any;
@@ -93,8 +127,8 @@ interface GameDetailss {
   developer: string;
   publisher: string;
   plaform: string;
-  privacyPolicy: string,
-  urlVideo: string,
+  privacyPolicy: string;
+  urlVideo: string;
   releaseDate: string;
   lastestVersion: string;
   numberOfBuyer: number;
@@ -130,7 +164,9 @@ interface GameDetailss {
     graphics: string;
     privacyPolicy: string;
     memory: string;
+    filePlay: string;
   };
+
 }
 
 interface ImageGameDetail {
@@ -151,7 +187,7 @@ interface CommentType {
   avatar: string;
 }
 
-interface SuggestionType{
+interface SuggestionType {
   idSuggestion: string;
   title: string;
   value: string;
@@ -177,4 +213,6 @@ export type {
   CommentType,
   SuggestionType,
   FormRegisterType,
+  CollectionType,
+  gameCollection,
 };

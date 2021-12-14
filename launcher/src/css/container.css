@@ -12,9 +12,12 @@ body {
     overflow:hidden;
     background-color: var(--color-gray);;
     font-family: var(--font-family-app);
-    background-image: linear-gradient(to left,rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.9) 50%,rgba(10, 10, 10, 1) 100%),  url('../texture/gokublack.jpg') ;
+    background-image: linear-gradient(to left,rgba(10, 10, 10, 1) 0%, rgba(10, 10, 10, 0.9) 50%,rgba(10, 10, 10, 1) 100%),  url('../texture/back.jpg') ;
     background-position: center;
     background-size: cover;
+}
+html{
+    user-select: none;
 }
 body *{
     box-sizing: border-box;
@@ -32,7 +35,7 @@ body *{
     padding: 0;
     display: grid;
     width: 100%;
-    grid-template-rows: 35px auto 25px;
+    grid-template-rows: 35px auto;
     background-color: var(--color-gray);
 }
 /* width */

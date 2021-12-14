@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import './styles.css';
 import Tab from '../Tab/Tab';
@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers/index';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../redux/actions/userAction';
+import { transform } from 'typescript';
 
 const { Header } = Layout;
 
@@ -27,6 +28,7 @@ interface MyHeaderPropstype {
 
 function MyHeader({ onOpen }: MyHeaderPropstype) {
   const [searchText, setSearchText] = useState('');
+  const [scroll, setScroll] = useState('up');
   const screens = useBreakpoint();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -40,7 +42,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
 
   const renderMenu = useCallback(
     () => (
-      <Menu>
+      <Menu style = {{width:'fit-content'}}>
         <Menu.Item>
           <Link to={'/user/' + idUser}>
             <div className='flex-start'>
@@ -67,29 +69,6 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           </Link>
         </Menu.Item>
         <Menu.Item>
-          <Link to={'/user/collection/' + idUser}>
-            <div className='flex-start'>
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                enable-background='new 0 0 24 24'
-                height='20px'
-                viewBox='0 0 24 24'
-                width='20px'
-                fill='#b5b5b5'>
-                <g>
-                  <rect fill='none' height='24' width='24' />
-                </g>
-                <g>
-                  <g>
-                    <path d='M21.58,16.09l-1.09-7.66C20.21,6.46,18.52,5,16.53,5H7.47C5.48,5,3.79,6.46,3.51,8.43l-1.09,7.66 C2.2,17.63,3.39,19,4.94,19h0c0.68,0,1.32-0.27,1.8-0.75L9,16h6l2.25,2.25c0.48,0.48,1.13,0.75,1.8,0.75h0 C20.61,19,21.8,17.63,21.58,16.09z M11,11H9v2H8v-2H6v-1h2V8h1v2h2V11z M15,10c-0.55,0-1-0.45-1-1c0-0.55,0.45-1,1-1s1,0.45,1,1 C16,9.55,15.55,10,15,10z M17,13c-0.55,0-1-0.45-1-1c0-0.55,0.45-1,1-1s1,0.45,1,1C18,12.55,17.55,13,17,13z' />
-                  </g>
-                </g>
-              </svg>
-              &emsp; Collection
-            </div>
-          </Link>
-        </Menu.Item>
-        <Menu.Item>
           <div onClick={handleSignOut} className='flex-start'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
@@ -107,7 +86,13 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     ),
     [user]
   );
-
+  const scroll_detect = () =>{
+    var lastScrollTop = 0;
+    window.addEventListener("scroll", function(){
+    var st = window.pageYOffset || document.documentElement.scrollTop; 
+    if (st <= 0) setScroll('up'); else setScroll('down')
+    }, false);
+  }
   const handleSignOut = () => {
     localStorage.removeItem('accessToken');
     dispatch(logout());
@@ -118,9 +103,16 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     // handle searh here with value
     setSearchText(value);
   };
-
+  useEffect(()=>{
+    scroll_detect();
+  })
   return (
-    <Header className={`header${!screens.lg ? ' header--md' : ''}`}>
+    <Header className={`header${!screens.lg ? ' header--md' : ''}`} 
+            style = {{
+              background: scroll==='up' ? '#131313' : '#111111' ,
+              borderBottom: scroll==='up' ? '1px solid #1f1f1f' : '0px',
+              transform: scroll==='up' ? 'translateY(0)' : 'translateY(-85px)'  
+            }}>
       <div className='header__top-wrapper hide-on-md'>
         <div className='header__tabs header__top-wrapper--left'>
           {tabs.map((tab, index) => (
@@ -139,42 +131,54 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
               <div className='header__top-wrapper--right__user pointer'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  height='28px'
+                  height='20px'
                   viewBox='0 0 24 24'
-                  width='28px'
+                  width='20px'
                   fill='#FFFFFF'>
                   <path d='M0 0h24v24H0z' fill='none' />
                   <path d='M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z' />
                 </svg>
-                {userName}
+                &nbsp;&nbsp;
+                {userName.toUpperCase()}
               </div>
             </Dropdown>
           ) : (
             <div className='header__top-wrapper--right__user gray-6'>
-              <Link
-                to='/buyer/sign-up'
+              {/* <Link
+                to='/sign-up'
                 className='m-0 global_action_link pointer sign_in_hover'>
                 Sign Up
               </Link>
-              &nbsp;|&nbsp;
+              &nbsp;|&nbsp; */}
               <Link
-                to='/buyer/sign-in'
+                to='/sign-in'
                 className='m-0 global_action_link pointer sign_in_hover'>
                 Sign In
               </Link>
             </div>
           )}
-          <ButtonPrimary
-            text='GET LAUNCHER'
-            callback={() => console.log('get launcher')}
+          {user?.roles === 'admin' ?
+            <ButtonPrimary
+            text='GO TO CONSOLE'
+            callback={() => window.open('admin/console/game-list','_self')}
             containerColor={rootColor.redColor}
             borderColor={rootColor.redColor}
             styleClass={'header__top-wrapper--right__btn-get-launcher'}
           />
+            :
+            <ButtonPrimary
+            text='GET LAUNCHER'
+            callback={() => window.location.href = 'https://github.com/nguyenphuc1040/game-launcher/releases/download/1.0.0/Stun.Setup64x86.exe'}
+            containerColor={rootColor.redColor}
+            borderColor={rootColor.redColor}
+            styleClass={'header__top-wrapper--right__btn-get-launcher'}
+          />
+          }
+          
         </div>
       </div>
 
-      <div className='header__bottom-wrapper'>
+      <div className='header__bottom-wrapper' style = {{marginTop: scroll==='up'? '0' : '50px'}}>
         <div
           className='header__bottom-wrapper__logo'
           onClick={onPressLogoHeader}>
@@ -198,6 +202,9 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           )}
           {/* WishList */}
         </div>
+      </div>
+      <div className='header_button-scroll-top' onClick={()=>{window.scrollTo(0,0)}}>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ababab"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
       </div>
     </Header>
   );
