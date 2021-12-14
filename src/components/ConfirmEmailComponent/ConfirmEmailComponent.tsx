@@ -20,6 +20,9 @@ function ConfirmEmailComponent() {
   const email = useSelector(
     (state: RootState) => state.email
   )
+  const forgot = useSelector(
+    (state: RootState) => state.forgotPassword
+  )
   const onFinish = async (values: any) => {
     VerificationCODE(email,values.code);
   };
@@ -29,10 +32,14 @@ function ConfirmEmailComponent() {
         email: email,
         code: code,
     }).then (e => {
-        message.success('Successful !');
-        localStorage.setItem('accessToken',e.data.token);
-        dispatch(login(e.data.user));
-        history.replace('/')
+        if (forgot === false){
+          message.success('Successful !');
+          localStorage.setItem('accessToken',e.data.token);
+          dispatch(login(e.data.user));
+          history.replace('/');
+        }else{
+          history.replace('/reset-password')
+        }
     }).catch(e => {
         message.error(e.request.response)
     })

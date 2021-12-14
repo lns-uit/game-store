@@ -31,6 +31,8 @@ import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
 import AdminUpdateGame from '../screens/AdminUpdateGame/AdminUpdateGame';
 import ConfirmEmail from '../screens/ConfirmEmail/ConfirmEmail';
 import ConfirmEmailWithLink from '../components/ConfirmEmailComponent/ConfirmEmailWithLink';
+import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
+import ResetPassword from '../screens/ResetPassword/ResetPassword';
 
 function RootNavigation() {
   let location = useLocation();
@@ -40,6 +42,9 @@ function RootNavigation() {
   const isLogin = useMemo(() => !!idUser, [idUser]);
   const [isLoading, setIsLoading] = useState(true);
   const email = useSelector((state: RootState) => state.email);
+  const forgot = useSelector(
+    (state: RootState) => state.forgotPassword
+  )
 
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
@@ -130,6 +135,15 @@ function RootNavigation() {
             render={() =>
               email === null ? <Redirect to='/' /> : <ConfirmEmail />
             }
+          />
+          <Route
+            path='/forgot-password'
+            render={() =>
+              isLogin ? <Redirect to='/' /> : <ForgotPassword />
+            }
+          />
+          <Route path='/reset-password'
+            render={()=> forgot === false ? <Redirect to='/' /> : <ResetPassword />}
           />
           <Route path='/email-verify/:url'>
             <ConfirmEmailWithLink />
