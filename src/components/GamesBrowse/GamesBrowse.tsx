@@ -6,7 +6,7 @@ import { Row, Col } from 'antd';
 import './styles.css';
 import axios from 'axios';
 import gameApi from '../../api/gamesApi';
-
+import {Helmet} from "react-helmet";
 interface Pages {
   games: GameType[];
 }
@@ -14,6 +14,7 @@ interface Pages {
 function GamesBrowse({ games }: Pages) {
   return (
     <div className='mr-top-10'>
+      <Helmet> <title> Stun Store | Browse </title>  </Helmet>
       <Row>
         {games.map((game, index) => {
           return (

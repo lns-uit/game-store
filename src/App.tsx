@@ -29,7 +29,17 @@ function App() {
     <>
       <Router>
         <Layout>
-          <div style = {{display: window.location.pathname.split('/')[1]==="admin" ? "none" : "block"}}>
+          { window.location.pathname.split('/')[1]==="admin" ? 
+            <div 
+              className = "header-stun-console" 
+              style = {{display: user?.roles==="admin" ? "block" : "none"}}
+            >
+              <ConsoleHeader/>
+            </div>
+            : 
+            <MyHeader onOpen={onOpen} />
+          }
+          {/* <div style = {{display: window.location.pathname.split('/')[1]==="admin" ? "none" : "block"}}>
             <MyHeader onOpen={onOpen} />
           </div>
           <div 
@@ -37,7 +47,7 @@ function App() {
               style = {{display: window.location.pathname.split('/')[1]==="admin" ? "block" : "none"}}
           >
             <ConsoleHeader/>
-          </div>
+          </div> */}
           {!screens.lg && <MyDrawer isOpen={isOpen} onClose={onClose} />}
           <Content
             style = {{marginTop: window.location.pathname.split('/')[1]==="admin" ? "70px" : "100px"}}

@@ -159,7 +159,7 @@ function Admin() {
       })
       .then((response) => {
         form.resetFields();
-        history.push("admin/console/game-list");
+        history.push("/admin/console/game-list");
         console.log(response.data)
       })
       .catch((error) => {
@@ -256,7 +256,7 @@ function Admin() {
             getValueFromEvent={normFileZip}
             noStyle
           >
-            <Upload.Dragger name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
+            <Upload.Dragger accept='.zip' name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
@@ -268,7 +268,7 @@ function Admin() {
         <div className="decription-photo">
           <div className="upload">
             <Form.Item
-              label="DESCRIPTION PHOTO (1920x1080 Required size)"
+              label="DESCRIPTION PHOTO (1920x1080 recommend size)"
               name="images"
               valuePropName="images"
               className="d-flex-form"
@@ -305,7 +305,6 @@ function Admin() {
             <Form.Item
               name="cost"
               label="Game Cost"
-              rules={[{ required: true, message: "Please Input Cost Game" }]}
             >
               <InputNumber
                 defaultValue={0}

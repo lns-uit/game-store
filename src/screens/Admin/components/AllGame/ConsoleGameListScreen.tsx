@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button, Input, Space, Table, Tag } from "antd";
 import { GameType, ImageType } from "../../../../interfaces/rootInterface";
 import axios from "axios";
@@ -6,17 +6,22 @@ import './style.css';
 import { useHistory } from "react-router-dom";
 const { Search } = Input;
 import {Endpoint} from "../../../../api/endpoint"
+import { LoadingContext } from "react-router-loading";
 
 function ConsoleGameListScreen() {
-  const onSearch = (value) => console.log(value);
+  const loadingContext = useContext(LoadingContext);
+  
+  const loading = async () => {
+    await axios.get(Endpoint.mainApi + "api/game").then((response) => {
+      setGameData(response.data);
+      loadingContext.done();
+    });
+   
+  };
   const [gameData, setGameData] = useState<GameType[]>([]);
   const [searchGame, setSearchGame] = useState('');
   const history = useHistory();
-  const getDataGame = () => {
-    return axios.get(Endpoint.mainApi + "api/game").then((response) => {
-      setGameData(response.data);
-    });
-  };
+
   const columns = [
     {
       title: "Game",
@@ -72,7 +77,7 @@ function ConsoleGameListScreen() {
     },
   ];
   useEffect(() => {
-    getDataGame();
+    loading();
   }, []);
   return (
     <div className="console-container">

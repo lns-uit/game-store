@@ -76,7 +76,7 @@ function PriceGame({ game }: Detail) {
         ) : (
           <div className='d-flex align-items-end'>
             <div className='m-left-8'>
-              <span className='fs-12 lh-16'>{numberWithCommas(game.cost)}</span>
+              <span className='fs-12 lh-16'>{game.cost === 0 ? "Free" : numberWithCommas(game.cost)}</span>
             </div>
           </div>
         )}

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Layout } from 'antd';
 import './styles.css';
 import Tab from '../Tab/Tab';
@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers/index';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../redux/actions/userAction';
+import { transform } from 'typescript';
 
 const { Header } = Layout;
 
@@ -27,6 +28,7 @@ interface MyHeaderPropstype {
 
 function MyHeader({ onOpen }: MyHeaderPropstype) {
   const [searchText, setSearchText] = useState('');
+  const [scroll, setScroll] = useState('up');
   const screens = useBreakpoint();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -40,7 +42,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
 
   const renderMenu = useCallback(
     () => (
-      <Menu>
+      <Menu style = {{width:'fit-content'}}>
         <Menu.Item>
           <Link to={'/user/' + idUser}>
             <div className='flex-start'>
@@ -84,7 +86,13 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     ),
     [user]
   );
-
+  const scroll_detect = () =>{
+    var lastScrollTop = 0;
+    window.addEventListener("scroll", function(){
+    var st = window.pageYOffset || document.documentElement.scrollTop; 
+    if (st <= 0) setScroll('up'); else setScroll('down')
+    }, false);
+  }
   const handleSignOut = () => {
     localStorage.removeItem('accessToken');
     dispatch(logout());
@@ -95,9 +103,16 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     // handle searh here with value
     setSearchText(value);
   };
-
+  useEffect(()=>{
+    scroll_detect();
+  })
   return (
-    <Header className={`header${!screens.lg ? ' header--md' : ''}`}>
+    <Header className={`header${!screens.lg ? ' header--md' : ''}`} 
+            style = {{
+              background: scroll==='up' ? '#131313' : '#111111' ,
+              borderBottom: scroll==='up' ? '1px solid #1f1f1f' : '0px',
+              transform: scroll==='up' ? 'translateY(0)' : 'translateY(-85px)'  
+            }}>
       <div className='header__top-wrapper hide-on-md'>
         <div className='header__tabs header__top-wrapper--left'>
           {tabs.map((tab, index) => (
@@ -116,24 +131,25 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
               <div className='header__top-wrapper--right__user pointer'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
-                  height='28px'
+                  height='20px'
                   viewBox='0 0 24 24'
-                  width='28px'
+                  width='20px'
                   fill='#FFFFFF'>
                   <path d='M0 0h24v24H0z' fill='none' />
                   <path d='M3 5v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.11 0-2 .9-2 2zm12 4c0 1.66-1.34 3-3 3s-3-1.34-3-3 1.34-3 3-3 3 1.34 3 3zm-9 8c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1H6v-1z' />
                 </svg>
-                {userName}
+                &nbsp;&nbsp;
+                {userName.toUpperCase()}
               </div>
             </Dropdown>
           ) : (
             <div className='header__top-wrapper--right__user gray-6'>
-              <Link
+              {/* <Link
                 to='/sign-up'
                 className='m-0 global_action_link pointer sign_in_hover'>
                 Sign Up
               </Link>
-              &nbsp;|&nbsp;
+              &nbsp;|&nbsp; */}
               <Link
                 to='/sign-in'
                 className='m-0 global_action_link pointer sign_in_hover'>
@@ -141,17 +157,28 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
               </Link>
             </div>
           )}
-          <ButtonPrimary
+          {user?.roles === 'admin' ?
+            <ButtonPrimary
+            text='GO TO CONSOLE'
+            callback={() => window.open('admin/console/game-list','_self')}
+            containerColor={rootColor.redColor}
+            borderColor={rootColor.redColor}
+            styleClass={'header__top-wrapper--right__btn-get-launcher'}
+          />
+            :
+            <ButtonPrimary
             text='GET LAUNCHER'
             callback={() => window.location.href = 'https://github.com/nguyenphuc1040/game-launcher/releases/download/1.0.0/Stun.Setup64x86.exe'}
             containerColor={rootColor.redColor}
             borderColor={rootColor.redColor}
             styleClass={'header__top-wrapper--right__btn-get-launcher'}
           />
+          }
+          
         </div>
       </div>
 
-      <div className='header__bottom-wrapper'>
+      <div className='header__bottom-wrapper' style = {{marginTop: scroll==='up'? '0' : '50px'}}>
         <div
           className='header__bottom-wrapper__logo'
           onClick={onPressLogoHeader}>
@@ -175,6 +202,9 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           )}
           {/* WishList */}
         </div>
+      </div>
+      <div className='header_button-scroll-top' onClick={()=>{window.scrollTo(0,0)}}>
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ababab"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
       </div>
     </Header>
   );

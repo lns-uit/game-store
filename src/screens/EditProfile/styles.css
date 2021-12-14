@@ -53,19 +53,21 @@
 }
 .page-edit-content{
     padding-bottom: 78px;
+    padding-top: 40px;
 }
 .profile-header{
-    max-width: 1150px;
+    max-width: 100%;
     height: 102px;
     margin: -28px 0px 0px;
 }
 .profile-header-texture{
     width: 100%;
     height: 100%;
-    background: rgba(58, 62, 71, 0.5);
+    background: rgb(36, 36, 36);
     display: flex;
     align-items: center;
     padding: 0px 32px;
+    border-radius: 5px;
 }
 .profile-header-avatar img{
     height: 64px;
@@ -102,7 +104,7 @@
     background-color: #111 !important;
 }
 .edit-profile-navigation .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
-    background-color: #3d4450;
+    background-color: rgb(36, 36, 36);
     background-position: 0 0;
 }
 .hover-edit-profile-navigation{
@@ -149,7 +151,7 @@
 .general-title{
     color: #ffffff;
     padding: 0px 0px 6px 10px;
-    border-bottom: 2px solid rgba(228,228,228,.1);
+    border-bottom: 2px solid rgb(36, 36, 36);
 }
 .DialogLabel{
     font-weight: 300;

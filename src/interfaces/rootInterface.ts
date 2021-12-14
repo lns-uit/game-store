@@ -25,6 +25,7 @@ interface GameType {
   }[];
   imageGameDetail: ImageType[];
   newVersion: any;
+  urlVideo: string;
 }
 
 interface CollectionType {

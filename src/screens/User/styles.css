@@ -57,8 +57,9 @@
     flex-shrink: 0;
     justify-content: center;
     z-index: 0;
-    background-color: bisque;
+    background-color: rgb(24, 24, 24);
     overflow:hidden;
+    margin-top: -100px;
 }
 .background-profile img {
     border-radius: 5px;

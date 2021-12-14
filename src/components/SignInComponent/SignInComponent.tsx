@@ -50,13 +50,11 @@ function SignInComponent() {
         setStrLoginErr(message);
       }
     } catch (e) {
-      console.log(e);
       alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
     }
   };
   const responseGoogle = async (response) => {
     let data = response.profileObj;
-    console.log(data);
     try {
       const responsive = await userApi.loginWithSMA({
           iLogin: {
@@ -69,7 +67,6 @@ function SignInComponent() {
               userName: data.email
           }
       })
-      console.log(responsive);
 
       const {message, token, user} = responsive || {}
       if (message) {
@@ -82,7 +79,6 @@ function SignInComponent() {
         history.replace('/')
       }
     } catch (e) {
-      console.log(e);
       alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
     }
   }
@@ -100,7 +96,6 @@ function SignInComponent() {
               userName: data.id
           }
       })
-      console.log(responsive);
 
       const {message, token, user} = responsive || {}
       if (message) {
@@ -113,7 +108,6 @@ function SignInComponent() {
         history.replace('/')
       }
     } catch (e) {
-      console.log(e);
       alert(RootErrorMessage.DEFAULT_ERROR_MESSAGE);
     }
   }

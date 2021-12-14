@@ -1,4 +1,5 @@
 .discover-screen {
+  transition: .3s;
 }
 .top-game-week {
   flex-wrap: nowrap !important;

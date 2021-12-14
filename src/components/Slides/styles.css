@@ -143,7 +143,7 @@
   border: 3px var(--red-color);
   border-style: none none solid none;
   animation-name: Timingslides;
-  animation-duration: 7s;
+  animation-duration: 12s;
   animation-timing-function: linear;
 }
 .btn-slides-idle {
@@ -215,7 +215,7 @@
 }
 @media screen and (max-width: 1600px) {
   .my-slides,
-  .my-slides-element {
+  .my-slides-element, .my-slides-element-loading {
     width: 55.7vw;
     height: 31.3vw;
   }
@@ -246,7 +246,7 @@
     -webkit-line-clamp: 1;
   }
   .my-slides,
-  .my-slides-element {
+  .my-slides-element, .my-slides-element-loading {
     width: 69.7vw;
     height: 39vw;
   }
@@ -273,7 +273,7 @@
 
 @media screen and (max-width: 768px) {
   .my-slides,
-  .my-slides-element {
+  .my-slides-element, .my-slides-element-loading {
     width: 100vw;
     height: 100vw;
     border-radius: 0px;

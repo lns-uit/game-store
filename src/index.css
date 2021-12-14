@@ -28,7 +28,9 @@
   padding: 0;
   
 }
-
+html {
+  scroll-behavior: smooth;
+}
 button:focus {
   outline: none;
 }

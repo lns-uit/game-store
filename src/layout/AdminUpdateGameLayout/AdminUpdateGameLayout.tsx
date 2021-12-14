@@ -129,17 +129,16 @@ function AdminUpdateGameLayout() {
             console.log('here')
         } else {
             values.fileGame = urlDownload;
-            values.images = JSON.stringify(fileList.map(image=>{
+            values.images = fileList.map(image=>{
                 return image.url
-            }));
+            });
             values.detailDecription = markup;
-            console.log(values);
-            // if (isUpdate) postGameUpdate(values);
-            //     else postGameCreateUpdate(values);
+            values.images.splice(0,0,url.url)
+            if (isUpdate) postGameUpdate(values);
+                else postGameCreateUpdate(values);
         }
     }
     const postGameCreateUpdate = (values: any) => {
-
         axios
             .put(Endpoint.mainApi + "api/game/create-update/" + game.idGame, {
                 game: {
@@ -349,7 +348,7 @@ function AdminUpdateGameLayout() {
                                 getValueFromEvent={normFileZip}
                                 noStyle
                             >
-                                <Upload.Dragger name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
+                                <Upload.Dragger accept='.zip' name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
                                     <p className="ant-upload-drag-icon">
                                         <InboxOutlined />
                                     </p>

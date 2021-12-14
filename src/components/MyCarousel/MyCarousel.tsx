@@ -59,6 +59,8 @@ function MyCarousel({ images,urlVideo }: MyCarouselPropsType) {
                   height={"100%"} 
                   loop={true}
                   controls={true}
+                  playing={true}
+                  muted={true}
                 />
               </div>
             }

@@ -181,3 +181,11 @@ label {
 .flex-center-x{
   align-items: center;
 }
+.img-upload-main-game{
+  object-fit: cover;
+  width: 400px;
+  object-position: center;
+}
+.space-between{
+  justify-content: space-between;
+}

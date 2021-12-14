@@ -4,6 +4,7 @@ import { rootColor } from '../../constants/rootColor';
 import { ActionType, GameType } from '../../interfaces/rootInterface';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import './styles.css';
+import numberWithCommas from '../../utils/numberWithCommas';
 
 interface GameItemPropsType {
   game: GameType;
@@ -81,11 +82,11 @@ function GameItem({
                 <div className='price-container__sale'>
                   <p>-{percentDiscount}%</p>
                 </div>
-                <p className='price-container__cost'>{cost}</p>
+                <p className='price-container__cost'>{cost === 0 ? 'Free' : numberWithCommas(cost)}</p>
               </div>
             ) : null}
 
-            <p className='price-container__current-price'>$ {currentCost}</p>
+            <p className='price-container__current-price'>{currentCost === 0 ? 'Free' : numberWithCommas(currentCost)}</p>
           </div>
         </div>
       </div>

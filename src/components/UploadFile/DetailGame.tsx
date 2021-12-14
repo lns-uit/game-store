@@ -109,7 +109,7 @@ function DetailGame(){
                 <Col
                     xxl={14}
                     xl={14}
-                    lg={16}
+                    lg={10}
                     md={16}
                     sm={24}
                     xs={24}
@@ -179,9 +179,9 @@ function DetailGame(){
                 </Col>
                 <Col
                     xxl={10}
-                    xl={100}
-                    lg={8}
-                    md={8}
+                    xl={10}
+                    lg={14}
+                    md={18}
                     sm={24}
                     xs={24}
                 >
@@ -203,12 +203,12 @@ function DetailGame(){
                     <div className="background-profile border-radius-8">
                         <div 
                             className="flex-basic relative border-radius-8 d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">
-                            <div className="width-full border-radius-8 height-300 icon-game">
+                            <div className="width-full border-radius-8 height-300 icon-game" >
                                 {
                                     loadingIconGame === true ?
                                         iconGame !== null
                                         ?
-                                        <img src={iconGame} alt="icon Game"/>
+                                        <img src={iconGame} alt="icon Game" className='img-upload-main-game'/>
                                         : null
                                     :<div className="loadding-icon-game">
                                         Uploading...
@@ -220,7 +220,7 @@ function DetailGame(){
                     <Form.Item
                         name="iconGame"
                         valuePropName="fileList"
-                        label = "Main Image Game ( 1080px x 1080px )"
+                        label = "Main Image Game ( Recommend 1080px x 1080px )"
                         getValueFromEvent={normFileImages}
                     >
                         <Upload name="iconGame">
