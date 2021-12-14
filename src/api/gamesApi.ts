@@ -48,10 +48,27 @@ const createNewBillGame = async newBill => {
   }
 };
 
+const getGameByGenre = async (body: any) => {
+  try {
+    const request = await callApi(
+      'post',
+      `${Endpoint.mainApi}api/game/lazy-load/browse`,
+      body
+    );
+    const { data } = request;
+    return data;
+  } catch (e) {
+    const error: any = e;
+    const { data } = error.response || {};
+    return data;
+  }
+};
+
 const gamesApi = {
   getGamesApi,
   getGameDetail,
   createNewBillGame,
+  getGameByGenre,
 };
 
 export default gamesApi;

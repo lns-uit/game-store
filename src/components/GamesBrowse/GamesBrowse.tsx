@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import GameItem from '../../components/GameItem/GameItem';
 import { ActionType, GameType } from '../../interfaces/rootInterface';
 import { Link } from 'react-router-dom';
@@ -7,19 +7,23 @@ import './styles.css';
 import axios from 'axios';
 import gameApi from '../../api/gamesApi';
 import {Helmet} from "react-helmet";
+
 interface Pages {
   games: GameType[];
+  lastGameRef: any;
 }
 
-function GamesBrowse({ games }: Pages) {
+function GamesBrowse({ games, lastGameRef }: Pages) {
   return (
     <div className='mr-top-10'>
       <Helmet> <title> Stun Store | Browse </title>  </Helmet>
       <Row>
         {games.map((game, index) => {
+          const isLastGameItem = index + 1 == games.length;
           return (
             <Col
-              key={`game-info-${index}`}
+              // change to id game
+              key={`game-info-${Math.floor(Math.random() * 10000000)}`}
               xxl={6}
               xl={8}
               lg={24}
@@ -27,9 +31,17 @@ function GamesBrowse({ games }: Pages) {
               sm={12}
               xs={24}>
               <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
-                <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
-                  <GameItem game={game} action={ActionType.REMOVE} />
-                </div>
+                {isLastGameItem ? (
+                  <div
+                    ref={lastGameRef}
+                    className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                    <GameItem game={game} action={ActionType.ADD} />
+                  </div>
+                ) : (
+                  <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                    <GameItem game={game} action={ActionType.ADD} />
+                  </div>
+                )}
               </Link>
             </Col>
           );

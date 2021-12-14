@@ -1,0 +1,25 @@
+.order-by-container {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+.order-by-wrapper {
+  display: flex;
+  align-items: center;
+}
+.order-by-label {
+  font-size: 15px;
+  margin-right: 8px;
+}
+.order-by-value {
+  cursor: pointer;
+  background-color: var(--mainGray-color);
+  padding: 4px 8px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  margin: 0 4px;
+}
+.order-by-value.active {
+  background-color: var(--red-color);
+}

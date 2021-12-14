@@ -1,65 +1,65 @@
 /*display*/
-.d-flex{
-    display: flex;
+.d-flex {
+  display: flex;
 }
-.gap-104{
-    gap: 104px;
+.gap-104 {
+  gap: 104px;
 }
-.flex-1-1-auto{
-    flex: 1 1 auto;
+.flex-1-1-auto {
+  flex: 1 1 auto;
 }
-.gap-81{
-    gap: 81px;
+.gap-81 {
+  gap: 81px;
 }
-.d-inline-block{
-    display: inline-block;
+.d-inline-block {
+  display: inline-block;
 }
 /*color*/
-.white{
-    color: white;
+.white {
+  color: white;
 }
-.bgr-gray3{
-    background-color: #262626;
+.bgr-gray3 {
+  background-color: #262626;
 }
 /*padding*/
-.pd-top-bottom-8{
-    padding-top: 8px;
-    padding-bottom: 8px;
+.pd-top-bottom-8 {
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
-.pd-left-right-20{
-    padding-left: 20px;
-    padding-right: 20px;
+.pd-left-right-20 {
+  padding-left: 20px;
+  padding-right: 20px;
 }
 /*border*/
-.border-radius-5{
-    border-radius: 5px;
-};
+.border-radius-5 {
+  border-radius: 5px;
+}
 /*different*/
-.btn-page{
-    padding: 10px;
+.btn-page {
+  padding: 10px;
 }
-.fillter-mobile{
-    display: none;
+.fillter-mobile {
+  display: none;
 }
-.fillter-pc *{
-    background-color: transparent !important;
-    color: white;
+.fillter-pc * {
+  background-color: transparent !important;
+  color: white;
 }
-.ant-menu-item{
-    border-top: 1px solid rgb(58, 58, 58) !important;
+.ant-menu-item {
+  border-top: 1px solid rgb(58, 58, 58) !important;
 }
-.option .ant-menu-title-content{
-    color: white !important;
+.option .ant-menu-title-content {
+  color: white !important;
 }
-.option{
-    border: 0px solid transparent !important; 
+.option {
+  border: 0px solid transparent !important;
 }
 
 @media only screen and (max-width: 767.5px) {
-    .fillter-pc {
-      display: none;
-    }
-    .fillter-mobile{
-        display: block;
-    }
+  .fillter-pc {
+    display: none;
+  }
+  .fillter-mobile {
+    display: block;
+  }
 }

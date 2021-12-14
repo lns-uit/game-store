@@ -151,6 +151,13 @@ function SignInComponent() {
                 <Input className = "b-radius-5" placeholder='Password' type='password' />
               </Form.Item>
             </div>
+            <div className="forgot-password">
+              <Link to="/forgot-password">
+                <p className="m-top-10 white fs-14 lh-18">
+                  Forgot Password
+                </p>
+              </Link>
+            </div>
 
             <Form.Item
               wrapperCol={{ offset: 0, span: 100 }}
