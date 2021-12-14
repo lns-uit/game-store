@@ -39,7 +39,9 @@ function DetailGame({
     const [loadingIconGame, setLoadingIconGame] = useState<any>(true);
     const dispatch = useDispatch();
     const [gameData, setGameData] = useState<any[]>([]);
+    const [genress, setGenress] = useState<any[]>([]);
     let allGame: any[] = [];
+    console.log(game)
 
     const normFileImages = (e) => {
         if(e.file.status === "error"){
@@ -66,7 +68,6 @@ function DetailGame({
         const res = await adminApi.getGenre();
         
         if (res){
-            console.log(res)
             res.forEach((data)=>{
                 allGame.push(
                     <Option key={data.idGenre} value={data.idGenre}>
@@ -92,28 +93,30 @@ function DetailGame({
                     .child(file.name)
                     .getDownloadURL()
                     .then(url=>{
-                        checkWidthHeight(url,file.name);
+                        setIconGame(url);
+                        setLoadingIconGame(true);
+                        dispatch(setUrlGameAvatar('getLink', file.name ,url));
                     })
             }
         )
     }
-    async function checkWidthHeight(imageUrl,name) {
-        try {
-            const { width, height } = await reactImageSize(imageUrl);
-            if (width < 1080 && height < 1080){
-                setLoadingIconGame(true); 
-                alert("Icon Game default 1080x1080")
-            }else{
-                setIconGame(imageUrl);
-                setLoadingIconGame(true);
-                dispatch(setUrlGameAvatar('getLink', name ,imageUrl));
-            }
-        } catch(err){
-            console.log(err);
-            alert("This is not Image");
-            setLoadingIconGame(true);
-        }
-    }
+    // async function checkWidthHeight(imageUrl,name) {
+    //     try {
+    //         const { width, height } = await reactImageSize(imageUrl);
+    //         if (width < 1080 && height < 1080){
+    //             setLoadingIconGame(true); 
+    //             alert("Icon Game default 1080x1080")
+    //         }else{
+    //             setIconGame(imageUrl);
+    //             setLoadingIconGame(true);
+    //             dispatch(setUrlGameAvatar('getLink', name ,imageUrl));
+    //         }
+    //     } catch(err){
+    //         console.log(err);
+    //         alert("This is not Image");
+    //         setLoadingIconGame(true);
+    //     }
+    // }
 
     const checkVersionExist = (value) => {
         axios.get(Endpoint.mainApi + "api/game/check-version-exist/" +  game.idGame + "/" + value,{
@@ -163,8 +166,7 @@ function DetailGame({
                         label = "Genres"
                         rules={[{ required: true, message: "Please Choice Genres" }]}
                     >
-                        <Select mode="multiple" placeholder="Select genres" 
-                        >
+                        <Select mode="multiple" placeholder="Select genres" >
                             {gameData}
                         </Select>
                     </Form.Item>

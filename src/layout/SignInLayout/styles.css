@@ -142,3 +142,9 @@
     text-align: left;
     color: #fff !important;
 }
+.forgot-password{
+    text-align: left;
+}
+.forgot-password:hover p{
+    color: #0072c9;
+}

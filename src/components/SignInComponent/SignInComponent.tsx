@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../layout/SignInLayout/styles.css';
 import { Link } from 'react-router-dom';
-import { Form, Input, Button, Checkbox, Alert } from 'antd';
+import { Form, Input, Button, Checkbox, Alert, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import userApi from '../../api/userApi';
 import { login } from '../../redux/actions/userAction';
@@ -10,11 +10,14 @@ import RootErrorMessage from '../../constants/ErrorMessage';
 import GoogleLogin from 'react-google-login';
 import FacebookLogin from 'react-facebook-login';
 import fbIcon from '../../assets/images/facebook-4-50.png';
-
+import axios from 'axios';
+import { Endpoint } from '../../api/endpoint';
+import {setEmail} from '../../redux/actions/actionEmail';
 
 function SignInComponent() {
   const [loginErr, setLoginErr] = useState(false);
   const [strLoginErr, setStrLoginErr] = useState('');
+  const [verificationEmail, setVerificationEmail] = useState(null);
   const dispatch = useDispatch();
   let history = useHistory();
   const onFinish = async (values: any) => {
@@ -23,20 +26,28 @@ function SignInComponent() {
         email: values.userName,
         password: values.password,
       });
-
-      console.log(responsive);
-
       const { message, token, user } = responsive || {};
 
+      if (user){
+        axios.get(Endpoint.mainApi + `api/user/verification-email-status/${user.idUser}`)
+        .then(res=>{
+          if (res.data === true ){
+            if (token) {
+              localStorage.setItem('accessToken', token);
+              dispatch(login(user));
+              history.replace('/');
+            }
+          }else{
+            dispatch(setEmail('getEmail', user.email));
+            history.push('/confirm-email');
+          }
+        })
+        .catch(err => {console.log(err)})
+        
+      }
       if (message) {
         setLoginErr(true);
         setStrLoginErr(message);
-      }
-
-      if (token) {
-        localStorage.setItem('accessToken', token);
-        dispatch(login(user));
-        history.replace('/');
       }
     } catch (e) {
       console.log(e);
@@ -145,6 +156,13 @@ function SignInComponent() {
                 ]}>
                 <Input className = "b-radius-5" placeholder='Password' type='password' />
               </Form.Item>
+            </div>
+            <div className="forgot-password">
+              <Link to="/forgot-password">
+                <p className="m-top-10 white fs-14 lh-18">
+                  Forgot Password
+                </p>
+              </Link>
             </div>
 
             <Form.Item
