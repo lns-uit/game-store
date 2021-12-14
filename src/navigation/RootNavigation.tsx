@@ -34,6 +34,7 @@ import ConfirmEmail from '../screens/ConfirmEmail/ConfirmEmail';
 import ConfirmEmailWithLink from '../components/ConfirmEmailComponent/ConfirmEmailWithLink';
 import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 import ResetPassword from '../screens/ResetPassword/ResetPassword';
+import SuggestionScreen from '../screens/Suggestion/SuggestionScreen';
 
 function RootNavigation() {
   let location = useLocation();
@@ -151,6 +152,7 @@ function RootNavigation() {
           </Route>
 
           {/* everyone */}
+          <Route path='/suggestion/:title' component={SuggestionScreen}></Route>
           <Route path='/game/:idGame' component={GameDetail} />
           <Route path='/browse/' component={BrowseScreen} />
           <Route exact path='/' component={DiscoverScreen} />

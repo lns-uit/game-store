@@ -133,7 +133,7 @@ function DiscoverScreen() {
           <GamesContainer
             gutterHorizontal={30}
             title="FREE NOW !"
-            leftAction={<ViewMoreBtn />}
+            leftAction={<ViewMoreBtn title="free-now" />}
             backgroundColor={rootColor.grayContainerColor}
           >
             <Row gutter={[35, 35]}>
@@ -175,7 +175,7 @@ function DiscoverScreen() {
                     key={`abc-${index}`}
                     gutterHorizontal={30}
                     title="Top Seller"
-                    leftAction={<ViewMoreBtn />}
+                    leftAction={<ViewMoreBtn title="top-sellers" />}
                   >
                     <>
                       {topSellers.map((game, index) => (
@@ -189,7 +189,7 @@ function DiscoverScreen() {
                     key={`abc-${index}`}
                     gutterHorizontal={30}
                     title="Free Games"
-                    leftAction={<ViewMoreBtn />}
+                    leftAction={<ViewMoreBtn title='free-games' />}
                   >
                     <>
                       {freeGames.map((game, index) => (
@@ -203,7 +203,7 @@ function DiscoverScreen() {
                     key={`abc-${index}`}
                     gutterHorizontal={30}
                     title="New Release"
-                    leftAction={<ViewMoreBtn />}
+                    leftAction={<ViewMoreBtn title='new-release' />}
                   >
                     <>
                       {newRelease.map((game, index) => (
@@ -219,7 +219,7 @@ function DiscoverScreen() {
             ))}
           </Row>
 
-          <GamesContainer title="MOST POPULAR !" leftAction={<ViewMoreBtn />}>
+          <GamesContainer title="MOST POPULAR !" leftAction={<ViewMoreBtn title="most-popular" />}>
             <Row gutter={[35, 35]}>
               {mostPopular.map((game, index) => (
                 <Col
