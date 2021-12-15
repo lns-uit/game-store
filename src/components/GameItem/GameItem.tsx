@@ -5,6 +5,7 @@ import { ActionType, GameType } from '../../interfaces/rootInterface';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
+import { useHistory } from 'react-router-dom';
 
 interface GameItemPropsType {
   game: GameType;
@@ -23,6 +24,7 @@ function GameItem({
   titleTooltip,
   onClickGameItem,
 }: GameItemPropsType) {
+  const history = useHistory();
   const { nameGame, discount, imageGameDetail, genres, cost } = game;
   const { percentDiscount } = discount || {};
   const displayImage =
@@ -48,6 +50,7 @@ function GameItem({
 
   return (
     <div
+      onClick={()=>{history.push('/game/'+game.idGame)}}
       className={
         isHorizontal ? 'game-item game-item--horizontal' : 'game-item'
       }>
