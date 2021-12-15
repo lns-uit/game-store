@@ -1,5 +1,5 @@
 const Endpoint ={
-    mainApi: "https://localhost:5001/"
+    mainApi: "http://103.142.139.104:5111/"
 } 
 
 export {Endpoint}
