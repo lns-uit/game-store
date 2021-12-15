@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import { GameType } from '../../interfaces/rootInterface';
 import './styles.css';
 
@@ -8,6 +9,7 @@ interface GameItemFreePropsType {
 }
 
 function GameItemFree({ game, heightImage }: GameItemFreePropsType) {
+  const history = useHistory();
   const { nameGame, discount, imageGameDetail, genres } = game;
   const displayImage =
     imageGameDetail[0].url ||
@@ -21,7 +23,9 @@ function GameItemFree({ game, heightImage }: GameItemFreePropsType) {
     ));
   };
   return (
-    <div className='game-item game-item--free'>
+    <div className='game-item game-item--free'
+        onClick={()=>{history.push('/game/'+game.idGame)}}
+    >
       <div
         style={heightImage ? { height: heightImage } : {}}
         className='game-item__image game-item__image--free'>

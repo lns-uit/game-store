@@ -76,7 +76,7 @@ function PriceGame({ game }: Detail) {
         ) : (
           <div className='d-flex align-items-end'>
             <div className='m-left-8'>
-              <span className='fs-12 lh-16'>{game.cost === 0 ? "Free" : numberWithCommas(game.cost)}</span>
+              <span className='fs-16 lh-16'>{game.cost === 0 ? "Free" : numberWithCommas(game.cost)}</span>
             </div>
           </div>
         )}
@@ -84,6 +84,7 @@ function PriceGame({ game }: Detail) {
           <Button
             type='primary'
             className='bgr-blue1 pd-8-16 width-full border-radius-4 '
+            style = {{height:'45px'}}
             onClick={showModal}>
             Buy Now
           </Button>
@@ -100,7 +101,7 @@ function PriceGame({ game }: Detail) {
         <div className='m-top-28 m-bottom-48'>
           <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>
             <div className='d-flex'>
-              <p className='m-0 center uppercase flex-1-1-auto'>
+              <p className='m-0 center uppercase flex-1-1-auto' style={{cursor:'pointer'}}>
                 add to wishlist
               </p>
               <span>

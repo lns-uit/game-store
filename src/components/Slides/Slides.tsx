@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
 import { GameType } from '../../interfaces/rootInterface';
 import numberWithCommas from '../../utils/numberWithCommas';
+import { useHistory } from 'react-router-dom';
 interface SlideData {
   gameData: GameType[]
 }
@@ -16,7 +17,7 @@ function Slides({gameData}: SlideData) {
   const [activeCarousel, setActiveCarousel] = useState(0);
   const carouselRef = useRef<CarouselRef>(null);
   const [btn_animScale, set_btn_animScale] = useState(false);
-  // const [gameData, setGameData] = useState<GameType[]>([]);
+  const history = useHistory();
 
   useEffect(()=>{
     // GetCarouselData();
@@ -128,7 +129,7 @@ function Slides({gameData}: SlideData) {
                    
                         </div>
                         <br />
-                        <button> PLAY NOW </button>
+                        <button onClick={()=>{history.push('/game/'+item.idGame)}} > PLAY NOW </button>
                       </div>
                     ) : null}
                   </div>
