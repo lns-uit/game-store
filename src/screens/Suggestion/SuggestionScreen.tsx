@@ -1,26 +1,42 @@
-import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import getPostTitleSuggestion from '../../utils/getPostTitleSuggestion';
+import useGameSuggestion from '../../hooks/useGameSuggestion';
+import ListGameBrowse from '../../layout/ListGameBrowse/ListGameBrowse';
+import SpinLoading from '../../components/SpinLoading/SpinLoading';
 
 function SuggestionScreen() {
-    let slug  = useParams();
+  const [currentPage, setCurrentPage] = useState(1);
+  const { title = '' } = useParams<any>() || {};
+  const titleSuggestion: string = getPostTitleSuggestion(title);
 
-    const getPostTitleSuggestion = (slug : any) => {
-        switch (slug.title) {
-            case 'top-sellers': return 'Top sellers';
-            case 'new-release': return 'New release';
-            case 'free-games': return 'Free games';
-            case 'most-popular': return 'Most popular';
-            case 'free-now': return 'Free now';
-            case 'most-favorite': return 'Most favorite';
-            case 'game-on-sales': return 'Game on sales';
+  const { games, isLoading, hasMore } = useGameSuggestion({
+    currentPage,
+    title: titleSuggestion,
+  });
+  const observer = useRef<any>();
+  const lastGameRef = useCallback(
+    node => {
+      if (isLoading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver(entries => {
+        console.log(entries);
+        if (entries[0].isIntersecting && hasMore) {
+          console.log('visible');
+          setCurrentPage(prevCurrentPage => prevCurrentPage + 1);
         }
-    }
-    useEffect(()=>{
-        console.log(getPostTitleSuggestion(slug))
-    },[])
-    return(
-        <div></div>
-    )
+      });
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore]
+  );
+
+  return (
+    <div className='browse white'>
+      <ListGameBrowse games={games} lastGameRef={lastGameRef} />
+      {isLoading && <SpinLoading />}
+    </div>
+  );
 }
 
 export default SuggestionScreen;

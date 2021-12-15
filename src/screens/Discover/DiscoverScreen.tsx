@@ -1,34 +1,35 @@
-import useBreakpoint from "antd/lib/grid/hooks/useBreakpoint";
-import React, { useEffect, useState, useRef, useContext } from "react";
-import { gamesInfoMockData } from "../../api/mockData";
-import { LoadingContext } from "react-router-loading";
-import GameItem from "../../components/GameItem/GameItem";
-import GameItemFree from "../../components/GameItemFree/GameItemFree";
-import { Helmet } from "react-helmet";
-import "./styles.css";
-import { Row, Col, Button, Radio } from "antd";
+import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { gamesInfoMockData } from '../../api/mockData';
+import { LoadingContext } from 'react-router-loading';
+import GameItem from '../../components/GameItem/GameItem';
+import GameItemFree from '../../components/GameItemFree/GameItemFree';
+import { Helmet } from 'react-helmet';
+import './styles.css';
+import { Row, Col, Button, Radio } from 'antd';
 import {
   ActionType,
   GameInfoType,
   GameType,
-} from "../../interfaces/rootInterface";
-import Slides from "../../components/Slides/Slides";
-import GamesContainer from "../../components/GamesContainer/GamesContainer";
-import ViewMoreBtn from "../../components/ViewMoreBtn/ViewMoreBtn";
-import { rootColor } from "../../constants/rootColor";
-import { LeftOutlined, RightOutlined } from "@ant-design/icons";
-import ButtonPrimary from "../../components/ButtonPrimary/ButtonPrimary";
-import numOfItemInGrid from "../../utils/numOfItemInGrid";
-import DiscoverLoading from "../../components/LoadingComponent/DiscoverLoading";
-import axios from "axios";
-import { Endpoint } from "../../api/endpoint";
+} from '../../interfaces/rootInterface';
+import Slides from '../../components/Slides/Slides';
+import GamesContainer from '../../components/GamesContainer/GamesContainer';
+import ViewMoreBtn from '../../components/ViewMoreBtn/ViewMoreBtn';
+import { rootColor } from '../../constants/rootColor';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import ButtonPrimary from '../../components/ButtonPrimary/ButtonPrimary';
+import numOfItemInGrid from '../../utils/numOfItemInGrid';
+import DiscoverLoading from '../../components/LoadingComponent/DiscoverLoading';
+import axios from 'axios';
+import { Endpoint } from '../../api/endpoint';
+import { getGameSuggestionApi } from '../../api/suggestionApi';
 const numOfItemsDisplay = {
   freeNow: 4,
   mostPopular: 4,
   topGamesWeek: 6,
 };
 
-const EMPTYARR = ["", "", ""];
+const EMPTYARR = ['', '', ''];
 
 function DiscoverScreen() {
   const loadingContext = useContext(LoadingContext);
@@ -49,69 +50,87 @@ function DiscoverScreen() {
 
   // gamesInfoMockData.slice(0, 4)
   const topGamesWeekRef = useRef<any>(null);
-  const handleSlide = (action) => {
+  const handleSlide = action => {
     const ox = topGamesWeekRef.current.offsetWidth;
-    if (action === "next") {
+    if (action === 'next') {
       topGamesWeekRef.current.scrollLeft += ox;
     } else {
       topGamesWeekRef.current.scrollLeft -= ox;
     }
   };
-  const GetData = (title: string,count:number,start:number) => {
-    axios.get(Endpoint.mainApi + 'api/suggestion/get-game/'+ title+ '/' + count + '/' + start)
-      .then(res => {
-        switch(title) {
-          case 'Carousel': setGameData(res.data); break;
-          case 'Top sellers': setTopSellers(res.data); break;
-          case 'New release': setNewRelease(res.data) ;break;
-          case 'Most favorite': setMostFavorite(res.data) ;break;
-          case 'Free games': setFreeGames(res.data); break;
-          case 'Most popular':setMostPopular(res.data); break;
-          case 'Top games week':setTopGamesWeek(res.data); break;
-          case 'Top games month': setTopGamesMonth(res.data); break;
-          case 'Game on sales': setGameOnSales(res.data); break;
-          case 'Free now': setItemsFree(res.data); break;
-        }
-   
-        setIsLoading(i => i+1);
-      })
-      .catch (e => {
-      })
-  }
+  const GetData = async (title: string, count: number, start: number) => {
+    const res = await getGameSuggestionApi(title, count, start);
+    if (Array.isArray(res)) {
+      switch (title) {
+        case 'Carousel':
+          setGameData(res);
+          break;
+        case 'Top sellers':
+          setTopSellers(res);
+          break;
+        case 'New release':
+          setNewRelease(res);
+          break;
+        case 'Most favorite':
+          setMostFavorite(res);
+          break;
+        case 'Free games':
+          setFreeGames(res);
+          break;
+        case 'Most popular':
+          setMostPopular(res);
+          break;
+        case 'Top games week':
+          setTopGamesWeek(res);
+          break;
+        case 'Top games month':
+          setTopGamesMonth(res);
+          break;
+        case 'Game on sales':
+          setGameOnSales(res);
+          break;
+        case 'Free now':
+          setItemsFree(res);
+          break;
+      }
+    }
+
+    setIsLoading(i => i + 1);
+  };
   useEffect(() => {
-    GetData('Carousel',5,0);
-    GetData('Top sellers',5,0);
-    GetData('New release',5,0);
-    GetData('Most favorite',5,0);
-    GetData('Free games',5,0);
-    GetData('Most popular',4,0);
-    GetData('Top games week',12,0);
-    GetData('Top games month',12,0);
-    GetData('Game on sales',4,0);
-    GetData('Free now',4,0);
+    GetData('Carousel', 5, 0);
+    GetData('Top sellers', 5, 0);
+    GetData('New release', 5, 0);
+    GetData('Most favorite', 5, 0);
+    GetData('Free games', 5, 0);
+    GetData('Most popular', 4, 0);
+    GetData('Top games week', 12, 0);
+    GetData('Top games month', 12, 0);
+    GetData('Game on sales', 4, 0);
+    GetData('Free now', 4, 0);
   }, []);
 
   return (
     <div>
-        {isLoading<10 ? <DiscoverLoading></DiscoverLoading> :
-        <div className="discover-screen">
+      {isLoading < 10 ? (
+        <DiscoverLoading></DiscoverLoading>
+      ) : (
+        <div className='discover-screen'>
           <Helmet>
-            {" "}
-            <title> Stun Store | Discover </title>{" "}
+            {' '}
+            <title> Stun Store | Discover </title>{' '}
           </Helmet>
           <div style={{ marginBottom: 40, marginTop: 40 }}>
             <Slides gameData={gameData} />
           </div>
           {/* Top game week */}
           <GamesContainer
-            title="Top Games Week !"
-            leftAction={<ActionLeftTopGameWeek handleSlide={handleSlide} />}
-          >
+            title='Top Games Week !'
+            leftAction={<ActionLeftTopGameWeek handleSlide={handleSlide} />}>
             <Row
               ref={topGamesWeekRef}
-              className="top-game-week"
-              gutter={[35, 35]}
-            >
+              className='top-game-week'
+              gutter={[35, 35]}>
               {topGamesWeek.map((game, index) => (
                 <Col
                   key={`game-info-top-game-week-${index}`}
@@ -120,8 +139,7 @@ function DiscoverScreen() {
                   lg={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
                   md={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
                   sm={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
-                  xs={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
-                >
+                  xs={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}>
                   <GameItem game={game} action={ActionType.ADD} />
                 </Col>
               ))}
@@ -132,10 +150,9 @@ function DiscoverScreen() {
 
           <GamesContainer
             gutterHorizontal={30}
-            title="FREE NOW !"
-            leftAction={<ViewMoreBtn title="free-now" />}
-            backgroundColor={rootColor.grayContainerColor}
-          >
+            title='FREE NOW !'
+            leftAction={<ViewMoreBtn title='free-now' />}
+            backgroundColor={rootColor.grayContainerColor}>
             <Row gutter={[35, 35]}>
               {itemsFree.map((game, index) => (
                 <Col
@@ -145,9 +162,8 @@ function DiscoverScreen() {
                   lg={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
                   md={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
                   sm={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
-                  xs={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
-                >
-                  <GameItemFree game={game} heightImage="25vw" />
+                  xs={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}>
+                  <GameItemFree game={game} heightImage='25vw' />
                 </Col>
               ))}
             </Row>
@@ -162,64 +178,75 @@ function DiscoverScreen() {
                 md={24}
                 sm={24}
                 xs={24}
-                key={`ab4-${index}`}
-              >
+                key={`ab4-${index}`}>
                 <div
                   className={
                     index !== EMPTYARR.length - 1
-                      ? "games-container-horizontal"
-                      : ""
-                  }
-                >
-                  {index === 0 ?  <GamesContainer
-                    key={`abc-${index}`}
-                    gutterHorizontal={30}
-                    title="Top Seller"
-                    leftAction={<ViewMoreBtn title="top-sellers" />}
-                  >
-                    <>
-                      {topSellers.map((game, index) => (
-                        <div style={{ marginBottom: 20 }}>
-                          <GameItem game={game} isHorizontal />
-                        </div>
-                      ))}
-                    </>
-                  </GamesContainer> : null}
-                  {index === 1 ?  <GamesContainer
-                    key={`abc-${index}`}
-                    gutterHorizontal={30}
-                    title="Free Games"
-                    leftAction={<ViewMoreBtn title='free-games' />}
-                  >
-                    <>
-                      {freeGames.map((game, index) => (
-                        <div style={{ marginBottom: 20 }}>
-                          <GameItem game={game} isHorizontal />
-                        </div>
-                      ))}
-                    </>
-                  </GamesContainer> :null}
-                  {index === 2 ?  <GamesContainer
-                    key={`abc-${index}`}
-                    gutterHorizontal={30}
-                    title="New Release"
-                    leftAction={<ViewMoreBtn title='new-release' />}
-                  >
-                    <>
-                      {newRelease.map((game, index) => (
-                        <div style={{ marginBottom: 20 }}>
-                          <GameItem game={game} isHorizontal />
-                        </div>
-                      ))}
-                    </>
-                  </GamesContainer> :null}
-                 
+                      ? 'games-container-horizontal'
+                      : ''
+                  }>
+                  {index === 0 ? (
+                    <GamesContainer
+                      key={`abc-${index}`}
+                      gutterHorizontal={30}
+                      title='Top Seller'
+                      leftAction={<ViewMoreBtn title='top-sellers' />}>
+                      <>
+                        {topSellers.map((game, index) => (
+                          <div
+                            style={{
+                              marginBottom: 20,
+                            }}>
+                            <GameItem game={game} isHorizontal />
+                          </div>
+                        ))}
+                      </>
+                    </GamesContainer>
+                  ) : null}
+                  {index === 1 ? (
+                    <GamesContainer
+                      key={`abc-${index}`}
+                      gutterHorizontal={30}
+                      title='Free Games'
+                      leftAction={<ViewMoreBtn title='free-games' />}>
+                      <>
+                        {freeGames.map((game, index) => (
+                          <div
+                            style={{
+                              marginBottom: 20,
+                            }}>
+                            <GameItem game={game} isHorizontal />
+                          </div>
+                        ))}
+                      </>
+                    </GamesContainer>
+                  ) : null}
+                  {index === 2 ? (
+                    <GamesContainer
+                      key={`abc-${index}`}
+                      gutterHorizontal={30}
+                      title='New Release'
+                      leftAction={<ViewMoreBtn title='new-release' />}>
+                      <>
+                        {newRelease.map((game, index) => (
+                          <div
+                            style={{
+                              marginBottom: 20,
+                            }}>
+                            <GameItem game={game} isHorizontal />
+                          </div>
+                        ))}
+                      </>
+                    </GamesContainer>
+                  ) : null}
                 </div>
               </Col>
             ))}
           </Row>
 
-          <GamesContainer title="MOST POPULAR !" leftAction={<ViewMoreBtn title="most-popular" />}>
+          <GamesContainer
+            title='MOST POPULAR !'
+            leftAction={<ViewMoreBtn title='most-popular' />}>
             <Row gutter={[35, 35]}>
               {mostPopular.map((game, index) => (
                 <Col
@@ -229,18 +256,18 @@ function DiscoverScreen() {
                   lg={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
                   md={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
                   sm={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
-                  xs={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
-                >
+                  xs={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}>
                   <GameItem
                     game={game}
                     action={ActionType.ADD}
-                    heightImage="23vw"
+                    heightImage='23vw'
                   />
                 </Col>
               ))}
             </Row>
           </GamesContainer>
-        </div> }
+        </div>
+      )}
     </div>
   );
 }
@@ -251,20 +278,20 @@ const ActionLeftTopGameWeek = ({
   handleSlide: (action: string) => void;
 }) => {
   return (
-    <div className="action-left-top-game-week">
+    <div className='action-left-top-game-week'>
       <ButtonPrimary
         borderColor={rootColor.grayContainerColor}
         containerColor={rootColor.grayContainerColor}
-        styleClass="action-left-top-game-week__btn"
+        styleClass='action-left-top-game-week__btn'
         text={<LeftOutlined />}
-        callback={() => handleSlide("prev")}
+        callback={() => handleSlide('prev')}
       />
       <ButtonPrimary
         borderColor={rootColor.grayContainerColor}
         containerColor={rootColor.grayContainerColor}
-        styleClass="action-left-top-game-week__btn"
+        styleClass='action-left-top-game-week__btn'
         text={<RightOutlined />}
-        callback={() => handleSlide("next")}
+        callback={() => handleSlide('next')}
       />
     </div>
   );

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, Redirect } from 'react-router';
-import { Switch, Route } from "react-router-loading";
+import { Switch, Route } from 'react-router-loading';
 import { setTabAction } from '../redux/actions/tabAction';
 import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
@@ -44,9 +44,7 @@ function RootNavigation() {
   const isLogin = useMemo(() => !!idUser, [idUser]);
   const [isLoading, setIsLoading] = useState(true);
   const email = useSelector((state: RootState) => state.email);
-  const forgot = useSelector(
-    (state: RootState) => state.forgotPassword
-  )
+  const forgot = useSelector((state: RootState) => state.forgotPassword);
 
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
@@ -77,91 +75,92 @@ function RootNavigation() {
 
   return (
     <Switch>
+      <>
+        {/* user login */}
+        <PrivateRoute loading path='/edit/user/:id'>
+          <EditProfile />
+        </PrivateRoute>
+        <PrivateRoute loading path='/user/:idUser'>
+          <User />
+        </PrivateRoute>
+        <PrivateRoute loading path='/admin/create-game'>
+          <AdminCreateGame />
+        </PrivateRoute>
+        <PrivateRoute loading path='/admin/update-game/:idGame'>
+          <AdminUpdateGame />
+        </PrivateRoute>
 
-        <>
-          {/* user login */}
-          <PrivateRoute loading path='/edit/user/:id'>
-            <EditProfile />
-          </PrivateRoute>
-          <PrivateRoute loading path='/user/:idUser'>
-            <User />
-          </PrivateRoute>
-          <PrivateRoute loading path='/admin/create-game'>
-            <AdminCreateGame />
-          </PrivateRoute>
-          <PrivateRoute loading path='/admin/update-game/:idGame'>
-            <AdminUpdateGame />
-          </PrivateRoute>
+        <Route
+          path='/admin/console/game-list'
+          component={ConsoleGameListScreen}
+          loading={true}></Route>
+        <Route loading path='/admin/console/user-list'>
+          <Route />
+        </Route>
+        <Route loading path='/admin/console/discount-list'>
+          <DiscountEvent />
+        </Route>
+        <Route loading path='/admin/console/genres-list'>
+          <GenresManager />
+        </Route>
+        <Route loading path='/admin/console/privacy-policy-edit'>
+          <PrivacyPolicyEditor />
+        </Route>
+        <Route loading path='/admin/console/store-refund-edit'>
+          <StoreRefundPolicyEditor />
+        </Route>
+        <Route loading path='/admin/console/term-of-service-edit'>
+          <TermOfService />
+        </Route>
+        <Route loading path='/admin/console/discover-cms'>
+          <DiscoverCMS />
+        </Route>
+        <Route loading path='/admin/console/history/:idGame'>
+          <AllGameVersion />
+        </Route>
 
-          <Route  path='/admin/console/game-list' component={ConsoleGameListScreen} loading={true}>
-          </Route>
-          <Route loading path='/admin/console/user-list'>
-            <Route />
-          </Route>
-          <Route loading path='/admin/console/discount-list'>
-            <DiscountEvent />
-          </Route>
-          <Route loading path='/admin/console/genres-list'>
-            <GenresManager />
-          </Route>
-          <Route loading path='/admin/console/privacy-policy-edit'>
-            <PrivacyPolicyEditor />
-          </Route>
-          <Route loading path='/admin/console/store-refund-edit'>
-            <StoreRefundPolicyEditor />
-          </Route>
-          <Route loading path='/admin/console/term-of-service-edit'>
-            <TermOfService />
-          </Route>
-          <Route loading path='/admin/console/discover-cms'>
-            <DiscoverCMS />
-          </Route>
-          <Route loading path='/admin/console/history/:idGame'>
-            <AllGameVersion />
-          </Route>
+        {/* Auth*/}
+        <Route
+          loading
+          path='/sign-in'
+          render={() => (isLogin ? <Redirect to='/' /> : <SignIn />)}
+        />
+        <Route
+          loading
+          path='/sign-up'
+          render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
+        />
+        <Route
+          loading
+          path='/confirm-email'
+          render={() =>
+            email === null ? <Redirect to='/' /> : <ConfirmEmail />
+          }
+        />
+        <Route
+          path='/forgot-password'
+          render={() => (isLogin ? <Redirect to='/' /> : <ForgotPassword />)}
+        />
+        <Route
+          path='/reset-password'
+          render={() =>
+            forgot === false ? <Redirect to='/' /> : <ResetPassword />
+          }
+        />
+        <Route path='/email-verify/:url'>
+          <ConfirmEmailWithLink />
+        </Route>
 
-          {/* Auth*/}
-          <Route
-            loading
-            path='/sign-in'
-            render={() => (isLogin ? <Redirect to='/' /> : <SignIn />)}
-          />
-          <Route
-            loading
-            path='/sign-up'
-            render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
-          />
-          <Route
-            loading
-            path='/confirm-email'
-            render={() =>
-              email === null ? <Redirect to='/' /> : <ConfirmEmail />
-            }
-          />
-          <Route
-            path='/forgot-password'
-            render={() =>
-              isLogin ? <Redirect to='/' /> : <ForgotPassword />
-            }
-          />
-          <Route path='/reset-password'
-            render={()=> forgot === false ? <Redirect to='/' /> : <ResetPassword />}
-          />
-          <Route path='/email-verify/:url'>
-            <ConfirmEmailWithLink />
-          </Route>
+        {/* everyone */}
+        <Route path='/suggestion/:title' component={SuggestionScreen} />
+        <Route path='/game/:idGame' component={GameDetail} />
+        <Route path='/browse/' component={BrowseScreen} />
+        <Route exact path='/' component={DiscoverScreen} />
+        {/* <Route path='*' component={NotFoundScreen} /> */}
 
-          {/* everyone */}
-          <Route path='/suggestion/:title' component={SuggestionScreen}></Route>
-          <Route path='/game/:idGame' component={GameDetail} />
-          <Route path='/browse/' component={BrowseScreen} />
-          <Route exact path='/' component={DiscoverScreen} />
-          {/* <Route path='*' component={NotFoundScreen} /> */}
-
-          {/* move to not found page */}
-          {/* <Redirect from='*' to='/404' /> */}
-        </>
-      
+        {/* move to not found page */}
+        {/* <Redirect from='*' to='/404' /> */}
+      </>
     </Switch>
   );
 }

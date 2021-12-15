@@ -13,9 +13,20 @@ interface Detail {
   game: GameDetailss;
 }
 
+const DEFAUL_CARD = {};
+
 function PriceGame({ game }: Detail) {
   const { idUser } = useSelector((state: RootState) => state.user) || {};
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const isGameFree = game.cost == 0;
+
+  const onClickBuyNow = () => {
+    if (isGameFree) {
+      onSubmitPayment(DEFAUL_CARD);
+    } else {
+      showModal();
+    }
+  };
 
   const showModal = () => {
     setIsModalVisible(true);
@@ -36,11 +47,24 @@ function PriceGame({ game }: Detail) {
       };
       const response = await gamesApi.createNewBillGame(dataRequest);
       const { actions, cost, datePaygame, idBill, message } = response || {};
+      var currentdate = new Date();
+      var datetime =
+        currentdate.getDate() +
+        '/' +
+        (currentdate.getMonth() + 1) +
+        '/' +
+        currentdate.getFullYear() +
+        ' @ ' +
+        currentdate.getHours() +
+        ':' +
+        currentdate.getMinutes() +
+        ':' +
+        currentdate.getSeconds();
       if (idBill) {
         showMessage(
           `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${
             game.nameGame
-          } with $${cost} at ${datePaygame}`
+          } with $${cost} at ${datePaygame || datetime}`
         );
         setIsModalVisible(false);
       } else if (message) {
@@ -76,7 +100,9 @@ function PriceGame({ game }: Detail) {
         ) : (
           <div className='d-flex align-items-end'>
             <div className='m-left-8'>
-              <span className='fs-16 lh-16'>{game.cost === 0 ? "Free" : numberWithCommas(game.cost)}</span>
+              <span className='fs-16 lh-16'>
+                {isGameFree ? 'Free' : numberWithCommas(game.cost)}
+              </span>
             </div>
           </div>
         )}
@@ -84,24 +110,28 @@ function PriceGame({ game }: Detail) {
           <Button
             type='primary'
             className='bgr-blue1 pd-8-16 width-full border-radius-4 '
-            style = {{height:'45px'}}
-            onClick={showModal}>
+            style={{ height: '45px' }}
+            onClick={onClickBuyNow}>
             Buy Now
           </Button>
-          <Modal
-            wrapClassName='master-card'
-            title={'Buy Game ' + game.nameGame}
-            visible={isModalVisible}
-            onOk={onSubmitPayment}
-            onCancel={handleCancel}
-            footer={null}>
-            <BuyComponent onSubmitPayment={onSubmitPayment} />
-          </Modal>
+          {!isGameFree && (
+            <Modal
+              wrapClassName='master-card'
+              title={'Buy Game ' + game.nameGame}
+              visible={isModalVisible}
+              onOk={onSubmitPayment}
+              onCancel={handleCancel}
+              footer={null}>
+              <BuyComponent onSubmitPayment={onSubmitPayment} />
+            </Modal>
+          )}
         </div>
         <div className='m-top-28 m-bottom-48'>
           <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>
             <div className='d-flex'>
-              <p className='m-0 center uppercase flex-1-1-auto' style={{cursor:'pointer'}}>
+              <p
+                className='m-0 center uppercase flex-1-1-auto'
+                style={{ cursor: 'pointer' }}>
                 add to wishlist
               </p>
               <span>
