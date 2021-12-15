@@ -300,13 +300,13 @@ function Admin() {
         </Form.Item>
 
         <SystemRequirements />
-        <Row gutter={[48, 8]}>
-          <Col xxl={14} xl={14} lg={16} md={16} sm={24} xs={24}>
+        <div style = {{display:'flex', alignItems:'flex-end', justifyContent:'space-between'}}> 
             <Form.Item
               name="cost"
               label="Game Cost"
             >
               <InputNumber
+                width="90vw"
                 defaultValue={0}
                 min={0}
                 formatter={(value) =>
@@ -314,18 +314,14 @@ function Admin() {
                 }
               />
             </Form.Item>
-          </Col>
-          <Col xxl={10} xl={100} lg={8} md={8} sm={24} xs={24}>
+
             <Form.Item
-              wrapperCol={{ span: 12, offset: 6 }}
-              className="m-top-24"
             >
               <Button type="primary" htmlType="submit">
-                Submit
+                  Create Game
               </Button>
             </Form.Item>
-          </Col>
-        </Row>
+        </div>
       </Form>
     </div>
   );

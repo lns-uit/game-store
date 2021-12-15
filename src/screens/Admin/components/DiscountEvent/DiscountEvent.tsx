@@ -31,7 +31,7 @@ function DiscountEvent() {
   let allGame: any[] = [];
 
   const getDataGame = () => {
-    return axios.get("https://localhost:5001/api/game").then((response) => {
+    return axios.get("https://localhost:5001/api/game/get-game-for-discount").then((response) => {
       response.data.forEach((data) => {
         if (data.lastestVersion !== -1) {
           allGame.push(
@@ -92,13 +92,13 @@ function DiscountEvent() {
       title: "Start Date",
       key: "startDate",
       dataIndex: "startDate",
-      render: (text) => <Moment format="DD-MM-yyyy | HH:mm:ss">{text}</Moment>,
+      render: (text) => <Moment trim>{text}</Moment>,
     },
     {
       title: "End Date",
       key: "endDate",
       dataIndex: "endDate",
-      render: (text) => <Moment format="DD-MM-yyyy | HH:mm:ss">{text}</Moment>,
+      render: (text) => <Moment format="DD-MM-yyyy | HH:mm:ss" trim>{text}</Moment>,
     },
     {
       title: "Action",
@@ -108,34 +108,45 @@ function DiscountEvent() {
           <Button 
           onClick={()=> {
             console.log(form)
-            form.setFieldsValue({title:record.title,percent:record.percentDiscount})
+            form.setFieldsValue(
+              {
+                title:record.title,
+                percent:record.percentDiscount,
+                time: [new Moment(record.startDate),new Moment(record.endDate)]
+              })
             showModal()
           }} 
             type="default"> Update 
           </Button>
+          <Button onClick={()=>{deleteDiscount(record.idDiscount)}}> Delete </Button>
           <Button> Detail </Button>
         </Space>
       ),
     },
   ];
+  const getGameByDiscount = (idDiscount) => {
+    axios.get(Endpoint.mainApi + "api/discount/get-game-by-discount/{idDiscount}",
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"), // token here
+        },
+      }
+    )
+  }
   const postDiscount = (
-    percentDiscount: any,
-    title: any,
-    startDate: any,
-    endDate: any,
-    game: any
+    value : any
   ) => {
     axios
       .post(
         Endpoint.mainApi + "api/discount/create",
         {
           discount: {
-            percentDiscount: percentDiscount,
-            title: title,
-            startDate: startDate,
-            endDate: endDate,
+            percentDiscount: value.percent,
+            title: value.title,
+            startDate: new Date(value.time[0]),
+            endDate: new Date(value.time[1]),
           },
-          listGameDiscount: game
+          listGameDiscount: value.games
         },
         {
           headers: {
@@ -144,7 +155,8 @@ function DiscountEvent() {
         }
       )
       .then((response) => {
-        getDiscountData();
+        refreshData();
+        form.resetFields();
         handleCancel();
       })
       .catch((error) => {
@@ -152,24 +164,20 @@ function DiscountEvent() {
       });
   };
   const updateDiscount = (
-    idDiscount: any,
-    percentDiscount: any,
-    title: any,
-    startDate: any,
-    endDate: any,
-    game: any
+    idDiscount: string,
+    value : any
   ) => {
     axios
       .put(
         Endpoint.mainApi + "api/discount/update/" + idDiscount,
         {
           discount: {
-            percentDiscount: percentDiscount,
-            title: title,
-            startDate: startDate,
-            endDate: endDate,
+            percentDiscount: value.percent,
+            title: value.title,
+            startDate: new Date(value.time[0].toString()),
+            endDate: new Date(value.time[1].toString()),
           },
-          listGameDiscount: game
+          listGameDiscount: value.games
         },
         {
           headers: {
@@ -178,15 +186,32 @@ function DiscountEvent() {
         }
       )
       .then((response) => {
-        getDiscountData();
+        refreshData();
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  useEffect(() => {
+  const deleteDiscount = (idDiscount: string) => {
+    axios.delete(
+      Endpoint.mainApi + "api/discount/delete/" + idDiscount,{
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken"),
+        }
+      }
+    ).then ( res => {
+      refreshData();
+    }
+    ).catch (err => {
+      refreshData();
+    })
+  }
+  const refreshData =() => {
     getDiscountData();
     getDataGame();
+  }
+  useEffect(() => {
+    refreshData();
   }, []);
   return (
     <div className="console-container">
@@ -202,7 +227,7 @@ function DiscountEvent() {
         <Form
           form={form}
           layout="vertical"
-          onFinish={(value) => { console.log(value) }}
+          onFinish={(value) => { postDiscount(value) }}
           onFinishFailed={() => { }}
           autoComplete="off"
         >

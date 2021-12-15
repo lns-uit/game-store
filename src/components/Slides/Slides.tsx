@@ -10,7 +10,7 @@ import { GameType } from '../../interfaces/rootInterface';
 import numberWithCommas from '../../utils/numberWithCommas';
 import { useHistory } from 'react-router-dom';
 interface SlideData {
-  gameData: GameType[]
+  gameData: GameType[] | null;
 }
 
 function Slides({gameData}: SlideData) {
@@ -28,7 +28,7 @@ function Slides({gameData}: SlideData) {
       <Row>
         <Col xxl={6} xl={6} lg={7} md={0} sm={0} xs={0}>
           <div className='group-btn-slides'>
-            {gameData.map((item, index) =>
+            {gameData?.map((item, index) =>
               index <= 4 ? (
                 <div
                   className='btn-slides'
@@ -94,7 +94,7 @@ function Slides({gameData}: SlideData) {
             afterChange={index => {
               setActiveCarousel(index);
             }}>
-            {gameData.map((item, index) =>
+            {gameData?.map((item, index) =>
               index <= 4 ? (
                 <div>
                   <div className='my-slides-element'>

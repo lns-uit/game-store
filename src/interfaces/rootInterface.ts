@@ -198,6 +198,20 @@ export enum ActionType {
   ADD = 'add',
   REMOVE = 'remove',
 }
+interface GameDiscoverType {
+  gameData: GameType[];
+  itemsFree: GameType[];
+  topGamesWeek: GameType[];
+  mostPopular: GameType[];
+  topSellers: GameType[];
+  newRelease: GameType[];
+  freeGames: GameType[];
+  topGamesMonth: GameType[];
+  gameOnSales: GameType[];
+  mostFavorite: GameType[];
+  isLoading: number;
+  type: string;
+}
 
 export type {
   ImageType,
@@ -215,4 +229,5 @@ export type {
   FormRegisterType,
   CollectionType,
   gameCollection,
+  GameDiscoverType,
 };
