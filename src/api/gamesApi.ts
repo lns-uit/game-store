@@ -28,6 +28,7 @@ const getGameDetail = async slug => {
 const createNewBillGame = async newBill => {
   try {
     const accessToken = localStorage.getItem('accessToken');
+    console.log(newBill);
 
     const request = await callApi(
       'post',

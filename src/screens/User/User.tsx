@@ -5,11 +5,18 @@ import CollectionLayout from '../../layout/CollectionLayout/CollectionLayout';
 import getCollectionByUserApi from '../../api/collectionApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
-import { CollectionType } from '../../interfaces/rootInterface';
+import { CollectionType, GameType } from '../../interfaces/rootInterface';
 
 function User() {
   const [collection, setCollection] = useState<CollectionType[]>([]);
   const user = useSelector((state: RootState) => state.user);
+
+  const removeGameFromCollection = (idGame: string) => {
+    const newCollection = collection.filter(
+      item => item.game.idGame.localeCompare(idGame) != 0
+    );
+    setCollection([...newCollection]);
+  };
 
   const fetchCollection = async idUser => {
     console.log('fetch collection');
@@ -23,7 +30,6 @@ function User() {
 
   useEffect(() => {
     fetchCollection(user.idUser);
-    console.log('fetch collection');
   }, []);
 
   return (
@@ -35,7 +41,11 @@ function User() {
             {collection.length === 0 ? (
               <div>loadding.....</div>
             ) : (
-              <CollectionLayout collection={collection} />
+              <CollectionLayout
+                removeGameFromCollection={removeGameFromCollection}
+                user={user}
+                collection={collection}
+              />
             )}
           </div>
         </div>

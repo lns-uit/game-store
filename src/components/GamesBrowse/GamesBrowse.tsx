@@ -6,7 +6,7 @@ import { Row, Col } from 'antd';
 import './styles.css';
 import axios from 'axios';
 import gameApi from '../../api/gamesApi';
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet';
 
 interface Pages {
   games: GameType[];
@@ -16,13 +16,17 @@ interface Pages {
 function GamesBrowse({ games, lastGameRef }: Pages) {
   return (
     <div className='mr-top-10'>
-      <Helmet> <title> Stun Store | Browse </title>  </Helmet>
+      <Helmet>
+        {' '}
+        <title> Stun Store | Browse </title>{' '}
+      </Helmet>
       <Row>
         {games.map((game, index) => {
           const isLastGameItem = index + 1 == games.length;
           return (
             <Col
               // change to id game
+              style={{ marginBottom: 20 }}
               key={`game-info-${Math.floor(Math.random() * 10000000)}`}
               xxl={6}
               xl={8}

@@ -23,9 +23,11 @@ function GameItemFree({ game, heightImage }: GameItemFreePropsType) {
     ));
   };
   return (
-    <div className='game-item game-item--free'
-        onClick={()=>{history.push('/game/'+game.idGame)}}
-    >
+    <div
+      className='game-item game-item--free'
+      onClick={() => {
+        history.push('/game/' + game.idGame);
+      }}>
       <div
         style={heightImage ? { height: heightImage } : {}}
         className='game-item__image game-item__image--free'>
