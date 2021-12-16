@@ -13,7 +13,7 @@ interface GameItemPropsType {
   isHorizontal?: boolean;
   heightImage?: string;
   titleTooltip?: string;
-  onClickGameItem?: () => void;
+  onClickGameItem?: (game: GameType) => void;
 }
 
 function GameItem({
@@ -49,11 +49,19 @@ function GameItem({
     return <p className='game-item__detail-wrapper__type'>{genreDisplay}</p>;
   };
 
+  const handleClickGameItem = e => {
+    if (typeof onClickGameItem != 'undefined') {
+      onClickGameItem(game);
+      e.preventDefault();
+      return;
+    } else {
+      history.push('/game/' + game.idGame);
+    }
+  };
+
   return (
     <div
-      onClick={() => {
-        history.push('/game/' + game.idGame);
-      }}
+      onClick={handleClickGameItem}
       className={
         isHorizontal ? 'game-item game-item--horizontal' : 'game-item'
       }>
@@ -64,7 +72,7 @@ function GameItem({
           title={titleTooltip}
           color={rootColor.redColor}
           key={rootColor.whiteColor}>
-          <button className='game-item__action' onClick={onClickGameItem}>
+          <button className='game-item__action'>
             {action === ActionType.REMOVE ? (
               <MinusCircleOutlined className='game-item__action__icon' />
             ) : (
