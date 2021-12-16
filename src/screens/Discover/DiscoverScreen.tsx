@@ -49,10 +49,6 @@ function DiscoverScreen() {
       topGamesWeekRef.current.scrollLeft -= ox;
     }
   };
-  useEffect(() => {
-    console.log(isLoading);
-    console.log(gameData)
-  }, [discover]);
 
   return (
     <div>

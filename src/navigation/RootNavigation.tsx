@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, Redirect } from 'react-router';
-import { Switch, Route } from "react-router-loading";
+import { Switch, Route } from 'react-router-loading';
 import { setTabAction } from '../redux/actions/tabAction';
 import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
@@ -39,6 +39,7 @@ import { GameType,GameDiscoverType } from '../interfaces/rootInterface';
 import axios from 'axios';
 import { Endpoint } from '../api/endpoint';
 import suggestionGameReducer from '../redux/reducers/suggestionGame';
+import { getGameSuggestionApi } from '../api/suggestionApi';
 
 function RootNavigation() {
   let location = useLocation();
@@ -48,9 +49,7 @@ function RootNavigation() {
   const isLogin = useMemo(() => !!idUser, [idUser]);
 
   const email = useSelector((state: RootState) => state.email);
-  const forgot = useSelector(
-    (state: RootState) => state.forgotPassword
-  )
+  const forgot = useSelector((state: RootState) => state.forgotPassword);
 
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
@@ -84,34 +83,32 @@ function RootNavigation() {
     isLoading: 10,
     type: "set",
   };
-  const GetData = (title: string, count: number, start: number) => {
-    axios.get(Endpoint.mainApi + 'api/suggestion/get-game/' + title + '/' + count + '/' + start)
-      .then(res => {
-        switch (title) {
-          case 'Carousel': data.gameData = res.data; break;
-          case 'Top sellers': data.topSellers = res.data; break;
-          case 'New release': data.newRelease = res.data; break;
-          case 'Most favorite': data.mostFavorite = res.data; break;
-          case 'Free games':  data.freeGames = res.data; break;
-          case 'Most popular':  data.mostPopular = res.data; break;
-          case 'Top games week': data.topGamesWeek = res.data; break;
-          case 'Top games month':  data.topGamesMonth = res.data; break;
-          case 'Game on sales':  data.gameOnSales = res.data; break;
-          case 'Free now':  data.itemsFree = res.data; break;
-        }
-        
-        isLoading ++;
+
+  const GetData = async (title: string, count: number, start: number) => {
+    const res = await getGameSuggestionApi(title, count, start);
+    if (Array.isArray(res)) {
+      switch (title) {
+        case 'Carousel': data.gameData = res; break;
+        case 'Top sellers': data.topSellers = res; break;
+        case 'New release': data.newRelease = res; break;
+        case 'Most favorite': data.mostFavorite = res; break;
+        case 'Free games':  data.freeGames = res; break;
+        case 'Most popular':  data.mostPopular = res; break;
+        case 'Top games week': data.topGamesWeek = res; break;
+        case 'Top games month':  data.topGamesMonth = res; break;
+        case 'Game on sales':  data.gameOnSales = res; break;
+        case 'Free now':  data.itemsFree = res; break;
+      }
+    }
+
+    isLoading ++;
         if (isLoading >=10) {
           if (data !== null) {
               dispatch(suggestionGameReducer(undefined,data));
           }
           
         }
-      })
-      .catch(e => {
-        console.log(e)
-      })
-  }
+  };
   useEffect(() => {
     fetchData();
     GetData('Carousel',5,0);
@@ -131,7 +128,6 @@ function RootNavigation() {
 
   return (
     <Switch>
-
       <>
         {/* user login */}
         <PrivateRoute loading path='/edit/user/:id'>
@@ -194,28 +190,28 @@ function RootNavigation() {
         />
         <Route
           path='/forgot-password'
-          render={() =>
-            isLogin ? <Redirect to='/' /> : <ForgotPassword />
-          }
+          render={() => (isLogin ? <Redirect to='/' /> : <ForgotPassword />)}
         />
-        <Route path='/reset-password'
-          render={() => forgot === false ? <Redirect to='/' /> : <ResetPassword />}
+        <Route
+          path='/reset-password'
+          render={() =>
+            forgot === false ? <Redirect to='/' /> : <ResetPassword />
+          }
         />
         <Route path='/email-verify/:url'>
           <ConfirmEmailWithLink />
         </Route>
 
         {/* everyone */}
-        <Route path='/suggestion/:title' component={SuggestionScreen}></Route>
+        <Route path='/suggestion/:title' component={SuggestionScreen} />
         <Route path='/game/:idGame' component={GameDetail} />
         <Route path='/browse/' component={BrowseScreen} />
-        <Route exact path='/' component={DiscoverScreen}/>
+        <Route exact path='/' component={DiscoverScreen} />
         {/* <Route path='*' component={NotFoundScreen} /> */}
 
         {/* move to not found page */}
         {/* <Redirect from='*' to='/404' /> */}
       </>
-
     </Switch>
   );
 }

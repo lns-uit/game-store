@@ -160,7 +160,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           {user?.roles === 'admin' ?
             <ButtonPrimary
             text='GO TO CONSOLE'
-            callback={() => window.open('admin/console/game-list','_self')}
+            callback={() => window.open('admin/console/game-list')}
             containerColor={rootColor.redColor}
             borderColor={rootColor.redColor}
             styleClass={'header__top-wrapper--right__btn-get-launcher'}

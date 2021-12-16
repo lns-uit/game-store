@@ -141,9 +141,14 @@ textarea.ant-input:focus {
 label {
   color: rgb(172, 172, 172) !important;
 }
-@media (min-width: 68px) and (max-width: 1023px) {
+@media screen and (max-width: 1600px) {
   .site-layout {
-    padding: 50px 80px;
+    padding: 50px 90px;
+  }
+}
+@media (max-width: 1100px) {
+  .site-layout {
+    padding: 50px 40px;
   }
   .dots--horizontal .dot-container {
     padding: 0 6px !important;

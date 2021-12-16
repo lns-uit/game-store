@@ -22,8 +22,6 @@ function useGames({
     start: number,
     action: string
   ) => {
-    console.log({ count, listGenreDetail, sortBy, start });
-
     const resGame = await gamesApi.getGameByGenre({
       listGenreDetail,
       count,
@@ -31,7 +29,6 @@ function useGames({
       sortBy,
     });
     if (Array.isArray(resGame)) {
-      console.log(resGame);
       if (start == 0) {
         setGames(resGame);
       } else {

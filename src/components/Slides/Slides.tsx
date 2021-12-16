@@ -26,7 +26,7 @@ function Slides({gameData}: SlideData) {
   return (
     <div className='slides-container'>
       <Row>
-        <Col xxl={6} xl={6} lg={7} md={0} sm={0} xs={0}>
+        <Col xxl={6} xl={6} lg={6} md={0} sm={0} xs={0}>
           <div className='group-btn-slides'>
             {gameData?.map((item, index) =>
               index <= 4 ? (
@@ -84,7 +84,7 @@ function Slides({gameData}: SlideData) {
             )}
           </div>
         </Col>
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
+        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <Carousel
             className='my-slides'
             ref={carouselRef}

@@ -270,13 +270,20 @@
     height: 7.02vw;
   }
 }
-
+@media screen and (max-width: 1000px) {
+  .my-slides,
+  .my-slides-element, .my-slides-element-loading {
+    margin-top: -50px;
+    height: 100vw !important;
+  }
+}
 @media screen and (max-width: 768px) {
   .my-slides,
   .my-slides-element, .my-slides-element-loading {
+    margin-top: -50px;
     width: 100vw;
     height: 100vw;
-    border-radius: 0px;
+    border-radius: 15px !important;
   }
   .my-slides {
     margin-top: -50px;
