@@ -141,6 +141,12 @@ textarea.ant-input:focus {
 label {
   color: rgb(172, 172, 172) !important;
 }
+.ant-carousel .slick-dots{
+  margin-left: 0 !important;
+}
+.ant-carousel .slick-dots-bottom{
+  bottom: 70px !important;
+}
 @media screen and (max-width: 1600px) {
   .site-layout {
     padding: 50px 90px;

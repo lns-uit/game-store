@@ -32,7 +32,15 @@ interface CollectionType {
   game: GameType;
   isInstalled: any;
 }
-
+interface BillType{
+  idBill: string;
+  idGame: string;
+  idUser: string;
+  datePay: Date;
+  cost: number;
+  actions: string;
+  discount: string;
+}
 interface gameCollection {
   averageRate: number;
   cost: number;
@@ -230,4 +238,5 @@ export type {
   CollectionType,
   gameCollection,
   GameDiscoverType,
+  BillType
 };

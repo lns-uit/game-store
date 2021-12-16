@@ -122,3 +122,29 @@
 .game-item__action__icon:hover {
   transform: scale(1.5, 1.5) !important;
 }
+@media screen and (max-width: 1600px) {
+  .game-item__image {
+    height: 16vw;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .game-item__image {
+    height: 25vw;
+  }
+}
+@media screen and (max-width: 992px) {
+  .game-item__image {
+    height: 25vw !important;
+  }
+}
+@media screen and (max-width: 768px) {
+  .game-item__image {
+    height: 40vw !important;
+  }
+}
+@media screen and (max-width: 500px) {
+  .game-item__image {
+    height: 40vw !important;
+  }
+}

@@ -270,7 +270,7 @@
     height: 7.02vw;
   }
 }
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 992px) {
   .my-slides,
   .my-slides-element, .my-slides-element-loading {
     margin-top: -50px;

@@ -20,8 +20,6 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import ButtonPrimary from "../../components/ButtonPrimary/ButtonPrimary";
 import numOfItemInGrid from "../../utils/numOfItemInGrid";
 import DiscoverLoading from "../../components/LoadingComponent/DiscoverLoading";
-import axios from "axios";
-import { Endpoint } from "../../api/endpoint";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/reducers";
 const numOfItemsDisplay = {
@@ -76,9 +74,9 @@ function DiscoverScreen() {
                   key={`game-info-top-game-week-${index}`}
                   xxl={numOfItemInGrid(numOfItemsDisplay.topGamesWeek)}
                   xl={numOfItemInGrid(numOfItemsDisplay.topGamesWeek)}
-                  lg={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
-                  md={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
-                  sm={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
+                  lg={numOfItemInGrid(numOfItemsDisplay.topGamesWeek/1.5)}
+                  md={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 1.5)}
+                  sm={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
                   xs={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
                 >
                   <GameItem game={game} action={ActionType.ADD} />

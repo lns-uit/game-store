@@ -8,6 +8,7 @@ import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
 import { GameType } from '../../interfaces/rootInterface';
 import numberWithCommas from '../../utils/numberWithCommas';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 interface SlideData {
   gameData: GameType[] | null;
@@ -18,7 +19,7 @@ function Slides({gameData}: SlideData) {
   const carouselRef = useRef<CarouselRef>(null);
   const [btn_animScale, set_btn_animScale] = useState(false);
   const history = useHistory();
-
+  const isResMb = useMediaQuery({ query: '(min-width: 992px)' })
   useEffect(()=>{
     // GetCarouselData();
   },[])
@@ -89,8 +90,8 @@ function Slides({gameData}: SlideData) {
             className='my-slides'
             ref={carouselRef}
             speed={200}
-            dots = {false}
-            effect="fade"
+            draggable = {!isResMb ? true : false}
+            dots = {isResMb ? false : true}
             afterChange={index => {
               setActiveCarousel(index);
             }}>
@@ -123,10 +124,16 @@ function Slides({gameData}: SlideData) {
                             </span>
                           ))}
                           <br/><br/>
-                          <b>
-                            {item.cost === 0 ? "Free Game" : numberWithCommas(item.cost)}
-                          </b>
-                   
+                          {
+                            item.discount == null ? 
+                            <b>
+                              {item.cost === 0 ? "Free" : numberWithCommas(item.cost)}
+                            </b> :
+                            <b>
+                              {parseFloat(item.cost)-item.cost*item.discount.percentDiscount/100 === 0 ? "Free Game" : numberWithCommas(parseFloat(item.cost)-item.cost*item.discount.percentDiscount/100)}
+                            </b>
+                          }
+                      
                         </div>
                         <br />
                         <button onClick={()=>{history.push('/game/'+item.idGame)}} > PLAY NOW </button>

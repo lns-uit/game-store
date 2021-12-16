@@ -5,12 +5,13 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './styles.css';
 import MyCarousel from '../../components/MyCarousel/MyCarousel';
-import { GameDetailss } from '../../interfaces/rootInterface';
+import { BillType, GameDetailss } from '../../interfaces/rootInterface';
 interface Detail {
   game: GameDetailss;
+  bill: BillType | undefined;
 }
 
-function LayoutGameDetail1({ game }: Detail) {
+function LayoutGameDetail1({ game,bill }: Detail) {
   const { nameGame } = game || {};
   return (
     <div className='cover'>

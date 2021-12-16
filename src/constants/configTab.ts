@@ -5,7 +5,7 @@ const defaultTab = [
   },
   {
     name: 'browse',
-    linkTo: '/browse/?page=1',
+    linkTo: '/browse',
   },
 ];
 const drawerTab = [

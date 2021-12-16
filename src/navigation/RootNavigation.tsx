@@ -36,8 +36,6 @@ import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 import ResetPassword from '../screens/ResetPassword/ResetPassword';
 import SuggestionScreen from '../screens/Suggestion/SuggestionScreen';
 import { GameType,GameDiscoverType } from '../interfaces/rootInterface';
-import axios from 'axios';
-import { Endpoint } from '../api/endpoint';
 import suggestionGameReducer from '../redux/reducers/suggestionGame';
 import { getGameSuggestionApi } from '../api/suggestionApi';
 
@@ -47,9 +45,10 @@ function RootNavigation() {
   const { idUser } = user || {};
   const dispatch = useDispatch();
   const isLogin = useMemo(() => !!idUser, [idUser]);
-
+  const [isLoading, setIsLoading] = useState(true);
   const email = useSelector((state: RootState) => state.email);
   const forgot = useSelector((state: RootState) => state.forgotPassword);
+
 
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
@@ -65,10 +64,11 @@ function RootNavigation() {
   const fetchData = useCallback(async () => {
     const tokenLogin = localStorage.getItem('accessToken');
     await loginWithToken(tokenLogin);
-    setTimeout(() => {
+    setTimeout(() => {  
+      setIsLoading(false);
     }, 500);
   }, []);
-  let isLoading = 0;
+  let isLoadingDiscover = 0;
   let data : GameDiscoverType = {
     gameData: [],
     itemsFree: [],
@@ -101,14 +101,19 @@ function RootNavigation() {
       }
     }
 
-    isLoading ++;
-        if (isLoading >=10) {
+    isLoadingDiscover ++;
+        if (isLoadingDiscover >=10) {
           if (data !== null) {
               dispatch(suggestionGameReducer(undefined,data));
           }
           
         }
   };
+
+  useEffect(() => {
+    dispatch(setTabAction(location.pathname));
+  }, [location]);
+
   useEffect(() => {
     fetchData();
     GetData('Carousel',5,0);
@@ -122,12 +127,11 @@ function RootNavigation() {
     GetData('Game on sales',4,0);
     GetData('Free now',4,0);
   }, []);
-  useEffect(() => {
-    dispatch(setTabAction(location.pathname));
-  }, [location]);
-
   return (
     <Switch>
+       {isLoading ? (
+        <Route path='/' render={() => <SplashScreen />} />
+      ) : (
       <>
         {/* user login */}
         <PrivateRoute loading path='/edit/user/:id'>
@@ -205,13 +209,14 @@ function RootNavigation() {
         {/* everyone */}
         <Route path='/suggestion/:title' component={SuggestionScreen} />
         <Route path='/game/:idGame' component={GameDetail} />
-        <Route path='/browse/' component={BrowseScreen} />
+        <Route path='/browse' component={BrowseScreen} />
         <Route exact path='/' component={DiscoverScreen} />
         {/* <Route path='*' component={NotFoundScreen} /> */}
 
         {/* move to not found page */}
         {/* <Redirect from='*' to='/404' /> */}
       </>
+      )}
     </Switch>
   );
 }
