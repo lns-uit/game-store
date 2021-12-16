@@ -16,17 +16,12 @@ function Collection({ collection, handleRefundGame }: GameSearch) {
     if (game.cost == 0) {
       const isAnswer = confirm('Are u want to delete it ?');
       if (isAnswer) {
-        handleRefundGame(game, {
-          masterCardCCV: 533,
-          masterCardExpire: '11/21',
-          masterCardName: 'NGUYEN PHUC',
-          masterCardNumber: '1040000001',
-        });
+        handleRefundGame(game, {});
       }
     } else {
-      // show card info
       const isAnswer = confirm('Are u want to refund it ?');
       if (isAnswer) {
+        // show card info and pass to handleRefundGame
         handleRefundGame(game, {
           masterCardCCV: 533,
           masterCardExpire: '11/21',
