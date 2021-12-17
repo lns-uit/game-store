@@ -5,6 +5,7 @@ import { BillType, GameDetailss } from '../../interfaces/rootInterface';
 import Moment from 'react-moment';
 import { Modal, Button } from 'antd';
 import BuyComponent from '../BuyComponent/BuyComponent';
+import RefundComponent from '../RefundComponent/RefundComponent'
 import gamesApi from '../../api/gamesApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
@@ -15,24 +16,22 @@ interface Detail {
   bill: BillType | undefined;
 }
 
-const DEFAUL_CARD = {};
+
 
 function PriceGame({ game, bill }: Detail) {
   const { idUser } = useSelector((state: RootState) => state.user) || {};
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalRefund, setIsModalRefund] = useState(false);
   const [timeRefund, setTimeRefund] = useState(-1);
   const isGameFree = game.cost == 0;
 
   const onClickBuyNow = () => {
-    if (isGameFree) {
-      onSubmitPayment(DEFAUL_CARD);
-    } else {
       showModal();
-    }
   };
   const countDownTimeRefund = () => {
-    if (moment(bill?.datePay).add(4975, 'minutes').diff(moment().format(), 'second') < 0) return;
-    setTimeRefund(moment(bill?.datePay).add(4975, 'minutes').diff(moment().format(), 'second'));
+    let timeCountDown = moment(bill?.datePay).add(100, 'hours').diff(moment().format(), 'second');
+    if (timeCountDown<0) return;
+    setTimeRefund(timeCountDown);
     setTimeout(countDownTimeRefund, 1000)
   }
   const pad = (num) => {
@@ -89,7 +88,9 @@ function PriceGame({ game, bill }: Detail) {
       }
     }
   };
-
+  const onSubmitRefund = async card => {
+    console.log(card);
+  }
   const handleCancel = () => {
     setIsModalVisible(false);
   };
@@ -113,7 +114,7 @@ function PriceGame({ game, bill }: Detail) {
             <div className='m-left-8'>
               <span className='fs-12 lh-16'>
                 {numberWithCommas(
-                  (game.discount.percentDiscount / 100) * game.cost
+                  (1 - game.discount.percentDiscount / 100) * game.cost
                 )}
               </span>
             </div>
@@ -157,7 +158,7 @@ function PriceGame({ game, bill }: Detail) {
 
               ) : (
                 <div>
-                  {timeRefund > 0 ? (
+                  {timeRefund > 0 && bill.cost !== 0 ? (
                     <div >
                       <div className='d-flex space-between'>
                         <div style ={{color:'#919191'}}>Time Refund: </div><b>{secondsFormatHMS(timeRefund)}</b> 
@@ -167,7 +168,7 @@ function PriceGame({ game, bill }: Detail) {
                         type='primary'
                         className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
                         style={{ height: '45px' }}
-                        onClick={() => { }}>
+                        onClick={() => {setIsModalRefund(true)}}>
                         Refund
                       </Button>
                     </div>
@@ -184,18 +185,28 @@ function PriceGame({ game, bill }: Detail) {
                 </div>
               )
           }
-
-          {!isGameFree && (
             <Modal
-              wrapClassName='master-card'
+              width={1000}
+              bodyStyle={{height: 700}}
+              style={{borderRadius: 10}}              wrapClassName='master-card'
               title={'Buy Game ' + game.nameGame}
               visible={isModalVisible}
               onOk={onSubmitPayment}
               onCancel={handleCancel}
               footer={null}>
-              <BuyComponent onSubmitPayment={onSubmitPayment} />
+              <BuyComponent onSubmitPayment={onSubmitPayment} game={game}/>
             </Modal>
-          )}
+            <Modal
+                width={500}
+                bodyStyle={{height: 500}}
+                style={{borderRadius: 10}}              wrapClassName='master-card'
+                title={'Refund Game ' + game.nameGame}
+                visible={isModalRefund}
+                onOk={onSubmitRefund}
+                onCancel={()=>{setIsModalRefund(false)}}
+                footer={null}>
+                <RefundComponent onSubmitRefund={onSubmitRefund} game={game} bill={bill}/>
+            </Modal>
         </div>
 
         <div>

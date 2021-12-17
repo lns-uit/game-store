@@ -1,0 +1,75 @@
+.buy-form-content{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+    color: white;
+    font-weight: 500;
+    font-size: 15px;
+}
+.buy-form-detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    background-color: rgb(29, 29, 29);
+    border-radius: 10px;
+    padding-top: 20px;
+    width: 40%;
+}
+.buy-content{
+    height: 100% !important;
+}
+.ant-form-vertical{
+    height: 100%;
+}
+.btn-method {
+    height: 100px;
+    width: 100px;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+.btn-method img{
+    height: 150px;
+}
+.number-format-creddit{
+    padding:0 10px;
+    border: 1px solid rgb(85, 85, 85) !important; 
+    font-weight: 500 !important;
+    color: white !important;
+    border-radius: 5px !important;
+}
+.mastercard-container{
+    width: 400px;
+}
+.game-item-payment{
+    height: 100px;
+    width: 100%;
+}
+.game-item-payment img{
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.name-game-pay{
+    word-wrap: break-word;
+    margin-left: 30px;
+    align-items:flex-end;
+    height:90%;
+    width: 300px;
+    inline-size: 190px;
+}
+.refund-form-detail{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    background-color: rgb(29, 29, 29);
+    border-radius: 10px;
+    padding-top: 20px;
+    width: 100%;
+}

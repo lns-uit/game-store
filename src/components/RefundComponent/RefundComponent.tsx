@@ -1,19 +1,21 @@
 import React, { useState } from "react";
 import "../../layout/LayoutGameDetail1/styles.css";
 import { Form, Input, Button } from "antd";
-import './style.css';
-import mastercardPng from './visa.png'
-import MasterCardForm from './MasterCardForm';
-import { GameDetailss, GameType } from "../../interfaces/rootInterface";
+import '../BuyComponent/style.css';
+import { BillType, GameDetailss, GameType } from "../../interfaces/rootInterface";
 import numberWithCommas from "../../utils/numberWithCommas";
-interface BuyComponentPropsType {
-  onSubmitPayment: (card: any) => void;
+import NumberFormat from "react-number-format";
+import Moment from "react-moment";
+
+interface RefundComponentPropsType {
+  onSubmitRefund: (card: any) => void;
   game: GameDetailss;
+  bill: BillType | undefined;
 }
 
 const DEFAUL_CARD = {};
 
-function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
+function RefundComponent({ onSubmitRefund,game,bill }: RefundComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState("");
 
@@ -23,17 +25,17 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
         totalPayment = (1 - game.discount.percentDiscount /100 )*game.cost;
     }
     if (totalPayment === 0) {
-      onSubmitPayment(DEFAUL_CARD);
+      onSubmitRefund(DEFAUL_CARD);
       return;
     }
     const card = {
-      masterCardName: value.name,
+      masterCardName: null,
       masterCardNumber: value.number.replaceAll(" ", ""),
-      masterCardCCV: parseInt(value.ccv2),
-      masterCardExpire: value.expirationDate.replaceAll(" ",""),
+      masterCardCCV: null,
+      masterCardExpire: null,
     };
 
-    onSubmitPayment(card);
+    onSubmitRefund(card);
   };
 
   const formatCreddit = (e) => {
@@ -57,7 +59,7 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
         {strErr}
       </div>
       <Form
-        name="sign_in"
+        name="refund"
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 50 }}
         onFinish={handleSubmitPaymet}
@@ -65,16 +67,8 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
         autoComplete="off"
       >
         <div className = "buy-form-content">
-          <div> 
-            <div className = "btn-method d-flex">
-                 <img src = {mastercardPng} />
-            </div>
-            <br/>
-            {game.discount?.percentDiscount === 100 || game.cost=== 0 ? null : <MasterCardForm></MasterCardForm>}
-         
-          </div>
-          <div className = "buy-form-detail">
-            <div className = "detail-payment-game">
+          <div className = "refund-form-detail">
+            <div className = "detail-payment-game" style={{width:"100%"}}>
               <div className="d-flex game-item-payment">
                 <img src={game.imageGameDetail[0].url} />
                 <div className="d-flex name-game-pay">
@@ -84,44 +78,40 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
               <br/>
               <div>
                 <div>
-                  Cost: <b> {numberWithCommas(game.cost)} </b>
+                  Date Bought: <b>{<Moment format="HH:mm:ss | DD-MM-yyyy" >{bill?.datePay}</Moment> }</b> 
                 </div>
-                {
-                  game.discount !== null ? (
-                    <div>
-                      Discount {game.discount.title} | <b> -{game.discount.percentDiscount}% </b>
-                    </div>
-                  ) : null
-                }
               </div>
             </div>
+            <Form.Item
+            name="number"
+            label="CARD NUMBER TO REFUND MONEY"
+            rules={[{ required: true, message: "Please input card number!" }]}
+            style={{width:"100%"}}
+          >
+            <NumberFormat
+              className="number-format-creddit"
+              format="#### #### #### ####"
+              placeholder="Card Number"
+            />
+          </Form.Item>
             <div>
               <div className = "d-flex space-between">
                 <div>
-                  Total Payment:
+                  You bought at cost:
                 </div>
                 <div>
-                  {game.discount !== null ?
-                    <div>
-                      {numberWithCommas(game.cost*(1 - game.discount.percentDiscount / 100))}
-                    </div>
-                    : 
-                    <div>
-                      {numberWithCommas(game.cost)}
-                    </div>
-                  }
-                
+                  {numberWithCommas(bill?.cost)}
                 </div>
               </div>
               <br/>
               <Form.Item wrapperCol={{ offset: 0, span: 100 }}>
                 <Button
-                  onClick={onSubmitPayment}
-                  style={{ height: "40px", width: "300px" }}
+                  onClick={onSubmitRefund}
+                  style={{ height: "40px", width: "400px" }}
                   htmlType="submit"
                   className="full-width btn-pay"
                 >
-                  Pay Now
+                  Refund Now
                 </Button>
               </Form.Item>
             </div>
@@ -132,4 +122,4 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
   );
 }
 
-export default BuyComponent;
+export default RefundComponent;

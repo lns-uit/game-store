@@ -20,7 +20,7 @@ function LayoutGameDetail1({ game,bill }: Detail) {
           <div className='flex-1-1-auto max-width-1029'>
             <div className='m-bottom-24'>
               <div className='text-cover d-inline-block'>
-                <h3 className='white m-0 fs-48 lh-56 uppercase'>{nameGame}</h3>
+                <h3 className='white m-0 fs-48 lh-56'>{nameGame}</h3>
               </div>
             </div>
             <div className='d-inline-block width-full cover-img button-none'>
