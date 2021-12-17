@@ -200,3 +200,10 @@ label {
 .space-between{
   justify-content: space-between;
 }
+.ant-btn[disabled]{
+  cursor: default !important;
+}
+.ant-btn-primary[disabled]{
+  color: rgb(202, 202, 202) !important;
+  border-color: #aaaaaa !important;
+}

@@ -4,7 +4,7 @@ import {
     LogLevel,
 } from "@microsoft/signalr";
 import { Avatar, Button, Input, Comment, Form, Rate } from "antd";
-import { CommentType, GameVersionType, UserType } from "../../interfaces/rootInterface";
+import { BillType, CommentType, GameVersionType, UserType } from "../../interfaces/rootInterface";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../redux/reducers/index";
@@ -17,9 +17,10 @@ const { TextArea } = Input;
 
 interface IdGame {
     idGame: string;
+    bill: BillType |undefined;
 }
 
-function CommentContainer({ idGame }: IdGame) {
+function CommentContainer({ idGame,bill }: IdGame) {
     const [connection, setConnection] = useState<HubConnection>();
     const [comments, setComment] = useState<CommentType[]>([]);
     const [ms, setMs] = useState("");
@@ -163,7 +164,7 @@ function CommentContainer({ idGame }: IdGame) {
             }
         }).then((response) => {
             setUserInfo(response.data);
-            joinRoom("stun-user", idGame);
+  
         }).catch(err => {
             console.log(err)
         })
@@ -186,13 +187,28 @@ function CommentContainer({ idGame }: IdGame) {
             .catch(err => console.log(err))
     }
     useEffect(() => {
-        if (localStorage.getItem('accessToken') !== null) {
-            getUserInfo();
-        }
+        joinRoom("anomymous-user", idGame);
         getComment();
         getMyComment();
         getCommentCount();
+        getUserInfo();
     }, []);
+
+    const closeConnection = async () => {
+        try {
+            await connection?.stop();
+            joinRoom("stun-user",idGame);
+        } catch {
+            closeConnection();
+        }
+    }
+
+    // useEffect(() => {
+    //     if (user !== null) {
+      
+    //         closeConnection();
+    //     }
+    // },[user])
     return (
         <div>
             <div className="font-w500">
@@ -206,7 +222,7 @@ function CommentContainer({ idGame }: IdGame) {
                     </div>
                 </div>
                 <br /> <br />
-                {idUser === '' ? null :
+                {idUser === '' || bill=== undefined ? null :
                     <div className="rate-input-container">
                         {
                             myComment?.idComment === undefined ?

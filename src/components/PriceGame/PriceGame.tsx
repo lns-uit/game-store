@@ -1,23 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
-import { GameDetailss } from '../../interfaces/rootInterface';
+import { BillType, GameDetailss } from '../../interfaces/rootInterface';
 import Moment from 'react-moment';
 import { Modal, Button } from 'antd';
 import BuyComponent from '../BuyComponent/BuyComponent';
 import gamesApi from '../../api/gamesApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
+import moment from 'moment';
 
 interface Detail {
   game: GameDetailss;
+  bill: BillType | undefined;
 }
 
 const DEFAUL_CARD = {};
 
-function PriceGame({ game }: Detail) {
+function PriceGame({ game, bill }: Detail) {
   const { idUser } = useSelector((state: RootState) => state.user) || {};
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [timeRefund, setTimeRefund] = useState(-1);
   const isGameFree = game.cost == 0;
 
   const onClickBuyNow = () => {
@@ -27,7 +30,22 @@ function PriceGame({ game }: Detail) {
       showModal();
     }
   };
+  const countDownTimeRefund = () => {
+    if (moment(bill?.datePay).add(4975, 'minutes').diff(moment().format(), 'second') < 0) return;
+    setTimeRefund(moment(bill?.datePay).add(4975, 'minutes').diff(moment().format(), 'second'));
+    setTimeout(countDownTimeRefund, 1000)
+  }
+  const pad = (num) => {
+    return ("0" + num).slice(-2);
+  }
+  const secondsFormatHMS = (secs: number) => {
+    var minutes = Math.floor(secs / 60);
+    secs = secs % 60;
+    var hours = Math.floor(minutes / 60)
+    minutes = minutes % 60;
+    return `${pad(hours)} h ${pad(minutes)} m ${pad(secs)} s`;
 
+  }
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -62,8 +80,7 @@ function PriceGame({ game }: Detail) {
         currentdate.getSeconds();
       if (idBill) {
         showMessage(
-          `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${
-            game.nameGame
+          `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${game.nameGame
           } with $${cost} at ${datePaygame || datetime}`
         );
         setIsModalVisible(false);
@@ -76,12 +93,16 @@ function PriceGame({ game }: Detail) {
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+  useEffect(() => {
+    if (bill !== undefined)
+      countDownTimeRefund();
+  }, [bill])
   return (
     <div className='d-flex align-items-start column justify-content-end height-full'>
       <div className='width-full'>
         {game.discount !== null ? (
           <div className='d-flex align-items-end'>
-            <div className='bgr-blue1 pd-4-12 border-radius-4'>
+            <div className='bgr-discount pd-4-12 border-radius-4'>
               <span>-{game.discount.percentDiscount}%</span>
             </div>
             <div className='m-left-right-8'>
@@ -107,13 +128,63 @@ function PriceGame({ game }: Detail) {
           </div>
         )}
         <div className='m-top-36'>
-          <Button
-            type='primary'
-            className='bgr-blue1 pd-8-16 width-full border-radius-4 '
-            style={{ height: '45px' }}
-            onClick={onClickBuyNow}>
-            Buy Now
-          </Button>
+          {
+            bill === undefined ?
+              (
+                <div>
+                  <Button
+                    type='primary'
+                    className='bgr-blue1 pd-8-16 width-full border-radius-4 uppercase'
+                    style={{ height: '45px' }}
+                    onClick={onClickBuyNow}>
+                    Buy Now
+                  </Button>
+                  <div className='m-top-28 m-bottom-48'>
+                    <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>
+                      <div className='d-flex'>
+                        <p
+                          className='m-0 center uppercase flex-1-1-auto'
+                          style={{ cursor: 'pointer' }}>
+                          add to wishlist
+                        </p>
+                        <span>
+                          <i className='fa fa-plus-circle'></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              ) : (
+                <div>
+                  {timeRefund > 0 ? (
+                    <div >
+                      <div className='d-flex space-between'>
+                        <div style ={{color:'#919191'}}>Time Refund: </div><b>{secondsFormatHMS(timeRefund)}</b> 
+                      </div>
+                      <br />
+                      <Button
+                        type='primary'
+                        className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                        style={{ height: '45px' }}
+                        onClick={() => { }}>
+                        Refund
+                      </Button>
+                    </div>
+                  ) :
+                    <Button
+                      disabled
+                      type='primary'
+                      className='bgr-red pd-8-16 width-full border-radius-4 uppercase'
+                      style={{ height: '45px' }}
+                    >
+                      In Collection
+                    </Button>
+                  }
+                </div>
+              )
+          }
+
           {!isGameFree && (
             <Modal
               wrapClassName='master-card'
@@ -126,20 +197,7 @@ function PriceGame({ game }: Detail) {
             </Modal>
           )}
         </div>
-        <div className='m-top-28 m-bottom-48'>
-          <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>
-            <div className='d-flex'>
-              <p
-                className='m-0 center uppercase flex-1-1-auto'
-                style={{ cursor: 'pointer' }}>
-                add to wishlist
-              </p>
-              <span>
-                <i className='fa fa-plus-circle'></i>
-              </span>
-            </div>
-          </div>
-        </div>
+
         <div>
           <div
             className={

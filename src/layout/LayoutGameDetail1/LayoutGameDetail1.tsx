@@ -32,7 +32,7 @@ function LayoutGameDetail1({ game,bill }: Detail) {
         </Col>
         <Col xxl={6} xl={6} lg={24} md={24} sm={24} xs={24}>
           <div className='height-full white pd-bottom-20'>
-            <PriceGame game={game} />
+            <PriceGame game={game} bill = {bill} />
           </div>
         </Col>
       </Row>

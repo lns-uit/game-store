@@ -45,7 +45,7 @@ function RootNavigation() {
   const { idUser } = user || {};
   const dispatch = useDispatch();
   const isLogin = useMemo(() => !!idUser, [idUser]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const email = useSelector((state: RootState) => state.email);
   const forgot = useSelector((state: RootState) => state.forgotPassword);
 

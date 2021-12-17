@@ -21,11 +21,12 @@ function GameDetail() {
     const response = await gamesApi.getGameDetail(slug);
     if (response) {
       console.log(response);
-      await checkIsBought(response.idGame);
+
       setGame(response);
     }
   };
-  const checkIsBought = (idGame:string) => {
+  const checkIsBought = (idUser:any,idGame:any) => {
+    if (idUser=== undefined || idGame === undefined) return;
     axios.get(Endpoint.mainApi + 'api/collection/is-own-by-user/' + idUser + '/' + idGame)
       .then(res =>{
         console.log(res.data);
@@ -39,6 +40,10 @@ function GameDetail() {
     fetchGameData();
   }, []);
 
+  useEffect(()=>{
+    checkIsBought(idUser,game?.idGame);
+  },[user,game])
+
   return (
     <div>
       {!game?.idGame ? (
@@ -46,7 +51,7 @@ function GameDetail() {
       ) : (
         <div style = {{marginTop: '30px'}}>
           <LayoutGameDetail1 game={game} bill = {bill}/>
-          <LayoutGameDetail2 game={game} />
+          <LayoutGameDetail2 game={game} bill = {bill}/>
         </div>
       )}
     </div>
