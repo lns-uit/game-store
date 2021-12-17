@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
+import GameDetailLoading from './GameDetailLoading'
 
 function GameDetail() {
   const slug = useParams();
@@ -47,13 +48,13 @@ function GameDetail() {
   return (
     <div>
       {!game?.idGame ? (
-        <div>Loadding</div>
-      ) : (
-        <div style = {{marginTop: '30px'}}>
-          <LayoutGameDetail1 game={game} bill = {bill}/>
-          <LayoutGameDetail2 game={game} bill = {bill}/>
-        </div>
-      )}
+        <GameDetailLoading></GameDetailLoading>
+       ) : (
+         <div style = {{marginTop: '30px'}}>
+           <LayoutGameDetail1 game={game} bill = {bill}/>
+           <LayoutGameDetail2 game={game} bill = {bill}/>
+         </div>
+       )}
     </div>
   );
 }

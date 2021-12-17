@@ -30,6 +30,7 @@ function CommentContainer({ idGame,bill }: IdGame) {
     const [userInfo, setUserInfo] = useState<UserType>();
     const [myComment, setMyComment] = useState<CommentType>();
     const [commentCount, setCommentCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
 
     const joinRoom = async (user, room) => {
         try {
@@ -164,7 +165,7 @@ function CommentContainer({ idGame,bill }: IdGame) {
             }
         }).then((response) => {
             setUserInfo(response.data);
-  
+            
         }).catch(err => {
             console.log(err)
         })
@@ -186,12 +187,16 @@ function CommentContainer({ idGame,bill }: IdGame) {
             })
             .catch(err => console.log(err))
     }
-    useEffect(() => {
-        joinRoom("anomymous-user", idGame);
+    const joinRoomTimeout = () => {
+        joinRoom("stun-user", idGame);
         getComment();
         getMyComment();
         getCommentCount();
         getUserInfo();
+        setIsLoading(false);
+    }
+    useEffect(() => {
+        setTimeout(joinRoomTimeout,2000);
     }, []);
 
     const closeConnection = async () => {
@@ -211,6 +216,7 @@ function CommentContainer({ idGame,bill }: IdGame) {
     // },[user])
     return (
         <div>
+            {isLoading ? null :
             <div className="font-w500">
                 <div style={{ fontSize: "16px", display: "flex" }}>
                     <div>
@@ -249,7 +255,7 @@ function CommentContainer({ idGame,bill }: IdGame) {
                         <CommentItem idUser={idUser} comment={data} updateCmtFunc={updateComment} deleteCmtFunc={deleteComment} isOwn={idUser === data.idUser} />
                         : null
                 ))}
-            </div>
+            </div>}
         </div>
     );
 }

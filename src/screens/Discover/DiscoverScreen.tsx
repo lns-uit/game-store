@@ -109,6 +109,28 @@ function DiscoverScreen() {
               ))}
             </Row>
           </GamesContainer>
+          {/* Game on sales */}
+          <GamesContainer title="GAMES ON SALE !" leftAction={<ViewMoreBtn title="game-on-sales" />}>
+            <Row gutter={[35, 35]}>
+              {gameOnSales?.map((game, index) => (
+                <Col
+                  key={`game-info-most-popular-${index}`}
+                  xxl={numOfItemInGrid(numOfItemsDisplay.mostPopular)}
+                  xl={numOfItemInGrid(numOfItemsDisplay.mostPopular)}
+                  lg={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                  md={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                  sm={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                  xs={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                >
+                  <GameItem
+                    game={game}
+                    action={ActionType.ADD}
+                    heightImage="23vw"
+                  />
+                </Col>
+              ))}
+            </Row>
+          </GamesContainer>
           {/* Top Seller */}
           <Row>
             {EMPTYARR.map((arr, index) => (
@@ -197,6 +219,7 @@ function DiscoverScreen() {
               ))}
             </Row>
           </GamesContainer>
+         
         </div> : <DiscoverLoading></DiscoverLoading> }
     </div>
   );

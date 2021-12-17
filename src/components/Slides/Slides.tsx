@@ -129,9 +129,16 @@ function Slides({gameData}: SlideData) {
                             <b>
                               {item.cost === 0 ? "Free" : numberWithCommas(item.cost)}
                             </b> :
-                            <b>
-                              {parseFloat(item.cost)-item.cost*item.discount.percentDiscount/100 === 0 ? "Free Game" : numberWithCommas(parseFloat(item.cost)-item.cost*item.discount.percentDiscount/100)}
-                            </b>
+                            <div style={{display:'flex'}}>
+                              <div style={{textDecoration: 'line-through',color: '#5c5c5c'}}>
+                                {item.cost}
+                              </div>
+                              &nbsp;
+                              <b>
+                              {parseFloat(item.cost)*(1-item.discount.percentDiscount/100) === 0 ? "Free Game" : numberWithCommas(parseFloat(item.cost)-item.cost*item.discount.percentDiscount/100)}
+                              </b>
+                              
+                            </div>
                           }
                       
                         </div>

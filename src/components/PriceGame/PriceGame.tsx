@@ -83,6 +83,7 @@ function PriceGame({ game, bill }: Detail) {
           } with $${cost} at ${datePaygame || datetime}`
         );
         setIsModalVisible(false);
+        window.location.reload();
       } else if (message) {
         showMessage(message);
       }
