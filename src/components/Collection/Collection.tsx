@@ -46,16 +46,14 @@ function Collection({ collection, handleRefundGame }: GameSearch) {
               md={12}
               sm={12}
               xs={24}>
-              <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
-                <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
-                  <GameItem
-                    titleTooltip={'Remove game from collection'}
-                    onClickGameItem={onClickGameItem}
-                    game={game}
-                    action={ActionType.REMOVE}
-                  />
-                </div>
-              </Link>
+              <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                <GameItem
+                  titleTooltip={'Remove game from collection'}
+                  onClickGameItem={onClickGameItem}
+                  game={game}
+                  action={ActionType.REMOVE}
+                />
+              </div>
             </Col>
           );
         })}

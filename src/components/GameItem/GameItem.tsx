@@ -22,7 +22,6 @@ function GameItem({
   isHorizontal,
   heightImage,
   titleTooltip,
-  onClickGameItem,
 }: GameItemPropsType) {
   const history = useHistory();
   const { nameGame, discount, imageGameDetail, genres, cost } = game;
@@ -50,12 +49,17 @@ function GameItem({
   };
 
   const handleClickGameItem = e => {
-    if (typeof onClickGameItem != 'undefined') {
-      onClickGameItem(game);
-      e.preventDefault();
-      return;
-    } else {
+    const node = e.target.nodeName.toLowerCase();
+    if (node !== 'svg' && node !== 'path') {
       history.push('/game/' + game.idGame);
+    }
+  };
+
+  const onClickTooltip = (e, action) => {
+    if (action === ActionType.ADD) {
+      alert('add to wishlist');
+    } else {
+      alert('remove from wishlist');
     }
   };
 
@@ -69,14 +73,24 @@ function GameItem({
         <Tooltip
           overlayInnerStyle={{ fontSize: 14 }}
           placement='topLeft'
-          title={titleTooltip}
+          title={
+            action === ActionType.REMOVE
+              ? 'Remove from wishlist'
+              : 'Add to wishlist'
+          }
           color={rootColor.redColor}
           key={rootColor.whiteColor}>
           <button className='game-item__action'>
             {action === ActionType.REMOVE ? (
-              <MinusCircleOutlined className='game-item__action__icon' />
+              <MinusCircleOutlined
+                className='game-item__action__icon'
+                onClick={e => onClickTooltip(e, ActionType.REMOVE)}
+              />
             ) : (
-              <PlusCircleOutlined className='game-item__action__icon' />
+              <PlusCircleOutlined
+                className='game-item__action__icon'
+                onClick={e => onClickTooltip(e, ActionType.ADD)}
+              />
             )}
           </button>
         </Tooltip>
