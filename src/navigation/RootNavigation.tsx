@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, Redirect } from 'react-router';
-import { Switch, Route } from 'react-router-loading';
+import {Switch, Route } from 'react-router-loading';
 import { setTabAction } from '../redux/actions/tabAction';
 import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
@@ -49,7 +49,6 @@ function RootNavigation() {
   const email = useSelector((state: RootState) => state.email);
   const forgot = useSelector((state: RootState) => state.forgotPassword);
 
-
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
 
@@ -68,6 +67,7 @@ function RootNavigation() {
       setIsLoading(false);
     }, 500);
   }, []);
+
   let isLoadingDiscover = 0;
   let data : GameDiscoverType = {
     gameData: [],
@@ -130,7 +130,11 @@ function RootNavigation() {
   return (
     <Switch>
        {isLoading ? (
-        <Route path='/' render={() => <SplashScreen />} />
+        <>
+          <Route path='/'/>
+            <SplashScreen />
+          <Route/>
+        </>
       ) : (
       <>
         {/* user login */}
@@ -193,10 +197,12 @@ function RootNavigation() {
           }
         />
         <Route
+          loading
           path='/forgot-password'
           render={() => (isLogin ? <Redirect to='/' /> : <ForgotPassword />)}
         />
         <Route
+          loading
           path='/reset-password'
           render={() =>
             forgot === false ? <Redirect to='/' /> : <ResetPassword />

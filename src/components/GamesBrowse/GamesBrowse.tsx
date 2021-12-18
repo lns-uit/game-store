@@ -34,19 +34,17 @@ function GamesBrowse({ games, lastGameRef }: Pages) {
               md={12}
               sm={12}
               xs={24}>
-              <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
-                {isLastGameItem ? (
-                  <div
-                    ref={lastGameRef}
-                    className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
-                    <GameItem game={game} action={ActionType.ADD} />
-                  </div>
-                ) : (
-                  <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
-                    <GameItem game={game} action={ActionType.ADD} />
-                  </div>
-                )}
-              </Link>
+              {isLastGameItem ? (
+                <div
+                  ref={lastGameRef}
+                  className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                  <GameItem game={game} action={ActionType.ADD} />
+                </div>
+              ) : (
+                <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                  <GameItem game={game} action={ActionType.ADD} />
+                </div>
+              )}
             </Col>
           );
         })}
