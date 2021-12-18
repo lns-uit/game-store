@@ -36,14 +36,6 @@ function EditProfileGeneral(){
                     </div>
                     <div>
                         <Form.Item
-                            label="Email"
-                            name="email"
-                        >
-                            <Input type="email" placeholder="Email" defaultValue={user.email}/>
-                        </Form.Item>
-                    </div>
-                    <div>
-                        <Form.Item
                             label="Phone"
                             name="phone"
                             className="none-error"

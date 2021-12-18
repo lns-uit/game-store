@@ -31,8 +31,8 @@ function ProfileUserLayout({ user }: ProfileUserLayoutPropsType) {
               <div className='relative d-flex align-center avatars'>
                 <Avatar
                   size={{
-                    xs: 100,
-                    sm: 100,
+                    xs: 168,
+                    sm: 168,
                     md: 168,
                     lg: 168,
                     xl: 168,
