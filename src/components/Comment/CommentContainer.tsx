@@ -4,7 +4,7 @@ import {
     LogLevel,
 } from "@microsoft/signalr";
 import { Avatar, Button, Input, Comment, Form, Rate } from "antd";
-import { BillType, CommentType, GameVersionType, UserType } from "../../interfaces/rootInterface";
+import { BillType, CommentType, GameDetailss, GameType, GameVersionType, UserType } from "../../interfaces/rootInterface";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../redux/reducers/index";
@@ -16,11 +16,12 @@ import numberDot from "../../utils/numberDot"
 const { TextArea } = Input;
 
 interface IdGame {
+    game: GameDetailss;
     idGame: string;
     bill: BillType |undefined;
 }
 
-function CommentContainer({ idGame,bill }: IdGame) {
+function CommentContainer({ idGame,bill,game }: IdGame) {
     const [connection, setConnection] = useState<HubConnection>();
     const [comments, setComment] = useState<CommentType[]>([]);
     const [ms, setMs] = useState("");
@@ -31,6 +32,8 @@ function CommentContainer({ idGame,bill }: IdGame) {
     const [myComment, setMyComment] = useState<CommentType>();
     const [commentCount, setCommentCount] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
+    const [rateCount, setRateCount] = useState(game.numOfRate);
+    const [rateAverage, setRateAverage] = useState(game.averageRate);
 
     const joinRoom = async (user, room) => {
         try {
@@ -43,11 +46,12 @@ function CommentContainer({ idGame,bill }: IdGame) {
                 console.log("message receive: ", message);
             });
 
-            connection.on("ReceiveCreateComment", (user, comment: CommentType) => {
+            connection.on("ReceiveCreateComment", (user, comment: CommentType, avgRate) => {
                 console.log('comment is created')
                 if (comment.idUser === idUser) setMyComment(comment);
                 setComment(cmts => [comment, ...cmts])
                 setCommentCount(cmt => cmt + 1)
+                setRateAverage(avgRate);
             })
 
             connection.on("ReceiveUpdateComment", (user, comment: CommentType) => {
@@ -61,10 +65,11 @@ function CommentContainer({ idGame,bill }: IdGame) {
 
             })
 
-            connection.on("ReceiveDeleteComment", (user, id: string) => {
+            connection.on("ReceiveDeleteComment", (user, id: string, avgRate) => {
                 setMyComment(cmt => cmt?.idComment === id ? undefined : cmt);
                 setComment(cmts => cmts.filter(item => item.idComment !== id))
-                setCommentCount(cmt => cmt - 1)
+                setCommentCount(cmt => cmt - 1);
+                setRateAverage(avgRate);
             })
 
             await connection.start();
@@ -198,16 +203,6 @@ function CommentContainer({ idGame,bill }: IdGame) {
     useEffect(() => {
         setTimeout(joinRoomTimeout,2000);
     }, []);
-
-    const closeConnection = async () => {
-        try {
-            await connection?.stop();
-            joinRoom("stun-user",idGame);
-        } catch {
-            closeConnection();
-        }
-    }
-
     // useEffect(() => {
     //     if (user !== null) {
       
@@ -216,9 +211,23 @@ function CommentContainer({ idGame,bill }: IdGame) {
     // },[user])
     return (
         <div>
+            
             {isLoading ? null :
             <div className="font-w500">
-                <div style={{ fontSize: "16px", display: "flex" }}>
+                <div className="font-w500">
+                <div className="white uppercase lh-26 pd-top-2 m-bottom-10 fs-14 weight-normal brg-img d-flex">
+                    <div>
+                        RATINGS
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div style={{ color: "#6b6b6b" }}>
+                        {numberDot(commentCount)} Rates
+                    </div>
+                    </div>
+                    <Rate disabled value = {rateAverage}></Rate>
+                </div>
+                <br/>
+                <div className="white uppercase lh-26 pd-top-2 m-bottom-10 fs-14 weight-normal brg-img d-flex">
                     <div>
                         COMMENTS
                     </div>
@@ -227,7 +236,7 @@ function CommentContainer({ idGame,bill }: IdGame) {
                         {numberDot(commentCount)} Comments
                     </div>
                 </div>
-                <br /> <br />
+                <br />
                 {idUser === '' || bill=== undefined ? null :
                     <div className="rate-input-container">
                         {

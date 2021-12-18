@@ -29,7 +29,7 @@ function PriceGame({ game, bill }: Detail) {
       showModal();
   };
   const countDownTimeRefund = () => {
-    let timeCountDown = moment(bill?.datePay).add(100, 'hours').diff(moment().format(), 'second');
+    let timeCountDown = moment(bill?.datePay).add(200, 'hours').diff(moment().format(), 'second');
     if (timeCountDown<0) return;
     setTimeRefund(timeCountDown);
     setTimeout(countDownTimeRefund, 1000)

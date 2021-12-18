@@ -1,7 +1,7 @@
 import callApi from '../utils/callApi';
 import { Endpoint } from './endpoint';
 
-const endpoint = 'https://localhost:5001/api/game';
+const endpoint = Endpoint.mainApi+'api/game';
 const urlGameDetail = '/api/gameversion/{idgame}/{version}';
 
 const getGamesApi = async () => {
@@ -17,7 +17,7 @@ const getGameDetail = async slug => {
   try {
     const res = await callApi(
       'get',
-      `https://localhost:5001/api/gameversion/by-game/lastest-version/${slug.idGame}`
+      Endpoint.mainApi + `api/gameversion/by-game/lastest-version/${slug.idGame}`
     );
     return res.data;
   } catch (err) {

@@ -53,7 +53,7 @@ function LayoutGameDetail2({ game,bill }: Detail) {
                     <AboutGame game={game}/>
                     <SystemRequirements game={game}/>
                     <MoreLikeThis/>
-                    <CommentContainer idGame = {game.idGame} bill={bill}/>
+                    <CommentContainer idGame = {game.idGame} bill={bill} game={game}/>
                 </Col>
                 <Col
                     xxl={6}

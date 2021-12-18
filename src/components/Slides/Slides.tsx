@@ -130,8 +130,8 @@ function Slides({gameData}: SlideData) {
                               {item.cost === 0 ? "Free" : numberWithCommas(item.cost)}
                             </b> :
                             <div style={{display:'flex'}}>
-                              <div style={{textDecoration: 'line-through',color: '#5c5c5c'}}>
-                                {item.cost}
+                              <div style={{textDecoration: 'line-through',color: '#adadad'}}>
+                                {numberWithCommas(item.cost)} &ensp;
                               </div>
                               &nbsp;
                               <b>
