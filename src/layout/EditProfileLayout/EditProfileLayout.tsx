@@ -8,63 +8,53 @@ import EditProfileGeneral from '../../components/EditProfileGeneral/EditProfileG
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import AvatarAndCoverImage from '../../components/AvatarAndCoverImage/AvatarAndCoverImage';
-import EditPassWord from '../../components/EditPassWord/EditPassWord'
+import EditPassWord from '../../components/EditPassWord/EditPassWord';
+import axios from 'axios';
+import {Endpoint} from '../../api/endpoint';
 
 function EditProfileLayout() {
   const user = useSelector((state: RootState) => state.user);
   const [navigationEditProfile,setNavigationEditProfile] = useState(1); 
-  const avatar =
-    'https://icon-library.com/images/default-user-icon/default-user-icon-8.jpg';
   const [urlCoverImage, setUrlCoverImage] = useState<any>(null);
   const [urlAvatar, setUrlAvatar] = useState<any>(null);
+  const [avatar, setAvatar] = useState<any>(user.avatar);
   const onFinish = (values: any) => {
     let userEdited: any = null
     if (navigationEditProfile === 1) {
       userEdited = {
         username: values.username,
         realName: values.realName,
-        email: values.email,
         phone: values.phone.toString(),
         background: null,
-        avatar: null,
-        password: null,
-        newpassword: null
+        avatar: null
       }
       postEditUser(userEdited);
     }else if (navigationEditProfile === 2){
       userEdited = {
         username: null,
         realName: null,
-        email: null,
         phone: null,
         background: urlCoverImage,
         avatar: urlAvatar,
-        password: null,
-        newpassword: null
       }
       postEditUser(userEdited);
-    }else{
-      if(values.newPassword !== values.comfirmPassword || values.newPassword === values.oldPassword){
-        console.log("mật khẩu mới và xác nhận mật khẩu không trùng nhau hoặc mật khẩu mới và mật khẩu cũ trùng nhau!!");
-      }else{
-        userEdited = {
-          username: null,
-          realName: null,
-          email: null,
-          phone: null,
-          background: null,
-          avatar: null,
-          password: values.oldPassword,
-          newpassword: values.newPassword
-        }
-        postEditUser(userEdited);
-      }
     }
   };
 
-  const postEditUser = (values: any) => {
-    console.log(values);
-    //post api
+  const postEditUser = async (values: any) => {
+    await axios
+      .put(`${Endpoint.mainApi}api/user/change-info/${user.idUser}`,{
+        body: values,
+      },
+      {
+        headers: {
+          Authorization: "Bearer" + localStorage.getItem("accessToken")
+        }
+      })
+    .then(res=>{
+      console.log(res);
+    })
+    .catch(err=>{console.log(err)})
   }
 
   const getUrlCoverImage = (url: string) =>{

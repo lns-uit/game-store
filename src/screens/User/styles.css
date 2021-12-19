@@ -139,6 +139,18 @@
     .avatars {
       position: relative;
       justify-content: center;
+      left: 0;
+    }
+    .jagged-wrapper::after{
+        content: "";
+        background-color: #111;
+        border-radius: 50%;
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        top: 270px;
+        left: 50%;
+        margin-left: -90px;
     }
 }
   

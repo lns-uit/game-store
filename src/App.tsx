@@ -18,7 +18,7 @@ const { Content } = Layout;
 function App() {
   const screens = useBreakpoint();
   const [isOpen, setIsOpen] = useState(false);
-  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.user); 
   const onOpen = () => {
     setIsOpen(true);
   };
