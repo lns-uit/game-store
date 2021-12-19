@@ -164,15 +164,19 @@ function GenresManager() {
               onChange={(event) => setGenreSearch(event.target.value)}
             />
           </div>
-          <div style={{ width: '20px' }}></div>
-          <div className="btn" onClick={() => {
+          <div style={{ width: '40px' }}></div>
+          <Button onClick={() => {
             form.resetFields();
             showModal();
             setAction("Create");
-          }}>
+          }}
+            className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+            style={{ height: '40px' }}
+            type = "primary"
+          >
             {" "}
             Create New Genre{" "}
-          </div>
+          </Button>
         </div>
       </div>
       <div className="console-list">

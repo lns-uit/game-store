@@ -16,8 +16,10 @@ const DEFAUL_CARD = {};
 function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState("");
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleSubmitPaymet = (value: any) => {
+    setIsSubmit(true);
     let totalPayment=game.cost ;
     if (game.discount !== null) {
         totalPayment = (1 - game.discount.percentDiscount /100 )*game.cost;
@@ -32,8 +34,12 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
       masterCardCCV: parseInt(value.ccv2),
       masterCardExpire: value.expirationDate.replaceAll(" ",""),
     };
+    try {
+      onSubmitPayment(card);
+    } catch(e) {
+      setIsSubmit(false);
+    }
 
-    onSubmitPayment(card);
   };
 
   const formatCreddit = (e) => {
@@ -116,10 +122,12 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
               <br/>
               <Form.Item wrapperCol={{ offset: 0, span: 100 }}>
                 <Button
+                  loading = {isSubmit}
                   onClick={onSubmitPayment}
-                  style={{ height: "40px", width: "300px" }}
+                  style={{ height: "40px", width: "300px"}}
+                  className='bgr-green pd-8-16 width-full border-radius-4 uppercase full-width btn-pay"'
+                  type = "primary"
                   htmlType="submit"
-                  className="full-width btn-pay"
                 >
                   Pay Now
                 </Button>

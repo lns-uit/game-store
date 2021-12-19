@@ -18,8 +18,10 @@ const DEFAUL_CARD = {};
 function RefundComponent({ onSubmitRefund,game,bill }: RefundComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState("");
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const handleSubmitPaymet = (value: any) => {
+    setIsSubmit(true);
     let totalPayment=game.cost ;
     if (game.discount !== null) {
         totalPayment = (1 - game.discount.percentDiscount /100 )*game.cost;
@@ -34,8 +36,12 @@ function RefundComponent({ onSubmitRefund,game,bill }: RefundComponentPropsType)
       masterCardCCV: null,
       masterCardExpire: null,
     };
-
-    onSubmitRefund(card);
+    try {
+      onSubmitRefund(card);
+    }
+    catch (e) {
+      setIsSubmit(false);
+    }
   };
 
   const formatCreddit = (e) => {
@@ -108,8 +114,10 @@ function RefundComponent({ onSubmitRefund,game,bill }: RefundComponentPropsType)
                 <Button
                   onClick={onSubmitRefund}
                   style={{ height: "40px", width: "400px" }}
+                  className='bgr-green pd-8-16 width-full border-radius-4 uppercase full-width btn-pay"'
+                  type = "primary"
                   htmlType="submit"
-                  className="full-width btn-pay"
+                  loading = {isSubmit}
                 >
                   Refund Now
                 </Button>

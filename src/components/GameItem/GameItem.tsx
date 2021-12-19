@@ -1,11 +1,14 @@
-import { Tag, Row, Col, Tooltip } from 'antd';
-import React, { CSSProperties, useEffect, useMemo } from 'react';
+import { Tag, Row, Col, Tooltip, message } from 'antd';
+import React, { CSSProperties, useEffect, useMemo, useState } from 'react';
 import { rootColor } from '../../constants/rootColor';
 import { ActionType, GameType } from '../../interfaces/rootInterface';
 import { PlusCircleOutlined, MinusCircleOutlined } from '@ant-design/icons';
 import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/reducers';
+import wishlistApi from '../../api/wishlistApi';
 
 interface GameItemPropsType {
   game: GameType;
@@ -25,6 +28,8 @@ function GameItem({
 }: GameItemPropsType) {
   const history = useHistory();
   const { nameGame, discount, imageGameDetail, genres, cost } = game;
+  const [isWishList,setIsWishList] = useState(false);
+  const user = useSelector((state: RootState) => state.user);
   const { percentDiscount } = discount || {};
   const displayImage =
     imageGameDetail.length > 0
@@ -55,14 +60,36 @@ function GameItem({
     }
   };
 
-  const onClickTooltip = (e, action) => {
+  const onClickTooltip = async (e, action) => {
     if (action === ActionType.ADD) {
-      alert('add to wishlist');
+      if (user === null) {
+        message.warn("Login to do this");
+        return;
+      }
+      const res = await wishlistApi.addToWishlist(user?.idUser,game.idGame);
+      console.log(res);
+      if (res === 'created') {
+        setIsWishList(true);
+      }
     } else {
-      alert('remove from wishlist');
+      const res = await wishlistApi.removeToWishlist(user?.idUser,game.idGame);
+      if (res === 'deleted') {
+        setIsWishList(false);
+      }
     }
   };
-
+  const checkIsWishlist = async () => {
+    if (user === null) {
+      setIsWishList(false);
+      return;
+    }
+    const res = await wishlistApi.checkIsWishlist(user?.idUser,game.idGame);
+    if (res === "found") setIsWishList(true);
+      else setIsWishList(false);
+  }
+  useEffect(()=>{
+    checkIsWishlist();
+  },[user])
   return (
     <div
       onClick={handleClickGameItem}
@@ -74,14 +101,14 @@ function GameItem({
           overlayInnerStyle={{ fontSize: 14 }}
           placement='topLeft'
           title={
-            action === ActionType.REMOVE
+            isWishList
               ? 'Remove from wishlist'
               : 'Add to wishlist'
           }
           color={rootColor.redColor}
           key={rootColor.whiteColor}>
           <button className='game-item__action'>
-            {action === ActionType.REMOVE ? (
+            {isWishList ? (
               <MinusCircleOutlined
                 className='game-item__action__icon'
                 onClick={e => onClickTooltip(e, ActionType.REMOVE)}

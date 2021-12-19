@@ -3,7 +3,7 @@ import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
 import { BillType, GameDetailss } from '../../interfaces/rootInterface';
 import Moment from 'react-moment';
-import { Modal, Button } from 'antd';
+import { Modal, Button, message } from 'antd';
 import BuyComponent from '../BuyComponent/BuyComponent';
 import RefundComponent from '../RefundComponent/RefundComponent'
 import gamesApi from '../../api/gamesApi';
@@ -26,7 +26,9 @@ function PriceGame({ game, bill }: Detail) {
   const isGameFree = game.cost == 0;
 
   const onClickBuyNow = () => {
-      showModal();
+    console.log(idUser);
+      if (idUser === null || idUser === undefined) message.warn("Login To Buy This Game");
+        else showModal();
   };
   const countDownTimeRefund = () => {
     let timeCountDown = moment(bill?.datePay).add(200, 'hours').diff(moment().format(), 'second');

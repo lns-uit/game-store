@@ -1,6 +1,7 @@
 "use-strict";
 const {ipcRenderer} = require('electron')
 
+ 
 let btnLogin;
 let email;
 let pwd;
@@ -9,6 +10,8 @@ var rightSlide;
 var leftSlide;
 var keepLoginCheckBox;
 var lbKeepLogin;
+let btnLoginWithGoogle;
+let wrongTextLogin;
 window.onload = function () {
     email = document.getElementById("email");
     pwd = document.getElementById("pwd");
@@ -17,6 +20,8 @@ window.onload = function () {
     leftSlide = document.getElementById("left-slide")
     keepLoginCheckBox = document.getElementById('keep-login')
     lbKeepLogin = document.getElementById('label-keep-login')
+    wrongTextLogin = document.getElementById('text-wrong-login');
+    btnLoginWithGoogle = document.getElementById('btn-login-with-google')
 
     lbKeepLogin.onclick = () => {
         keepLoginCheckBox.checked = !keepLoginCheckBox.checked;
@@ -35,10 +40,20 @@ window.onload = function () {
     btnLogin.onclick = function () {
         onLogin();
     }
-
+    btnLoginWithGoogle.onclick = function () {
+        onLoginWithGG();
+    }
+    ipcRenderer.on('message-wrong-login',function(event,data){
+        wrongTextLogin.style.display = 'flex';
+        wrongTextLogin.innerHTML  = data;
+    })
     function onLogin(){
         const obj = {email: email.value, pwd: pwd.value, keepLogin: keepLoginCheckBox.checked}
         ipcRenderer.invoke("login",obj);
+    }
+    function onLoginWithGG(){
+        const obj = {keepLogin: keepLoginCheckBox.checked}
+        ipcRenderer.invoke("login-sma",obj);
     }
 
     rightSlide.onclick = function () {
@@ -74,6 +89,6 @@ window.onload = function () {
 
 
     }
-    setTimeout(plusSlidesAuto,15000,1)
+    setTimeout(plusSlidesAuto,15000,-1)
 
 }

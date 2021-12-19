@@ -19,7 +19,13 @@ interface GameType {
   lastestVersion: any;
   numberOfBuyers: any;
   numberOfDowloaders: any;
-  discount: any;
+  discount: {
+    idDiscount: string;
+    title: string;
+    percentDiscount: number;
+    startDate: string;
+    endDate: string;
+  };
   genres: {
     idGenreNavigation: GenreType;
   }[];

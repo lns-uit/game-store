@@ -1,6 +1,5 @@
 .login-container{
-    display: grid;
-    grid-template-row: 50px 1fr;
+
 }
 .content-login{
     display: grid;
@@ -10,24 +9,34 @@
     height: calc(100vh - 50px);
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 50px 30px 20px;
+    justify-content: center;
+    padding: 0px 50px 0px 0px;
 }
 
 .title-login{
     color: white;
     font-size: 28px;
     font-weight: bold;
-    position: absolute;
-    top: 0;
-    margin-top: 80px;
     margin-left: 10px;
     text-align: center;
 }
-#btn-login{
+#text-wrong-login{
+  margin-top: 10px;
+  height: 34px;
+  width: 100%;
+  border: 1px solid red;
+  border-radius: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-size: 13px;
+  display: none;
+  font-weight: 500;
+}
+#btn-login,#btn-login-with-google{
     height: 35px;
     width: 100%;
-    /* background-color: rgb(22, 80, 167); */
     border: 1px solid rgb(196, 196, 196);
     border-radius: 2px;
     cursor: pointer;
@@ -35,12 +44,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
     transition: .3s;
 }
 #btn-login:hover{
-    background-color: rgb(41, 41, 41);
+    background-color: #9300a0cb !important;
+}
+#btn-login-with-google:hover{
+  background-color: rgba(0, 109, 182, 0.529);
 }
 .form-login-container input{
     height: 40px;

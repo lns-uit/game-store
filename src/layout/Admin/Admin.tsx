@@ -48,6 +48,7 @@ function Admin() {
   const [urlDownload, setUrlDownload] = useState<any>(null);
   const [fileZip, setFileZip] = useState<any>([]);
   const [loaddingImagesGame, setLoaddingImagesGame] = useState(false);
+  const [isUpdatingGame, setIsUpdatingGame] = useState(false);
   const url = useSelector(
     (state: RootState) => state.gameAvatar
   )
@@ -114,6 +115,10 @@ function Admin() {
       window.alert(stringErr);
     } else {
       values.fileGame = urlDownload;
+      if (urlDownload === null) {
+        message.warn("Login To Buy This Game");
+        return;
+      }
       values.images = fileList.map(image => {
         return image.url
       });
@@ -122,8 +127,8 @@ function Admin() {
     }
   }
   const postGame = (values: any) => {
-    console.log(values);
     values.images.splice(0,0,url.url)
+    setIsUpdatingGame(true);
     axios
       .post(Endpoint.mainApi + "api/game/create", {
         game: {
@@ -317,8 +322,13 @@ function Admin() {
 
             <Form.Item
             >
-              <Button type="primary" htmlType="submit">
-                  Create Game
+              <Button 
+                  type="primary" htmlType="submit"
+                  className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                  style={{ height: '45px' }}
+                  loading={isUpdatingGame ? true : urlDownload!==null ? false : true}
+              >
+                  {urlDownload!==null ? "Create Game" : "Uploading Your Zip File"}
               </Button>
             </Form.Item>
         </div>

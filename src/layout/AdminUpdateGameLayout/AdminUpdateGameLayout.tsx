@@ -32,7 +32,9 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import {setUrlGameAvatar} from '../../redux/actions/gameAvatarAction'
 import { Endpoint } from '../../api/endpoint';
-
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 const { Option } = Select;
 
 function AdminUpdateGameLayout() {
@@ -54,6 +56,7 @@ function AdminUpdateGameLayout() {
     const [isUpdate, setIsUpdate] = useState(true);
     const [isInvalidVersion, setIsInvalidVersion] = useState(false);
     const [genres, setGenres] = useState<any[]>([]);
+    const [isUpdatingGame, setIsUpdatingGame] = useState(false);
 
     const hashConfig = {
         trigger: '#',
@@ -129,6 +132,10 @@ function AdminUpdateGameLayout() {
             console.log('here')
         } else {
             values.fileGame = urlDownload;
+            if (urlDownload === null && !isUpdate) {
+                message.warn("Zip File is Uploading");
+                return;
+            }
             values.images = fileList.map(image=>{
                 return image.url
             });
@@ -139,6 +146,7 @@ function AdminUpdateGameLayout() {
         }
     }
     const postGameCreateUpdate = (values: any) => {
+        setIsUpdatingGame(true);
         axios
             .put(Endpoint.mainApi + "api/game/create-update/" + game.idGame, {
                 game: {
@@ -171,7 +179,7 @@ function AdminUpdateGameLayout() {
             })
             .then((response) => {
                 form.resetFields();
-                history.push("admin/console/game-list");
+                history.push("/admin/console/history/" + game.idGame);
                 console.log(response.data)
             })
             .catch((error) => {
@@ -179,6 +187,7 @@ function AdminUpdateGameLayout() {
             });
     };
     const postGameUpdate = (values: any) => {
+        setIsUpdatingGame(true);
         axios
             .put(Endpoint.mainApi + "api/game/update/" + game.idGame, {
                 game: {
@@ -196,8 +205,7 @@ function AdminUpdateGameLayout() {
             })
             .then((response) => {
                 form.resetFields();
-                history.push("admin/console/game-list");
-                console.log(response.data)
+                history.push("/admin/console/history/" + game.idGame);
             })
             .catch((error) => {
                 console.log(error);
@@ -412,8 +420,15 @@ function AdminUpdateGameLayout() {
                                 <Form.Item
     
                                 >
-                                    <Button type="primary" htmlType="submit">
-                                        {isUpdate ? "Update Game" : "Create Update Game"}
+                                    <Button 
+                                        type="primary" 
+                                        className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                                        style={{ height: '45px' }}
+                                        htmlType="submit" 
+                                        loading={isUpdatingGame ? true : isUpdate ? false : urlDownload!==null ? false : true}
+                                        
+                                    >
+                                        {isUpdate ? "Update Game" : urlDownload!==null ? "Create Update Game" : "Uploading Game Zip File"}
                                     </Button>
                                 </Form.Item>
                 

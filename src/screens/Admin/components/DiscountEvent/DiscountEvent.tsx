@@ -299,11 +299,15 @@ function DiscountEvent() {
                 onChange={(event) => setSearchDiscount(event.target.value)}
               />
             </div>
-            <div style={{ width: '20px' }}></div>
-            <div className="btn" onClick={() => { form.resetFields(); showModal() }}>
+            <div style={{ width: '40px' }}></div>
+            <Button 
+              className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+              style={{ height: '40px' }}
+              type = "primary"
+              onClick={() => { form.resetFields(); showModal() }}>
               {" "}
               Create New Discount{" "}
-            </div>
+            </Button>
           </div>
         </div>
 

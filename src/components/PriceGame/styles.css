@@ -38,6 +38,12 @@
     border-color: #a0a0a0 !important;
     border-radius: 5px !important;
 }
+.bgr-green{
+    background-color: rgb(22, 167, 49) !important;
+    color: rgb(255, 255, 255) !important;
+    border-color: #a0a0a0 !important;
+    border-radius: 5px !important;
+}
 .bgr-red{
     background-color: rgb(126, 11, 11) !important;
     color: rgb(202, 202, 202) !important;
@@ -52,6 +58,9 @@
 }
 .bgr-yellow:hover{
     background-color: rgb(135, 60, 11) !important;
+}
+.bgr-green:hover{
+    background-color: rgb(14, 124, 34) !important;
 }
 .bgr-blue1:hover{
     background-color: #6f0979 !important;
