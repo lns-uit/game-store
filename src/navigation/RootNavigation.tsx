@@ -37,6 +37,7 @@ import ResetPassword from '../screens/ResetPassword/ResetPassword';
 import SuggestionScreen from '../screens/Suggestion/SuggestionScreen';
 import { GameType,GameDiscoverType } from '../interfaces/rootInterface';
 import suggestionGameReducer from '../redux/reducers/suggestionGame';
+import WishlistScreen from '../screens/Wishlist/WishlistScreen';
 import { getGameSuggestionApi } from '../api/suggestionApi';
 
 function RootNavigation() {
@@ -150,6 +151,9 @@ function RootNavigation() {
         <PrivateRoute loading path='/admin/update-game/:idGame'>
           <AdminUpdateGame />
         </PrivateRoute>
+        <Route path = '/wishlist/:idUser'>
+          <WishlistScreen></WishlistScreen>
+        </Route>
 
         <Route path='/admin/console/game-list' component={ConsoleGameListScreen} loading={true}>
         </Route>

@@ -38,6 +38,7 @@ function GameDetail() {
       })
   }
   useEffect(() => {
+    window.scrollTo(0,0);
     fetchGameData();
   }, []);
 

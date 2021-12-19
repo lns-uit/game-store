@@ -2,8 +2,8 @@ import callApi from '../utils/callApi';
 import { Endpoint } from './endpoint';
 
 const checkIsWishlist = async (
+    idUser: string,
     idGame: string,
-    idUser: string
 ) => {
     try {
         const request = await callApi(
@@ -18,14 +18,14 @@ const checkIsWishlist = async (
 }
 
 const addToWishlist = async (
-    idGame:string,
     idUser: string,
+    idGame:string,
 ) => {
     try {
         const request = await callApi(
             'post',
-            `${Endpoint.mainApi}api/wishlist/create/${idUser}`,
-            `${idGame}`,
+            `${Endpoint.mainApi}api/wishlist/create/${idUser}/${idGame}`,
+            null,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('accessToken')
@@ -39,14 +39,15 @@ const addToWishlist = async (
     }
 }
 const removeToWishlist = async (
-    idGame:string,
     idUser: string,
+    idGame:string,
+
 ) => {
     try {
         const request = await callApi(
             'delete',
-            `${Endpoint.mainApi}api/wishlist/delete/${idUser}`,
-            idGame,
+            `${Endpoint.mainApi}api/wishlist/delete/${idUser}/${idGame}`,
+            null,
             {
                 headers: {
                     Authorization: "Bearer " + localStorage.getItem('accessToken')

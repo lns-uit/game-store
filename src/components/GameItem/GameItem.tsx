@@ -70,11 +70,13 @@ function GameItem({
       console.log(res);
       if (res === 'created') {
         setIsWishList(true);
+        message.success('Added '+ game.nameGame + ' to Wishlist')
       }
     } else {
       const res = await wishlistApi.removeToWishlist(user?.idUser,game.idGame);
       if (res === 'deleted') {
         setIsWishList(false);
+        message.success('Removed '+ game.nameGame + ' from Wishlist')
       }
     }
   };
