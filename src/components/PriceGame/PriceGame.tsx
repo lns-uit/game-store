@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css';
 import numberWithCommas from '../../utils/numberWithCommas';
-import { BillType, GameDetailss } from '../../interfaces/rootInterface';
+import {
+  BillType,
+  GameDetailss,
+  GameType,
+} from '../../interfaces/rootInterface';
 import Moment from 'react-moment';
 import { Modal, Button } from 'antd';
 import BuyComponent from '../BuyComponent/BuyComponent';
-import RefundComponent from '../RefundComponent/RefundComponent'
+import RefundComponent from '../RefundComponent/RefundComponent';
 import gamesApi from '../../api/gamesApi';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
@@ -16,8 +20,6 @@ interface Detail {
   bill: BillType | undefined;
 }
 
-
-
 function PriceGame({ game, bill }: Detail) {
   const { idUser } = useSelector((state: RootState) => state.user) || {};
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -26,25 +28,26 @@ function PriceGame({ game, bill }: Detail) {
   const isGameFree = game.cost == 0;
 
   const onClickBuyNow = () => {
-      showModal();
+    showModal();
   };
   const countDownTimeRefund = () => {
-    let timeCountDown = moment(bill?.datePay).add(100, 'hours').diff(moment().format(), 'second');
-    if (timeCountDown<0) return;
+    let timeCountDown = moment(bill?.datePay)
+      .add(100, 'hours')
+      .diff(moment().format(), 'second');
+    if (timeCountDown < 0) return;
     setTimeRefund(timeCountDown);
-    setTimeout(countDownTimeRefund, 1000)
-  }
-  const pad = (num) => {
-    return ("0" + num).slice(-2);
-  }
+    setTimeout(countDownTimeRefund, 1000);
+  };
+  const pad = num => {
+    return ('0' + num).slice(-2);
+  };
   const secondsFormatHMS = (secs: number) => {
     var minutes = Math.floor(secs / 60);
     secs = secs % 60;
-    var hours = Math.floor(minutes / 60)
+    var hours = Math.floor(minutes / 60);
     minutes = minutes % 60;
     return `${pad(hours)} h ${pad(minutes)} m ${pad(secs)} s`;
-
-  }
+  };
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -79,7 +82,8 @@ function PriceGame({ game, bill }: Detail) {
         currentdate.getSeconds();
       if (idBill) {
         showMessage(
-          `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${game.nameGame
+          `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${
+            game.nameGame
           } with $${cost} at ${datePaygame || datetime}`
         );
         setIsModalVisible(false);
@@ -89,16 +93,67 @@ function PriceGame({ game, bill }: Detail) {
       }
     }
   };
+
+  const handleRefundGame = async (game: GameDetailss, card: any) => {
+    console.log(game, card);
+
+    if (idUser) {
+      const dataRequest = {
+        card,
+        newBill: {
+          idGame: game.idGame,
+          idUser,
+          actions: 'refund',
+        },
+      };
+      const response = await gamesApi.createNewBillGame(dataRequest);
+      console.log(response);
+      const {
+        idBill,
+        message = '',
+        cost,
+        datePaygame,
+        title = '',
+      } = response || {};
+      var currentdate = new Date();
+      var datetime =
+        currentdate.getDate() +
+        '/' +
+        (currentdate.getMonth() + 1) +
+        '/' +
+        currentdate.getFullYear() +
+        ' @ ' +
+        currentdate.getHours() +
+        ':' +
+        currentdate.getMinutes() +
+        ':' +
+        currentdate.getSeconds();
+      if (idBill) {
+        alert(
+          `You refund game ${game.nameGame} with $${cost} at ${
+            datePaygame || datetime
+          }`
+        );
+      } else if (message) {
+        alert(message);
+      } else if (title) {
+        alert(title);
+      }
+    }
+  };
+
   const onSubmitRefund = async card => {
-    console.log(card);
-  }
+    handleRefundGame(game, card);
+  };
+
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+
   useEffect(() => {
-    if (bill !== undefined)
-      countDownTimeRefund();
-  }, [bill])
+    if (bill !== undefined) countDownTimeRefund();
+  }, [bill]);
+
   return (
     <div className='d-flex align-items-start column justify-content-end height-full'>
       <div className='width-full'>
@@ -130,84 +185,90 @@ function PriceGame({ game, bill }: Detail) {
           </div>
         )}
         <div className='m-top-36'>
-          {
-            bill === undefined ?
-              (
-                <div>
-                  <Button
-                    type='primary'
-                    className='bgr-blue1 pd-8-16 width-full border-radius-4 uppercase'
-                    style={{ height: '45px' }}
-                    onClick={onClickBuyNow}>
-                    Buy Now
-                  </Button>
-                  <div className='m-top-28 m-bottom-48'>
-                    <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>
-                      <div className='d-flex'>
-                        <p
-                          className='m-0 center uppercase flex-1-1-auto'
-                          style={{ cursor: 'pointer' }}>
-                          add to wishlist
-                        </p>
-                        <span>
-                          <i className='fa fa-plus-circle'></i>
-                        </span>
-                      </div>
-                    </div>
+          {bill === undefined ? (
+            <div>
+              <Button
+                type='primary'
+                className='bgr-blue1 pd-8-16 width-full border-radius-4 uppercase'
+                style={{ height: '45px' }}
+                onClick={onClickBuyNow}>
+                Buy Now
+              </Button>
+              <div className='m-top-28 m-bottom-48'>
+                <div className='pd-8-16 width-full border-radius-4 pointer transition-dot-3 hover-buy border-1'>
+                  <div className='d-flex'>
+                    <p
+                      className='m-0 center uppercase flex-1-1-auto'
+                      style={{ cursor: 'pointer' }}>
+                      add to wishlist
+                    </p>
+                    <span>
+                      <i className='fa fa-plus-circle'></i>
+                    </span>
                   </div>
                 </div>
-
-              ) : (
+              </div>
+            </div>
+          ) : (
+            <div>
+              {timeRefund > 0 && bill.cost !== 0 ? (
                 <div>
-                  {timeRefund > 0 && bill.cost !== 0 ? (
-                    <div >
-                      <div className='d-flex space-between'>
-                        <div style ={{color:'#919191'}}>Time Refund: </div><b>{secondsFormatHMS(timeRefund)}</b> 
-                      </div>
-                      <br />
-                      <Button
-                        type='primary'
-                        className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
-                        style={{ height: '45px' }}
-                        onClick={() => {setIsModalRefund(true)}}>
-                        Refund
-                      </Button>
-                    </div>
-                  ) :
-                    <Button
-                      disabled
-                      type='primary'
-                      className='bgr-red pd-8-16 width-full border-radius-4 uppercase'
-                      style={{ height: '45px' }}
-                    >
-                      In Collection
-                    </Button>
-                  }
+                  <div className='d-flex space-between'>
+                    <div style={{ color: '#919191' }}>Time Refund: </div>
+                    <b>{secondsFormatHMS(timeRefund)}</b>
+                  </div>
+                  <br />
+                  <Button
+                    type='primary'
+                    className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                    style={{ height: '45px' }}
+                    onClick={() => {
+                      setIsModalRefund(true);
+                    }}>
+                    Refund
+                  </Button>
                 </div>
-              )
-          }
-            <Modal
-              width={1000}
-              bodyStyle={{height: 700}}
-              style={{borderRadius: 10}}              wrapClassName='master-card'
-              title={'Buy Game ' + game.nameGame}
-              visible={isModalVisible}
-              onOk={onSubmitPayment}
-              onCancel={handleCancel}
-              footer={null}>
-              <BuyComponent onSubmitPayment={onSubmitPayment} game={game}/>
-            </Modal>
-            <Modal
-                width={500}
-                bodyStyle={{height: 500}}
-                style={{borderRadius: 10}}              wrapClassName='master-card'
-                title={'Refund Game ' + game.nameGame}
-                visible={isModalRefund}
-                onOk={onSubmitRefund}
-                onCancel={()=>{setIsModalRefund(false)}}
-                footer={null}>
-                <RefundComponent onSubmitRefund={onSubmitRefund} game={game} bill={bill}/>
-            </Modal>
+              ) : (
+                <Button
+                  disabled
+                  type='primary'
+                  className='bgr-red pd-8-16 width-full border-radius-4 uppercase'
+                  style={{ height: '45px' }}>
+                  In Collection
+                </Button>
+              )}
+            </div>
+          )}
+          <Modal
+            width={1000}
+            bodyStyle={{ height: 700 }}
+            style={{ borderRadius: 10 }}
+            wrapClassName='master-card'
+            title={'Buy Game ' + game.nameGame}
+            visible={isModalVisible}
+            onOk={onSubmitPayment}
+            onCancel={handleCancel}
+            footer={null}>
+            <BuyComponent onSubmitPayment={onSubmitPayment} game={game} />
+          </Modal>
+          <Modal
+            width={500}
+            bodyStyle={{ height: 500 }}
+            style={{ borderRadius: 10 }}
+            wrapClassName='master-card'
+            title={'Refund Game ' + game.nameGame}
+            visible={isModalRefund}
+            onOk={() => {}}
+            onCancel={() => {
+              setIsModalRefund(false);
+            }}
+            footer={null}>
+            <RefundComponent
+              onSubmitRefund={onSubmitRefund}
+              game={game}
+              bill={bill}
+            />
+          </Modal>
         </div>
 
         <div>

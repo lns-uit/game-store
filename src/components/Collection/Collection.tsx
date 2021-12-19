@@ -13,23 +13,23 @@ interface GameSearch {
 
 function Collection({ collection, handleRefundGame }: GameSearch) {
   const onClickGameItem = (game: GameType) => {
-    if (game.cost == 0) {
-      const isAnswer = confirm('Are u want to delete it ?');
-      if (isAnswer) {
-        handleRefundGame(game, {});
-      }
-    } else {
-      const isAnswer = confirm('Are u want to refund it ?');
-      if (isAnswer) {
-        // show card info and pass to handleRefundGame
-        handleRefundGame(game, {
-          masterCardCCV: 533,
-          masterCardExpire: '11/21',
-          masterCardName: 'NGUYEN PHUC',
-          masterCardNumber: '1040000001',
-        });
-      }
-    }
+    // if (game.cost == 0) {
+    //   const isAnswer = confirm('Are u want to delete it ?');
+    //   if (isAnswer) {
+    //     handleRefundGame(game, {});
+    //   }
+    // } else {
+    //   const isAnswer = confirm('Are u want to refund it ?');
+    //   if (isAnswer) {
+    //     // show card info and pass to handleRefundGame
+    //     handleRefundGame(game, {
+    //       masterCardCCV: 533,
+    //       masterCardExpire: '11/21',
+    //       masterCardName: 'NGUYEN PHUC',
+    //       masterCardNumber: '1040000001',
+    //     });
+    //   }
+    // }
   };
 
   return (
