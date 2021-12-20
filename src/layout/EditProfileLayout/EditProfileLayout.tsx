@@ -22,33 +22,32 @@ function EditProfileLayout() {
     let userEdited: any = null
     if (navigationEditProfile === 1) {
       userEdited = {
-        username: values.username,
-        realName: values.realName,
-        phone: values.phone.toString(),
-        background: null,
-        avatar: null
+        UserName: values.username || null,
+        RealName: values.realName,
+        Background: null,
+        Avatar: null
       }
       postEditUser(userEdited);
     }else if (navigationEditProfile === 2){
       userEdited = {
-        username: null,
-        realName: null,
-        phone: null,
-        background: urlCoverImage,
-        avatar: urlAvatar,
+        UserName: null,
+        RealName: null,
+        Background: urlCoverImage,
+        Avatar: urlAvatar,
       }
       postEditUser(userEdited);
     }
   };
 
   const postEditUser = async (values: any) => {
+    console.log(values);
     await axios
       .put(`${Endpoint.mainApi}api/user/change-info/${user.idUser}`,{
-        body: values,
+        infoUser: values,
       },
       {
         headers: {
-          Authorization: "Bearer" + localStorage.getItem("accessToken")
+          Authorization: "Bearer " + localStorage.getItem("accessToken")
         }
       })
     .then(res=>{
