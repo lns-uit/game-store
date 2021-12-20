@@ -158,7 +158,7 @@ function RootNavigation() {
         <Route path='/admin/console/game-list' component={ConsoleGameListScreen} loading={true}>
         </Route>
         <Route loading path='/admin/console/user-list'>
-          <Route />
+          <ConsoleUsersListScreen/>
         </Route>
         <Route loading path='/admin/console/discount-list'>
           <DiscountEvent />

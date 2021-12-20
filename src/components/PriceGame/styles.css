@@ -120,3 +120,6 @@
 .hover-buy:hover{
     opacity: .8;
 }
+.line-through{
+    text-decoration: line-through;
+}

@@ -9,6 +9,9 @@ import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import wishlistApi from '../../api/wishlistApi';
+import moment from 'moment';
+import axios from 'axios';
+import { Endpoint } from '../../api/endpoint';
 
 interface GameItemPropsType {
   game: GameType;
@@ -16,6 +19,8 @@ interface GameItemPropsType {
   isHorizontal?: boolean;
   heightImage?: string;
   titleTooltip?: string;
+  wishListChange?:number;
+  setWishlistChange?: any;
   onClickGameItem?: (game: GameType) => void;
 }
 
@@ -25,12 +30,15 @@ function GameItem({
   isHorizontal,
   heightImage,
   titleTooltip,
+  wishListChange,
+  setWishlistChange,
 }: GameItemPropsType) {
   const history = useHistory();
   const { nameGame, discount, imageGameDetail, genres, cost } = game;
   const [isWishList,setIsWishList] = useState(false);
   const user = useSelector((state: RootState) => state.user);
   const { percentDiscount } = discount || {};
+  const [timeDiscount, setTimeDiscount] = useState(-1);
   const displayImage =
     imageGameDetail.length > 0
       ? imageGameDetail[0].url
@@ -69,14 +77,24 @@ function GameItem({
       const res = await wishlistApi.addToWishlist(user?.idUser,game.idGame);
       console.log(res);
       if (res === 'created') {
+        setWishlistChange(w => w+1)
         setIsWishList(true);
-        message.success('Added '+ game.nameGame + ' to Wishlist')
+        message.success({
+          content:'Added '+ game.nameGame + ' to Wishlist',
+          style: {
+          },
+        })
       }
     } else {
       const res = await wishlistApi.removeToWishlist(user?.idUser,game.idGame);
       if (res === 'deleted') {
+        setWishlistChange(w => w+1)
         setIsWishList(false);
-        message.success('Removed '+ game.nameGame + ' from Wishlist')
+        message.success({
+          content:'Removed '+ game.nameGame + ' from Wishlist',
+          style: {
+          },
+        })
       }
     }
   };
@@ -89,9 +107,43 @@ function GameItem({
     if (res === "found") setIsWishList(true);
       else setIsWishList(false);
   }
+
+  const deleteGameOfDiscount = () => {
+    axios.delete(Endpoint.mainApi + 'api/discount/delete/outdate/' + game.discount.idDiscount)
+  }
+  const countDownTimeDiscount = () => {
+    let timeEnd = moment(game.discount.endDate)
+    .diff(moment(), 'second');
+    if (timeEnd < 0) {
+      deleteGameOfDiscount();
+      return;    
+    }
+    setTimeDiscount(timeEnd);
+    setTimeout(countDownTimeDiscount, 1000);
+  };
+  const checkTimeDiscount = () => {
+    if (game.discount === null) return;
+    let timeStart = moment()
+                        .diff(moment(game.discount.startDate), 'second');
+    let timeEnd = moment(game.discount.endDate)
+                        .diff(moment().format(), 'second');
+    if (timeStart>0) {
+      if (timeEnd>0) {
+        setTimeDiscount(timeEnd);
+        countDownTimeDiscount();
+        return;
+      }
+    }
+    if (timeEnd < 0) deleteGameOfDiscount();
+  }
   useEffect(()=>{
-    checkIsWishlist();
-  },[user])
+    if (user !== null)
+        checkIsWishlist(); 
+    else setIsWishList(false);
+  },[user,wishListChange])
+  useEffect(()=>{
+    checkTimeDiscount();
+  },[game])
   return (
     <div
       onClick={handleClickGameItem}
@@ -134,7 +186,7 @@ function GameItem({
           <p className='game-item__detail-wrapper__name'>{nameGame}</p>
           {renderGenre()}
           <div className='game-item__detail-wrapper__price-container'>
-            {percentDiscount ? (
+            {percentDiscount && timeDiscount>0 ? (
               <div className='price-container__sale-container'>
                 <div className='price-container__sale'>
                   <p>-{percentDiscount}%</p>

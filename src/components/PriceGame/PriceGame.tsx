@@ -15,6 +15,8 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/reducers';
 import moment from 'moment';
 import wishlistApi from '../../api/wishlistApi';
+import axios from 'axios';
+import { Endpoint } from '../../api/endpoint';
 
 interface Detail {
   game: GameDetailss;
@@ -25,6 +27,7 @@ function PriceGame({ game, bill }: Detail) {
   const { idUser } = useSelector((state: RootState) => state.user) || {};
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isModalRefund, setIsModalRefund] = useState(false);
+  const [timeDiscount, setTimeDiscount] = useState(-1);
   const [timeRefund, setTimeRefund] = useState(-1);
   const isGameFree = game.cost == 0;
   const [isWishList,setIsWishList] = useState(false);
@@ -49,7 +52,7 @@ function PriceGame({ game, bill }: Detail) {
     secs = secs % 60;
     var hours = Math.floor(minutes / 60);
     minutes = minutes % 60;
-    return `${pad(hours)} h ${pad(minutes)} m ${pad(secs)} s`;
+    return `${(hours)} h ${pad(minutes)} m ${pad(secs)} s`;
   };
   const showModal = () => {
     setIsModalVisible(true);
@@ -184,31 +187,73 @@ function PriceGame({ game, bill }: Detail) {
     if (res === "found") setIsWishList(true);
       else setIsWishList(false);
   }
+  const deleteGameOfDiscount = () => {
+    axios.delete(Endpoint.mainApi + 'api/discount/delete/outdate/' + game.discount.idDiscount)
+      .then(res => {
+        console.log('delte disocunt')
+      })
+  }
+  const countDownTimeDiscount = () => {
+    let timeEnd = moment(game.discount.endDate)
+    .diff(moment(), 'second');
+    if (timeEnd < 0) {
+      deleteGameOfDiscount();
+      return;    
+    }
+    setTimeDiscount(timeEnd);
+    setTimeout(countDownTimeDiscount, 1000);
+  };
+  const checkTimeDiscount = () => {
+    if (game.discount === null) return;
+    let timeStart = moment()
+                        .diff(moment(game.discount.startDate), 'second');
+    let timeEnd = moment(game.discount.endDate)
+                        .diff(moment().format(), 'second');
+    if (timeStart>0) {
+      if (timeEnd>0) {
+        setTimeDiscount(timeEnd);
+        countDownTimeDiscount();
+        return;
+      } 
+    }
+    if (timeEnd < 0) deleteGameOfDiscount();
+  }
   useEffect(()=>{
-    checkIsWishlist();
+    if (idUser !== null) checkIsWishlist(); else setIsWishList(false);
   },[idUser])
+
+  useEffect(()=>{
+    checkTimeDiscount();
+  },[game])
 
   return (
     <div className='d-flex align-items-start column justify-content-end height-full'>
       <div className='width-full'>
-        {game.discount !== null ? (
-          <div className='d-flex align-items-end'>
-            <div className='bgr-discount pd-4-12 border-radius-4'>
-              <span>-{game.discount.percentDiscount}%</span>
+        {game.discount !== null && timeDiscount>0 ? (
+          <div>
+
+            <div className='d-flex align-items-end'>
+              <div className='bgr-discount pd-4-12 border-radius-4'>
+                <span>-{game.discount.percentDiscount}%</span>
+              </div>
+              <div className='m-left-right-8'>
+                <span className='gray-2 fs-12 lh-16 line-through'>
+                  {numberWithCommas(game.cost)}
+                </span>
+              </div>
+              <div className='m-left-8'>
+                <span className='fs-12 lh-16'>
+                  {numberWithCommas(
+                    (1 - game.discount.percentDiscount / 100) * game.cost
+                  )}
+                </span>
+              </div>
             </div>
-            <div className='m-left-right-8'>
-              <span className='gray-2 fs-12 lh-16'>
-                {numberWithCommas(game.cost)}
-              </span>
-            </div>
-            <div className='m-left-8'>
-              <span className='fs-12 lh-16'>
-                {numberWithCommas(
-                  (1 - game.discount.percentDiscount / 100) * game.cost
-                )}
-              </span>
+            <div style={{marginTop:'10px'}}>
+              End on  <b> {secondsFormatHMS(timeDiscount)}</b>
             </div>
           </div>
+       
         ) : (
           <div className='d-flex align-items-end'>
             <div className='m-left-8'>
@@ -301,7 +346,7 @@ function PriceGame({ game, bill }: Detail) {
             onOk={onSubmitPayment}
             onCancel={handleCancel}
             footer={null}>
-            <BuyComponent onSubmitPayment={onSubmitPayment} game={game} />
+            <BuyComponent onSubmitPayment={onSubmitPayment} game={game} timeDiscount={timeDiscount} />
           </Modal>
           <Modal
             width={500}

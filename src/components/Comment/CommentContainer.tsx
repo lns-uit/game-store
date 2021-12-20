@@ -197,18 +197,18 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
         getComment();
         getMyComment();
         getCommentCount();
-        getUserInfo();
+        
         setIsLoading(false);
     }
+
     useEffect(() => {
-        setTimeout(joinRoomTimeout,2000);
+        if (user !== null) {
+            getUserInfo();
+        }
+    },[user])
+    useEffect(() => {
+        joinRoomTimeout();
     }, []);
-    // useEffect(() => {
-    //     if (user !== null) {
-      
-    //         closeConnection();
-    //     }
-    // },[user])
     return (
         <div>
             

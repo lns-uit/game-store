@@ -22,10 +22,10 @@ function Collection({ collection, handleRefundGame }: GameSearch) {
           return (
             <Col
               key={`game-info-collection-${index}`}
-              xxl={6}
-              xl={8}
-              lg={24}
-              md={12}
+              xxl={4}
+              xl={4}
+              lg={6}
+              md={6}
               sm={12}
               xs={24}>
               <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>

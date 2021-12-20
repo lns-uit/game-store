@@ -66,8 +66,8 @@ function MyCarousel({ images,urlVideo }: MyCarouselPropsType) {
             }
             {  
               images.map(image => (
-              <div className='my-carousel__item' style={{ background:"#121212"}}>
-                <img src={image.url} alt='carousel-image' />
+              <div className='my-carousel__item' >
+                <img src={image.url} alt='carousel-image' style={{ background:"#121212"}}/>
               </div>
           ))}
         </Carousel>

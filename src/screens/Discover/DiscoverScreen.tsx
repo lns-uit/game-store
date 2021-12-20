@@ -33,6 +33,7 @@ const EMPTYARR = ["", "", ""];
 function DiscoverScreen() {
   const loadingContext = useContext(LoadingContext);
   const screens = useBreakpoint();
+  const [wishListChange,setWishlistChange] = useState(0);
   const discover = useSelector((state: RootState) => state.discoverGame);
   const {
     isLoading,gameData,itemsFree,topGamesWeek,mostPopular,
@@ -79,7 +80,7 @@ function DiscoverScreen() {
                   sm={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
                   xs={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
                 >
-                  <GameItem game={game} action={ActionType.ADD} />
+                  <GameItem game={game} action={ActionType.ADD} wishListChange={wishListChange} setWishlistChange={setWishlistChange} />
                 </Col>
               ))}
             </Row>
@@ -126,6 +127,7 @@ function DiscoverScreen() {
                     game={game}
                     action={ActionType.ADD}
                     heightImage="23vw"
+                    wishListChange={wishListChange} setWishlistChange={setWishlistChange} 
                   />
                 </Col>
               ))}
@@ -214,6 +216,7 @@ function DiscoverScreen() {
                     game={game}
                     action={ActionType.ADD}
                     heightImage="23vw"
+                    wishListChange={wishListChange} setWishlistChange={setWishlistChange} 
                   />
                 </Col>
               ))}

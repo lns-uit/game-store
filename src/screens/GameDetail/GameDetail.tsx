@@ -18,11 +18,8 @@ function GameDetail() {
   const { idUser } = user || {};
 
   const fetchGameData = async () => {
-    console.log(slug);
     const response = await gamesApi.getGameDetail(slug);
     if (response) {
-      console.log(response);
-
       setGame(response);
     }
   };
@@ -30,11 +27,9 @@ function GameDetail() {
     if (idUser=== undefined || idGame === undefined) return;
     axios.get(Endpoint.mainApi + 'api/collection/is-own-by-user/' + idUser + '/' + idGame)
       .then(res =>{
-        console.log(res.data);
         setBill(res.data);
       })
       .catch(err => {
-
       })
   }
   useEffect(() => {

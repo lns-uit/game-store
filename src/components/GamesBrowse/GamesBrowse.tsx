@@ -28,10 +28,10 @@ function GamesBrowse({ games, lastGameRef }: Pages) {
               // change to id game
               style={{ marginBottom: 20 }}
               key={`game-info-${Math.floor(Math.random() * 10000000)}`}
-              xxl={6}
-              xl={8}
-              lg={24}
-              md={12}
+              xxl={4}
+              xl={4}
+              lg={6}
+              md={6}
               sm={12}
               xs={24}>
               {isLastGameItem ? (

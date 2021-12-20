@@ -32,23 +32,23 @@ const columns = [
     dataIndex: "email",
     key: "email",
   },
-  {
-    title: "Phone Number",
-    key: "numberPhone",
-    dataIndex: "numberPhone",
-  },
-  {
-    title: "Action",
-    key: "idUser",
-    dataIndex: "idUser",
-    render: (id) => (
-      <Space size="middle">
-        <Dropdown overlay={ <MyMenu id={id}/>} placement="bottomLeft">
-          <Button>Action</Button>
-        </Dropdown>
-      </Space>
-    ),
-  },
+  // {
+  //   title: "Phone Number",
+  //   key: "numberPhone",
+  //   dataIndex: "numberPhone",
+  // },
+  // {
+  //   title: "Action",
+  //   key: "idUser",
+  //   dataIndex: "idUser",
+  //   render: (id) => (
+  //     <Space size="middle">
+  //       <Dropdown overlay={ <MyMenu id={id}/>} placement="bottomLeft">
+  //         <Button>Action</Button>
+  //       </Dropdown>
+  //     </Space>
+  //   ),
+  // },
 ];
 const MyMenu = ({id}) => (
   <Menu>
@@ -83,16 +83,21 @@ const MyMenu = ({id}) => (
 function ConsoleUsersListScreen() {
   const [userData, setUserData] = useState<UserType[]>([]);
   const [searchUser, setSearchUser] = useState('');
-
+  let start = 0;
+  let count = 5;
   const getUserData = () => {
-    return axios.get( Endpoint.mainApi + "api/user",{
+    return axios.get( Endpoint.mainApi + 'api/user/'+start+'/'+count ,{
       headers: {
           Authorization: "Bearer "+ localStorage.getItem('accessToken') // token here
       }
     }).then((response) => {
-      setUserData(response.data);
-    }).catch(err => {
-      console.log(err)
+      if (response.data.length !== 0) {
+        response.data.forEach((element,index)=> {
+          setUserData(arr => [...arr,element]);
+        })
+        start += count;
+        getUserData();
+      }
     })
   };
   useEffect(() => {

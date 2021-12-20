@@ -121,6 +121,8 @@ interface UserType {
   numberPhone: string;
   avatar: any;
   background: any;
+  roles: string;
+  confirmEmail:  boolean;
 }
 
 interface Imgs {

@@ -9,15 +9,15 @@ import numberWithCommas from "../../utils/numberWithCommas";
 interface BuyComponentPropsType {
   onSubmitPayment: (card: any) => void;
   game: GameDetailss;
+  timeDiscount: number;
 }
 
 const DEFAUL_CARD = {};
 
-function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
+function BuyComponent({ onSubmitPayment,game,timeDiscount }: BuyComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState("");
   const [isSubmit, setIsSubmit] = useState(false);
-
   const handleSubmitPaymet = (value: any) => {
     setIsSubmit(true);
     let totalPayment=game.cost ;
@@ -52,6 +52,16 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
     console.log(typeof match);
 
     for (var i = 0, len = match.length; i < len; i += 4) {}
+  };
+  const pad = num => {
+    return ('0' + num).slice(-2);
+  };
+  const secondsFormatHMS = (secs: number) => {
+    var minutes = Math.floor(secs / 60);
+    secs = secs % 60;
+    var hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+    return `${(hours)} h ${pad(minutes)} m ${pad(secs)} s`;
   };
   return (
     <div className="buy-content">
@@ -93,10 +103,14 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
                   Cost: <b> {numberWithCommas(game.cost)} </b>
                 </div>
                 {
-                  game.discount !== null ? (
+                  game.discount !== null && timeDiscount>0 ? (
                     <div>
                       Discount {game.discount.title} | <b> -{game.discount.percentDiscount}% </b>
+                      <div style={{marginTop:'10px'}}>
+                        End on  <b> {secondsFormatHMS(timeDiscount)}</b>
+                     </div>
                     </div>
+                   
                   ) : null
                 }
               </div>
@@ -107,7 +121,7 @@ function BuyComponent({ onSubmitPayment,game }: BuyComponentPropsType) {
                   Total Payment:
                 </div>
                 <div>
-                  {game.discount !== null ?
+                  {game.discount !== null && timeDiscount>0 ?
                     <div>
                       {numberWithCommas(game.cost*(1 - game.discount.percentDiscount / 100))}
                     </div>
