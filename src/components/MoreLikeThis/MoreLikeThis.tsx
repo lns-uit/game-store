@@ -51,7 +51,7 @@ function MoreLikeThis() {
         slidesToShow: 3,
         slidesToScroll: 1
     };
-
+    
     const next = () => {
         ref.current.slickNext();
     };
