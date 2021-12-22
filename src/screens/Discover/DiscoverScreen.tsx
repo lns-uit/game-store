@@ -20,8 +20,8 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import ButtonPrimary from "../../components/ButtonPrimary/ButtonPrimary";
 import numOfItemInGrid from "../../utils/numOfItemInGrid";
 import DiscoverLoading from "../../components/LoadingComponent/DiscoverLoading";
-import axios from "axios";
-import { Endpoint } from "../../api/endpoint";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/reducers";
 const numOfItemsDisplay = {
   freeNow: 4,
   mostPopular: 4,
@@ -32,22 +32,13 @@ const EMPTYARR = ["", "", ""];
 
 function DiscoverScreen() {
   const loadingContext = useContext(LoadingContext);
-  const [gameData, setGameData] = useState<GameType[]>([]);
   const screens = useBreakpoint();
-  const [isLoading, setIsLoading] = useState(0);
-  const [itemsFree, setItemsFree] = useState<GameType[]>([]);
-  // gamesInfoMockData.slice(0, 4)
-  const [topGamesWeek, setTopGamesWeek] = useState<GameType[]>([]);
-  // gamesInfoMockData.slice(0, 10)
-  const [mostPopular, setMostPopular] = useState<GameType[]>([]);
-  const [topSellers, setTopSellers] = useState<GameType[]>([]);
-  const [newRelease, setNewRelease] = useState<GameType[]>([]);
-  const [freeGames, setFreeGames] = useState<GameType[]>([]);
-  const [topGamesMonth, setTopGamesMonth] = useState<GameType[]>([]);
-  const [gameOnSales, setGameOnSales] = useState<GameType[]>([]);
-  const [mostFavorite, setMostFavorite] = useState<GameType[]>([]);
-
-  // gamesInfoMockData.slice(0, 4)
+  const [wishListChange,setWishlistChange] = useState(0);
+  const discover = useSelector((state: RootState) => state.discoverGame);
+  const {
+    isLoading,gameData,itemsFree,topGamesWeek,mostPopular,
+    topSellers,newRelease,freeGames,topGamesMonth,gameOnSales,mostFavorite
+  } = discover;
   const topGamesWeekRef = useRef<any>(null);
   const handleSlide = (action) => {
     const ox = topGamesWeekRef.current.offsetWidth;
@@ -57,43 +48,10 @@ function DiscoverScreen() {
       topGamesWeekRef.current.scrollLeft -= ox;
     }
   };
-  const GetData = (title: string,count:number,start:number) => {
-    axios.get(Endpoint.mainApi + 'api/suggestion/get-game/'+ title+ '/' + count + '/' + start)
-      .then(res => {
-        switch(title) {
-          case 'Carousel': setGameData(res.data); break;
-          case 'Top sellers': setTopSellers(res.data); break;
-          case 'New release': setNewRelease(res.data) ;break;
-          case 'Most favorite': setMostFavorite(res.data) ;break;
-          case 'Free games': setFreeGames(res.data); break;
-          case 'Most popular':setMostPopular(res.data); break;
-          case 'Top games week':setTopGamesWeek(res.data); break;
-          case 'Top games month': setTopGamesMonth(res.data); break;
-          case 'Game on sales': setGameOnSales(res.data); break;
-          case 'Free now': setItemsFree(res.data); break;
-        }
-   
-        setIsLoading(i => i+1);
-      })
-      .catch (e => {
-      })
-  }
-  useEffect(() => {
-    GetData('Carousel',5,0);
-    GetData('Top sellers',5,0);
-    GetData('New release',5,0);
-    GetData('Most favorite',5,0);
-    GetData('Free games',5,0);
-    GetData('Most popular',4,0);
-    GetData('Top games week',12,0);
-    GetData('Top games month',12,0);
-    GetData('Game on sales',4,0);
-    GetData('Free now',4,0);
-  }, []);
 
   return (
     <div>
-        {isLoading<10 ? <DiscoverLoading></DiscoverLoading> :
+        {isLoading !== null && isLoading >=10 ?  
         <div className="discover-screen">
           <Helmet>
             {" "}
@@ -112,17 +70,17 @@ function DiscoverScreen() {
               className="top-game-week"
               gutter={[35, 35]}
             >
-              {topGamesWeek.map((game, index) => (
+              {topGamesWeek?.map((game, index) => (
                 <Col
                   key={`game-info-top-game-week-${index}`}
                   xxl={numOfItemInGrid(numOfItemsDisplay.topGamesWeek)}
                   xl={numOfItemInGrid(numOfItemsDisplay.topGamesWeek)}
-                  lg={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
-                  md={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
-                  sm={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
+                  lg={numOfItemInGrid(numOfItemsDisplay.topGamesWeek/1.5)}
+                  md={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 1.5)}
+                  sm={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 2)}
                   xs={numOfItemInGrid(numOfItemsDisplay.topGamesWeek / 3)}
                 >
-                  <GameItem game={game} action={ActionType.ADD} />
+                  <GameItem game={game} action={ActionType.ADD} wishListChange={wishListChange} setWishlistChange={setWishlistChange} />
                 </Col>
               ))}
             </Row>
@@ -137,7 +95,7 @@ function DiscoverScreen() {
             backgroundColor={rootColor.grayContainerColor}
           >
             <Row gutter={[35, 35]}>
-              {itemsFree.map((game, index) => (
+              {itemsFree?.map((game, index) => (
                 <Col
                   key={`game-info-free-now-${index}`}
                   xxl={numOfItemInGrid(numOfItemsDisplay.freeNow)}
@@ -147,7 +105,34 @@ function DiscoverScreen() {
                   sm={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
                   xs={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
                 >
-                  <GameItemFree game={game} heightImage="25vw" />
+                  {game.discount !== null ?
+                    <GameItemFree game={game} heightImage="25vw" />
+                    : null  
+                  }
+                
+                </Col>
+              ))}
+            </Row>
+          </GamesContainer>
+          {/* Game on sales */}
+          <GamesContainer title="GAMES ON SALE !" leftAction={<ViewMoreBtn title="game-on-sales" />}>
+            <Row gutter={[35, 35]}>
+              {gameOnSales?.map((game, index) => (
+                <Col
+                  key={`game-info-most-popular-${index}`}
+                  xxl={numOfItemInGrid(numOfItemsDisplay.mostPopular)}
+                  xl={numOfItemInGrid(numOfItemsDisplay.mostPopular)}
+                  lg={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                  md={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                  sm={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                  xs={numOfItemInGrid(numOfItemsDisplay.mostPopular / 2)}
+                >
+                  <GameItem
+                    game={game}
+                    action={ActionType.ADD}
+                    heightImage="23vw"
+                    wishListChange={wishListChange} setWishlistChange={setWishlistChange} 
+                  />
                 </Col>
               ))}
             </Row>
@@ -178,7 +163,7 @@ function DiscoverScreen() {
                     leftAction={<ViewMoreBtn title="top-sellers" />}
                   >
                     <>
-                      {topSellers.map((game, index) => (
+                      {topSellers?.map((game, index) => (
                         <div style={{ marginBottom: 20 }}>
                           <GameItem game={game} isHorizontal />
                         </div>
@@ -192,7 +177,7 @@ function DiscoverScreen() {
                     leftAction={<ViewMoreBtn title='free-games' />}
                   >
                     <>
-                      {freeGames.map((game, index) => (
+                      {freeGames?.map((game, index) => (
                         <div style={{ marginBottom: 20 }}>
                           <GameItem game={game} isHorizontal />
                         </div>
@@ -206,7 +191,7 @@ function DiscoverScreen() {
                     leftAction={<ViewMoreBtn title='new-release' />}
                   >
                     <>
-                      {newRelease.map((game, index) => (
+                      {newRelease?.map((game, index) => (
                         <div style={{ marginBottom: 20 }}>
                           <GameItem game={game} isHorizontal />
                         </div>
@@ -221,7 +206,7 @@ function DiscoverScreen() {
 
           <GamesContainer title="MOST POPULAR !" leftAction={<ViewMoreBtn title="most-popular" />}>
             <Row gutter={[35, 35]}>
-              {mostPopular.map((game, index) => (
+              {mostPopular?.map((game, index) => (
                 <Col
                   key={`game-info-most-popular-${index}`}
                   xxl={numOfItemInGrid(numOfItemsDisplay.mostPopular)}
@@ -235,12 +220,14 @@ function DiscoverScreen() {
                     game={game}
                     action={ActionType.ADD}
                     heightImage="23vw"
+                    wishListChange={wishListChange} setWishlistChange={setWishlistChange} 
                   />
                 </Col>
               ))}
             </Row>
           </GamesContainer>
-        </div> }
+         
+        </div> : <DiscoverLoading></DiscoverLoading> }
     </div>
   );
 }

@@ -5,12 +5,13 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './styles.css';
 import MyCarousel from '../../components/MyCarousel/MyCarousel';
-import { GameDetailss } from '../../interfaces/rootInterface';
+import { BillType, GameDetailss } from '../../interfaces/rootInterface';
 interface Detail {
   game: GameDetailss;
+  bill: BillType | undefined;
 }
 
-function LayoutGameDetail1({ game }: Detail) {
+function LayoutGameDetail1({ game,bill }: Detail) {
   const { nameGame } = game || {};
   return (
     <div className='cover'>
@@ -19,7 +20,7 @@ function LayoutGameDetail1({ game }: Detail) {
           <div className='flex-1-1-auto max-width-1029'>
             <div className='m-bottom-24'>
               <div className='text-cover d-inline-block'>
-                <h3 className='white m-0 fs-48 lh-56 uppercase'>{nameGame}</h3>
+                <h3 className='white m-0 fs-48 lh-56'>{nameGame}</h3>
               </div>
             </div>
             <div className='d-inline-block width-full cover-img button-none'>
@@ -31,7 +32,7 @@ function LayoutGameDetail1({ game }: Detail) {
         </Col>
         <Col xxl={6} xl={6} lg={24} md={24} sm={24} xs={24}>
           <div className='height-full white pd-bottom-20'>
-            <PriceGame game={game} />
+            <PriceGame game={game} bill = {bill} />
           </div>
         </Col>
       </Row>

@@ -50,7 +50,11 @@ function ConsoleHeader(){
                 </div>
                 
                 <div>
-                    <Button type = "primary" onClick={()=>{window.open("/","_self")}}>
+                    <Button 
+                        type = "primary" onClick={()=>{window.open("/")}}
+                        className='bgr-red pd-8-16 width-full border-radius-4 uppercase'
+                        style={{ height: '40px' }}
+                    >
                         Go to Discover
                     </Button>
                 </div>

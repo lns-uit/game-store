@@ -66,20 +66,22 @@
 /*different*/
 .master-card .ant-modal-content {
   background-color: var(--grayContainer-color) !important;
+  border-radius: 15px !important;
+  overflow: hidden !important;
 }
 .master-card .ant-modal-close-x {
   color: var(--red-color) !important;
 }
 .master-card .ant-modal-header {
-  background-color: var(--grayContainer-color) !important;
+  background-color: #1c1c1c !important;
   /* background-color: var(--grayContainer-color) !important; */
-  border-bottom: 1px solid var(--border-color) !important;
+  border-bottom: 0 solid var(--border-color) !important;
 }
 
 .master-card .ant-modal-header .ant-modal-title {
   color: var(--white-color) !important;
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .master-card .ant-modal-footer {
@@ -97,7 +99,6 @@
   justify-content: space-between;
 }
 .buy-content input {
-  color: var(--textDisable-color) !important;
   font-weight: 700;
   font-size: 16px;
 }

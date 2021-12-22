@@ -6,7 +6,7 @@ import { Row, Col } from 'antd';
 import './styles.css';
 import axios from 'axios';
 import gameApi from '../../api/gamesApi';
-import {Helmet} from "react-helmet";
+import { Helmet } from 'react-helmet';
 
 interface Pages {
   games: GameType[];
@@ -16,33 +16,31 @@ interface Pages {
 function GamesBrowse({ games, lastGameRef }: Pages) {
   return (
     <div className='mr-top-10'>
-      <Helmet> <title> Stun Store | Browse </title>  </Helmet>
       <Row>
         {games.map((game, index) => {
           const isLastGameItem = index + 1 == games.length;
           return (
             <Col
               // change to id game
+              style={{ marginBottom: 20 }}
               key={`game-info-${Math.floor(Math.random() * 10000000)}`}
-              xxl={6}
-              xl={8}
-              lg={24}
-              md={12}
+              xxl={4}
+              xl={4}
+              lg={6}
+              md={6}
               sm={12}
               xs={24}>
-              <Link to={'/game/' + game.idGame + '/' + game.lastestVersion}>
-                {isLastGameItem ? (
-                  <div
-                    ref={lastGameRef}
-                    className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
-                    <GameItem game={game} action={ActionType.ADD} />
-                  </div>
-                ) : (
-                  <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
-                    <GameItem game={game} action={ActionType.ADD} />
-                  </div>
-                )}
-              </Link>
+              {isLastGameItem ? (
+                <div
+                  ref={lastGameRef}
+                  className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                  <GameItem game={game} action={ActionType.ADD} />
+                </div>
+              ) : (
+                <div className='pd-left-right-10 pd-bottom-30 m-bottom-12'>
+                  <GameItem game={game} action={ActionType.ADD} />
+                </div>
+              )}
             </Col>
           );
         })}

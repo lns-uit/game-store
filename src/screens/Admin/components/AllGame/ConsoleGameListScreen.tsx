@@ -7,31 +7,52 @@ import { useHistory } from "react-router-dom";
 const { Search } = Input;
 import {Endpoint} from "../../../../api/endpoint"
 import { LoadingContext } from "react-router-loading";
+import Helmet from 'react-helmet';
 
 function ConsoleGameListScreen() {
   const loadingContext = useContext(LoadingContext);
-  
+  const [gameData, setGameData] = useState<GameType[]>([]);
+  const [searchGame, setSearchGame] = useState('');
+  const history = useHistory();
+  let start = 0;
+  let count = 5;
   const loading = async () => {
-    await axios.get(Endpoint.mainApi + "api/game").then((response) => {
-      setGameData(response.data);
+    await axios.post(Endpoint.mainApi + "api/game/lazy-load/browse",{
+      listGenreDetail: [],
+      count : count,
+      start : start,
+      sortBy: "abc"
+    }).then((response) => {
+      if (response.data.length !== 0) {
+          response.data.forEach((element,index)=> {
+              setGameData(arr => [...arr,element]);
+          })
+         
+          start += count;
+          loading();
+      }
       loadingContext.done();
     });
    
   };
-  const [gameData, setGameData] = useState<GameType[]>([]);
-  const [searchGame, setSearchGame] = useState('');
-  const history = useHistory();
+
 
   const columns = [
+    {
+      title: "",
+      dataIndex: "nameGame",
+      key: "nameGame",
+      width: "10px",
+      render: (text,item,index) => <h4>{index+1}</h4>
+
+    },
     {
       title: "Game",
       dataIndex: "imageGameDetail",
       key: "imageGameDetail",
       width: "40px",
       render: (text) =>
-        text.length !== 0 ? (
           <img className="cover" height="40px" width="40px" src={text[0].url} />
-        ) : null,
     },
     {
       dataIndex: "nameGame",
@@ -81,6 +102,9 @@ function ConsoleGameListScreen() {
   }, []);
   return (
     <div className="console-container">
+      <Helmet>
+            <title> Stun Console | Games </title>
+      </Helmet>
       <div className="console-detail-header">
         <h1>
             ALL GAME
@@ -95,11 +119,16 @@ function ConsoleGameListScreen() {
               onChange={event => setSearchGame(event.target.value?.toLowerCase())}
             />
           </div>
-          <div style = {{width:'20px'}}></div>
-          <div className = "btn" onClick={() => { history.push("/admin/create-game") }}>
+          <div style = {{width:'40px'}}></div>
+          <Button 
+              onClick={() => { history.push("/admin/create-game") }}
+              className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+              style={{ height: '40px' }}
+              type = "primary"
+          >
             {" "}
             Create New Game{" "}
-          </div>
+          </Button>
         </div>
       </div>
       <div className="console-list">

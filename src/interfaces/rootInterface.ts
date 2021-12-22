@@ -19,7 +19,13 @@ interface GameType {
   lastestVersion: any;
   numberOfBuyers: any;
   numberOfDowloaders: any;
-  discount: any;
+  discount: {
+    idDiscount: string;
+    title: string;
+    percentDiscount: number;
+    startDate: string;
+    endDate: string;
+  };
   genres: {
     idGenreNavigation: GenreType;
   }[];
@@ -32,7 +38,16 @@ interface CollectionType {
   game: GameType;
   isInstalled: any;
 }
-
+interface BillType{
+  idBill: string;
+  idGame: string;
+  idUser: string;
+  datePay: Date;
+  cost: number;
+  actions: string;
+  discount: string;
+  timeRefund: number;
+}
 interface gameCollection {
   averageRate: number;
   cost: number;
@@ -107,6 +122,8 @@ interface UserType {
   numberPhone: string;
   avatar: any;
   background: any;
+  roles: string;
+  confirmEmail:  boolean;
 }
 
 interface Imgs {
@@ -198,6 +215,20 @@ export enum ActionType {
   ADD = 'add',
   REMOVE = 'remove',
 }
+interface GameDiscoverType {
+  gameData: GameType[];
+  itemsFree: GameType[];
+  topGamesWeek: GameType[];
+  mostPopular: GameType[];
+  topSellers: GameType[];
+  newRelease: GameType[];
+  freeGames: GameType[];
+  topGamesMonth: GameType[];
+  gameOnSales: GameType[];
+  mostFavorite: GameType[];
+  isLoading: number;
+  type: string;
+}
 
 export type {
   ImageType,
@@ -215,4 +246,6 @@ export type {
   FormRegisterType,
   CollectionType,
   gameCollection,
+  GameDiscoverType,
+  BillType
 };

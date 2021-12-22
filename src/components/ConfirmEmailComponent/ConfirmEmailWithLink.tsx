@@ -9,6 +9,7 @@ import { login } from "../../redux/actions/userAction";
 
 interface typeSlug{
     url: string,
+    action: string,
 }
 
 function ConfirmEmailWithLink() {
@@ -43,9 +44,16 @@ function ConfirmEmailWithLink() {
                         Welcome
                     </div>
                     <br/>
-                    <div className = "btn flex-center b-r5" onClick={()=>{history.replace('/')}}>
-                        Go to Discover
-                    </div>
+                    {
+                        slug.action === 'rs-pwd' ?
+                        <div className = "btn flex-center b-r5" onClick={()=>{history.replace('/reset-password')}}>
+                            Change Password 
+                        </div> :
+                        <div className = "btn flex-center b-r5" onClick={()=>{history.replace('/')}}>
+                            Go to Discover
+                        </div>
+                    }
+                   
                 </div> : 
                 <div className = "flex-column confirm-email-with-link-box flex-center">
                     <div className = "fs-tt">

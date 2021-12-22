@@ -1,0 +1,72 @@
+.full-width-x{
+    width: 100%;
+    height: 100%;
+    margin-top: 70px;
+    display: flex;
+    justify-content: space-between;
+}
+.full-width-child{
+    width: 100%;
+    height: 40px;
+}
+@keyframes LoadingAnim {
+    0% {
+      opacity: 0.8;
+    }
+    50% {
+      opacity: 0.2;
+    }
+    100% {
+      opacity: 0.8;
+    }
+  }
+  
+.anim-loading {
+    background: #222222;
+    border-radius: 10px;
+    border: 1px solid rgb(37, 37, 37);
+    animation-name: LoadingAnim;
+    animation-duration: 2s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+.carousel-loading{
+    height: 30vw;
+    width: 100%;
+}
+.box-detail{
+    width: 65%;
+}
+.box-price{
+    width: 30%;
+    padding-top: 18vw;
+}
+@media screen and (max-width: 1600px) {
+
+}
+  
+@media screen and (max-width: 1100px) {
+    .full-width{
+        display: flex;
+        flex-direction: column;
+    }
+    .box-detail{
+        width: 100%;
+    }
+    .box-price{
+        width: 100%;
+        padding-top: 10px;
+    }
+}
+  
+@media screen and (max-width: 768px) {
+    .full-width{
+        display: flex;
+        flex-direction: column;
+        margin-top: -50px;
+    }
+    .box-price{
+        width: 100%;
+        padding-top: 10px;
+    }
+}

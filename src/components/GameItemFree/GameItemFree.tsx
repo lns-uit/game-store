@@ -1,4 +1,5 @@
 import React from 'react';
+import Moment from 'react-moment';
 import { useHistory } from 'react-router-dom';
 import { GameType } from '../../interfaces/rootInterface';
 import './styles.css';
@@ -23,9 +24,11 @@ function GameItemFree({ game, heightImage }: GameItemFreePropsType) {
     ));
   };
   return (
-    <div className='game-item game-item--free'
-        onClick={()=>{history.push('/game/'+game.idGame)}}
-    >
+    <div
+      className='game-item game-item--free'
+      onClick={() => {
+        history.push('/game/' + game.idGame);
+      }}>
       <div
         style={heightImage ? { height: heightImage } : {}}
         className='game-item__image game-item__image--free'>
@@ -40,7 +43,16 @@ function GameItemFree({ game, heightImage }: GameItemFreePropsType) {
       <div className='game-item-free__description'>
         <p className='game-item-free__description__title'>{nameGame}</p>
         <p className='game-item-free__description__subtitle'>
-          Free now 12:45AM Sep 14 2020
+          {game.discount === null ?
+            <div>
+               End Free
+            </div>
+          :
+          <div>
+            Free now to  <Moment format='DD-MMM-yyyy , hh:mm:ss' >{game.discount.endDate}</Moment> 
+          </div>
+          }
+     
         </p>
       </div>
     </div>

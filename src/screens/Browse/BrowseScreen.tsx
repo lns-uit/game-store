@@ -7,7 +7,7 @@ import { GenreType } from '../../interfaces/rootInterface';
 import OrderBy from '../../components/OrderBy/OrderBy';
 import Sort from '../../components/Sort/Sort';
 import useGames from '../../hooks/useGames';
-
+import { Helmet } from 'react-helmet';
 const ORDER_BY = ['abc', 'new-release', 'price-to-high', 'price-to-low'];
 
 function BrowseScreen() {
@@ -70,6 +70,10 @@ function BrowseScreen() {
 
   return (
     <div className='browse white'>
+      <Helmet>
+        {' '}
+        <title> Stun Store | Browse </title>{' '}
+      </Helmet>
       <OrderBy
         valueOrderBy={valueOrderBy}
         valuesOrderBy={ORDER_BY}

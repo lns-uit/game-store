@@ -12,6 +12,7 @@ function AllGameVersion() {
     slug = useParams();
     const [gameData, setGameData] = useState<GameVersionType[]>([]);
     const [searchGame, setSearchGame] = useState('');
+    const [nameGame, setNameGame] = useState('');
     const history = useHistory();
     const location = useLocation();
 
@@ -28,6 +29,18 @@ function AllGameVersion() {
             setGameData(response.data);
         });
     };
+    const getGame = () => {
+        axios.get(Endpoint.mainApi+"api/gameversion/by-game/lastest-version/"+slug.idGame,
+            {
+                headers: {
+                    Authorization: "Bearer "+ localStorage.getItem("accessToken")
+                },
+            }
+        )
+        .then(res => {
+            setNameGame(res.data.nameGame)
+        })
+    }
     const columns = [
         {
             title: "Version",
@@ -44,12 +57,13 @@ function AllGameVersion() {
     ];
     useEffect(() => {
         getDataGame();
+        getGame();
     }, []);
     return (
         <div className="console-container">
             <div className="console-detail-header">
                 <h1>
-                    Version
+                    {nameGame}
                 </h1>
                 <div className="console-toolbar">
 
@@ -61,14 +75,17 @@ function AllGameVersion() {
                             onChange={event => setSearchGame(event.target.value?.toLowerCase())}
                         />
                     </div>
-                    <div style={{ width: '20px' }}></div>
-                    <div className="btn" onClick={() => { 
-                            let routePath = location.pathname.split('/');
-                            let id = routePath[routePath.length-1];
-                            history.push("/admin/update-game/"+ id) 
-                        }}>
+                    <div style={{ width: '40px' }}></div>
+                    <Button  className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                            style={{ height: '40px' }}
+                            type = "primary" 
+                            onClick={() => { 
+                                let routePath = location.pathname.split('/');
+                                let id = routePath[routePath.length-1];
+                                history.push("/admin/update-game/"+ id) 
+                            }}>
                         Create New Update
-                    </div>
+                    </Button>
                 </div>
             </div>
             <div className="console-list">

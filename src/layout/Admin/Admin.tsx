@@ -4,6 +4,7 @@ import DetailGame from '../../components/UploadFile/DetailGame';
 import DescriptionPhoto from '../../components/UploadFile/DescriptionPhoto';
 import ShortDescription from '../../components/UploadFile/ShortDescription';
 import SystemRequirements from '../../components/UploadFile/SystemRequirements';
+import Helmet from 'react-helmet'
 import {
   message,
   Form,
@@ -48,6 +49,7 @@ function Admin() {
   const [urlDownload, setUrlDownload] = useState<any>(null);
   const [fileZip, setFileZip] = useState<any>([]);
   const [loaddingImagesGame, setLoaddingImagesGame] = useState(false);
+  const [isUpdatingGame, setIsUpdatingGame] = useState(false);
   const url = useSelector(
     (state: RootState) => state.gameAvatar
   )
@@ -114,6 +116,10 @@ function Admin() {
       window.alert(stringErr);
     } else {
       values.fileGame = urlDownload;
+      if (urlDownload === null) {
+        message.warn("Login To Buy This Game");
+        return;
+      }
       values.images = fileList.map(image => {
         return image.url
       });
@@ -122,8 +128,8 @@ function Admin() {
     }
   }
   const postGame = (values: any) => {
-    console.log(values);
     values.images.splice(0,0,url.url)
+    setIsUpdatingGame(true);
     axios
       .post(Endpoint.mainApi + "api/game/create", {
         game: {
@@ -240,6 +246,9 @@ function Admin() {
   },[])
   return (
     <div className="white console-container">
+      <Helmet>
+            <title> Stun Console | Create Game </title>
+      </Helmet>
       <div className="console-detail-header">
         <h1>CREATE NEW GAME</h1>
         <div className="console-toolbar"></div>
@@ -300,13 +309,13 @@ function Admin() {
         </Form.Item>
 
         <SystemRequirements />
-        <Row gutter={[48, 8]}>
-          <Col xxl={14} xl={14} lg={16} md={16} sm={24} xs={24}>
+        <div style = {{display:'flex', alignItems:'flex-end', justifyContent:'space-between'}}> 
             <Form.Item
               name="cost"
               label="Game Cost"
             >
               <InputNumber
+                width="90vw"
                 defaultValue={0}
                 min={0}
                 formatter={(value) =>
@@ -314,18 +323,19 @@ function Admin() {
                 }
               />
             </Form.Item>
-          </Col>
-          <Col xxl={10} xl={100} lg={8} md={8} sm={24} xs={24}>
+
             <Form.Item
-              wrapperCol={{ span: 12, offset: 6 }}
-              className="m-top-24"
             >
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button 
+                  type="primary" htmlType="submit"
+                  className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                  style={{ height: '45px' }}
+                  loading={isUpdatingGame ? true : urlDownload!==null ? false : true}
+              >
+                  {urlDownload!==null ? "Create Game" : "Uploading Your Zip File"}
               </Button>
             </Form.Item>
-          </Col>
-        </Row>
+        </div>
       </Form>
     </div>
   );

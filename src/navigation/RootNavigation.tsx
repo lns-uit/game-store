@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, Redirect } from 'react-router';
-import { Switch, Route } from "react-router-loading";
+import { Switch, Route } from 'react-router-loading';
 import { setTabAction } from '../redux/actions/tabAction';
 import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
@@ -35,6 +35,13 @@ import ConfirmEmailWithLink from '../components/ConfirmEmailComponent/ConfirmEma
 import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 import ResetPassword from '../screens/ResetPassword/ResetPassword';
 import SuggestionScreen from '../screens/Suggestion/SuggestionScreen';
+import { GameType, GameDiscoverType } from '../interfaces/rootInterface';
+import suggestionGameReducer from '../redux/reducers/suggestionGame';
+import WishlistScreen from '../screens/Wishlist/WishlistScreen';
+import { getGameSuggestionApi } from '../api/suggestionApi';
+import RefundPolicyScreen from '../screens/StorePolicy/RefundPolicyScreen';
+import PrivacyPolicyScreen from '../screens/StorePolicy/PrivacyPolicyScreen';
+import TermOfServiceScreen from '../screens/StorePolicy/TermOfServiceScreen';
 
 function RootNavigation() {
   let location = useLocation();
@@ -42,11 +49,9 @@ function RootNavigation() {
   const { idUser } = user || {};
   const dispatch = useDispatch();
   const isLogin = useMemo(() => !!idUser, [idUser]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const email = useSelector((state: RootState) => state.email);
-  const forgot = useSelector(
-    (state: RootState) => state.forgotPassword
-  )
+  const forgot = useSelector((state: RootState) => state.forgotPassword);
 
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
@@ -67,17 +72,93 @@ function RootNavigation() {
     }, 500);
   }, []);
 
+  let isLoadingDiscover = 0;
+  let data: GameDiscoverType = {
+    gameData: [],
+    itemsFree: [],
+    topGamesWeek: [],
+    mostPopular: [],
+    topSellers: [],
+    newRelease: [],
+    freeGames: [],
+    topGamesMonth: [],
+    gameOnSales: [],
+    mostFavorite: [],
+    isLoading: 10,
+    type: 'set',
+  };
+
+  const GetData = async (title: string, count: number, start: number) => {
+    const res = await getGameSuggestionApi(title, count, start);
+    if (Array.isArray(res)) {
+      switch (title) {
+        case 'Carousel':
+          data.gameData = res;
+          break;
+        case 'Top sellers':
+          data.topSellers = res;
+          break;
+        case 'New release':
+          data.newRelease = res;
+          break;
+        case 'Most favorite':
+          data.mostFavorite = res;
+          break;
+        case 'Free games':
+          data.freeGames = res;
+          break;
+        case 'Most popular':
+          data.mostPopular = res;
+          break;
+        case 'Top games week':
+          data.topGamesWeek = res;
+          break;
+        case 'Top games month':
+          data.topGamesMonth = res;
+          break;
+        case 'Game on sales':
+          data.gameOnSales = res;
+          break;
+        case 'Free now':
+          data.itemsFree = res;
+          break;
+      }
+    }
+
+    isLoadingDiscover++;
+    if (isLoadingDiscover >= 10) {
+      if (data !== null) {
+        dispatch(suggestionGameReducer(undefined, data));
+      }
+    }
+  };
+
   useEffect(() => {
     dispatch(setTabAction(location.pathname));
   }, [location]);
 
   useEffect(() => {
     fetchData();
+    GetData('Carousel', 5, 0);
+    GetData('Top sellers', 5, 0);
+    GetData('New release', 5, 0);
+    GetData('Most favorite', 5, 0);
+    GetData('Free games', 5, 0);
+    GetData('Most popular', 4, 0);
+    GetData('Top games week', 12, 0);
+    GetData('Top games month', 12, 0);
+    GetData('Game on sales', 4, 0);
+    GetData('Free now', 4, 0);
   }, []);
-
   return (
     <Switch>
-
+      {isLoading ? (
+        <>
+          <Route path='/' />
+          <SplashScreen />
+          <Route />
+        </>
+      ) : (
         <>
           {/* user login */}
           <PrivateRoute loading path='/edit/user/:id'>
@@ -92,11 +173,16 @@ function RootNavigation() {
           <PrivateRoute loading path='/admin/update-game/:idGame'>
             <AdminUpdateGame />
           </PrivateRoute>
+          <PrivateRoute path='/wishlist/:idUser'>
+            <WishlistScreen />
+          </PrivateRoute>
 
-          <Route  path='/admin/console/game-list' component={ConsoleGameListScreen} loading={true}>
-          </Route>
+          <Route
+            path='/admin/console/game-list'
+            component={ConsoleGameListScreen}
+            loading={true}></Route>
           <Route loading path='/admin/console/user-list'>
-            <Route />
+            <ConsoleUsersListScreen />
           </Route>
           <Route loading path='/admin/console/discount-list'>
             <DiscountEvent />
@@ -139,29 +225,35 @@ function RootNavigation() {
             }
           />
           <Route
+            loading
             path='/forgot-password'
+            render={() => (isLogin ? <Redirect to='/' /> : <ForgotPassword />)}
+          />
+          <Route
+            loading
+            path='/reset-password'
             render={() =>
-              isLogin ? <Redirect to='/' /> : <ForgotPassword />
+              forgot === false ? <Redirect to='/' /> : <ResetPassword />
             }
           />
-          <Route path='/reset-password'
-            render={()=> forgot === false ? <Redirect to='/' /> : <ResetPassword />}
-          />
-          <Route path='/email-verify/:url'>
+          <Route path='/verify/:url/:action'>
             <ConfirmEmailWithLink />
           </Route>
 
           {/* everyone */}
-          <Route path='/suggestion/:title' component={SuggestionScreen}></Route>
+          <Route path='/term-of-service' component={TermOfServiceScreen}/>
+          <Route path='/privacy-policy' component={PrivacyPolicyScreen}/>
+          <Route path='/store-refund-policy' component={RefundPolicyScreen}/>
+          <Route path='/suggestion/:title' component={SuggestionScreen} />
           <Route path='/game/:idGame' component={GameDetail} />
-          <Route path='/browse/' component={BrowseScreen} />
+          <Route path='/browse' component={BrowseScreen} />
           <Route exact path='/' component={DiscoverScreen} />
           {/* <Route path='*' component={NotFoundScreen} /> */}
 
           {/* move to not found page */}
           {/* <Redirect from='*' to='/404' /> */}
         </>
-      
+      )}
     </Switch>
   );
 }

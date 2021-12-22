@@ -25,20 +25,23 @@ function App() {
   const onClose = () => {
     setIsOpen(false);
   };
+
+  useEffect(() => {
+    console.log(user);
+  }, []);
   return (
     <>
       <Router>
         <Layout>
-          { window.location.pathname.split('/')[1]==="admin" ? 
-            <div 
-              className = "header-stun-console" 
-              style = {{display: user?.roles==="admin" ? "block" : "none"}}
-            >
-              <ConsoleHeader/>
+          {window.location.pathname.split('/')[1] === 'admin' ? (
+            <div
+              className='header-stun-console'
+              style={{ display: user?.roles === 'admin' ? 'block' : 'none' }}>
+              <ConsoleHeader />
             </div>
-            : 
+          ) : (
             <MyHeader onOpen={onOpen} />
-          }
+          )}
           {/* <div style = {{display: window.location.pathname.split('/')[1]==="admin" ? "none" : "block"}}>
             <MyHeader onOpen={onOpen} />
           </div>
@@ -50,11 +53,26 @@ function App() {
           </div> */}
           {!screens.lg && <MyDrawer isOpen={isOpen} onClose={onClose} />}
           <Content
-            style = {{marginTop: window.location.pathname.split('/')[1]==="admin" ? "70px" : "100px"}}
-            className={window.location.pathname.split('/')[1]!=="admin" ? `site-layout${!screens.lg ? ' site-layout--md' : ''}` : 'site-layout-admin'}>
+            style={{
+              marginTop:
+                window.location.pathname.split('/')[1] === 'admin'
+                  ? '70px'
+                  : '100px',
+            }}
+            className={
+              window.location.pathname.split('/')[1] !== 'admin'
+                ? `site-layout${!screens.lg ? ' site-layout--md' : ''}`
+                : 'site-layout-admin'
+            }>
             <RootNavigation />
           </Content>
-          <div style = {{display: window.location.pathname.split('/')[1]==="admin" ? "none" : "block"}}>
+          <div
+            style={{
+              display:
+                window.location.pathname.split('/')[1] === 'admin'
+                  ? 'none'
+                  : 'block',
+            }}>
             <MyFooter />
           </div>
         </Layout>

@@ -6,7 +6,8 @@ const storage = require('electron-json-storage');
 var fs = require('fs');
 const {ipcRenderer, shell, remote } = require('electron')
 const { loadProgressBar } = require('axios-progress-bar')
-const Endpoint = "http://103.142.139.104:5111/"
+const Endpoint = "https://103.142.139.104:5111/"
+// const Endpoint = "https://localhost:5001/"
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {
     const element = document.getElementById(selector)
@@ -195,7 +196,7 @@ function GetGameDetail(game){
     shortDescription.textContent = "";
     detailDescription.innerHTML = "";
 
-    axios.get(Endpoint+"api/gameversion/by-game/"+game.idGame + "/"+ game.lastestVersion,
+    axios.get(Endpoint+"api/gameversion/by-game/lastest-version/"+game.idGame,
         {
             headers: {
                 Authorization: "Bearer " + userInfo.token

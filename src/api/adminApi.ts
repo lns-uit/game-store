@@ -1,6 +1,7 @@
 import callApi from '../utils/callApi';
+import { Endpoint } from './endpoint';
 
-const genreApi = 'https://localhost:5001/api/genre'
+const genreApi = Endpoint.mainApi + 'api/genre'
 
 const getGenre = async () => {
   try {

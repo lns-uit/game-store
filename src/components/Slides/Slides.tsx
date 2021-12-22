@@ -8,9 +8,10 @@ import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
 import { GameType } from '../../interfaces/rootInterface';
 import numberWithCommas from '../../utils/numberWithCommas';
+import { useMediaQuery } from 'react-responsive';
 import { useHistory } from 'react-router-dom';
 interface SlideData {
-  gameData: GameType[]
+  gameData: GameType[] | null;
 }
 
 function Slides({gameData}: SlideData) {
@@ -18,7 +19,7 @@ function Slides({gameData}: SlideData) {
   const carouselRef = useRef<CarouselRef>(null);
   const [btn_animScale, set_btn_animScale] = useState(false);
   const history = useHistory();
-
+  const isResMb = useMediaQuery({ query: '(min-width: 992px)' })
   useEffect(()=>{
     // GetCarouselData();
   },[])
@@ -26,9 +27,9 @@ function Slides({gameData}: SlideData) {
   return (
     <div className='slides-container'>
       <Row>
-        <Col xxl={6} xl={6} lg={7} md={0} sm={0} xs={0}>
+        <Col xxl={6} xl={6} lg={6} md={0} sm={0} xs={0}>
           <div className='group-btn-slides'>
-            {gameData.map((item, index) =>
+            {gameData?.map((item, index) =>
               index <= 4 ? (
                 <div
                   className='btn-slides'
@@ -84,17 +85,17 @@ function Slides({gameData}: SlideData) {
             )}
           </div>
         </Col>
-        <Col xxl={18} xl={18} lg={16} md={24} sm={24} xs={24}>
+        <Col xxl={18} xl={18} lg={18} md={24} sm={24} xs={24}>
           <Carousel
             className='my-slides'
             ref={carouselRef}
             speed={200}
-            dots = {false}
-            effect="fade"
+            draggable = {!isResMb ? true : false}
+            dots = {isResMb ? false : true}
             afterChange={index => {
               setActiveCarousel(index);
             }}>
-            {gameData.map((item, index) =>
+            {gameData?.map((item, index) =>
               index <= 4 ? (
                 <div>
                   <div className='my-slides-element'>
@@ -123,10 +124,23 @@ function Slides({gameData}: SlideData) {
                             </span>
                           ))}
                           <br/><br/>
-                          <b>
-                            {item.cost === 0 ? "Free Game" : numberWithCommas(item.cost)}
-                          </b>
-                   
+                          {
+                            item.discount == null ? 
+                            <b>
+                              {item.cost === 0 ? "Free" : numberWithCommas(item.cost)}
+                            </b> :
+                            <div style={{display:'flex'}}>
+                              <div style={{textDecoration: 'line-through',color: '#adadad'}}>
+                                {numberWithCommas(item.cost)} &ensp;
+                              </div>
+                              &nbsp;
+                              <b>
+                              {parseFloat(item.cost)*(1-item.discount.percentDiscount/100) === 0 ? "Free Game" : numberWithCommas(parseFloat(item.cost)-item.cost*item.discount.percentDiscount/100)}
+                              </b>
+                              
+                            </div>
+                          }
+                      
                         </div>
                         <br />
                         <button onClick={()=>{history.push('/game/'+item.idGame)}} > PLAY NOW </button>

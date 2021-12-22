@@ -14,9 +14,10 @@ const path = require("path");
 const axios = require("axios");
 const https = require("https");
 const storage = require("electron-json-storage");
-// const { unzip } = require("zlib");
-// const { file } = require("@babel/types");
-const Endpoint = "http://103.142.139.104:5111/"
+const ElectronGoogleOAuth2 = require('@getstation/electron-google-oauth2').default;
+
+const Endpoint = "https://103.142.139.104:5111/"
+// const Endpoint = "https://localhost:5001/"
 const agent = new https.Agent({
   rejectUnauthorized: false,
 });
@@ -109,7 +110,9 @@ function createLoginScreen() {
   loginScreen.loadFile("login.html");
   // loginScreen.webContents.openDevTools();
 }
-
+ipcMain.handle("login-sma",(event,obj)=>{
+  CreateLoginGoogle(obj);
+})
 ipcMain.handle("login", (event, obj) => {
   validateLogin(obj);
 });
@@ -213,6 +216,61 @@ function unZipGame(obj){
 
 }
 
+function CreateLoginGoogle(obj){
+  const myApiOauth = new ElectronGoogleOAuth2(
+    '436864193139-pp683cr97eg03a8jri9lmmmonfa0963e.apps.googleusercontent.com',
+    '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',  
+    ['https://www.googleapis.com/auth/drive.metadata.readonly'],
+    { successRedirectURL: 'https://stun-store.vercel.app/launcher-oauth-success' },
+  );
+
+  myApiOauth.openAuthWindowAndGetTokens()
+    .then(token => {
+        axios.get("https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token="+token.access_token,{
+          httpsAgent: agent,
+          headers: {
+            Authorization: "Bearer " + token.id_token
+          }
+        })
+        .then (res => {
+          responseGoogle(res,obj);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    });
+}
+
+function responseGoogle(response,obj) {
+  let data = response.data;
+  axios.post(Endpoint + 'api/user/login-sma',{
+    iLogin: {
+      email: data.email,
+      },
+    iUser: {
+        email: data.email,
+        realname: data.name,
+        avatar: data.picture,
+        userName: data.email
+    }
+  },{
+    httpsAgent: agent,
+  })
+  .then(response => {
+    storage.set("user", response.data.token, function (error) {
+      if (error) throw error;
+    });
+    if (!obj.keepLogin) isKeepLogin = false;
+    userInfo = response.data;
+    createMainScreen();
+    mainScreen.show();
+    loginScreen.close();
+  })
+  .catch(err => {
+    console.log(err)
+  })
+}
+
 function validateLogin(obj) {
   axios
     .post(
@@ -237,17 +295,18 @@ function validateLogin(obj) {
       
     })
     .catch((error) => {
-      const options = {
-        type: "question",
-        buttons: ["OK"],
-        defaultId: 2,
-        title: "Notification",
-        message: "Something wrong",
-      };
-      dialog.showMessageBox(null, options, (response, checkboxChecked) => {
-        console.log(response);
-        console.log(checkboxChecked);
-      });
+      loginScreen.webContents.send('message-wrong-login',error.response.data.message)
+      // const options = {
+      //   type: "question",
+      //   buttons: ["OK"],
+      //   defaultId: 2,
+      //   title: "Notification",
+      //   message: error.data,
+      // };
+      // dialog.showMessageBox(null, options, (response, checkboxChecked) => {
+      //   console.log(response);
+      //   console.log(checkboxChecked);
+      // });
     });
 }
 app.commandLine.appendSwitch("ignore-certificate-errors");

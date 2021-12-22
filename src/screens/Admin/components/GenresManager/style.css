@@ -11,3 +11,36 @@
 .genres-manager-container{
     padding: 0 0 0 20px;
 }
+.modal-genre .ant-modal-header{
+  background-color: #2c2c2c !important;
+  border-bottom: 0 !important;
+}
+.modal-genre .ant-modal-title {
+  color: white !important;
+}
+.modal-genre svg{
+  fill: white !important;
+}
+
+/* width */
+.ant-picker-time-panel-column::-webkit-scrollbar {
+  width: 6px;
+  height: 5px;
+}
+
+/* Track */
+.ant-picker-time-panel-column::-webkit-scrollbar-track {
+  background: rgb(255, 255, 255) !important;
+}
+
+/* Handle */
+.ant-picker-time-panel-column::-webkit-scrollbar-thumb {
+  background: rgb(151, 151, 151) !important;
+  border-radius: 100px;
+  cursor:default !important;
+}
+
+/* Handle on hover */
+.ant-picker-time-panel-column::-webkit-scrollbar-thumb:hover {
+  background: rgb(163, 163, 163) !important;
+}

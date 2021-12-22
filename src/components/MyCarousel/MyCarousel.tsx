@@ -52,7 +52,7 @@ function MyCarousel({ images,urlVideo }: MyCarouselPropsType) {
               (urlVideo === null || urlVideo === "") ? null :
               <div className='my-carousel__item'>
                 <ReactPlayer
-                  style={{ position: 'relative',borderRadius:"10px",overflow: "hidden"}}
+                  style={{ position: 'relative',borderRadius:"10px",overflow: "hidden", background:"#121212"}}
                   url={urlVideo}
                   vertical={true}
                   width={"100%"} 
@@ -66,8 +66,8 @@ function MyCarousel({ images,urlVideo }: MyCarouselPropsType) {
             }
             {  
               images.map(image => (
-              <div className='my-carousel__item'>
-                <img src={image.url} alt='carousel-image' />
+              <div className='my-carousel__item' >
+                <img src={image.url} alt='carousel-image' style={{ background:"#121212"}}/>
               </div>
           ))}
         </Carousel>

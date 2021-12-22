@@ -1,0 +1,27 @@
+.t-center{
+    color:white;
+    text-align: center;
+}
+.policy-container{
+    margin-top: 50px;
+    padding-bottom: 40px;
+}
+.f-title{
+    font-size: 25px;
+}
+.f-content{
+    font-size: 15px;
+}
+.f-time-refund{
+    font-size: 17px;
+    color: var(--red-color);
+}
+.t-left{
+    color:rgb(174, 174, 174);
+    line-height: 30px;
+}
+.policy-content-text{
+    cursor: default !important;
+    border: 0 !important;
+    overflow: visible !important;
+}

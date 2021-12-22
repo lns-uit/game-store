@@ -10,15 +10,6 @@ function SystemRequirements() {
     return (
         <div className="system-requirements">
             <h3 className="uppercase m-0 white">System requirements</h3>
-            <Row gutter={[48, 8]}>
-                <Col
-                    xxl={14}
-                    xl={14}
-                    lg={16}
-                    md={16}
-                    sm={24}
-                    xs={24}
-                >
 
                     <Form.Item
                         name="processor"
@@ -59,8 +50,7 @@ function SystemRequirements() {
                     >
                         <Input placeholder="OS" />
                     </Form.Item>
-                </Col>
-            </Row>
+
         </div>
     )
 }

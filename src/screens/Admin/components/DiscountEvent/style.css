@@ -14,3 +14,16 @@
 .ant-select-selector {
     border-color:rgb(117, 117, 117) !important;
 }
+.detail-discount{
+    color:rgb(209, 207, 207);
+}
+.title {
+    font-size: 27px;
+    font-weight: bold;
+    color:rgb(214, 111, 0);
+}
+.ant-modal-content {
+    border-radius: 15px !important;
+    overflow: hidden !important;
+    /* background: red; */
+}

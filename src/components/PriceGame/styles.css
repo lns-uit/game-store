@@ -33,7 +33,41 @@
 }
 /*color*/
 .bgr-blue1{
-    background-color: #2369BB;
+    background-color: #9300a0 !important;
+    color: rgb(255, 255, 255) !important;
+    border-color: #a0a0a0 !important;
+    border-radius: 5px !important;
+}
+.bgr-green{
+    background-color: rgb(22, 167, 49) !important;
+    color: rgb(255, 255, 255) !important;
+    border-color: #a0a0a0 !important;
+    border-radius: 5px !important;
+}
+.bgr-red{
+    background-color: rgb(126, 11, 11) !important;
+    color: rgb(202, 202, 202) !important;
+    border-color: #aaaaaa !important;
+    border-radius: 5px !important;
+}
+.bgr-yellow{
+    background-color: rgb(175, 70, 0) !important;
+    color: rgb(255, 255, 255) !important;
+    border-color: #a0a0a0 !important;
+    border-radius: 5px !important;
+}
+.bgr-yellow:hover{
+    background-color: rgb(135, 60, 11) !important;
+}
+.bgr-green:hover{
+    background-color: rgb(14, 124, 34) !important;
+}
+.bgr-blue1:hover{
+    background-color: #6f0979 !important;
+}
+.bgr-discount {
+    cursor: default !important;
+    background-color: var(--red-color) !important;
 }
 .gray-2{
     color: #A1A1A1;
@@ -85,4 +119,7 @@
 }
 .hover-buy:hover{
     opacity: .8;
+}
+.line-through{
+    text-decoration: line-through;
 }

@@ -11,7 +11,6 @@ function AboutGame({
     game
 }:Detail){
     useEffect(() =>{
-        console.log(game.newVersion.descriptions);
     },[])
     return(
         <div className="pd-bottom-20 relative">

@@ -191,7 +191,7 @@
 .store_horizontal_autoslider_ctn{
     padding: 0px 25px;
     max-width: 662px;
-    height: 150px;
+    height: 260px;
     margin-bottom: 2px;
     overflow: hidden;
 }
@@ -199,12 +199,13 @@
     background-color: rgba( 0, 0, 0, 0.2 );
     float: left;
     padding: 15px;
+    height: 253px;
     margin-right: 2px;
     border: 1px solid rgba( 0, 0, 0, 0 );
 }
 .block-content img{
-    width: 171px;
-    height: 64px;
+    width: 170px;
+    height: 150px;
 }
 .discount_block{
     margin: 0;

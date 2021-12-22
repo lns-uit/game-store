@@ -31,8 +31,8 @@ function ProfileUserLayout({ user }: ProfileUserLayoutPropsType) {
               <div className='relative d-flex align-center avatars'>
                 <Avatar
                   size={{
-                    xs: 100,
-                    sm: 100,
+                    xs: 168,
+                    sm: 168,
                     md: 168,
                     lg: 168,
                     xl: 168,
@@ -56,7 +56,6 @@ function ProfileUserLayout({ user }: ProfileUserLayoutPropsType) {
                 <h1 className='m-bottom-4 white'>{realName}</h1>
                 <p className='m-bottom-4 gray-5'>Username: {userName}</p>
                 <p className='m-bottom-4 '>Email: {email}</p>
-                <p className='m-0 '>Phone: {numberPhone}</p>
               </div>
               <div>
                 <Link to='/edit/user/c1217ffe-de67-49fc-8515-eb6487b7dcda'>

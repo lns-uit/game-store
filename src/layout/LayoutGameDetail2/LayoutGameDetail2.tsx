@@ -4,14 +4,15 @@ import AboutGame from '../../components/AboutGame/AboutGame';
 import SystemRequirements from '../../components/SystemRequirements/SystemRequirements';
 import MoreLikeThis from '../../components/MoreLikeThis/MoreLikeThis';
 import "./styles.css";
-import {GameDetailss} from "../../interfaces/rootInterface"
+import {BillType, GameDetailss} from "../../interfaces/rootInterface"
 import CommentContainer from "../../components/Comment/CommentContainer"
 
 interface Detail {
   game: GameDetailss;
+  bill : BillType | undefined;
 }
 
-function LayoutGameDetail2({ game }: Detail) {
+function LayoutGameDetail2({ game,bill }: Detail) {
   return (
     <div className='m-top-80 white'>
       <Row gutter={[48, 8]}>
@@ -52,7 +53,7 @@ function LayoutGameDetail2({ game }: Detail) {
                     <AboutGame game={game}/>
                     <SystemRequirements game={game}/>
                     <MoreLikeThis/>
-                    <CommentContainer idGame = {game.idGame}/>
+                    <CommentContainer idGame = {game.idGame} bill={bill} game={game}/>
                 </Col>
                 <Col
                     xxl={6}

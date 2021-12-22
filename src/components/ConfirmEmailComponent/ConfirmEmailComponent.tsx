@@ -38,7 +38,9 @@ function ConfirmEmailComponent() {
           dispatch(login(e.data.user));
           history.replace('/');
         }else{
-          history.replace('/reset-password')
+          dispatch(login(e.data.user));
+          history.replace('/reset-password');
+          localStorage.setItem('accessToken',e.data.token);
         }
     }).catch(e => {
         message.error(e.request.response)

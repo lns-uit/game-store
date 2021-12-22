@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Layout } from 'antd';
+import { Layout, notification } from 'antd';
 import './styles.css';
 import Tab from '../Tab/Tab';
 import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
@@ -17,6 +17,10 @@ import { RootState } from '../../redux/reducers/index';
 import { useHistory } from 'react-router-dom';
 import { logout } from '../../redux/actions/userAction';
 import { transform } from 'typescript';
+import { GameDetailss } from '../../interfaces/rootInterface';
+import GameOnSale from '../Notification/GameOnSale';
+import axios from 'axios';
+import { Endpoint } from '../../api/endpoint';
 
 const { Header } = Layout;
 
@@ -44,7 +48,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     () => (
       <Menu style = {{width:'fit-content'}}>
         <Menu.Item>
-          <Link to={'/user/' + idUser}>
+          <Link to={'/user/' + user.userName}>
             <div className='flex-start'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -103,15 +107,40 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     // handle searh here with value
     setSearchText(value);
   };
+  const openNotification = (title:string,game:GameDetailss,placement) => {
+    notification.open({
+      message: `${title}`,
+      duration: 10,
+      style: {background:"#222222d7",borderRadius:"10px",color:"white"},
+      description:
+        <GameOnSale game = {game}></GameOnSale>,
+      placement
+    });
+  };
+  const getGameNotification = () => {
+    axios.get(Endpoint.mainApi + 'api/suggestion/get-game-suggestion-now')
+      .then(res => {
+        openNotification("Game On Sale Now !!!",res.data,"bottomLeft");
+      })
+
+  }
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
   useEffect(()=>{
     scroll_detect();
   })
+  useEffect(()=>{
+
+    if (user===null)
+    setTimeout(getGameNotification,getRandomInt(10)*1000+10000)
+  },[user])
   return (
     <Header className={`header${!screens.lg ? ' header--md' : ''}`} 
             style = {{
-              background: scroll==='up' ? '#131313' : '#111111' ,
+              background: scroll==='up'  ? '#131313' : '#111111' ,
               borderBottom: scroll==='up' ? '1px solid #1f1f1f' : '0px',
-              transform: scroll==='up' ? 'translateY(0)' : 'translateY(-85px)'  
+              transform: scroll==='down' && screens.lg ? 'translateY(-85px)' : 'translateY(0)'  
             }}>
       <div className='header__top-wrapper hide-on-md'>
         <div className='header__tabs header__top-wrapper--left'>
@@ -160,7 +189,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           {user?.roles === 'admin' ?
             <ButtonPrimary
             text='GO TO CONSOLE'
-            callback={() => window.open('admin/console/game-list','_self')}
+            callback={() => window.open('/admin/console/game-list')}
             containerColor={rootColor.redColor}
             borderColor={rootColor.redColor}
             styleClass={'header__top-wrapper--right__btn-get-launcher'}
@@ -168,7 +197,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
             :
             <ButtonPrimary
             text='GET LAUNCHER'
-            callback={() => window.location.href = 'https://github.com/nguyenphuc1040/game-launcher/releases/download/1.0.0/Stun.Setup64x86.exe'}
+            callback={() => window.location.href = 'https://github.com/nguyenphuc1040/game-launcher/releases/download/1.0.1/StunSetup64x86.exe'}
             containerColor={rootColor.redColor}
             borderColor={rootColor.redColor}
             styleClass={'header__top-wrapper--right__btn-get-launcher'}
@@ -178,7 +207,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
         </div>
       </div>
 
-      <div className='header__bottom-wrapper' style = {{marginTop: scroll==='up'? '0' : '50px'}}>
+      <div className='header__bottom-wrapper' style = {{marginTop: scroll ==='down' && screens.lg ? '50px' : '0px'}}>
         <div
           className='header__bottom-wrapper__logo'
           onClick={onPressLogoHeader}>
@@ -191,17 +220,22 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           placeholder='Search'
           icon={<SearchOutlined />}
         />
-
-        <div className='header__bottom-wrapper__wish-list'>
-          {screens.lg ? (
-            <a href=''>Wish list</a>
-          ) : (
-            <button className='header__drawer-btn' onClick={onOpen}>
-              <MenuOutlined className='header__drawer-btn__icon' />
-            </button>
-          )}
-          {/* WishList */}
-        </div>
+          <div className='header__bottom-wrapper__wish-list' >
+            {screens.lg ? (
+              <div>
+                {
+                  user !== null ?
+                  <Link to={'/wishlist/'+user.userName}><a>Wish list</a></Link>
+                  :null
+                }
+              </div>
+            ) : (
+              <button className='header__drawer-btn' onClick={()=>onOpen()}>
+                <MenuOutlined className='header__drawer-btn__icon' />
+              </button>
+            )}
+            {/* WishList */}
+          </div> 
       </div>
       <div className='header_button-scroll-top' onClick={()=>{window.scrollTo(0,0)}}>
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ababab"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>
