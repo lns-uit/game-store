@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Layout, notification } from 'antd';
+import { Input, Layout, notification } from 'antd';
 import './styles.css';
 import Tab from '../Tab/Tab';
 import ButtonPrimary from '../ButtonPrimary/ButtonPrimary';
@@ -21,6 +21,7 @@ import { GameDetailss } from '../../interfaces/rootInterface';
 import GameOnSale from '../Notification/GameOnSale';
 import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
+import SearchBox from '../SearchBox/SearchBox';
 
 const { Header } = Layout;
 
@@ -39,6 +40,8 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
   const currentTab = useSelector((state: RootState) => state.tab);
   const user = useSelector((state: RootState) => state.user);
   const { userName = '', idUser = '' } = user || {};
+  const [onSearch, setOnSearch] = useState(false);
+  const [textSearch, setTextSearch] = useState("");
 
   const onPressLogoHeader = () => {
     history.replace('/');
@@ -213,12 +216,12 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
           onClick={onPressLogoHeader}>
           <img src={screens.lg ? logo : logoSecondary} alt='logo' />
         </div>
-        <InputPrimary
-          stylesClassname='header__bottom-wrapper__input'
-          text={searchText}
-          setText={onHandleSearch}
+        <Input
+          className='header__bottom-wrapper__input'
           placeholder='Search'
-          icon={<SearchOutlined />}
+          onFocus={()=>{setOnSearch(true)}}
+          // onBlur={()=>{setOnSearch(false)}}
+          onChange={(event)=>{setTextSearch(event.target.value)}}
         />
           <div className='header__bottom-wrapper__wish-list' >
             {screens.lg ? (
@@ -236,6 +239,15 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
             )}
             {/* WishList */}
           </div> 
+      </div>
+      <div
+        onClick={()=>{setOnSearch(false)}} 
+        className = "search-box-modal"
+        style={{
+          display:onSearch ? "flex" : "none",
+          transform: scroll==='down' && screens.lg ? 'translateY(45px)' : 'translateY(0)'  
+          }}> 
+        <SearchBox text={textSearch}/>
       </div>
       <div className='header_button-scroll-top' onClick={()=>{window.scrollTo(0,0)}}>
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#ababab"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/></svg>

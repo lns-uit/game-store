@@ -28,10 +28,9 @@ function Comment({ comment, updateCmtFunc, deleteCmtFunc, isOwn, idUser }: Comme
         console.log(idUser)
         return axios.get(Endpoint.mainApi + "api/likecomment/" + comment?.idComment + "/" + idUser)
             .then(res => {
-                console.log(res.data)
                 setUserLike(res.data.own)
             })
-            .catch(err => console.log(err))
+            .catch(err => {})
     }
 
     useEffect(() => {

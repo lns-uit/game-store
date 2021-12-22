@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, Redirect } from 'react-router';
-import { Switch, Route } from 'react-router-loading';
+import { Switch, Route } from 'react-router';
 import { setTabAction } from '../redux/actions/tabAction';
 import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
@@ -42,6 +42,7 @@ import { getGameSuggestionApi } from '../api/suggestionApi';
 import RefundPolicyScreen from '../screens/StorePolicy/RefundPolicyScreen';
 import PrivacyPolicyScreen from '../screens/StorePolicy/PrivacyPolicyScreen';
 import TermOfServiceScreen from '../screens/StorePolicy/TermOfServiceScreen';
+import { Button } from 'antd';
 
 function RootNavigation() {
   let location = useLocation();
@@ -49,10 +50,9 @@ function RootNavigation() {
   const { idUser } = user || {};
   const dispatch = useDispatch();
   const isLogin = useMemo(() => !!idUser, [idUser]);
-  const [isLoading, setIsLoading] = useState(false);
   const email = useSelector((state: RootState) => state.email);
   const forgot = useSelector((state: RootState) => state.forgotPassword);
-
+  const [isLoading, setIsLoading] = useState(true);
   const loginWithToken = async tokenLogin => {
     if (!tokenLogin) return false;
 
@@ -67,6 +67,7 @@ function RootNavigation() {
   const fetchData = useCallback(async () => {
     const tokenLogin = localStorage.getItem('accessToken');
     await loginWithToken(tokenLogin);
+    setIsLoading(false);
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
@@ -90,6 +91,7 @@ function RootNavigation() {
 
   const GetData = async (title: string, count: number, start: number) => {
     const res = await getGameSuggestionApi(title, count, start);
+    if (res !== undefined)
     if (Array.isArray(res)) {
       switch (title) {
         case 'Carousel':
@@ -154,23 +156,24 @@ function RootNavigation() {
     <Switch>
       {isLoading ? (
         <>
-          <Route path='/' />
-          <SplashScreen />
+          <Route exact path='/' />
+            <div>
+            </div>
           <Route />
         </>
       ) : (
         <>
           {/* user login */}
-          <PrivateRoute loading path='/edit/user/:id'>
+          <PrivateRoute path='/edit/user/:id'>
             <EditProfile />
           </PrivateRoute>
-          <PrivateRoute loading path='/user/:idUser'>
+          <PrivateRoute path='/user/:idUser'>
             <User />
           </PrivateRoute>
-          <PrivateRoute loading path='/admin/create-game'>
+          <PrivateRoute path='/admin/create-game'>
             <AdminCreateGame />
           </PrivateRoute>
-          <PrivateRoute loading path='/admin/update-game/:idGame'>
+          <PrivateRoute path='/admin/update-game/:idGame'>
             <AdminUpdateGame />
           </PrivateRoute>
           <PrivateRoute path='/wishlist/:idUser'>
@@ -180,57 +183,57 @@ function RootNavigation() {
           <Route
             path='/admin/console/game-list'
             component={ConsoleGameListScreen}
-            loading={true}></Route>
-          <Route loading path='/admin/console/user-list'>
+          ></Route>
+          <Route path='/admin/console/user-list'>
             <ConsoleUsersListScreen />
           </Route>
-          <Route loading path='/admin/console/discount-list'>
+          <Route  path='/admin/console/discount-list'>
             <DiscountEvent />
           </Route>
-          <Route loading path='/admin/console/genres-list'>
+          <Route  path='/admin/console/genres-list'>
             <GenresManager />
           </Route>
-          <Route loading path='/admin/console/privacy-policy-edit'>
+          <Route  path='/admin/console/privacy-policy-edit'>
             <PrivacyPolicyEditor />
           </Route>
-          <Route loading path='/admin/console/store-refund-edit'>
+          <Route  path='/admin/console/store-refund-edit'>
             <StoreRefundPolicyEditor />
           </Route>
-          <Route loading path='/admin/console/term-of-service-edit'>
+          <Route  path='/admin/console/term-of-service-edit'>
             <TermOfService />
           </Route>
-          <Route loading path='/admin/console/discover-cms'>
+          <Route  path='/admin/console/discover-cms'>
             <DiscoverCMS />
           </Route>
-          <Route loading path='/admin/console/history/:idGame'>
+          <Route  path='/admin/console/history/:idGame'>
             <AllGameVersion />
           </Route>
 
           {/* Auth*/}
           <Route
-            loading
+            
             path='/sign-in'
             render={() => (isLogin ? <Redirect to='/' /> : <SignIn />)}
           />
           <Route
-            loading
+            
             path='/sign-up'
             render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
           />
           <Route
-            loading
+            
             path='/confirm-email'
             render={() =>
               email === null ? <Redirect to='/' /> : <ConfirmEmail />
             }
           />
           <Route
-            loading
+            
             path='/forgot-password'
             render={() => (isLogin ? <Redirect to='/' /> : <ForgotPassword />)}
           />
           <Route
-            loading
+            
             path='/reset-password'
             render={() =>
               forgot === false ? <Redirect to='/' /> : <ResetPassword />

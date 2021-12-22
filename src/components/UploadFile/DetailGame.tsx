@@ -199,7 +199,7 @@ function DetailGame(){
                     >
                         <Input placeholder="Version" />
                     </Form.Item>
-                    
+                    <br/>    <br/>    <br/>    <br/>    <br/>
                     <div className="background-profile border-radius-8">
                         <div 
                             className="flex-basic relative border-radius-8 d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full">

@@ -90,6 +90,7 @@ function Admin() {
   }
 
   const onFinish = (values: any) => {
+    console.log('hi')
     let error: string[] = [];
     let count = 0;
     let stringErr = "";
@@ -117,7 +118,7 @@ function Admin() {
     } else {
       values.fileGame = urlDownload;
       if (urlDownload === null) {
-        message.warn("Login To Buy This Game");
+        message.warn("Waiting");
         return;
       }
       values.images = fileList.map(image => {
@@ -292,8 +293,6 @@ function Admin() {
         <ShortDescription />
         <Form.Item
           label="* DETAIL DESCRIPTION"
-          rules={[{ required: true, message: "Please Input Detail Description" }]}
-
         >
           <div className="detail-description" onClick={focus}>
 

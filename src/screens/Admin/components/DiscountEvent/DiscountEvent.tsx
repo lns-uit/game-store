@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Endpoint } from "../../../../api/endpoint";
+import moment from 'moment';
 import {
   Button,
   Input,
@@ -16,7 +17,6 @@ import axios from "axios";
 import Helmet from 'react-helmet';
 import "./style.css";
 import Moment from "react-moment";
-import moment from "moment";
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -76,7 +76,6 @@ function DiscountEvent() {
         },
       })
       .then((response) => {
-        console.log(response.data)
         setListDiscount(response.data);
       });
   };
@@ -104,13 +103,13 @@ function DiscountEvent() {
       title: "Start Date",
       key: "startDate",
       dataIndex: "startDate",
-      render: (text) => moment(discountDetail?.startDate).format('DD-MM-YYYY, h:mm:ss'),
+      render: (text,record) => moment(record?.startDate).format('DD-MM-YYYY, h:mm:ss'),
     },
     {
       title: "End Date",
       key: "endDate",
       dataIndex: "endDate",
-      render: (text) =>  moment(discountDetail?.endDate).format('DD-MM-YYYY, h:mm:ss'),
+      render: (text,record) =>  moment(record?.endDate).format('DD-MM-YYYY, h:mm:ss'),
     },
     {
       title: "Action",
@@ -171,8 +170,8 @@ function DiscountEvent() {
           discount: {
             percentDiscount: value.percent,
             title: value.title,
-            startDate: moment(value.time[0]).format(),
-            endDate: moment(value.time[1]).format(),
+            startDate: moment(value.time[0]).utc(),
+            endDate: moment(value.time[1]).utc(),
           },
           listGameDiscount: value.games
         },

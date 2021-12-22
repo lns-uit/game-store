@@ -78,7 +78,7 @@ function GameItem({
       const res = await wishlistApi.addToWishlist(user?.idUser, game.idGame);
       console.log(res);
       if (res === 'created') {
-        setWishlistChange(w => w+1)
+        // if (setWishlistChange() !== undefined) setWishlistChange(w => w+1)
         setIsWishList(true);
         message.success({
           content:'Added '+ game.nameGame + ' to Wishlist',
@@ -89,7 +89,7 @@ function GameItem({
     } else {
       const res = await wishlistApi.removeToWishlist(user?.idUser, game.idGame);
       if (res === 'deleted') {
-        setWishlistChange(w => w+1)
+        // if (setWishlistChange() !== undefined) setWishlistChange(w => w+1)
         setIsWishList(false);
         message.success({
           content:'Removed '+ game.nameGame + ' from Wishlist',
@@ -141,7 +141,7 @@ function GameItem({
     if (user !== null)
         checkIsWishlist(); 
     else setIsWishList(false);
-  },[user,wishListChange])
+  },[user])
   useEffect(()=>{
     checkTimeDiscount();
   },[game])
