@@ -19,6 +19,10 @@ function EditPassWord(){
                         <Form.Item
                             label="New Password"
                             name="newPassword"
+                            rules={[
+                                { min: 8, message: 'Password must be minimum 8 characters.' },
+                                { max: 20, message: 'Password must be max 20 characters.' },
+                            ]}
                         >
                             <Input placeholder="New Password" type="password"/>
                         </Form.Item>
