@@ -15,14 +15,29 @@ import {setEmail} from '../../redux/actions/actionEmail';
 import {setForgotPassword} from '../../redux/actions/forgotPasswordAction';
 
 function ResetPasswordComponent(){
-    const [emailWarning, setEmailWarning] = useState("");
-    const [isValidEmail, setIsValidEmail] = useState(false);
     const history = useHistory();
     const dispatch = useDispatch();
+    const user = useSelector(
+        (state: RootState) => state.user
+    )
+    console.log(user)
 
-    const onFinish = (values: any)=>{
+    const onFinish = async (values: any)=>{
         if (values.newPassword !== values.confirmPassword){
             window.alert('mật khẩu không khớp')
+        }else{
+            await axios.post(`${Endpoint.mainApi}api/user/reset-password`,{},
+            {
+                headers: {
+                    "idUser": user.idUser,
+                    "pwd": values.newPassword,
+                    Authorization: "Bearer " + localStorage.getItem("accessToken")
+                }
+            })
+            .then((res)=>{
+                console.log(res);
+            })
+            .catch(err=>{console.log(err)})
         }
     }
     return(
@@ -51,7 +66,7 @@ function ResetPasswordComponent(){
                                   { required: true, message: 'Please input new password!' },
                                 ]}
                             >
-                                <Input className = "b-radius-5" placeholder='New Password'/>
+                                <Input className = "b-radius-5" placeholder='New Password' type='password'/>
                             </Form.Item>
                         </div>
 
@@ -63,7 +78,7 @@ function ResetPasswordComponent(){
                                   { required: true, message: 'Please input confirm password!' },
                                 ]}
                             >
-                                <Input className = "b-radius-5" placeholder='Confirm Password'/>
+                                <Input className = "b-radius-5" placeholder='Confirm Password' type='password'/>
                             </Form.Item>
                         </div>
 

@@ -42,9 +42,7 @@ function EditProfileLayout() {
   const postEditUser = async (values: any) => {
     console.log(values);
     await axios
-      .put(`${Endpoint.mainApi}api/user/change-info/${user.idUser}`,{
-        infoUser: values,
-      },
+      .put(`${Endpoint.mainApi}api/user/change-info/${user.idUser}`,values,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken")

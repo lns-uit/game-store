@@ -1,9 +1,11 @@
-import React, {useRef} from 'react';
-import {Link} from 'react-router-dom';
+import React, {useRef,useEffect,useState} from 'react';
+import {Link,useParams} from 'react-router-dom';
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import numberWithCommas from '../../utils/numberWithCommas';
+import axios from 'axios';
+import { Endpoint } from '../../api/endpoint';
 
 const games=[
     {
@@ -44,13 +46,23 @@ const games=[
 ]
 
 function MoreLikeThis() {
-    const ref = React.useRef<Slider>(null)
+    let slug  = useParams();
+    const ref = React.useRef<Slider>(null);
+    const [gameMoreLikeThis,setGameMoreLikeThis] = useState<any>([])
     const settings = {
         infinite: true,
         speed: 500,
         slidesToShow: 3,
         slidesToScroll: 1
     };
+    const callMoreLikeThis = async ()=>{
+        await axios.get(`${Endpoint.mainApi}api/game/more-like-this/${slug.idGame}/5`)
+            .then(res=>{
+                console.log(res.data)
+                setGameMoreLikeThis(res.data);
+            })
+            .catch(err=>{console.log(err)})
+    }
 
     const next = () => {
         ref.current.slickNext();
@@ -59,6 +71,10 @@ function MoreLikeThis() {
     const previous = () => {
         ref.current.slickPrev();
     };
+
+    useEffect(() => {
+        callMoreLikeThis()
+    },[])
     return(
         <div className="m-top-40 m-bottom-16">
             <div className="block_header">
@@ -72,33 +88,37 @@ function MoreLikeThis() {
             <div className="store_horizontal_autoslider_ctn relative">
                 <Slider ref={ref} {...settings}>
                     {
-                        games.map((game,index)=>{
+                        gameMoreLikeThis.length === 0 
+                        ? 
+                            (<div>loadding....</div>)
+                        :
+                        (gameMoreLikeThis.map((game,index)=>{
                             return(
-                                <Link to={'/game/'+game.slug} className="block-content-hover">
+                                <Link to={'/game/'+game.idGame} className="block-content-hover">
                                     <div className="block-content">
-                                        <img src={game.linkImg} alt={game.name} />
-                                        <h4 className="m-0 white fs-13">{game.name}</h4>
+                                        <img src={game.imageGameDetail[0].url} alt={game.nameGame} />
+                                        <h4 className="m-0 white fs-13">{game.nameGame}</h4>
                                         <div className="discount_block">
                                             {
-                                                game.discount !== 0 
+                                                game.discount !== null 
                                                 ?
                                                 <div className="d-flex justify-content-end">
                                                     <div className="pd-0-3 green-1 bgr-green">
-                                                        -{game.discount*100}%
+                                                        -{game.discount.percentDiscount}%
                                                     </div>
                                                     <div className="pd-0-3 d-flex">
                                                         <p className="m-0 delete-price">
-                                                            {numberWithCommas(game.price)}₫
+                                                            {numberWithCommas(game.cost)}₫
                                                         </p>
                                                         <p className="m-0 final-price">
-                                                            {numberWithCommas(game.price - game.discount* game.price)}₫
+                                                            {numberWithCommas(game.cost - (game.discount.percentDiscount/100)* game.cost)}$
                                                         </p>
                                                     </div>
                                                 </div>
                                                 :
                                                 <div className="d-flex justify-content-end">
                                                     <p className="m-0 final-price">
-                                                        {numberWithCommas(game.price - game.discount* game.price)}₫
+                                                        {numberWithCommas(game.cost - 0* game.cost)}$
                                                     </p>
                                                 </div>
                                             }
@@ -106,7 +126,7 @@ function MoreLikeThis() {
                                     </div>
                                 </Link>
                             )
-                        })
+                        }))
                     }
                 </Slider>
             </div>
