@@ -45,8 +45,12 @@ const games=[
     }
 ]
 
+interface TypeSlug{
+    idGame:string;
+}
+
 function MoreLikeThis() {
-    let slug  = useParams();
+    let slug  = useParams<TypeSlug>();
     const ref = React.useRef<Slider>(null);
     const [gameMoreLikeThis,setGameMoreLikeThis] = useState<any>([])
     const settings = {
