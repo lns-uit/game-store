@@ -4,6 +4,7 @@ import DetailGame from '../../components/UploadFile/DetailGame';
 import DescriptionPhoto from '../../components/UploadFile/DescriptionPhoto';
 import ShortDescription from '../../components/UploadFile/ShortDescription';
 import SystemRequirements from '../../components/UploadFile/SystemRequirements';
+import Helmet from 'react-helmet'
 import {
   message,
   Form,
@@ -245,6 +246,9 @@ function Admin() {
   },[])
   return (
     <div className="white console-container">
+      <Helmet>
+            <title> Stun Console | Create Game </title>
+      </Helmet>
       <div className="console-detail-header">
         <h1>CREATE NEW GAME</h1>
         <div className="console-toolbar"></div>

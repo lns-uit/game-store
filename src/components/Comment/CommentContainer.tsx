@@ -38,12 +38,12 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
     const joinRoom = async (user, room) => {
         try {
             const connection = new HubConnectionBuilder()
-                .withUrl("https://localhost:5001/comment")
+                .withUrl(Endpoint.mainApi+"comment")
                 .configureLogging(LogLevel.Information)
                 .build();
 
             connection.on("ReceiveMessage", (user, message) => {
-                console.log("message receive: ", message);
+                // console.log("message receive: ", message);
             });
 
             connection.on("ReceiveCreateComment", (user, comment: CommentType, avgRate) => {
@@ -146,6 +146,8 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
             </Form.Item>
             <Form.Item>
                 <Button
+                    className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                    style={{ height: '40px' }}
                     htmlType="submit"
                     type="primary"
                 >

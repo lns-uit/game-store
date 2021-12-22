@@ -6,6 +6,7 @@ import { Row, Col } from 'antd';
 import { ActionType, GameType } from '../../interfaces/rootInterface';
 import { CollectionType } from '../../interfaces/rootInterface';
 
+
 interface GameSearch {
   collection: CollectionType[];
   handleRefundGame: (game: GameType, card: any) => any;

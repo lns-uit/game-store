@@ -9,7 +9,7 @@ import { RootState } from '../../redux/reducers';
 import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
 import GameDetailLoading from './GameDetailLoading'
-
+import { Helmet } from "react-helmet";
 function GameDetail() {
   const slug = useParams();
   const [game, setGame] = useState<GameDetailss>();
@@ -43,10 +43,15 @@ function GameDetail() {
 
   return (
     <div>
+      
       {!game?.idGame ? (
         <GameDetailLoading></GameDetailLoading>
        ) : (
+         
          <div style = {{marginTop: '30px'}}>
+           <Helmet>
+              <title> {game.nameGame} </title>
+            </Helmet>
            <LayoutGameDetail1 game={game} bill = {bill}/>
            <LayoutGameDetail2 game={game} bill = {bill}/>
          </div>

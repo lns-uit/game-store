@@ -46,6 +46,7 @@ interface BillType{
   cost: number;
   actions: string;
   discount: string;
+  timeRefund: number;
 }
 interface gameCollection {
   averageRate: number;

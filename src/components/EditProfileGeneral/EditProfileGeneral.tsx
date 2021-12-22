@@ -34,15 +34,6 @@ function EditProfileGeneral(){
                             <Input placeholder="Real Name" defaultValue={user.realName}/>
                         </Form.Item>
                     </div>
-                    <div>
-                        <Form.Item
-                            label="Phone"
-                            name="phone"
-                            className="none-error"
-                        >
-                            <Input placeholder="Phone" type="number" defaultValue={user.phone}/>
-                        </Form.Item>
-                    </div>
                 </div>
             </div>
         </div>

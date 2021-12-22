@@ -10,16 +10,15 @@ interface BuyComponentPropsType {
   onSubmitPayment: (card: any) => void;
   game: GameDetailss;
   timeDiscount: number;
+  isSubmit: boolean;
 }
 
 const DEFAUL_CARD = {};
 
-function BuyComponent({ onSubmitPayment,game,timeDiscount }: BuyComponentPropsType) {
+function BuyComponent({ onSubmitPayment,game,timeDiscount,isSubmit }: BuyComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState("");
-  const [isSubmit, setIsSubmit] = useState(false);
   const handleSubmitPaymet = (value: any) => {
-    setIsSubmit(true);
     let totalPayment=game.cost ;
     if (game.discount !== null) {
         totalPayment = (1 - game.discount.percentDiscount /100 )*game.cost;
@@ -37,7 +36,6 @@ function BuyComponent({ onSubmitPayment,game,timeDiscount }: BuyComponentPropsTy
     try {
       onSubmitPayment(card);
     } catch(e) {
-      setIsSubmit(false);
     }
 
   };

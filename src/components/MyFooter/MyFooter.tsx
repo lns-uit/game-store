@@ -10,6 +10,7 @@ import {
 } from '@ant-design/icons';
 import logoSecondary from '../../assets/images/logoSecondary.png';
 import useBreakpoint from 'antd/lib/grid/hooks/useBreakpoint';
+import { Link } from 'react-router-dom';
 const { Footer } = Layout;
 
 function MyFooter() {
@@ -68,15 +69,15 @@ function MyFooter() {
               <img src={logoSecondary} alt='my-footer-icon' />
             </div>
             <div className='my-footer__policies'>
-              <a href='https://www.facebook.com/'>
+              <Link to='/term-of-service'>
                 <p>Terms of Service</p>
-              </a>
-              <a href='https://www.facebook.com/'>
+              </Link>
+              <Link to='/privacy-policy'>
                 <p>Privacy Policy</p>
-              </a>
-              <a href='https://www.facebook.com/'>
+              </Link>
+              <Link to='/store-refund-policy'>
                 <p>Store Refund Policy</p>
-              </a>
+              </Link>
             </div>
           </div>
         </Col>

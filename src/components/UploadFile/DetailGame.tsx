@@ -224,7 +224,11 @@ function DetailGame(){
                         getValueFromEvent={normFileImages}
                     >
                         <Upload name="iconGame">
-                            <Button icon={<UploadOutlined />}>Upload icon game</Button>
+                            <Button 
+                                   type="primary" 
+                                   className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                                   style={{ height: '45px' }}
+                                icon={<UploadOutlined />}>Upload icon game</Button>
                         </Upload>
                     </Form.Item>
                 </Col>

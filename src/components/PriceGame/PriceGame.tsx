@@ -29,16 +29,16 @@ function PriceGame({ game, bill }: Detail) {
   const [isModalRefund, setIsModalRefund] = useState(false);
   const [timeDiscount, setTimeDiscount] = useState(-1);
   const [timeRefund, setTimeRefund] = useState(-1);
+  const [isSubmit, setIsSubmit] = useState(false);
   const isGameFree = game.cost == 0;
   const [isWishList,setIsWishList] = useState(false);
   const onClickBuyNow = () => {
-    console.log(idUser);
       if (idUser === null || idUser === undefined) message.warn("Login To Buy This Game");
         else showModal();
   };
   const countDownTimeRefund = () => {
     let timeCountDown = moment(bill?.datePay)
-                        .add(100, 'hours')
+                        .add(bill?.timeRefund, 'seconds')
                         .diff(moment().format(), 'second');
     if (timeCountDown < 0) return;
     setTimeRefund(timeCountDown);
@@ -63,6 +63,7 @@ function PriceGame({ game, bill }: Detail) {
   };
 
   const onSubmitPayment = async card => {
+    setIsSubmit(true);
     if (idUser) {
       const dataRequest = {
         card,
@@ -73,19 +74,7 @@ function PriceGame({ game, bill }: Detail) {
       };
       const response = await gamesApi.createNewBillGame(dataRequest);
       const { actions, cost, datePaygame, idBill, message } = response || {};
-      var currentdate = new Date();
-      var datetime =
-        currentdate.getDate() +
-        '/' +
-        (currentdate.getMonth() + 1) +
-        '/' +
-        currentdate.getFullYear() +
-        ' @ ' +
-        currentdate.getHours() +
-        ':' +
-        currentdate.getMinutes() +
-        ':' +
-        currentdate.getSeconds();
+      var datetime = moment().format();
       if (idBill) {
         showMessage(
           `You bought ${actions === 'pay' ? 'bought' : 'refund'} success game ${
@@ -93,16 +82,17 @@ function PriceGame({ game, bill }: Detail) {
           } with $${cost} at ${datePaygame || datetime}`
         );
         setIsModalVisible(false);
+        setIsSubmit(false);
         window.location.reload();
       } else if (message) {
         showMessage(message);
+        setIsSubmit(false);
       }
     }
   };
 
   const handleRefundGame = async (game: GameDetailss, card: any) => {
-    console.log(game, card);
-
+    setIsSubmit(true);
     if (idUser) {
       const dataRequest = {
         card,
@@ -113,7 +103,6 @@ function PriceGame({ game, bill }: Detail) {
         },
       };
       const response = await gamesApi.createNewBillGame(dataRequest);
-      console.log(response);
       const {
         idBill,
         message = '',
@@ -121,28 +110,21 @@ function PriceGame({ game, bill }: Detail) {
         datePaygame,
         title = '',
       } = response || {};
-      var currentdate = new Date();
-      var datetime =
-        currentdate.getDate() +
-        '/' +
-        (currentdate.getMonth() + 1) +
-        '/' +
-        currentdate.getFullYear() +
-        ' @ ' +
-        currentdate.getHours() +
-        ':' +
-        currentdate.getMinutes() +
-        ':' +
-        currentdate.getSeconds();
+      var datetime = moment().format();
       if (idBill) {
         alert(
           `You refund game ${game.nameGame} with $${cost} at ${
             datePaygame || datetime
           }`
-        );
+        ); 
+        setIsModalRefund(false);
+        setIsSubmit(false);
+        window.location.reload();
       } else if (message) {
+        setIsSubmit(false);
         alert(message);
       } else if (title) {
+        setIsSubmit(false);
         alert(title);
       }
     }
@@ -162,7 +144,6 @@ function PriceGame({ game, bill }: Detail) {
         return;
       }
       const res = await wishlistApi.addToWishlist(idUser,game.idGame);
-      console.log(res);
       if (res === 'created') {
         setIsWishList(true);
         message.success('Added '+ game.nameGame + ' to Wishlist')
@@ -190,7 +171,6 @@ function PriceGame({ game, bill }: Detail) {
   const deleteGameOfDiscount = () => {
     axios.delete(Endpoint.mainApi + 'api/discount/delete/outdate/' + game.discount.idDiscount)
       .then(res => {
-        console.log('delte disocunt')
       })
   }
   const countDownTimeDiscount = () => {
@@ -346,7 +326,7 @@ function PriceGame({ game, bill }: Detail) {
             onOk={onSubmitPayment}
             onCancel={handleCancel}
             footer={null}>
-            <BuyComponent onSubmitPayment={onSubmitPayment} game={game} timeDiscount={timeDiscount} />
+            <BuyComponent onSubmitPayment={onSubmitPayment} game={game} timeDiscount={timeDiscount} isSubmit = {isSubmit}/>
           </Modal>
           <Modal
             width={500}
@@ -364,6 +344,7 @@ function PriceGame({ game, bill }: Detail) {
               onSubmitRefund={onSubmitRefund}
               game={game}
               bill={bill}
+              isSubmit = {isSubmit}
             />
           </Modal>
         </div>

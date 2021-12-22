@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation, Redirect } from 'react-router';
-import {Switch, Route } from 'react-router-loading';
+import { Switch, Route } from 'react-router-loading';
 import { setTabAction } from '../redux/actions/tabAction';
 import BrowseScreen from '../screens/Browse/BrowseScreen';
 import DiscoverScreen from '../screens/Discover/DiscoverScreen';
@@ -35,10 +35,13 @@ import ConfirmEmailWithLink from '../components/ConfirmEmailComponent/ConfirmEma
 import ForgotPassword from '../screens/ForgotPassword/ForgotPassword';
 import ResetPassword from '../screens/ResetPassword/ResetPassword';
 import SuggestionScreen from '../screens/Suggestion/SuggestionScreen';
-import { GameType,GameDiscoverType } from '../interfaces/rootInterface';
+import { GameType, GameDiscoverType } from '../interfaces/rootInterface';
 import suggestionGameReducer from '../redux/reducers/suggestionGame';
 import WishlistScreen from '../screens/Wishlist/WishlistScreen';
 import { getGameSuggestionApi } from '../api/suggestionApi';
+import RefundPolicyScreen from '../screens/StorePolicy/RefundPolicyScreen';
+import PrivacyPolicyScreen from '../screens/StorePolicy/PrivacyPolicyScreen';
+import TermOfServiceScreen from '../screens/StorePolicy/TermOfServiceScreen';
 
 function RootNavigation() {
   let location = useLocation();
@@ -64,13 +67,13 @@ function RootNavigation() {
   const fetchData = useCallback(async () => {
     const tokenLogin = localStorage.getItem('accessToken');
     await loginWithToken(tokenLogin);
-    setTimeout(() => {  
+    setTimeout(() => {
       setIsLoading(false);
     }, 500);
   }, []);
 
   let isLoadingDiscover = 0;
-  let data : GameDiscoverType = {
+  let data: GameDiscoverType = {
     gameData: [],
     itemsFree: [],
     topGamesWeek: [],
@@ -82,33 +85,52 @@ function RootNavigation() {
     gameOnSales: [],
     mostFavorite: [],
     isLoading: 10,
-    type: "set",
+    type: 'set',
   };
 
   const GetData = async (title: string, count: number, start: number) => {
     const res = await getGameSuggestionApi(title, count, start);
     if (Array.isArray(res)) {
       switch (title) {
-        case 'Carousel': data.gameData = res; break;
-        case 'Top sellers': data.topSellers = res; break;
-        case 'New release': data.newRelease = res; break;
-        case 'Most favorite': data.mostFavorite = res; break;
-        case 'Free games':  data.freeGames = res; break;
-        case 'Most popular':  data.mostPopular = res; break;
-        case 'Top games week': data.topGamesWeek = res; break;
-        case 'Top games month':  data.topGamesMonth = res; break;
-        case 'Game on sales':  data.gameOnSales = res; break;
-        case 'Free now':  data.itemsFree = res; break;
+        case 'Carousel':
+          data.gameData = res;
+          break;
+        case 'Top sellers':
+          data.topSellers = res;
+          break;
+        case 'New release':
+          data.newRelease = res;
+          break;
+        case 'Most favorite':
+          data.mostFavorite = res;
+          break;
+        case 'Free games':
+          data.freeGames = res;
+          break;
+        case 'Most popular':
+          data.mostPopular = res;
+          break;
+        case 'Top games week':
+          data.topGamesWeek = res;
+          break;
+        case 'Top games month':
+          data.topGamesMonth = res;
+          break;
+        case 'Game on sales':
+          data.gameOnSales = res;
+          break;
+        case 'Free now':
+          data.itemsFree = res;
+          break;
       }
     }
 
-    isLoadingDiscover ++;
-        if (isLoadingDiscover >=10) {
-          if (data !== null) {
-              dispatch(suggestionGameReducer(undefined,data));
-          }
-          
-        }
+    isLoadingDiscover++;
+    if (isLoadingDiscover >= 10) {
+      if (data !== null) {
+        dispatch(suggestionGameReducer(undefined, data));
+      }
+    }
   };
 
   useEffect(() => {
@@ -117,115 +139,120 @@ function RootNavigation() {
 
   useEffect(() => {
     fetchData();
-    GetData('Carousel',5,0);
-    GetData('Top sellers',5,0);
-    GetData('New release',5,0);
-    GetData('Most favorite',5,0);
-    GetData('Free games',5,0);
-    GetData('Most popular',4,0);
-    GetData('Top games week',12,0);
-    GetData('Top games month',12,0);
-    GetData('Game on sales',4,0);
-    GetData('Free now',4,0);
+    GetData('Carousel', 5, 0);
+    GetData('Top sellers', 5, 0);
+    GetData('New release', 5, 0);
+    GetData('Most favorite', 5, 0);
+    GetData('Free games', 5, 0);
+    GetData('Most popular', 4, 0);
+    GetData('Top games week', 12, 0);
+    GetData('Top games month', 12, 0);
+    GetData('Game on sales', 4, 0);
+    GetData('Free now', 4, 0);
   }, []);
   return (
     <Switch>
-       {isLoading ? (
+      {isLoading ? (
         <>
-          <Route path='/'/>
-            <SplashScreen />
-          <Route/>
+          <Route path='/' />
+          <SplashScreen />
+          <Route />
         </>
       ) : (
-      <>
-        {/* user login */}
-        <PrivateRoute loading path='/edit/user/:id'>
-          <EditProfile />
-        </PrivateRoute>
-        <PrivateRoute loading path='/user/:idUser'>
-          <User />
-        </PrivateRoute>
-        <PrivateRoute loading path='/admin/create-game'>
-          <AdminCreateGame />
-        </PrivateRoute>
-        <PrivateRoute loading path='/admin/update-game/:idGame'>
-          <AdminUpdateGame />
-        </PrivateRoute>
-        <Route path = '/wishlist/:idUser'>
-          <WishlistScreen></WishlistScreen>
-        </Route>
+        <>
+          {/* user login */}
+          <PrivateRoute loading path='/edit/user/:id'>
+            <EditProfile />
+          </PrivateRoute>
+          <PrivateRoute loading path='/user/:idUser'>
+            <User />
+          </PrivateRoute>
+          <PrivateRoute loading path='/admin/create-game'>
+            <AdminCreateGame />
+          </PrivateRoute>
+          <PrivateRoute loading path='/admin/update-game/:idGame'>
+            <AdminUpdateGame />
+          </PrivateRoute>
+          <PrivateRoute path='/wishlist/:idUser'>
+            <WishlistScreen />
+          </PrivateRoute>
 
-        <Route path='/admin/console/game-list' component={ConsoleGameListScreen} loading={true}>
-        </Route>
-        <Route loading path='/admin/console/user-list'>
-          <ConsoleUsersListScreen/>
-        </Route>
-        <Route loading path='/admin/console/discount-list'>
-          <DiscountEvent />
-        </Route>
-        <Route loading path='/admin/console/genres-list'>
-          <GenresManager />
-        </Route>
-        <Route loading path='/admin/console/privacy-policy-edit'>
-          <PrivacyPolicyEditor />
-        </Route>
-        <Route loading path='/admin/console/store-refund-edit'>
-          <StoreRefundPolicyEditor />
-        </Route>
-        <Route loading path='/admin/console/term-of-service-edit'>
-          <TermOfService />
-        </Route>
-        <Route loading path='/admin/console/discover-cms'>
-          <DiscoverCMS />
-        </Route>
-        <Route loading path='/admin/console/history/:idGame'>
-          <AllGameVersion />
-        </Route>
+          <Route
+            path='/admin/console/game-list'
+            component={ConsoleGameListScreen}
+            loading={true}></Route>
+          <Route loading path='/admin/console/user-list'>
+            <ConsoleUsersListScreen />
+          </Route>
+          <Route loading path='/admin/console/discount-list'>
+            <DiscountEvent />
+          </Route>
+          <Route loading path='/admin/console/genres-list'>
+            <GenresManager />
+          </Route>
+          <Route loading path='/admin/console/privacy-policy-edit'>
+            <PrivacyPolicyEditor />
+          </Route>
+          <Route loading path='/admin/console/store-refund-edit'>
+            <StoreRefundPolicyEditor />
+          </Route>
+          <Route loading path='/admin/console/term-of-service-edit'>
+            <TermOfService />
+          </Route>
+          <Route loading path='/admin/console/discover-cms'>
+            <DiscoverCMS />
+          </Route>
+          <Route loading path='/admin/console/history/:idGame'>
+            <AllGameVersion />
+          </Route>
 
-        {/* Auth*/}
-        <Route
-          loading
-          path='/sign-in'
-          render={() => (isLogin ? <Redirect to='/' /> : <SignIn />)}
-        />
-        <Route
-          loading
-          path='/sign-up'
-          render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
-        />
-        <Route
-          loading
-          path='/confirm-email'
-          render={() =>
-            email === null ? <Redirect to='/' /> : <ConfirmEmail />
-          }
-        />
-        <Route
-          loading
-          path='/forgot-password'
-          render={() => (isLogin ? <Redirect to='/' /> : <ForgotPassword />)}
-        />
-        <Route
-          loading
-          path='/reset-password'
-          render={() =>
-            forgot === false ? <Redirect to='/' /> : <ResetPassword />
-          }
-        />
-        <Route path='/email-verify/:url'>
-          <ConfirmEmailWithLink />
-        </Route>
+          {/* Auth*/}
+          <Route
+            loading
+            path='/sign-in'
+            render={() => (isLogin ? <Redirect to='/' /> : <SignIn />)}
+          />
+          <Route
+            loading
+            path='/sign-up'
+            render={() => (isLogin ? <Redirect to='/' /> : <SignUp />)}
+          />
+          <Route
+            loading
+            path='/confirm-email'
+            render={() =>
+              email === null ? <Redirect to='/' /> : <ConfirmEmail />
+            }
+          />
+          <Route
+            loading
+            path='/forgot-password'
+            render={() => (isLogin ? <Redirect to='/' /> : <ForgotPassword />)}
+          />
+          <Route
+            loading
+            path='/reset-password'
+            render={() =>
+              forgot === false ? <Redirect to='/' /> : <ResetPassword />
+            }
+          />
+          <Route path='/verify/:url/:action'>
+            <ConfirmEmailWithLink />
+          </Route>
 
-        {/* everyone */}
-        <Route path='/suggestion/:title' component={SuggestionScreen} />
-        <Route path='/game/:idGame' component={GameDetail} />
-        <Route path='/browse' component={BrowseScreen} />
-        <Route exact path='/' component={DiscoverScreen} />
-        {/* <Route path='*' component={NotFoundScreen} /> */}
+          {/* everyone */}
+          <Route path='/term-of-service' component={TermOfServiceScreen}/>
+          <Route path='/privacy-policy' component={PrivacyPolicyScreen}/>
+          <Route path='/store-refund-policy' component={RefundPolicyScreen}/>
+          <Route path='/suggestion/:title' component={SuggestionScreen} />
+          <Route path='/game/:idGame' component={GameDetail} />
+          <Route path='/browse' component={BrowseScreen} />
+          <Route exact path='/' component={DiscoverScreen} />
+          {/* <Route path='*' component={NotFoundScreen} /> */}
 
-        {/* move to not found page */}
-        {/* <Redirect from='*' to='/404' /> */}
-      </>
+          {/* move to not found page */}
+          {/* <Redirect from='*' to='/404' /> */}
+        </>
       )}
     </Switch>
   );

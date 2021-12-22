@@ -16,10 +16,6 @@ interface Pages {
 function GamesBrowse({ games, lastGameRef }: Pages) {
   return (
     <div className='mr-top-10'>
-      <Helmet>
-        {' '}
-        <title> Stun Store | Browse </title>{' '}
-      </Helmet>
       <Row>
         {games.map((game, index) => {
           const isLastGameItem = index + 1 == games.length;

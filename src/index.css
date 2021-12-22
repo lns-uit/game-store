@@ -51,6 +51,7 @@ code {
 }
 img {
   background-color: transparent;
+  object-fit: cover;
 }
 /* width */
 ::-webkit-scrollbar {

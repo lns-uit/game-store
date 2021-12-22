@@ -207,3 +207,6 @@ label {
   color: rgb(202, 202, 202) !important;
   border-color: #aaaaaa !important;
 }
+.ant-input:hover{
+  border-color: #b14b1c !important;
+}

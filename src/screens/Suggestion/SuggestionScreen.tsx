@@ -4,7 +4,7 @@ import getPostTitleSuggestion from '../../utils/getPostTitleSuggestion';
 import useGameSuggestion from '../../hooks/useGameSuggestion';
 import ListGameBrowse from '../../layout/ListGameBrowse/ListGameBrowse';
 import SpinLoading from '../../components/SpinLoading/SpinLoading';
-
+import { Helmet } from 'react-helmet';
 function SuggestionScreen() {
   const [currentPage, setCurrentPage] = useState(1);
   const { title = '' } = useParams<any>() || {};
@@ -33,6 +33,10 @@ function SuggestionScreen() {
 
   return (
     <div className='browse white'>
+      <Helmet>
+        {' '}
+        <title> Stun Store | {titleSuggestion} </title>{' '}
+      </Helmet>
       <ListGameBrowse games={games} lastGameRef={lastGameRef} />
       {isLoading && <SpinLoading />}
     </div>

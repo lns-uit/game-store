@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import '../../screens/User/styles.css';
 import { Form, Input } from 'antd';
 import Collection from '../../components/Collection/Collection';
+import Helmet from 'react-helmet'
 import {
   CollectionType,
   GameType,
@@ -75,6 +76,9 @@ function CollectionLayout({
 
   return (
     <div className='m-top-24'>
+       <Helmet>
+          <title> {user.userName} </title>
+      </Helmet>
       <div className='collection-profile'>
         <div className='flex-basic relative border-radius-8 d-flex flex-shringk-1 min-width-0 column flex-grow-1 max-width-full'>
           <div>

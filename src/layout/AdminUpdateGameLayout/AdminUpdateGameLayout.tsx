@@ -25,6 +25,7 @@ import { RootState } from '../../redux/reducers/index';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import draftToHtml from 'draftjs-to-html';
+import Helmet from 'react-helmet'
 import reactImageSize from 'react-image-size';
 import '../../screens/AdminUpdateGame/styles.css';
 import gamesApi from '../../api/gamesApi'
@@ -338,6 +339,9 @@ function AdminUpdateGameLayout() {
                 <div>loadding</div>
                 :
                 <div className="white console-container">
+                         <Helmet>
+                                <title> Stun Console | Games </title>
+                        </Helmet>
                     <div className="console-detail-header">
                         <h1>UPDATE GAME</h1>
                         <div className="console-toolbar"></div>
@@ -368,7 +372,7 @@ function AdminUpdateGameLayout() {
                         <div className="decription-photo">
                             <div className="upload">
                                 <Form.Item
-                                    label="DESCRIPTION PHOTO (1920x1080 Required size)"
+                                    label="DESCRIPTION PHOTO (1920x1080 Recommend size)"
                                     name="images"
                                     valuePropName="images"
                                     className="d-flex-form"

@@ -43,7 +43,16 @@ function GameItemFree({ game, heightImage }: GameItemFreePropsType) {
       <div className='game-item-free__description'>
         <p className='game-item-free__description__title'>{nameGame}</p>
         <p className='game-item-free__description__subtitle'>
-          Free now to  <Moment format='DD-MMM-yyyy , hh:mm:ss' >{game.discount.endDate}</Moment> 
+          {game.discount === null ?
+            <div>
+               End Free
+            </div>
+          :
+          <div>
+            Free now to  <Moment format='DD-MMM-yyyy , hh:mm:ss' >{game.discount.endDate}</Moment> 
+          </div>
+          }
+     
         </p>
       </div>
     </div>

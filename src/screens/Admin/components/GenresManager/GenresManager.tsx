@@ -6,6 +6,7 @@ import axios from "axios";
 import { Button, Form, Input, Modal, Space, Table, Tag } from "antd";
 import Search from "antd/lib/transfer/search";
 import { Endpoint } from "../../../../api/endpoint"
+import Helmet from 'react-helmet'
 
 function GenresManager() {
   const [listGenre, setListGenre] = useState<GenreType[]>([]);
@@ -28,6 +29,13 @@ function GenresManager() {
   };
   const columns = [
     {
+      title: "",
+      dataIndex: "nameGenre",
+      key: "nameGenre",
+      width: "10px",
+      render: (text,item,index) => <h4>{index+1}</h4>,
+    },
+    {
       title: "Genre Name",
       dataIndex: "nameGenre",
       key: "nameGenre",
@@ -40,7 +48,9 @@ function GenresManager() {
       render: (id, obj) => (
         <Space size="middle">
           <Button
-            type="primary"
+            className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+            style={{ height: '40px' }}
+            type = "primary"
             onClick={() => {
               console.log(obj)
               setIdGenreUpdate(obj.idGenre)
@@ -117,12 +127,16 @@ function GenresManager() {
   }, []);
   return (
     <div className="console-container">
+      <Helmet>
+            <title> Stun Console | Genres </title>
+      </Helmet>
       <Modal
-        footer={[
-        ]}
-        title={action + "Genre"}
+        footer={null}
+        title={action + " Genre"}
         visible={isModalVisible}
         onCancel={handleCancel}
+        className = "modal-genre"
+        style={{ borderRadius: 10 }}
       >
         <Form
           form={form}
@@ -141,10 +155,15 @@ function GenresManager() {
             ></Input>
             
           </Form.Item>
-          <br/>   <br/>
+          <br/>
           <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Submit
+              <Button 
+                htmlType="submit"
+                className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                style={{ height: '40px' }}
+                type = "primary"
+              >
+                 {action} Genre
               </Button>
             </Form.Item>
         </Form>

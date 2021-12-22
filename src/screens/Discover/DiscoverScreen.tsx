@@ -105,7 +105,11 @@ function DiscoverScreen() {
                   sm={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
                   xs={numOfItemInGrid(numOfItemsDisplay.freeNow / 2)}
                 >
-                  <GameItemFree game={game} heightImage="25vw" />
+                  {game.discount !== null ?
+                    <GameItemFree game={game} heightImage="25vw" />
+                    : null  
+                  }
+                
                 </Col>
               ))}
             </Row>

@@ -15,6 +15,7 @@ interface RefundComponentPropsType {
   onSubmitRefund: (card: any) => void;
   game: GameDetailss;
   bill: BillType | undefined;
+  isSubmit: boolean;
 }
 
 const DEFAUL_CARD = {};
@@ -23,12 +24,11 @@ function RefundComponent({
   onSubmitRefund,
   game,
   bill,
+  isSubmit
 }: RefundComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState('');
-  const [isSubmit, setIsSubmit] = useState(false);
   const handleSubmitPaymet = (value: any) => {
-    setIsSubmit(true);
     let totalPayment = game.cost;
     if (game.discount !== null) {
       totalPayment = (1 - game.discount.percentDiscount / 100) * game.cost;
@@ -44,7 +44,6 @@ function RefundComponent({
       onSubmitRefund(card);
     }
     catch (e) {
-      setIsSubmit(false);
     }
   };
 

@@ -13,8 +13,10 @@ import {
 } from "antd";
 import { GameType, DiscountType } from "../../../../interfaces/rootInterface";
 import axios from "axios";
+import Helmet from 'react-helmet';
 import "./style.css";
 import Moment from "react-moment";
+import moment from "moment";
 const { Search } = Input;
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -23,15 +25,18 @@ function DiscountEvent() {
   const [percent, setPercent] = useState(0);
   const [listDiscount, setListDiscount] = useState<DiscountType[]>([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalDetailVisible,setIsModalDetailVisible]= useState(false);
   const [gameData, setGameData] = useState<any[]>([]);
   const [searchDiscount, setSearchDiscount] = useState("");
   const [titleDiscount, setTitleDiscount] = useState("");
   const [listGameDiscount, setListGameDiscount] = useState<string[]>([]);
+  const [listGameThisDiscount, setListGameThisDiscount] = useState<GameType[]>([]);
+  const [discountDetail,setDiscountDetail] = useState<DiscountType>();
   const [form] = Form.useForm();
   let allGame: any[] = [];
 
   const getDataGame = () => {
-    return axios.get("https://localhost:5001/api/game/get-game-for-discount").then((response) => {
+    return axios.get(Endpoint.mainApi+"api/game/get-game-for-discount").then((response) => {
       response.data.forEach((data) => {
         if (data.lastestVersion !== -1) {
           allGame.push(
@@ -77,6 +82,13 @@ function DiscountEvent() {
   };
   const columns = [
     {
+      title: "",
+      dataIndex: "title",
+      key: "title",
+      width: "10px",
+      render: (text,item,index) => <h4>{index+1}</h4>
+    },
+    {
       title: "Name",
       dataIndex: "title",
       key: "title",
@@ -92,20 +104,20 @@ function DiscountEvent() {
       title: "Start Date",
       key: "startDate",
       dataIndex: "startDate",
-      render: (text) => <Moment trim>{text}</Moment>,
+      render: (text) => moment(discountDetail?.startDate).format('DD-MM-YYYY, h:mm:ss'),
     },
     {
       title: "End Date",
       key: "endDate",
       dataIndex: "endDate",
-      render: (text) => <Moment format="DD-MM-yyyy | HH:mm:ss" trim>{text}</Moment>,
+      render: (text) =>  moment(discountDetail?.endDate).format('DD-MM-YYYY, h:mm:ss'),
     },
     {
       title: "Action",
       key: "action",
       render: (text, record) => (
         <Space size="middle">
-          <Button 
+          {/* <Button 
           onClick={()=> {
             console.log(form)
             form.setFieldsValue(
@@ -117,21 +129,37 @@ function DiscountEvent() {
             showModal()
           }} 
             type="default"> Update 
-          </Button>
-          <Button onClick={()=>{deleteDiscount(record.idDiscount)}}> Delete </Button>
-          <Button> Detail </Button>
+          </Button> */}
+          <Button onClick={()=>{deleteDiscount(record.idDiscount)}}
+                  className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+                  style={{ height: '40px' }}
+                  type = "primary"
+          > Delete </Button>
+          <Button
+            className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+            style={{ height: '40px' }}
+            type = "primary"
+            onClick={()=>{
+              setDiscountDetail(record);
+              getGameByDiscount(record.idDiscount)
+            }}
+          > Detail </Button>
         </Space>
       ),
     },
   ];
   const getGameByDiscount = (idDiscount) => {
-    axios.get(Endpoint.mainApi + "api/discount/get-game-by-discount/{idDiscount}",
+    axios.get(Endpoint.mainApi + `api/discount/get-game-by-discount/${idDiscount}`,
       {
         headers: {
           Authorization: "Bearer " + localStorage.getItem("accessToken"), // token here
         },
       }
     )
+    .then(res => {
+      setListGameThisDiscount(res.data)
+      setIsModalDetailVisible(true);
+    })
   }
   const postDiscount = (
     value : any
@@ -143,8 +171,8 @@ function DiscountEvent() {
           discount: {
             percentDiscount: value.percent,
             title: value.title,
-            startDate: new Date(value.time[0]),
-            endDate: new Date(value.time[1]),
+            startDate: moment(value.time[0]).format(),
+            endDate: moment(value.time[1]).format(),
           },
           listGameDiscount: value.games
         },
@@ -215,14 +243,16 @@ function DiscountEvent() {
   }, []);
   return (
     <div className="console-container">
-
+      <Helmet>
+            <title> Stun Console | Discounts </title>
+      </Helmet>
       <Modal
-        footer={[
-        ]}
+        footer={null}
         title="Create New Discount"
         visible={isModalVisible}
         onOk={() => handleOk()}
         onCancel={() => handleCancel()}
+        className = "modal-genre"
       >
         <Form
           form={form}
@@ -276,14 +306,56 @@ function DiscountEvent() {
             </Select>
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
+            <Button type="primary" htmlType="submit"
+               className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
+               style={{ height: '40px' }}
+            >
+              Create Discount
             </Button>
           </Form.Item>
 
         </Form>
       </Modal>
+      <Modal
+        footer={null}
+        title="Detail Discount"
+        visible={isModalDetailVisible}
+        className = "modal-genre"
+        onCancel={() => {setIsModalDetailVisible(false)}}
+      >
+        <div className="detail-discount">
+          <div className = "title">
+            {discountDetail?.title}
+          </div>
+          <br/>
+          <div>
+            Date Start: <b>{moment(discountDetail?.startDate).format('MMMM DD YYYY, h:mm:ss a')}</b>
+          </div>
+          <br/>
+          <div>
+            Date End &nbsp;: <b>{moment(discountDetail?.endDate).format('MMMM DD YYYY, h:mm:ss a')}</b>
+          </div>
+          <br/>
+          <div>
+            Percent Discount: <b>{discountDetail?.percentDiscount}%</b>
+          </div>
+          <br/>
+          <div style={{fontSize:'15px'}}>
+            List Game In Discount:
+          </div>
+          <div>
+          {
+            listGameThisDiscount.map((item,index)=>(
+              <div>
+                {index+1}. &nbsp;&nbsp;<b>{item.nameGame}</b>
+              </div>
+            ))
+          }
+          </div>
+       
+        </div>
 
+      </Modal>
       <div className="console-content">
         <div className="console-detail-header">
           <h1>

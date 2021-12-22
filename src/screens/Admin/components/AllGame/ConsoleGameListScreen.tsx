@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 const { Search } = Input;
 import {Endpoint} from "../../../../api/endpoint"
 import { LoadingContext } from "react-router-loading";
+import Helmet from 'react-helmet';
 
 function ConsoleGameListScreen() {
   const loadingContext = useContext(LoadingContext);
@@ -37,6 +38,14 @@ function ConsoleGameListScreen() {
 
 
   const columns = [
+    {
+      title: "",
+      dataIndex: "nameGame",
+      key: "nameGame",
+      width: "10px",
+      render: (text,item,index) => <h4>{index+1}</h4>
+
+    },
     {
       title: "Game",
       dataIndex: "imageGameDetail",
@@ -93,6 +102,9 @@ function ConsoleGameListScreen() {
   }, []);
   return (
     <div className="console-container">
+      <Helmet>
+            <title> Stun Console | Games </title>
+      </Helmet>
       <div className="console-detail-header">
         <h1>
             ALL GAME

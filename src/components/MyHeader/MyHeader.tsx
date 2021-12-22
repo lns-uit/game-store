@@ -48,7 +48,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
     () => (
       <Menu style = {{width:'fit-content'}}>
         <Menu.Item>
-          <Link to={'/user/' + idUser}>
+          <Link to={'/user/' + user.userName}>
             <div className='flex-start'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -225,7 +225,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
               <div>
                 {
                   user !== null ?
-                  <Link to={'/wishlist/'+user.idUser}><a>Wish list</a></Link>
+                  <Link to={'/wishlist/'+user.userName}><a>Wish list</a></Link>
                   :null
                 }
               </div>

@@ -16,10 +16,10 @@
     padding: 0 !important;
 }
 .editor-class{
-    height: 600px !important;
     padding: 0 !important;
     overflow: hidden !important;
     background-color: #111111 !important;
+    border:0 !important;
 }
 .DraftEditor-root{
     border-color: rgb(175, 175, 175) !important;
@@ -37,4 +37,13 @@
     justify-content: center;
     align-items: center;
     border-radius: 5px;
+}
+.DraftEditor-root{
+    margin-bottom: 0 !important;
+}
+.rdw-editor-toolbar *{
+    background-color: rgb(194, 194, 194) !important;
+}
+.rdw-editor-toolbar {
+    background-color: rgb(194, 194, 194) !important;
 }
