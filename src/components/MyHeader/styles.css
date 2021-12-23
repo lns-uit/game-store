@@ -42,6 +42,7 @@
   border-radius: 5px !important;
 }
 .header__bottom-wrapper__input {
+  height: 50px !important;
   border-radius: 5px !important;
   width: 50% !important;
   margin: 0 35px !important;
@@ -49,6 +50,7 @@
   border-color: #232323 !important;
   color: var(--white-color) !important;
   padding: 4px 5px 4px 20px!important;
+  z-index: 1500;
 }
 
 .header__bottom-wrapper__logo {
@@ -177,4 +179,14 @@
   justify-content: center;
   align-items: center;
   border: 1px solid rgb(116, 116, 116);
+}
+.search-box-modal{
+  position:fixed;
+  top: 0;
+  height:100vh;
+  width:100vw;
+  left:0;
+  display: flex;
+  justify-content: center;
+  transition: .3s;
 }

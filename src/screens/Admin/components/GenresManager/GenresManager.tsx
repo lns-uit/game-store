@@ -71,14 +71,14 @@ function GenresManager() {
     setIsModalVisible(false);
   };
   const fetchDataGenre = () => {
-    return axios.get("https://localhost:5001/api/genre").then((response) => {
+    return axios.get(Endpoint.mainApi+"api/genre").then((response) => {
       setListGenre(response.data);
     });
   };
   const postGenre = (genre: any) => {
     axios
       .post(
-        "https://localhost:5001/api/genre/create",
+        Endpoint.mainApi+"api/genre/create",
         {
           nameGenre: genre,
         },

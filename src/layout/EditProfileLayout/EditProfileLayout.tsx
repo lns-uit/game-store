@@ -10,7 +10,9 @@ import { RootState } from '../../redux/reducers';
 import AvatarAndCoverImage from '../../components/AvatarAndCoverImage/AvatarAndCoverImage';
 import EditPassWord from '../../components/EditPassWord/EditPassWord';
 import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import {Endpoint} from '../../api/endpoint';
+import { login } from '../../redux/actions/userAction';
 
 function EditProfileLayout() {
   const user = useSelector((state: RootState) => state.user);
@@ -18,29 +20,41 @@ function EditProfileLayout() {
   const [urlCoverImage, setUrlCoverImage] = useState<any>(null);
   const [urlAvatar, setUrlAvatar] = useState<any>(null);
   const [avatar, setAvatar] = useState<any>(user.avatar);
+  const [isValidUsername,setIsValidUsername] = useState(true);
+
+  const validUsername = (bool: boolean) =>{
+    setIsValidUsername(bool);
+  }
+  const dispatch = useDispatch();
+
   const onFinish = (values: any) => {
     let userEdited: any = null
     if (navigationEditProfile === 1) {
-      userEdited = {
-        UserName: values.username || null,
-        RealName: values.realName,
-        Background: null,
-        Avatar: null
+      if(isValidUsername === true){
+        userEdited = {
+          UserName: values.username || null,
+          RealName: values.realName,
+          Background: null,
+          Avatar: null
+        }
+        postEditUser(userEdited);
+      }else{
+        window.alert('User name exited')
       }
-      postEditUser(userEdited);
     }else if (navigationEditProfile === 2){
       userEdited = {
         UserName: null,
         RealName: null,
         Background: urlCoverImage,
         Avatar: urlAvatar,
-      }
+    }
       postEditUser(userEdited);
+    }else{
+      editPassword(values);
     }
   };
 
   const postEditUser = async (values: any) => {
-    console.log(values);
     await axios
       .put(`${Endpoint.mainApi}api/user/change-info/${user.idUser}`,values,
       {
@@ -49,9 +63,36 @@ function EditProfileLayout() {
         }
       })
     .then(res=>{
+      dispatch(login(res.data));
+      window.alert('Edit success');
       console.log(res);
     })
-    .catch(err=>{console.log(err)})
+    .catch(err=>{window.alert('Edit fail');})
+  }
+
+  const editPassword = async (values: any) =>{
+    console.log(values)
+    if (values.newPassword !== values.comfirmPassword){
+      window.alert('New password not compare confirm password');
+    }else{
+      await axios.post(`${Endpoint.mainApi}api/user/change-password`,{
+        idUser: user.idUser,
+        CurrentPass: values.oldPassword,
+        NewPass: values.newPassword
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("accessToken")
+        }
+      }
+      )
+        .then(res=>{
+          window.alert("Change password success!")
+        })
+        .catch(err=>{
+          window.alert("Old password is not correct!")
+        })
+    }
   }
 
   const getUrlCoverImage = (url: string) =>{
@@ -80,7 +121,7 @@ function EditProfileLayout() {
                 <Link
                   to='/user/c1217ffe-de67-49fc-8515-eb6487b7dcda'
                   className='white'>
-                  <span className='fs-26'>khoild11</span>
+                  <span className='fs-26'>{user.userName}</span>
                 </Link>
                 <span className='fs-16 gray-4 m-left-right-8'>»</span>
                 <span>Edit Profile</span>
@@ -106,7 +147,7 @@ function EditProfileLayout() {
                 >
                   {
                     navigationEditProfile === 1 ?
-                    <EditProfileGeneral />
+                    <EditProfileGeneral validUsername={validUsername}/>
                     : navigationEditProfile === 2 ?
                     <AvatarAndCoverImage getUrlAvatar={getUrlAvatar} getUrlCoverImage={getUrlCoverImage}/>
                     : <EditPassWord/>

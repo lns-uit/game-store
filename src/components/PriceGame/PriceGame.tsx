@@ -37,9 +37,12 @@ function PriceGame({ game, bill }: Detail) {
         else showModal();
   };
   const countDownTimeRefund = () => {
+
+    let billTimeRefund = (bill?.timeRefund || 0) 
+    // + 25200;
     let timeCountDown = moment(bill?.datePay)
-                        .add(bill?.timeRefund, 'seconds')
-                        .diff(moment().format(), 'second');
+                        .add(billTimeRefund, 'seconds')
+                        .diff(moment().utc().format(), 'second');
     if (timeCountDown < 0) return;
     setTimeRefund(timeCountDown);
     setTimeout(countDownTimeRefund, 1000);
@@ -157,6 +160,7 @@ function PriceGame({ game, bill }: Detail) {
     }
   };
   useEffect(() => {
+    console.log()
     if (bill !== undefined) countDownTimeRefund();
   }, [bill]);
   const checkIsWishlist = async () => {
@@ -184,11 +188,12 @@ function PriceGame({ game, bill }: Detail) {
     setTimeout(countDownTimeDiscount, 1000);
   };
   const checkTimeDiscount = () => {
+
     if (game.discount === null) return;
-    let timeStart = moment()
+    let timeStart = moment().utc()
                         .diff(moment(game.discount.startDate), 'second');
     let timeEnd = moment(game.discount.endDate)
-                        .diff(moment().format(), 'second');
+                        .diff(moment().utc(), 'second');
     if (timeStart>0) {
       if (timeEnd>0) {
         setTimeDiscount(timeEnd);

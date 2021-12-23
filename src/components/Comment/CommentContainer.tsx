@@ -35,7 +35,7 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
     const [rateCount, setRateCount] = useState(game.numOfRate);
     const [rateAverage, setRateAverage] = useState(game.averageRate);
 
-    const joinRoom = async (user, room) => {
+    const joinRoom = async (user, room) => {    
         try {
             const connection = new HubConnectionBuilder()
                 .withUrl(Endpoint.mainApi+"comment")
@@ -46,12 +46,10 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
                 // console.log("message receive: ", message);
             });
 
-            connection.on("ReceiveCreateComment", (user, comment: CommentType, avgRate) => {
-                console.log('comment is created')
+            connection.on("ReceiveCreateComment", (user, comment: CommentType) => {
                 if (comment.idUser === idUser) setMyComment(comment);
                 setComment(cmts => [comment, ...cmts])
                 setCommentCount(cmt => cmt + 1)
-                setRateAverage(avgRate);
             })
 
             connection.on("ReceiveUpdateComment", (user, comment: CommentType) => {
@@ -64,19 +62,21 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
                 ])
 
             })
+            connection.on("ReceiveUpdateRate",(user, average: number) =>{
+                setRateAverage(average);
+            })
 
-            connection.on("ReceiveDeleteComment", (user, id: string, avgRate) => {
+            connection.on("ReceiveDeleteComment", (user, id: string, average: number) => {
+                setRateAverage(average);
                 setMyComment(cmt => cmt?.idComment === id ? undefined : cmt);
                 setComment(cmts => cmts.filter(item => item.idComment !== id))
                 setCommentCount(cmt => cmt - 1);
-                setRateAverage(avgRate);
             })
 
             await connection.start();
             await connection.invoke("JoinRoom", { user, room });
             setConnection(connection);
         } catch (e) {
-            console.log(e);
         }
     };
 
@@ -84,14 +84,13 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
         try {
             await connection?.invoke("SendMessage", message);
         } catch (e) {
-            console.log(e);
         }
     };
     const createComment = async (data: CommentType) => {
         try {
             await connection?.invoke("CreateComment", data)
+            await connection?.invoke("UpdateRate", data)
         } catch (e) {
-            console.log(e);
         }
     }
 
@@ -99,14 +98,12 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
         try {
             await connection?.invoke("UpdateComment", data, idUser, action)
         } catch (e) {
-            console.log(e);
         }
     }
     const deleteComment = async (idcmt: string) => {
         try {
             await connection?.invoke("DeleteComment", idcmt)
         } catch (e) {
-            console.log(e);
         }
     }
     const Editor = () => (
@@ -174,7 +171,6 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
             setUserInfo(response.data);
             
         }).catch(err => {
-            console.log(err)
         })
     };
     const getCommentCount = () => {
@@ -182,22 +178,21 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
             .then(res => {
                 setCommentCount(res.data)
             })
-            .catch(err => console.log(err))
+            .catch(err =>{})
     }
     const getMyComment = () => {
         return axios.get(Endpoint.mainApi + "api/comments/" + idGame + "/" + idUser)
             .then(res => {
                 {
-                    console.log(res)
                     setMyComment(res.data);
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err =>{})
     }
     const joinRoomTimeout = () => {
         joinRoom("stun-user", idGame);
         getComment();
-        getMyComment();
+       
         getCommentCount();
         
         setIsLoading(false);
@@ -206,6 +201,7 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
     useEffect(() => {
         if (user !== null) {
             getUserInfo();
+            getMyComment();
         }
     },[user])
     useEffect(() => {
@@ -226,7 +222,7 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
                         {numberDot(commentCount)} Rates
                     </div>
                     </div>
-                    <Rate disabled value = {rateAverage}></Rate>
+                    <Rate disabled value = {rateAverage} allowHalf ></Rate>
                 </div>
                 <br/>
                 <div className="white uppercase lh-26 pd-top-2 m-bottom-10 fs-14 weight-normal brg-img d-flex">

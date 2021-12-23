@@ -5,6 +5,7 @@ import { Endpoint } from "../../../../api/endpoint";
 import "./style.css";
 import axios from "axios";
 import Helmet from 'react-helmet';
+
 import Item from "antd/lib/list/Item";
 const { Search } = Input;
 const columns = [
@@ -159,8 +160,7 @@ function ConsoleUsersListScreen() {
           dataSource={userData.filter(
             (item) =>
               item.email?.toLowerCase().indexOf(searchUser) !== -1 ||
-              item.userName?.toLowerCase().indexOf(searchUser) !== -1 ||
-              item.realName?.toLowerCase().indexOf(searchUser) !== -1
+              item.userName?.toLowerCase().indexOf(searchUser) !== -1
           )}
         />
       </div>

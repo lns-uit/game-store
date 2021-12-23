@@ -7,14 +7,14 @@ const initialState ={
 }
 
 interface ForgotActionType {
-  forgot: boolean,
+  paylod: any,
   type: string
 }
 
 const forgotPasswordReducer = (state: StateUrl = initialState, action: ForgotActionType) => {
   switch (action.type) {
     case 'forgot':
-      return action.forgot;
+      return action.paylod;
     default:
       return state;
   }

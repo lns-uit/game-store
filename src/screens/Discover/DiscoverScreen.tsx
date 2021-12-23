@@ -87,7 +87,7 @@ function DiscoverScreen() {
           </GamesContainer>
 
           {/* Free now */}
-
+          {itemsFree?.length === 0 ? null :
           <GamesContainer
             gutterHorizontal={30}
             title="FREE NOW !"
@@ -113,8 +113,9 @@ function DiscoverScreen() {
                 </Col>
               ))}
             </Row>
-          </GamesContainer>
+          </GamesContainer>}
           {/* Game on sales */}
+          {gameOnSales?.length===0 ? null :
           <GamesContainer title="GAMES ON SALE !" leftAction={<ViewMoreBtn title="game-on-sales" />}>
             <Row gutter={[35, 35]}>
               {gameOnSales?.map((game, index) => (
@@ -136,7 +137,7 @@ function DiscoverScreen() {
                 </Col>
               ))}
             </Row>
-          </GamesContainer>
+          </GamesContainer>}
           {/* Top Seller */}
           <Row>
             {EMPTYARR.map((arr, index) => (

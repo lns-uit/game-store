@@ -1,0 +1,72 @@
+.box-search-container{
+    height: fit-content;
+    background-color: #1f1f1f;
+    width: 48vw;
+    margin-left: 128px;
+    min-height: 100px;
+    position: fixed;
+    max-height: 80vh;
+    overflow-y:auto;
+    border-radius: 10px;
+    margin-top: 130px;
+}
+.item-search{
+    height: 100px;
+    align-items: center;
+    padding: 0 20px;
+    transition: .3s;
+    cursor: pointer;
+}
+.item-search:hover{
+    background-color: #373737;
+}
+.item-search img{
+    height: 60px;
+    width: 50px;
+    border-radius: 5px;
+
+}
+.name-game{
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    height: 60px;
+    width: 100%;
+}
+.name-game .name{
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    height: 30px;
+    width: 90%;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+.name-game .cost{
+    color: rgb(170, 47, 19);
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    height: 35px;
+}
+.ant-layout-header{
+    line-height: 20px !important;
+}
+.nothing-here{
+    padding: 40px;
+    display: flex;
+    color:rgb(136, 136, 136);
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 20px;
+    font-weight: 500;
+}
+@media screen and (max-width: 992px) {
+    .box-search-container{
+        width: 88vw;
+        margin-top: 80px;
+        margin-left: 0;
+    }
+}
