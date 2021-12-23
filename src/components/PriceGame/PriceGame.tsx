@@ -38,8 +38,7 @@ function PriceGame({ game, bill }: Detail) {
   };
   const countDownTimeRefund = () => {
 
-    let billTimeRefund = (bill?.timeRefund || 0) 
-    // + 25200;
+    let billTimeRefund = (bill?.timeRefund || 0)  + 25200;
     let timeCountDown = moment(bill?.datePay)
                         .add(billTimeRefund, 'seconds')
                         .diff(moment().utc().format(), 'second');
