@@ -210,3 +210,11 @@ label {
 .ant-input:hover{
   border-color: #b14b1c !important;
 }
+.ant-input[disabled]{
+  color: rgb(179, 179, 179) !important;
+  background-color: transparent !important;
+}
+.ant-input{
+  background-color: transparent !important;
+  color: rgb(230, 230, 230) !important;
+}
