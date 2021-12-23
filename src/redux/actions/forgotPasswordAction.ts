@@ -1,9 +1,9 @@
-const setForgotPassword = (str: string, forgot: boolean) => {
+const setForgotPassword = (str: string, bool: any) => {
   return {
-    forgot: forgot,
-    type: str
+    type: str,
+    payload: bool
   };
 };
 
-export { setForgotPassword};
+export { setForgotPassword };
 

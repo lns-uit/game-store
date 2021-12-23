@@ -2,14 +2,6 @@ import React, { useState } from 'react';
 import { GenreType } from '../../interfaces/rootInterface';
 import './styles.css';
 
-var sorts = [
-  'All',
-  'Alphabetical',
-  'New Release',
-  'Price Low To High',
-  'Price High To Low',
-];
-
 interface SortPropsType {
   genres: GenreType[];
   sortValues: GenreType[];
