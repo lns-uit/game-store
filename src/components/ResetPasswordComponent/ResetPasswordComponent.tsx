@@ -35,7 +35,8 @@ function ResetPasswordComponent(){
                 }
             })
             .then((res)=>{
-                console.log(res);
+                dispatch(setForgotPassword('forgot', false));
+                history.replace('/');
             })
             .catch(err=>{console.log(err)})
         }
