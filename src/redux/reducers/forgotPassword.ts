@@ -1,20 +1,16 @@
 export interface StateUrl{
-  forgot: boolean;
-}
-
-const initialState ={
-  forgot: false,
+  forgot: any;
 }
 
 interface ForgotActionType {
-  paylod: any,
+  paylod?: any,
   type: string
 }
 
-const forgotPasswordReducer = (state: StateUrl = initialState, action: ForgotActionType) => {
+const forgotPasswordReducer = (state = false, action: ForgotActionType) => {
   switch (action.type) {
     case 'forgot':
-      return action.paylod;
+      return action.paylod || true;
     default:
       return state;
   }
