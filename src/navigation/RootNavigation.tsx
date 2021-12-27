@@ -27,6 +27,7 @@ import StoreRefundPolicyEditor from '../screens/Admin/components/StoreRefundPoli
 import TermOfService from '../screens/Admin/components/TermOfService/TermOfServiceEditor';
 import DiscoverCMS from '../screens/Admin/components/DiscoverCMS/DiscoverCMS';
 import AllGameVersion from '../screens/Admin/components/GameVersion/AllGameVersion';
+import Overview from '../screens/Admin/components/GameVersion/Overview';
 import EditProfile from '../screens/EditProfile/EditProfile';
 import NotFoundScreen from '../screens/NotFound/NotFoundScreen';
 import AdminUpdateGame from '../screens/AdminUpdateGame/AdminUpdateGame';
@@ -42,6 +43,7 @@ import { getGameSuggestionApi } from '../api/suggestionApi';
 import RefundPolicyScreen from '../screens/StorePolicy/RefundPolicyScreen';
 import PrivacyPolicyScreen from '../screens/StorePolicy/PrivacyPolicyScreen';
 import TermOfServiceScreen from '../screens/StorePolicy/TermOfServiceScreen';
+import GameOrders from '../screens/Admin/components/GameVersion/GameOrders';
 import { Button } from 'antd';
 
 function RootNavigation() {
@@ -173,7 +175,7 @@ function RootNavigation() {
           <PrivateRoute path='/admin/create-game'>
             <AdminCreateGame />
           </PrivateRoute>
-          <PrivateRoute path='/admin/update-game/:idGame'>
+          <PrivateRoute path='/admin/console/game/update/:idGame'>
             <AdminUpdateGame />
           </PrivateRoute>
           <PrivateRoute path='/wishlist/:idUser'>
@@ -205,10 +207,15 @@ function RootNavigation() {
           <Route  path='/admin/console/discover-cms'>
             <DiscoverCMS />
           </Route>
-          <Route  path='/admin/console/history/:idGame'>
+          <Route  path='/admin/console/game/releases/:idGame'>
             <AllGameVersion />
           </Route>
-
+          <Route  path='/admin/console/game/orders/:idGame'>
+            <GameOrders />
+          </Route>
+          <Route  path='/admin/console/game/overview/:idGame'>
+            <Overview />
+          </Route>
           {/* Auth*/}
           <Route
             

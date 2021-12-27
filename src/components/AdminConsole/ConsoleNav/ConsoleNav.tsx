@@ -59,21 +59,18 @@ function ConsoleNav(){
     const [indexNav, setIndexNav] = useState(-1);
     const history = useHistory();
     const onChangeRoute = (event) =>{
-        if (event.pathname === "/admin/create-game")
-        setIndexNav(-1);
+        setIndexNav(navlist.findIndex(obj=> obj.path === window.location.pathname))
     }
     
 
     const handleLoadSomething = () => {
         ref.current?.continuousStart
         setTimeout(() => {
-            console.log("...loading something");
             ref.current?.complete();
         }, 100);
     };
     useEffect(()=>{
         history.listen(onChangeRoute)
-        setIndexNav(navlist.findIndex(obj=> obj.path === window.location.pathname))
     },[])
     return (
         <div className = "console-nav-container">

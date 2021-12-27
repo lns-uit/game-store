@@ -26,7 +26,7 @@ function GameOnSale({game}:PropsType) {
                         </div>
                         &nbsp;
                         <div className="text-deco gray-txt d-flex align-center">
-                        {numberWithCommas((game.discount.percentDiscount/100)*game.cost)}
+                        {numberWithCommas(game.cost)}
                         </div>
                     </div>
                    

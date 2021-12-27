@@ -135,7 +135,7 @@ function ConsoleGameListScreen() {
         <Table
           onRow={(record, rowIndex) => {
             return {
-              onClick: event => { history.push('history/'+record.idGame) },
+              onClick: event => { history.push('game/overview/'+record.idGame) },
             };
           }}
           pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}

@@ -1,36 +1,45 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Space, Table, Tag } from "antd";
-import { GameType, GameVersionType, ImageType } from "../../../../interfaces/rootInterface";
+import { BillType, GameType, GameVersionType, ImageType } from "../../../../interfaces/rootInterface";
 import axios from "axios";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 const { Search } = Input;
 import { Endpoint } from "../../../../api/endpoint"
 import Moment from "react-moment";
+import numberWithCommas from "../../../../utils/numberWithCommas";
 
-function AllGameVersion() {
+function GameOrders() {
     let slug: any = {};
     slug = useParams();
-    const [gameData, setGameData] = useState<GameVersionType[]>([]);
+    const [billData, setBillData] = useState<BillType[]>([]);
     const [searchGame, setSearchGame] = useState('');
     const [nameGame, setNameGame] = useState('');
     const history = useHistory();
     const location = useLocation();
 
-    const getDataGame = () => {
+    const getDataBill = () => {
         let routePath = location.pathname.split('/');
         let id = routePath[routePath.length-1];
-        return axios.get(Endpoint.mainApi + "api/gameversion/by-game/" + id,
+        return axios.get(Endpoint.mainApi + "api/bill/" + id + '/' + billData.length +  '/5',
             {
                 headers: {
                     Authorization: "Bearer "+ localStorage.getItem("accessToken")
                 }
             }
         ).then((response) => {
-            setGameData(response.data);
+            if (response.data.length !== 0) {
+                setBillData(response.data);
+                getDataBill();
+            }
         });
     };
     const getGame = () => {
         axios.get(Endpoint.mainApi+"api/gameversion/by-game/lastest-version/"+slug.idGame,
+            {
+                headers: {
+                    Authorization: "Bearer "+ localStorage.getItem("accessToken")
+                },
+            }
         )
         .then(res => {
             setNameGame(res.data.nameGame)
@@ -38,26 +47,38 @@ function AllGameVersion() {
     }
     const columns = [
         {
-            title: "Version",
-            dataIndex: "versionGame",
-            key: "versionGame",
+            title: "ID",
+            dataIndex: "idBill",
+            key: "idBill",
             render: (text) => <h3>{text}</h3>,
         },
         {
-            title: "DateUpdate",
-            dataIndex: "dateUpdate",
-            key: "dateUpdate",
+            title: "Time",
+            dataIndex: "datePay",
+            key: "datePay",
             render: (date) => <Moment format="DD-MM-yyyy | HH:mm:ss">{date}</Moment>
+        },
+        {
+            title: "Action",
+            dataIndex: "actions",
+            key: "actions",
+            render: (text,record) => <div style={{color: text === 'refund' ? '#e83b07' : '#07a5e8'}}>{text.toUpperCase()}</div>,
+        },
+        {
+            title: "Cost",
+            dataIndex: "cost",
+            key: "cost",
+            render: (text) => <h3>{numberWithCommas(text)}</h3>,
         },
     ];
     useEffect(() => {
-        getDataGame();
+        getDataBill();
     }, []);
     return (
         <div className="console-container">
             <div className="console-detail-header">
                 <h1>
-                    Releases
+                    Orders
                 </h1>
                 <div className="console-toolbar">
 
@@ -70,16 +91,6 @@ function AllGameVersion() {
                         />
                     </div>
                     <div style={{ width: '40px' }}></div>
-                    <Button  className='bgr-yellow pd-8-16 width-full border-radius-4 uppercase'
-                            style={{ height: '40px' }}
-                            type = "primary" 
-                            onClick={() => { 
-                                let routePath = location.pathname.split('/');
-                                let id = routePath[routePath.length-1];
-                                history.push("/admin/console/game/update/"+ id) 
-                            }}>
-                        Create New Update
-                    </Button>
                 </div>
             </div>
             <div className="console-list">
@@ -91,12 +102,11 @@ function AllGameVersion() {
                     }}
                     pagination={{ defaultPageSize: 10, showSizeChanger: true, pageSizeOptions: ['10', '20', '30'] }}
                     columns={columns} dataSource={
-                        gameData.filter(item => item.versionGame?.toLowerCase().indexOf(searchGame) !== -1
-
-                        )} />
+                        billData.filter(item => item.actions.toLowerCase().indexOf(searchGame) !== -1)
+                        } />
             </div>
         </div>
     )
 }
 
-export default AllGameVersion;
+export default GameOrders;

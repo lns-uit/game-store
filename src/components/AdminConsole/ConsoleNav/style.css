@@ -37,3 +37,20 @@
     fill: var(--console-nav-btn-color) !important;
     width: 30px;
 }
+.back-to-console{
+    cursor: pointer;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+
+}
+.back-to-console:hover{
+    background-color: #1b1b1b !important; 
+}
+.divide-bar{
+    width: 85%;
+    height: 1px;
+    background-color: rgb(65, 65, 65);
+    padding: 0 10px;
+    margin-left: 20px;
+}

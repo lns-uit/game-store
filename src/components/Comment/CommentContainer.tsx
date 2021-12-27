@@ -157,11 +157,13 @@ function CommentContainer({ idGame,bill,game }: IdGame) {
     );
 
     const getComment = () => {
-        return axios.get(Endpoint.mainApi + "api/comments/" + idGame).then((response) => {
-            setComment(response.data.reverse());
+        return axios.get(Endpoint.mainApi + `api/comments/rates/${idGame}/${comments.length}/5`).then((response) => {
+            if (response.data.length !== 0) {
+                setComment(response.data.reverse());
+                getComment();
+            }
         });
     };
-
     const getUserInfo = () => {
         return axios.get(Endpoint.mainApi + "api/user/" + idUser, {
             headers: {

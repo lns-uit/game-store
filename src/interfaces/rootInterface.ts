@@ -18,7 +18,7 @@ interface GameType {
   cost: any;
   lastestVersion: any;
   numberOfBuyers: any;
-  numberOfDowloaders: any;
+  numberOfDownloaders: any;
   discount: {
     idDiscount: string;
     title: string;
@@ -69,7 +69,7 @@ interface gameCollection {
   newVersion: any;
   numberOfRare: number;
   numberOfBuyer: number;
-  numberOfDowloaders: number;
+  numberOfDownloaders: number;
   plaform: string;
   publisher: string;
   releaseDate: string;
@@ -149,7 +149,7 @@ interface GameDetailss {
   releaseDate: string;
   lastestVersion: string;
   numberOfBuyer: number;
-  numberOfDowloaders: number;
+  numberOfDownloaders: number;
   numOfRate: number;
   discount: {
     idDiscount: string;
