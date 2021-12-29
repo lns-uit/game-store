@@ -6,7 +6,7 @@ const storage = require('electron-json-storage');
 var fs = require('fs');
 const {ipcRenderer, shell, remote } = require('electron')
 const { loadProgressBar } = require('axios-progress-bar')
-const Endpoint = "http://103.142.139.104:5112/"
+const Endpoint = "https://103.142.139.104:5111/"
 // const Endpoint = "https://localhost:5001/"
 window.addEventListener('DOMContentLoaded', () => {
   const replaceText = (selector, text) => {

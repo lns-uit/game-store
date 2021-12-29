@@ -16,7 +16,7 @@ const https = require("https");
 const storage = require("electron-json-storage");
 const ElectronGoogleOAuth2 = require('@getstation/electron-google-oauth2').default;
 
-const Endpoint = "http://103.142.139.104:5112/"
+const Endpoint = "https://103.142.139.104:5111/"
 // const Endpoint = "https://localhost:5001/"
 const agent = new https.Agent({
   rejectUnauthorized: false,
