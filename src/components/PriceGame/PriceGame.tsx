@@ -330,7 +330,7 @@ function PriceGame({ game, bill }: Detail) {
             onOk={onSubmitPayment}
             onCancel={handleCancel}
             footer={null}>
-            <BuyComponent onSubmitPayment={onSubmitPayment} game={game} timeDiscount={timeDiscount} isSubmit = {isSubmit}/>
+            <BuyComponent setIsSubmit={setIsSubmit} onSubmitPayment={onSubmitPayment} game={game} timeDiscount={timeDiscount} isSubmit = {isSubmit}/>
           </Modal>
           <Modal
             width={500}
@@ -349,6 +349,7 @@ function PriceGame({ game, bill }: Detail) {
               game={game}
               bill={bill}
               isSubmit = {isSubmit}
+              setIsSubmit={setIsSubmit}
             />
           </Modal>
         </div>

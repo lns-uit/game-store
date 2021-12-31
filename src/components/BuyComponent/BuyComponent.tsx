@@ -8,6 +8,7 @@ import { GameDetailss, GameType } from "../../interfaces/rootInterface";
 import numberWithCommas from "../../utils/numberWithCommas";
 interface BuyComponentPropsType {
   onSubmitPayment: (card: any) => void;
+  setIsSubmit: any;
   game: GameDetailss;
   timeDiscount: number;
   isSubmit: boolean;
@@ -15,7 +16,7 @@ interface BuyComponentPropsType {
 
 const DEFAUL_CARD = {};
 
-function BuyComponent({ onSubmitPayment,game,timeDiscount,isSubmit }: BuyComponentPropsType) {
+function BuyComponent({ onSubmitPayment,game,timeDiscount,isSubmit,setIsSubmit }: BuyComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState("");
   const handleSubmitPaymet = (value: any) => {
@@ -75,6 +76,7 @@ function BuyComponent({ onSubmitPayment,game,timeDiscount,isSubmit }: BuyCompone
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 50 }}
         onFinish={handleSubmitPaymet}
+        onFinishFailed={()=>{setIsSubmit(false)}}
         layout="vertical"
         autoComplete="off"
       >

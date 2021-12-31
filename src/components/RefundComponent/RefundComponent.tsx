@@ -13,6 +13,7 @@ import Moment from 'react-moment';
 
 interface RefundComponentPropsType {
   onSubmitRefund: (card: any) => void;
+  setIsSubmit: any;
   game: GameDetailss;
   bill: BillType | undefined;
   isSubmit: boolean;
@@ -24,7 +25,8 @@ function RefundComponent({
   onSubmitRefund,
   game,
   bill,
-  isSubmit
+  isSubmit,
+  setIsSubmit
 }: RefundComponentPropsType) {
   const [Err, setErr] = useState(false);
   const [strErr, setStrErr] = useState('');
@@ -71,6 +73,7 @@ function RefundComponent({
         labelCol={{ span: 8 }}
         wrapperCol={{ span: 50 }}
         onFinish={handleSubmitPaymet}
+        onFinishFailed={()=>{setIsSubmit(false)}}
         layout='vertical'
         autoComplete='off'>
         <div className='buy-form-content'>
