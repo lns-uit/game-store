@@ -183,13 +183,13 @@ function SignInComponent() {
               cookiePolicy={'single_host_origin'}
             />
             <br/><br/>
-            <FacebookLogin
+            {/* <FacebookLogin
               appId="4499644436831251"
               fields="name,email,picture"
               // onClick={responseFacebook}
               cssClass="btn-login-with-facebook"
               icon= {<img src={fbIcon} height="25px"/>}
-              callback={responseFacebook} />
+              callback={responseFacebook} /> */}
           </Form>
           <div className='not-account'>
             <Link to='/sign-up' className='a-create-account'>
