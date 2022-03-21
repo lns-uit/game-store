@@ -55,7 +55,6 @@ function Admin() {
   )
   const [form] = Form.useForm();
 
-  console.log(fileList);
   const hashConfig = {
     trigger: '#',
     separator: ' ',
@@ -90,7 +89,6 @@ function Admin() {
   }
 
   const onFinish = (values: any) => {
-    console.log('hi')
     let error: string[] = [];
     let count = 0;
     let stringErr = "";
@@ -134,27 +132,27 @@ function Admin() {
     axios
       .post(Endpoint.mainApi + "api/game/create", {
         game: {
-          namegame: values.nameGame,
-          developer: values.developer,
-          publisher: values.publisher,
-          plaform: values.platform,
-          urlVideo: values.urlVideo,
+          NameGame : values.nameGame,
+          Developer : values.developer,
+          Publisher : values.publisher,
+          Plaform : values.platform,
+          UrlVideo : values.urlVideo,
           cost: values.cost,
-          lastestversion: values.version,
+          LastestVersion : values.version,
         },
         
         gameVersion: {
-          versiongame: values.version,
-          urldowload: values.fileGame,
-          ShortDescription: values.shortDecription.currentTarget.value,
-          Descriptions: values.detailDecription,
+          VersionGame : values.version,
+          UrlDowload : values.fileGame,
+          ShortDescription : values.shortDecription.currentTarget.value,
+          Descriptions : values.detailDecription,
           os: values.OS,
           Processor: values.processor,
           Storage: values.storage,
           Graphics: values.graphics,
-          PrivacyPolicy: values.privacyPolicy,
+          PrivacyPolicy : values.privacyPolicy,
           Memory: values.memory,
-          filePlay: values.fileLauncher
+          FilePlay : values.fileLauncher
         },
         listImageDetail: values.images,
         listGenreDetail: values.selectMultiple
@@ -167,10 +165,10 @@ function Admin() {
       .then((response) => {
         form.resetFields();
         history.push("/admin/console/game-list");
-        console.log(response.data)
       })
       .catch((error) => {
         console.log(error);
+        setIsUpdatingGame(false);
       });
   };
   function getLinkFileZip(file) {

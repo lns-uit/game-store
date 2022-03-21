@@ -185,6 +185,7 @@ function AdminUpdateGameLayout() {
             })
             .catch((error) => {
                 console.log(error);
+                setIsUpdatingGame(false);
             });
     };
     const postGameUpdate = (values: any) => {
