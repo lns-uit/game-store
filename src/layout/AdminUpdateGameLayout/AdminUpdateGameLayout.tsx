@@ -180,7 +180,7 @@ function AdminUpdateGameLayout() {
             })
             .then((response) => {
                 form.resetFields();
-                history.push("/admin/console/history/" + game.idGame);
+                history.replace("/admin/console/game/releases/" + game.idGame);
                 console.log(response.data)
             })
             .catch((error) => {
@@ -207,7 +207,7 @@ function AdminUpdateGameLayout() {
             })
             .then((response) => {
                 form.resetFields();
-                history.push("/admin/console/history/" + game.idGame);
+                history.replace("/admin/console/game/releases/" + game.idGame);
             })
             .catch((error) => {
                 console.log(error);
