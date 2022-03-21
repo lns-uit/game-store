@@ -137,7 +137,6 @@ function BuyComponent({ onSubmitPayment,game,timeDiscount,isSubmit,setIsSubmit }
               <Form.Item wrapperCol={{ offset: 0, span: 100 }}>
                 <Button
                   loading = {isSubmit}
-                  onClick={onSubmitPayment}
                   style={{ height: "40px", width: "300px"}}
                   className='bgr-green pd-8-16 width-full border-radius-4 uppercase full-width btn-pay"'
                   type = "primary"
