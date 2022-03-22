@@ -88,7 +88,6 @@ function AdminUpdateGameLayout() {
     const normFileImages = (e) => {
         setLoaddingImagesGame(true);
         setFileList(e.fileList);
-        console.log(e);
         if (e.file.status === "error") {
             getLinkFileImage(e.file.originFileObj);
         }
@@ -130,7 +129,6 @@ function AdminUpdateGameLayout() {
                 stringErr += error[i] + '\n';
             }
             message.error(stringErr);
-            console.log('here')
         } else {
             values.fileGame = urlDownload;
             if (urlDownload === null && !isUpdate) {
@@ -181,7 +179,6 @@ function AdminUpdateGameLayout() {
             .then((response) => {
                 form.resetFields();
                 history.replace("/admin/console/game/releases/" + game.idGame);
-                console.log(response.data)
             })
             .catch((error) => {
                 console.log(error);
@@ -301,7 +298,6 @@ function AdminUpdateGameLayout() {
             const response = await gamesApi.getGameDetail(slug);
 
             if (response) {
-                console.log(response);
                 form.setFieldsValue({
                     nameGame: response.nameGame,
                     developer: response.developer,

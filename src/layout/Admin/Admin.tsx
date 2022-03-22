@@ -164,7 +164,7 @@ function Admin() {
       })
       .then((response) => {
         form.resetFields();
-        history.push("/admin/console/game-list");
+        history.push("/admin/console/game/releases/" + response.data.newGameDto.idGame);
       })
       .catch((error) => {
         console.log(error);

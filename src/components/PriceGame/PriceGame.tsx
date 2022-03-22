@@ -17,6 +17,7 @@ import moment from 'moment';
 import wishlistApi from '../../api/wishlistApi';
 import axios from 'axios';
 import { Endpoint } from '../../api/endpoint';
+import { createAdd } from 'typescript';
 
 interface Detail {
   game: GameDetailss;
@@ -68,11 +69,11 @@ function PriceGame({ game, bill }: Detail) {
     setIsSubmit(true);
     if (idUser) {
       const dataRequest = {
-        card,
+        card: card,
         newBill: {
           idGame: game.idGame,
-          idUser,
-        },
+          idUser: idUser,
+        }
       };
       const response = await gamesApi.createNewBillGame(dataRequest);
       const { actions, cost, datePaygame, idBill, message } = response || {};
@@ -97,10 +98,10 @@ function PriceGame({ game, bill }: Detail) {
     setIsSubmit(true);
     if (idUser) {
       const dataRequest = {
-        card,
+        card: card,
         newBill: {
           idGame: game.idGame,
-          idUser,
+          idUser: idUser,
           actions: 'refund',
         },
       };
