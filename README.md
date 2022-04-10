@@ -23,17 +23,17 @@ Ngô Văn Khải | 19520614 | - Thiết kế cơ sở dữ liệu <br/> - Triể
 ### Cài đặt 
 - Backend: 
 
-      $ git clone https://github.com/nguyenphuc1040/framework_IS220.M11_16_back-end.git
+      $ git clone https://github.com/nguyenphuc1040/stun-store-be.git
       
-      $ cd framework_IS220.M11_16_back-end
+      $ cd stun-store-be
       
       $ dotnet watch run
       
 - Frontend: 
 
-      $ git clone https://github.com/nguyenphuc1040/framework_IS220.M11_16_front-end.git
+      $ git clone https://github.com/nguyenphuc1040/stun-store-fe.git
 
-      $ cd framework_IS220.M11_16_front-end
+      $ cd stun-store-fe
 
       $ yarn install
 
@@ -93,17 +93,17 @@ Ngo Van Khai | 19520614 | - Design Database <br/> - Web Application Deployment  
 ### How to run
 - Backend: 
 
-      $ git clone https://github.com/nguyenphuc1040/framework_IS220.M11_16_back-end.git
+      $ git clone https://github.com/nguyenphuc1040/stun-store-be.git
       
-      $ cd framework_IS220.M11_16_back-end
+      $ cd stun-store-be
       
       $ dotnet watch run
       
 - Frontend: 
+- 
+      $ git clone https://github.com/nguyenphuc1040/stun-store-fe.git
 
-      $ git clone https://github.com/nguyenphuc1040/framework_IS220.M11_16_front-end.git
-
-      $ cd framework_IS220.M11_16_front-end
+      $ cd stun-store-fe
 
       $ yarn install
 
