@@ -42,7 +42,7 @@ function SignInComponent() {
             history.push('/confirm-email');
           }
         })
-        .catch(err => {console.log(err)})
+        .catch(err => {})
         
       }
       if (message) {

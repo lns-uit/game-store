@@ -28,20 +28,17 @@ function ConfirmEmailComponent() {
   };
 
 
-  console.log(forgot);
   const VerificationCODE = (email: string, code: string) => {
     axios.post(Endpoint.mainApi + 'api/user/verification/code',{
         email: email,
         code: code,
     }).then (e => {
         if (forgot.forgot === null) {
-          console.log(1)
           message.success('Successful !');
           localStorage.setItem('accessToken',e.data.token);
           dispatch(login(e.data.user));
           history.replace('/');
         }else{
-          console.log(2)
           dispatch(login(e.data.user));
           localStorage.setItem('accessToken',e.data.token);
           history.replace('/reset-password');

@@ -42,7 +42,6 @@ function CollectionLayout({
         },
       };
       const response = await gamesApi.createNewBillGame(dataRequest);
-      console.log(response);
       const { idBill, message = '', cost, datePaygame } = response || {};
       var currentdate = new Date();
       var datetime =

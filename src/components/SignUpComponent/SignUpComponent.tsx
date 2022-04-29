@@ -35,7 +35,7 @@ function SignUpComponent() {
       };
       const responsive = await userApi.registerUserApi(newUser);
       const { idUser, message } = responsive || {};
-      console.log(responsive)
+
       if (message) {
         Mss.success(message);
         history.push('/confirm-email');

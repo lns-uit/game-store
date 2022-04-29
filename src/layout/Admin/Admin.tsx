@@ -167,7 +167,6 @@ function Admin() {
         history.push("/admin/console/game/releases/" + response.data.newGameDto.idGame);
       })
       .catch((error) => {
-        console.log(error);
         setIsUpdatingGame(false);
       });
   };
@@ -177,7 +176,7 @@ function Admin() {
       "state_changed",
       snapshot => { },
       error => {
-        console.log(error);
+
       },
       () => {
         storage
@@ -200,7 +199,7 @@ function Admin() {
       "state_changed",
       snapshot => { },
       error => {
-        console.log(error);
+
       },
       () => {
         storage

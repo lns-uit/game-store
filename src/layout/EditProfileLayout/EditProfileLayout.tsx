@@ -65,13 +65,11 @@ function EditProfileLayout() {
     .then(res=>{
       dispatch(login(res.data));
       window.alert('Edit success');
-      console.log(res);
     })
     .catch(err=>{window.alert('Edit fail');})
   }
 
   const editPassword = async (values: any) =>{
-    console.log(values)
     if (values.newPassword !== values.comfirmPassword){
       window.alert('New password not compare confirm password');
     }else{

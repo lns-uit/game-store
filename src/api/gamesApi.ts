@@ -9,7 +9,6 @@ const getGamesApi = async () => {
     const res = await callApi('get', endpoint);
     return res.data;
   } catch (error) {
-    console.log(error);
   }
 };
 
@@ -21,15 +20,12 @@ const getGameDetail = async slug => {
     );
     return res.data;
   } catch (err) {
-    console.log(err);
   }
 };
 
 const createNewBillGame = async newBill => {
   try {
     const accessToken = localStorage.getItem('accessToken');
-    console.log(newBill);
-
     const request = await callApi(
       'post',
       `${Endpoint.mainApi}api/bill/create`,

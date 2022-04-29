@@ -25,7 +25,6 @@ function Comment({ comment, updateCmtFunc, deleteCmtFunc, isOwn, idUser }: Comme
     const [userLike, setUserLike] = useState('null');
 
     const checkMyLikeComment = () => {
-        console.log(idUser)
         return axios.get(Endpoint.mainApi + "api/likecomment/" + comment?.idComment + "/" + idUser)
             .then(res => {
                 setUserLike(res.data.own)

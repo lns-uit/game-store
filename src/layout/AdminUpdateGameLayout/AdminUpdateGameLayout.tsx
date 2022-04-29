@@ -181,7 +181,6 @@ function AdminUpdateGameLayout() {
                 history.replace("/admin/console/game/releases/" + game.idGame);
             })
             .catch((error) => {
-                console.log(error);
                 setIsUpdatingGame(false);
             });
     };
@@ -207,7 +206,6 @@ function AdminUpdateGameLayout() {
                 history.replace("/admin/console/game/releases/" + game.idGame);
             })
             .catch((error) => {
-                console.log(error);
             });
     };
     function getLinkFileZip(file) {
@@ -216,7 +214,6 @@ function AdminUpdateGameLayout() {
             "state_changed",
             snapshot => { },
             error => {
-                console.log(error);
             },
             () => {
                 storage
@@ -239,7 +236,6 @@ function AdminUpdateGameLayout() {
             "state_changed",
             snapshot => { },
             error => {
-                console.log(error);
             },
             () => {
                 storage

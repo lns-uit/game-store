@@ -7,7 +7,6 @@ const getGenresApi = async () => {
     const { data } = res || {};
     return data;
   } catch (error) {
-    console.log(error);
   }
 };
 

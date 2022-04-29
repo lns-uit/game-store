@@ -8,7 +8,6 @@ const getGenre = async () => {
     const res = await callApi('get', genreApi);
     return res.data;
   } catch (error) {
-    console.log(error);
   }
 };
 

@@ -1,5 +1,5 @@
 const Endpoint ={
-    mainApi: "http://103.142.139.104:5111/"
+    mainApi: "https://stunservices.herokuapp.com/"
     // mainApi: "https://localhost:5001/"
 } 
 

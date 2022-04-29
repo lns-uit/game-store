@@ -76,7 +76,6 @@ function GameItem({
         return;
       }
       const res = await wishlistApi.addToWishlist(user?.idUser, game.idGame);
-      console.log(res);
       if (res === 'created') {
         // if (setWishlistChange() !== undefined) setWishlistChange(w => w+1)
         setIsWishList(true);

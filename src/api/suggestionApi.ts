@@ -14,7 +14,6 @@ const getGameSuggestionApi = async (
     const { data } = request || {};
     return data;
   } catch (error) {
-    console.log(error);
   }
 };
 

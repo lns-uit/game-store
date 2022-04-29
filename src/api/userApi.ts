@@ -5,8 +5,6 @@ import { FormRegisterType } from '../interfaces/rootInterface';
 
 const loginApi = async formLogin => {
   try {
-    console.log(formLogin);
-
     const request = await callApi(
       'post',
       Endpoint.mainApi + 'api/user/login',
@@ -17,8 +15,6 @@ const loginApi = async formLogin => {
     return data;
   } catch (e) {
     const error: any = e;
-    console.log(error.response);
-
     return error.response?.data;
   }
 };
@@ -34,8 +30,6 @@ const loginWithSMA = async info => {
     return data;
   } catch (e) {
     const error: any = e;
-    console.log(error.response);
-
     return error.response?.data;
   }
 };

@@ -18,7 +18,6 @@ const getCollectionByUserApi = async idUSer => {
   } catch (e) {
     const err: any = e;
     const { response } = err || {};
-    console.log(response);
   }
 };
 
