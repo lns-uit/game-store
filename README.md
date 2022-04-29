@@ -72,7 +72,7 @@ https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/aqua.png)
 
 ### Link Design: [Click Here](https://www.figma.com/file/PyrhA02MocSgTN3iHlh6Dm/WebGameDesign?node-id=0%3A1)
 
-### Link Demo Web: [Click Here](http://stun-store.ngovankhai.site/)
+### Link Demo Web: [Click Here](https://stun-store.vercel.app/)
 
 ### Team
 
