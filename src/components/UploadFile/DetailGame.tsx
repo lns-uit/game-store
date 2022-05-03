@@ -141,7 +141,7 @@ function DetailGame(){
                     >
                         <Select placeholder="Please select platform">
                             <Option value="window">Window</Option>
-                            <Option value="macOS">Android</Option>
+                            <Option value="android">Android</Option>
                         </Select>
                     </Form.Item>
 
