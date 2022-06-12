@@ -71,11 +71,7 @@ function AdminUpdateGameLayout() {
 
     const normFileZip = (e) => {
         setFileZip(e.fileList);
-        if (e.file.status === "error" && e.file.type !== "application/x-zip-compressed") {
-            alert("This is not file .zip");
-            setUrlDownload(null)
-            setIsUpdate(true);
-        } else if (e.file.status === "error" && e.file.type === "application/x-zip-compressed") {
+        if (e.file.status === "error") {
             getLinkFileZip(e.file.originFileObj);
             setIsUpdate(false);
         } else if (e.file.status === "removed") {
@@ -353,11 +349,11 @@ function AdminUpdateGameLayout() {
                                 getValueFromEvent={normFileZip}
                                 noStyle
                             >
-                                <Upload.Dragger accept='.zip' name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
+                                <Upload.Dragger name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
                                     <p className="ant-upload-drag-icon">
                                         <InboxOutlined />
                                     </p>
-                                    <p className="ant-upload-text uppercase">Upload File Zip</p>
+                                    <p className="ant-upload-text uppercase">Upload File</p>
                                 </Upload.Dragger>
                             </Form.Item>
                         </Form.Item>

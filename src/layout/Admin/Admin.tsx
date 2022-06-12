@@ -67,9 +67,7 @@ function Admin() {
 
   const normFileZip = (e) => {
     setFileZip(e.fileList);
-    if (e.file.status === "error" && e.file.type !== "application/x-zip-compressed") {
-      message.error("Require file .zip");
-    } else if (e.file.status === "error" && e.file.type === "application/x-zip-compressed") {
+    if (e.file.status === "error") {
       getLinkFileZip(e.file.originFileObj);
     } else if (e.file.status === "removed") {
       setUrlDownload(null)
@@ -132,6 +130,7 @@ function Admin() {
     axios
       .post(Endpoint.mainApi + "api/game/create", {
         game: {
+          IdGame: values.platform === "android" ? values.fileLauncher : "",
           NameGame : values.nameGame,
           Developer : values.developer,
           Publisher : values.publisher,
@@ -263,11 +262,11 @@ function Admin() {
             getValueFromEvent={normFileZip}
             noStyle
           >
-            <Upload.Dragger accept='.zip' name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
+            <Upload.Dragger accept='*' name="fileGame" fileList={fileZip} className={fileZip.length >= 1 ? "d-none" : "d-block"}>
               <p className="ant-upload-drag-icon">
                 <InboxOutlined />
               </p>
-              <p className="ant-upload-text uppercase">Upload File Zip</p>
+              <p className="ant-upload-text uppercase">Upload File Game</p>
             </Upload.Dragger>
           </Form.Item>
         </Form.Item>

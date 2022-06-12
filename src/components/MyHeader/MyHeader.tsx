@@ -200,7 +200,7 @@ function MyHeader({ onOpen }: MyHeaderPropstype) {
             :
             <ButtonPrimary
             text='GET LAUNCHER'
-            callback={() => window.location.href = 'https://github.com/nguyenphuc1040/game-launcher/releases/download/1.0.1/StunSetup64x86.exe'}
+            callback={() => window.location.href = 'https://github.com/nguyenphuc1040/stun-launcher/releases/download/1.0.2/Stun.Setup.1.0.2.exe'}
             containerColor={rootColor.redColor}
             borderColor={rootColor.redColor}
             styleClass={'header__top-wrapper--right__btn-get-launcher'}
